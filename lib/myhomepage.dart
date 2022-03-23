@@ -1,10 +1,8 @@
 import 'package:cityofcars/button.dart';
 import 'package:cityofcars/constants.dart';
 import 'package:cityofcars/loginSignup.dart';
-import 'package:cityofcars/verification.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);

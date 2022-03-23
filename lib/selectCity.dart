@@ -1,4 +1,4 @@
-import 'package:cityofcars/button.dart';
+
 import 'package:cityofcars/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -30,7 +30,7 @@ class _SelectCityState extends State<SelectCity> {
           child: Text(
             "Select Your City",
             style: GoogleFonts.montserrat(
-                textStyle: TextStyle(
+                textStyle: const TextStyle(
               fontSize: 21,
               fontWeight: FontWeight.bold,
               color: kTextInputPlaceholderColor,
@@ -90,13 +90,13 @@ class _SelectCityState extends State<SelectCity> {
                               children: [
                                 Image.asset(
                                     "assets/images/${cityList[index]["images"]}"),
-                                SizedBox(
+                                const SizedBox(
                                   height: 5,
                                 ),
                                 Text(
                                   cityList[index]["name"],
                                   style: GoogleFonts.montserrat(
-                                      textStyle: TextStyle(
+                                      textStyle: const TextStyle(
                                           color: Colors.black,
                                           fontSize: 12,
                                           fontWeight: FontWeight.bold)),

@@ -20,12 +20,12 @@ class _VerficationState extends State<Verfication> {
   final defaultPinTheme = PinTheme(
     width: 56,
     height: 70,
-    textStyle: TextStyle(
+    textStyle: const TextStyle(
         fontSize: 20,
         color: Color.fromRGBO(30, 60, 87, 1),
         fontWeight: FontWeight.w600),
     decoration: BoxDecoration(
-      color: Color(0XFFF1F0F2),
+      color: const Color(0XFFF1F0F2),
       borderRadius: BorderRadius.circular(20),
     ),
   );

@@ -1,6 +1,4 @@
 import 'package:cityofcars/constants.dart';
-import 'package:cityofcars/selectCity.dart';
-import 'package:cityofcars/verification.dart';
 import 'package:flutter/material.dart';
 
 import 'myhomepage.dart';
