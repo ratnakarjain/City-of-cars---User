@@ -1,7 +1,7 @@
 
 
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 const korangecolor = Color(0XFFF48100);
 const kbluecolor = Color(0XFF003E89);
@@ -14,7 +14,9 @@ const kwhitecolor = Color(0XFFFFFFFF);
 
 const kSinginTextColor = Color(0XFF5C6E98);
 const kLightOrangeBgColor = Color(0XFFFAF7F7);
-const kShadowColor = Color(0XFF0000001F);
+const kShadowColor = Color(0X0000001F);
 
 const kTextInputPlaceholderColor = Color(0XFF241332);
 const kCursorColor = Color(0XFFD47FA6);
+const kTransparent = Colors.transparent;
+const kGreenColor = Color(0xFF70A72C);

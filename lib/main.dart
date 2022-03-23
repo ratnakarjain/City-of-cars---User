@@ -1,4 +1,7 @@
 import 'package:cityofcars/constants.dart';
+import 'package:cityofcars/dash.dart';
+import 'package:cityofcars/selectBrand.dart';
+import 'package:cityofcars/selectFuel.dart';
 import 'package:flutter/material.dart';
 
 import 'myhomepage.dart';
@@ -16,10 +19,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'City of Cars',
-      theme: ThemeData(
-        primaryColor: korangecolor,
+      theme: ThemeData().copyWith(
+        colorScheme: ThemeData().colorScheme.copyWith(
+              primary: korangecolor,
+            ),),
+      home: const Dash(
+        
       ),
-      home: const MyHomePage(),
     );
   }
 }
