@@ -6,6 +6,8 @@ class RRectCard extends StatelessWidget {
   bool istext;
   String? text = "";
   String image;
+  double? imageHeight;
+  double borderRadius;
   TextStyle? textStyle = const TextStyle();
   Color? color;
 
@@ -14,9 +16,11 @@ class RRectCard extends StatelessWidget {
       required this.h,
       required this.w,
       this.text,
+      required this.borderRadius,
       required this.istext,
       this.textStyle,
       required this.image,
+      this.imageHeight,
       this.color})
       : super(key: key);
 
@@ -24,14 +28,14 @@ class RRectCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: color,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius)),
       elevation: 8,
       shadowColor: Colors.grey.withOpacity(0.2),
       child: Container(
         height: h,
         width: w,
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Image.asset(image),
+          Image.asset(image,height: imageHeight,),
           const SizedBox(
             height: 5,
           ),

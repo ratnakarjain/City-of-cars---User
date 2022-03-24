@@ -1,4 +1,5 @@
 import 'package:cityofcars/constants.dart';
+import 'package:cityofcars/serviceMain.dart';
 import 'package:cityofcars/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -74,6 +75,7 @@ class _SelectFuelState extends State<SelectFuel> {
               height: h * 0.03,
             ),
             RRectCard(
+              borderRadius: 30,
               h: h * 0.12,
               w: h * 0.12,
               istext: true,
@@ -113,15 +115,22 @@ class _SelectFuelState extends State<SelectFuel> {
                       crossAxisCount: 3,
                       children: List.generate(fueltype.length, (index) {
                         return Center(
-                          child: RRectCard(
-                            h: h * 0.12,
-                            w: h * 0.12,
-                            istext: true,
-                            image: "assets/images/${fueltype[index]['image']}",
-                            text: fueltype[index]["type"],
-                            textStyle: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w600,
-                              height: 1.5,
+                          child: GestureDetector(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) =>const ServiceMain(),));
+                        
+                            },
+                            child: RRectCard(
+                              h: h * 0.12,
+                              w: h * 0.12,
+                              borderRadius: 30,
+                              istext: true,
+                              image: "assets/images/${fueltype[index]['image']}",
+                              text: fueltype[index]["type"],
+                              textStyle: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                                height: 1.5,
+                              ),
                             ),
                           ),
                         );

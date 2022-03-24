@@ -1,4 +1,5 @@
 import 'package:cityofcars/constants.dart';
+import 'package:cityofcars/selectFuel.dart';
 import 'package:cityofcars/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -78,40 +79,55 @@ class _SelectBrandState extends State<SelectBrand> {
         automaticallyImplyLeading: false,
         title: Padding(
           padding: const EdgeInsets.only(left: 22, top: 20),
-          child: Text(
-            "Select Your City",
-            style: GoogleFonts.montserrat(
-                textStyle: const TextStyle(
-              fontSize: 21,
-              fontWeight: FontWeight.bold,
-              color: kTextInputPlaceholderColor,
-            )),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                isSelected ? "Select Your Car" : "Select Your Brand",
+                style: GoogleFonts.montserrat(
+                    textStyle: const TextStyle(
+                  fontSize: 21,
+                  fontWeight: FontWeight.bold,
+                  color: kTextInputPlaceholderColor,
+                )),
+              ),
+              isSelected
+                  ? Container()
+                  : Text(
+                      "Skip",
+                      style: GoogleFonts.montserrat(
+                          textStyle: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w700,
+                        color: kTextInputPlaceholderColor.withOpacity(0.5),
+                      )),
+                    ),
+            ],
           ),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(h*0.1),
+          preferredSize: Size.fromHeight(h * 0.1),
           child: Container(
-                padding:
-                    EdgeInsets.only(left: w * 0.06, right: w * 0.06, top: 20),
-                child: TextField(
-                  decoration: InputDecoration(
-                      hintText: "Search",
-                      hintStyle: GoogleFonts.montserrat(color: kGreenColor),
-                      suffixIcon: Icon(
-                        Icons.search,
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: korangecolor, width: 1.0),
-                          borderRadius: BorderRadius.circular(20)),
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: kTextInputPlaceholderColor, width: 1.0),
-                          borderRadius: BorderRadius.circular(20))),
-                ),
-              ),
+            padding: EdgeInsets.only(left: w * 0.06, right: w * 0.06, top: 20),
+            child: TextField(
+              decoration: InputDecoration(
+                  hintText: "Search",
+                  hintStyle: GoogleFonts.montserrat(color: kGreenColor),
+                  suffixIcon: Icon(
+                    Icons.search,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: korangecolor, width: 1.0),
+                      borderRadius: BorderRadius.circular(20)),
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: kTextInputPlaceholderColor, width: 1.0),
+                      borderRadius: BorderRadius.circular(20))),
+            ),
+          ),
         ),
       ),
       body: Container(
@@ -119,72 +135,51 @@ class _SelectBrandState extends State<SelectBrand> {
         width: w,
         child: Column(
           children: [
-            // Expanded(
-            //   child: Container(
-            //     padding:
-            //         EdgeInsets.only(left: w * 0.06, right: w * 0.06, top: 20),
-            //     child: TextField(
-            //       decoration: InputDecoration(
-            //           hintText: "Search",
-            //           hintStyle: GoogleFonts.montserrat(color: kGreenColor),
-            //           suffixIcon: Icon(
-            //             Icons.search,
-            //           ),
-            //           focusedBorder: OutlineInputBorder(
-            //               borderSide:
-            //                   BorderSide(color: korangecolor, width: 1.0),
-            //               borderRadius: BorderRadius.circular(20)),
-            //           border: OutlineInputBorder(
-            //               borderSide: BorderSide(
-            //                   color: kTextInputPlaceholderColor, width: 1.0),
-            //               borderRadius: BorderRadius.circular(20))),
-            //     ),
-            //   ),
-            // ),
-            isSelected?
-             Hero(
-               tag: "tag",
-               child: Padding(
-                 padding:  EdgeInsets.all(h*0.03),
-                 child: RRectCard(
-                              h: h * 0.15,
-                              w: h * 0.15,
-                              istext: false,
-                              color: kLightOrangeBgColor,
-                              image: "assets/images/${carLogoList[item!]}"),
-               ),
-             )
-            :
-            Expanded(
-              child: Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: w * 0.05, vertical: 50),
-                  child: GridView.count(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    children: List.generate(carLogoList.length, (index) {
-                      return GestureDetector(
-                        onTap: () {
-                          bottumSheet();
-                          item = index;
-                          isSelected = true;
-                          setState(() {});
-                        },
-                        child: Hero(
-                          tag: "tag",
-                          child: RRectCard(
-                              h: h * 0.18,
-                              w: h * 0.18,
-                              istext: false,
-                              color: kLightOrangeBgColor,
-                              image: "assets/images/${carLogoList[index]}"),
-                        ),
-                      );
-                    }),
+            isSelected
+                ? Hero(
+                    tag: "tag",
+                    child: Padding(
+                      padding: EdgeInsets.all(h * 0.03),
+                      child: RRectCard(
+                          h: h * 0.15,
+                          w: h * 0.15,
+                          istext: false,
+                          borderRadius: 30,
+                          color: kLightOrangeBgColor,
+                          image: "assets/images/${carLogoList[item!]}"),
+                    ),
+                  )
+                : Expanded(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: w * 0.05, vertical: 50),
+                      child: GridView.count(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        children: List.generate(carLogoList.length, (index) {
+                          return GestureDetector(
+                            onTap: () {
+                              bottumSheet();
+                              item = index;
+                              isSelected = true;
+                              setState(() {});
+                            },
+                            child: Hero(
+                              tag: "tag",
+                              child: RRectCard(
+                                  h: h * 0.18,
+                                  w: h * 0.18,
+                                  istext: false,
+                                  borderRadius: 30,
+                                  color: kLightOrangeBgColor,
+                                  image: "assets/images/${carLogoList[index]}"),
+                            ),
+                          );
+                        }),
+                      ),
+                    ),
                   ),
-                ),
-            ),
           ],
         ),
       ),
@@ -192,7 +187,6 @@ class _SelectBrandState extends State<SelectBrand> {
   }
 
   bottumSheet() {
-    
     showModalBottomSheet(
         context: context,
         elevation: 8,
@@ -203,7 +197,6 @@ class _SelectBrandState extends State<SelectBrand> {
           topRight: Radius.circular(h * 0.03),
         )),
         builder: (context) {
-          
           return Container(
             width: w,
             decoration: BoxDecoration(
@@ -244,16 +237,26 @@ class _SelectBrandState extends State<SelectBrand> {
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
                       children: List.generate(cars.length, (index) {
-                        return RRectCard(
-                            h: h * 0.18,
-                            w: h * 0.18,
-                            istext: true,
-                            text: cars[index]["name"],
-                            textStyle: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w600,
-                              height: 1.5,
-                            ),
-                            image: "assets/images/${cars[index]["image"]}");
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const SelectFuel(),
+                                ));
+                          },
+                          child: RRectCard(
+                              h: h * 0.18,
+                              w: h * 0.18,
+                              istext: true,
+                              borderRadius: 30,
+                              text: cars[index]["name"],
+                              textStyle: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                                height: 1.5,
+                              ),
+                              image: "assets/images/${cars[index]["image"]}"),
+                        );
                       }),
                     ),
                   ),
@@ -261,6 +264,10 @@ class _SelectBrandState extends State<SelectBrand> {
               ],
             ),
           );
-        });
+        }).whenComplete(() {
+      item = null;
+      isSelected = false;
+      setState(() {});
+    });
   }
 }

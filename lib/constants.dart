@@ -13,7 +13,7 @@ const klightpurpulcolor = Color(0XFF8A56AC);
 const kwhitecolor = Color(0XFFFFFFFF);
 
 const kSinginTextColor = Color(0XFF5C6E98);
-const kLightOrangeBgColor = Color(0XFFFAF7F7);
+const kLightOrangeBgColor = Color(0XFFFFF7F7);
 const kShadowColor = Color(0X0000001F);
 
 const kTextInputPlaceholderColor = Color(0XFF241332);

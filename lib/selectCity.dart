@@ -1,5 +1,7 @@
 
+
 import 'package:cityofcars/constants.dart';
+import 'package:cityofcars/selectBrand.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -77,31 +79,36 @@ class _SelectCityState extends State<SelectCity> {
                   crossAxisCount: 2,
                   children: List.generate(cityList.length, (index) {
                     return Center(
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30)),
-                        elevation: 8,
-                        shadowColor: Colors.grey.withOpacity(0.2),
-                        child: Container(
-                          height: size.height * 0.17,
-                          width: size.height * 0.17,
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                    "assets/images/${cityList[index]["images"]}"),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  cityList[index]["name"],
-                                  style: GoogleFonts.montserrat(
-                                      textStyle: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold)),
-                                )
-                              ]),
+                      child: GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) =>const SelectBrand(),));
+                        },
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30)),
+                          elevation: 8,
+                          shadowColor: Colors.grey.withOpacity(0.2),
+                          child: Container(
+                            height: size.height * 0.17,
+                            width: size.height * 0.17,
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                      "assets/images/${cityList[index]["images"]}"),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    cityList[index]["name"],
+                                    style: GoogleFonts.montserrat(
+                                        textStyle: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold)),
+                                  )
+                                ]),
+                          ),
                         ),
                       ),
                     );
