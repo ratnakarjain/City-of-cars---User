@@ -15,19 +15,11 @@ class _MyHomePageState extends State<MyHomePage> {
   var h;
   var w;
   int currentPage = 0;
-  List cardData=[
-    {
-      "image":"assets/images/man_with_car.png"
-    },
-    {
-      "image":"assets/images/man_with_car.png"
-    },
-    {
-      "image":"assets/images/man_with_car.png"
-    },
-    {
-       "image":"assets/images/man_with_car.png"
-    },
+  List cardData = [
+    {"image": "assets/images/man_with_car.png"},
+    {"image": "assets/images/man_with_car.png"},
+    {"image": "assets/images/man_with_car.png"},
+    {"image": "assets/images/man_with_car.png"},
   ];
   @override
   Widget build(BuildContext context) {
@@ -67,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
             //               style: GoogleFonts.montserrat(
             //                 fontWeight: FontWeight.w700
             //               ),
-                          
+
             //               ),
             //           ),
             //         ),
@@ -82,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
             //                 color: kblacklightshadecolor,
             //                 fontWeight: FontWeight.w500
             //               ),
-                          
+
             //               ),
             //           ),
             //         ),
@@ -102,10 +94,9 @@ class _MyHomePageState extends State<MyHomePage> {
             //         _current = index;
             //       });
             //     }),
-              
+
             // ),
             Expanded(
-
               child: PageView.builder(
                   onPageChanged: (value) {
                     setState(() {
@@ -113,57 +104,54 @@ class _MyHomePageState extends State<MyHomePage> {
                     });
                   },
                   itemCount: cardData.length,
-                  itemBuilder: (context, index) =>
-                  Padding(
-                    padding:  EdgeInsets.only(top: h*0.08,left: w*0.05,right: w*0.05,bottom: h*0.02),
-                    child: Card(
-                elevation: 10,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(h*0.08)
-                ),
-                child: Container(
-                    height: h*0.6,
-                    width: w*0.9,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(cardData[index]["image"]!),
-                        Padding(
-                          padding: EdgeInsets.only(top: h*0.02),
-                          child: Center(
-                            child: Text(
-                              "Get Started",
-                              textScaleFactor: 2,
-                              style: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.w700
-                              ),
-                              
-                              ),
+                  itemBuilder: (context, index) => Padding(
+                        padding: EdgeInsets.only(
+                            top: h * 0.08,
+                            left: w * 0.05,
+                            right: w * 0.05,
+                            bottom: h * 0.02),
+                        child: Card(
+                          elevation: 10,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(h * 0.08)),
+                          child: Container(
+                            height: h * 0.6,
+                            width: w * 0.9,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(cardData[index]["image"]!),
+                                Padding(
+                                  padding: EdgeInsets.only(top: h * 0.02),
+                                  child: Center(
+                                    child: Text(
+                                      "Get Started",
+                                      textScaleFactor: 2,
+                                      style: GoogleFonts.montserrat(
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: w * 0.8,
+                                  padding: EdgeInsets.only(top: h * 0.015),
+                                  child: Center(
+                                    child: Text(
+                                      "   If you're offered a seat on a rocket\n ship, don't ask what seat! Just get on.",
+                                      textScaleFactor: 1,
+                                      style: GoogleFonts.montserrat(
+                                          color: kblacklightshadecolor,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                        Container(
-                          width: w*0.8,
-                          padding: EdgeInsets.only(top: h*0.015),
-                          child: Center(
-                            child: Text(
-                              "   If you're offered a seat on a rocket\n ship, don't ask what seat! Just get on.",
-                              textScaleFactor: 1,
-                              style: GoogleFonts.montserrat(
-                                color: kblacklightshadecolor,
-                                fontWeight: FontWeight.w500
-                              ),
-                              
-                              ),
-                          ),
-                        ),
-                      ],
-                    ),
-                ),
-              ),
-                  )
-                ),
+                      )),
             ),
-             Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: cardData.map((url) {
                 int index = cardData.indexOf(url);
@@ -180,50 +168,52 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               }).toList(),
             ),
-             SizedBox(
-              height: h*0.05,
-            ),            
+            SizedBox(
+              height: h * 0.05,
+            ),
             RRecctButton(
               text: "LOGIN",
-              h: h*0.07,
-              w: w*0.88,
+              h: h * 0.07,
+              w: w * 0.88,
               buttonColor: kbluecolor,
               style: GoogleFonts.montserrat(
-                      color: kwhitecolor,
-                      fontWeight: FontWeight.w600
-                    ),
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => LoginSignUp(isSignIn: true,),));
-                
-              },
-            ),
-             SizedBox(
-              height: h*0.02,
-            ),   
-            RRecctButton(
-              text: "SIGNUP",
-              h: h*0.07,
-              w: w*0.88,
-              buttonColor: korangecolor,
-              style: GoogleFonts.montserrat(
-                      color: kwhitecolor,
-                      fontWeight: FontWeight.w600
-                    ),
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => LoginSignUp(isSignIn: false,),));
-                
+                  color: kwhitecolor, fontWeight: FontWeight.w600),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginSignUp(
+                        isSignIn: true,
+                      ),
+                    ));
               },
             ),
             SizedBox(
-              height: h*0.05,
-            ),  
-            
-            
-
+              height: h * 0.02,
+            ),
+            RRecctButton(
+              text: "SIGNUP",
+              h: h * 0.07,
+              w: w * 0.88,
+              buttonColor: korangecolor,
+              style: GoogleFonts.montserrat(
+                  color: kwhitecolor, fontWeight: FontWeight.w600),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginSignUp(
+                        isSignIn: false,
+                      ),
+                    ));
+              },
+            ),
+            SizedBox(
+              height: h * 0.05,
+            ),
           ],
         ),
       ),
     );
   }
-
 }

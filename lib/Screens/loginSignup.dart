@@ -7,7 +7,7 @@ import 'verification.dart';
 
 class LoginSignUp extends StatefulWidget {
   bool isSignIn;
-   LoginSignUp({Key? key, required this.isSignIn}) : super(key: key);
+  LoginSignUp({Key? key, required this.isSignIn}) : super(key: key);
 
   @override
   _LoginSignUpState createState() => _LoginSignUpState();
@@ -27,8 +27,9 @@ class _LoginSignUpState extends State<LoginSignUp> {
   void initState() {
     // TODO: implement initState
     super.initState();
-isSelected = widget.isSignIn;
+    isSelected = widget.isSignIn;
   }
+
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
@@ -259,19 +260,22 @@ isSelected = widget.isSignIn;
           SizedBox(height: 20),
           RRecctButton(
               text: "CONTINUE",
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Verfication(),));
-                
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Verfication(),
+                    ));
               },
               buttonColor: korangecolor,
               style: GoogleFonts.montserrat(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
                       fontSize: 14)),
               h: 52,
               w: width - 44),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           !isSelected
               ? Row(
                   mainAxisAlignment: MainAxisAlignment.center,

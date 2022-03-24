@@ -3,24 +3,17 @@ import 'package:flutter/material.dart';
 class RRectCard extends StatelessWidget {
   final double h;
   final double w;
-  bool istext;
-  String? text = "";
-  String image;
-  double? imageHeight;
   double borderRadius;
-  TextStyle? textStyle = const TextStyle();
   Color? color;
+        Widget widget;
+
 
   RRectCard(
       {Key? key,
       required this.h,
       required this.w,
-      this.text,
+      required this.widget,
       required this.borderRadius,
-      required this.istext,
-      this.textStyle,
-      required this.image,
-      this.imageHeight,
       this.color})
       : super(key: key);
 
@@ -34,20 +27,28 @@ class RRectCard extends StatelessWidget {
       child: Container(
         height: h,
         width: w,
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Image.asset(image,height: imageHeight,),
-          const SizedBox(
-            height: 5,
-          ),
-          istext
-              ? FittedBox(
-                child: Text(
-                    text!,
-                    style: textStyle,
-                  ),
-              )
-              : Container()
-        ]),
+        child: 
+        widget
+      ),
+    );
+  }
+}
+
+class Label extends StatelessWidget {
+  String text;
+  TextStyle textStyle;
+  Color color;
+  EdgeInsetsGeometry padding;
+  Label({ Key? key , required this.text, required this.textStyle, required this.padding, required this.color}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: color,
+      padding: padding,
+      child: Text(
+        text.toUpperCase(),
+        style: textStyle,
       ),
     );
   }

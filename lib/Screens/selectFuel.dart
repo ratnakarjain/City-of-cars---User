@@ -40,107 +40,128 @@ class _SelectFuelState extends State<SelectFuel> {
         elevation: 0,
       ),
       body: Container(
-        height: h,
-        width: w,
-        decoration: BoxDecoration(
-            color: kwhitecolor,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(h * 0.05),
-              topRight: Radius.circular(h * 0.05),
-            ),
-            boxShadow: [
-              BoxShadow(
-                  offset: Offset(0, -5),
-                  blurRadius: 5,
-                  spreadRadius: 3,
-                  color: kblackcolor.withOpacity(0.1))
-            ]),
+        
         child: Column(
           children: [
-            Text(
-              "Select Cars",
-              textScaleFactor: 1.1,
-              style: GoogleFonts.montserrat(
-                  height: 2, fontWeight: FontWeight.w600),
-            ),
-            Text(
-              "269 shots",
-              textScaleFactor: 0.8,
-              style: GoogleFonts.montserrat(
-                fontWeight: FontWeight.w600,
-                height: 1.5,
-                color: kblackcolor.withOpacity(0.6),
-              ),
-            ),
-            SizedBox(
-              height: h * 0.03,
-            ),
-            RRectCard(
-              borderRadius: 30,
-              h: h * 0.12,
-              w: h * 0.12,
-              istext: true,
-              image: "assets/images/Uber1.png",
-              text: "Polo",
-              textStyle: GoogleFonts.montserrat(
-                fontWeight: FontWeight.w600,
-                height: 1.5,
-              ),
-            ),
-            SizedBox(
-              height: h * 0.04,
-            ),
             Container(
+              height: h,
               width: w,
-              height: h * 0.28,
               decoration: BoxDecoration(
                   color: kwhitecolor,
-                  borderRadius: BorderRadius.circular(h * 0.05),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(h * 0.05),
+                    topRight: Radius.circular(h * 0.05),
+                  ),
                   boxShadow: [
                     BoxShadow(
-                        blurRadius: 8,
-                        spreadRadius: 5,
+                        offset: Offset(0, -5),
+                        blurRadius: 5,
+                        spreadRadius: 3,
                         color: kblackcolor.withOpacity(0.1))
                   ]),
               child: Column(
                 children: [
                   Text(
-                    "Fuel",
+                    "Select Cars",
                     textScaleFactor: 1.1,
                     style: GoogleFonts.montserrat(
                         height: 2, fontWeight: FontWeight.w600),
                   ),
-                  Expanded(
-                    child: GridView.count(
-                      scrollDirection: Axis.vertical,
-                      crossAxisCount: 3,
-                      children: List.generate(fueltype.length, (index) {
-                        return Center(
-                          child: GestureDetector(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) =>const ServiceMain(),));
-                        
-                            },
-                            child: RRectCard(
-                              h: h * 0.12,
-                              w: h * 0.12,
-                              borderRadius: 30,
-                              istext: true,
-                              image: "assets/images/${fueltype[index]['image']}",
-                              text: fueltype[index]["type"],
-                              textStyle: GoogleFonts.montserrat(
+                  SizedBox(
+                    height: h * 0.03,
+                  ),
+                  RRectCard(
+                    borderRadius: 30,
+                    h: h * 0.12,
+                    w: h * 0.12,
+                    widget: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset("assets/images/Uber1.png"),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          FittedBox(
+                            child: Text(
+                              "Polo",
+                              style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w600,
                                 height: 1.5,
                               ),
                             ),
-                          ),
-                        );
-                      }),
-                    ),
+                          )
+                        ]),
                   ),
+                  SizedBox(
+                    height: h * 0.04,
+                  ),
+                  Container(
+                    width: w,
+                    height: h * 0.28,
+                    decoration: BoxDecoration(
+                        color: kwhitecolor,
+                        borderRadius: BorderRadius.circular(h * 0.05),
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 8,
+                              spreadRadius: 5,
+                              color: kblackcolor.withOpacity(0.1))
+                        ]),
+                    child: Column(
+                      children: [
+                        Text(
+                          "Fuel",
+                          textScaleFactor: 1.1,
+                          style: GoogleFonts.montserrat(
+                              height: 2, fontWeight: FontWeight.w600),
+                        ),
+                        Expanded(
+                          child: GridView.count(
+                            scrollDirection: Axis.vertical,
+                            crossAxisCount: 3,
+                            children: List.generate(fueltype.length, (index) {
+                              return Center(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => const ServiceMain(),
+                                        ));
+                                  },
+                                  child: RRectCard(
+                                    h: h * 0.12,
+                                    w: h * 0.12,
+                                    borderRadius: 30,
+                                    widget: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Image.asset("assets/images/Uber1.png"),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          FittedBox(
+                                            child: Text(
+                                              "Polo",
+                                              style: GoogleFonts.montserrat(
+                                                fontWeight: FontWeight.w600,
+                                                height: 1.5,
+                                              ),
+                                            ),
+                                          )
+                                        ]),
+                                  ),
+                                ),
+                              );
+                            }),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

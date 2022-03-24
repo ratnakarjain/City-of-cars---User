@@ -13,6 +13,8 @@ class SelectBrand extends StatefulWidget {
 }
 
 class _SelectBrandState extends State<SelectBrand> {
+  ScrollController _controller1 = ScrollController();
+  ScrollController _controller2 = ScrollController();
   var h;
   var w;
   List carLogoList = [
@@ -138,43 +140,63 @@ class _SelectBrandState extends State<SelectBrand> {
           children: [
             isSelected
                 ? Padding(
-                  padding: EdgeInsets.all(h * 0.03),
-                  child: RRectCard(
-                      h: h * 0.15,
-                      w: h * 0.15,
-                      istext: false,
-                      borderRadius: 30,
-                      color: kLightOrangeBgColor,
-                      image: "assets/images/${carLogoList[item!]}"),
-                )
-                : Expanded(
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: w * 0.05, vertical: 50),
-                      child: GridView.count(
-                        crossAxisCount: 3,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                        children: List.generate(carLogoList.length, (index) {
-                          return GestureDetector(
-                            onTap: () {
-                              bottumSheet();
-                              item = index;
-                              isSelected = true;
-                              setState(() {});
-                            },
-                            child: RRectCard(
-                                h: h * 0.18,
-                                w: h * 0.18,
-                                istext: false,
-                                borderRadius: 30,
-                                color: kLightOrangeBgColor,
-                                image: "assets/images/${carLogoList[index]}"),
-                          );
-                        }),
+                    padding: EdgeInsets.all(h * 0.03),
+                    child: RRectCard(
+                       h: h * 0.15,
+                        w: h * 0.15,
+                        borderRadius: 30,
+                        color: kbluecolor,
+                      widget: RRectCard(
+                        h: h * 0.15,
+                        w: h * 0.15,
+                        borderRadius: 30,
+                        color: kLightOrangeBgColor,
+                        widget: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset("assets/images/${carLogoList[item!]}"),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                            ]),
                       ),
-                    ),
+                    ))
+                : Container(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: w * 0.05, vertical: 50),
+                  child: GridView.count(
+                    shrinkWrap: true,
+                    controller: _controller1,
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    children: List.generate(carLogoList.length, (index) {
+                      return GestureDetector(
+                        onTap: () {
+                          bottumSheet();
+                          item = index;
+                          isSelected = true;
+                          setState(() {});
+                        },
+                        child:
+                         RRectCard(
+                  h: h * 0.18,
+                  w: h * 0.18,
+                  borderRadius: 30,
+                  color: kLightOrangeBgColor,
+                  widget: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset("assets/images/${carLogoList[index]}"),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                      ]),
+                ));
+                
+                    }),
                   ),
+                ),
           ],
         ),
       ),
@@ -223,37 +245,50 @@ class _SelectBrandState extends State<SelectBrand> {
                     color: kblackcolor.withOpacity(0.6),
                   ),
                 ),
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: w * 0.05, vertical: 10),
-                    child: GridView.count(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                      children: List.generate(cars.length, (index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const SelectFuel(),
-                                ));
-                          },
-                          child: RRectCard(
-                              h: h * 0.18,
-                              w: h * 0.18,
-                              istext: true,
-                              borderRadius: 30,
-                              text: cars[index]["name"],
-                              textStyle: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.w600,
-                                height: 1.5,
-                              ),
-                              image: "assets/images/${cars[index]["image"]}"),
-                        );
-                      }),
-                    ),
+                Container(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: w * 0.05, vertical: 10),
+                  child: GridView.count(
+                    shrinkWrap: true,
+                    controller: _controller2,
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    children: List.generate(cars.length, (index) {
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const SelectFuel(),
+                              ));
+                        },
+                        child: 
+                         RRectCard(
+                            h: h * 0.18,
+                            w: h * 0.18,
+                            borderRadius: 30,
+                            widget: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset("assets/images/${cars[index]["image"]}"),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  FittedBox(
+                                    child: Text(
+                                      cars[index]["name"],
+                                      style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.w600,
+                                        height: 1.5,
+                                      ),
+                                    ),
+                                  )
+                                ]),
+                          ),
+                        
+                      );
+                    }),
                   ),
                 ),
               ],
