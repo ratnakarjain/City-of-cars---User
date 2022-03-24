@@ -1,8 +1,9 @@
-import 'package:cityofcars/constants.dart';
-import 'package:cityofcars/serviceMain.dart';
-import 'package:cityofcars/widgets.dart';
+import 'package:cityofcars/Utils/constants.dart';
+import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'serviceMain.dart';
 
 class SelectFuel extends StatefulWidget {
   const SelectFuel({Key? key}) : super(key: key);

@@ -1,11 +1,7 @@
-import 'package:cityofcars/constants.dart';
-import 'package:cityofcars/selectCity.dart';
-import 'package:cityofcars/serviceMain.dart';
-import 'package:cityofcars/selectBrand.dart';
-import 'package:cityofcars/selectFuel.dart';
+
 import 'package:flutter/material.dart';
 
-import 'myhomepage.dart';
+import 'Screens/myhomepage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,6 +9,8 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  get korangecolor => null;
 
   // This widget is the root of your application.
   @override

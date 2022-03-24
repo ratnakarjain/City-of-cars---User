@@ -1,6 +1,6 @@
-import 'package:cityofcars/button.dart';
-import 'package:cityofcars/constants.dart';
-import 'package:cityofcars/loginSignup.dart';
+import 'package:cityofcars/Utils/Buttons/button.dart';
+import 'package:cityofcars/Utils/constants.dart';
+import 'package:cityofcars/Screens/loginSignup.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

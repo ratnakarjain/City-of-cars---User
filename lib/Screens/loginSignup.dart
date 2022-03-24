@@ -1,8 +1,9 @@
-import 'package:cityofcars/button.dart';
-import 'package:cityofcars/constants.dart';
-import 'package:cityofcars/verification.dart';
+import 'package:cityofcars/Utils/Buttons/button.dart';
+import 'package:cityofcars/Utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'verification.dart';
 
 class LoginSignUp extends StatefulWidget {
   bool isSignIn;

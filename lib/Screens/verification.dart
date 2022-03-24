@@ -1,10 +1,11 @@
-import 'package:cityofcars/constants.dart';
-import 'package:cityofcars/selectCity.dart';
+import 'package:cityofcars/Screens/selectCity.dart';
+import 'package:cityofcars/Utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 
-import 'button.dart';
+import '../Utils/Buttons/button.dart';
+
 
 class Verfication extends StatefulWidget {
   const Verfication({Key? key}) : super(key: key);

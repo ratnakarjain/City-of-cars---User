@@ -1,8 +1,9 @@
-import 'package:cityofcars/constants.dart';
-import 'package:cityofcars/selectFuel.dart';
-import 'package:cityofcars/widgets.dart';
+import 'package:cityofcars/Utils/constants.dart';
+import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'selectFuel.dart';
 
 class SelectBrand extends StatefulWidget {
   const SelectBrand({Key? key}) : super(key: key);
@@ -136,19 +137,16 @@ class _SelectBrandState extends State<SelectBrand> {
         child: Column(
           children: [
             isSelected
-                ? Hero(
-                    tag: "tag",
-                    child: Padding(
-                      padding: EdgeInsets.all(h * 0.03),
-                      child: RRectCard(
-                          h: h * 0.15,
-                          w: h * 0.15,
-                          istext: false,
-                          borderRadius: 30,
-                          color: kLightOrangeBgColor,
-                          image: "assets/images/${carLogoList[item!]}"),
-                    ),
-                  )
+                ? Padding(
+                  padding: EdgeInsets.all(h * 0.03),
+                  child: RRectCard(
+                      h: h * 0.15,
+                      w: h * 0.15,
+                      istext: false,
+                      borderRadius: 30,
+                      color: kLightOrangeBgColor,
+                      image: "assets/images/${carLogoList[item!]}"),
+                )
                 : Expanded(
                     child: Container(
                       padding: EdgeInsets.symmetric(
@@ -165,16 +163,13 @@ class _SelectBrandState extends State<SelectBrand> {
                               isSelected = true;
                               setState(() {});
                             },
-                            child: Hero(
-                              tag: "tag",
-                              child: RRectCard(
-                                  h: h * 0.18,
-                                  w: h * 0.18,
-                                  istext: false,
-                                  borderRadius: 30,
-                                  color: kLightOrangeBgColor,
-                                  image: "assets/images/${carLogoList[index]}"),
-                            ),
+                            child: RRectCard(
+                                h: h * 0.18,
+                                w: h * 0.18,
+                                istext: false,
+                                borderRadius: 30,
+                                color: kLightOrangeBgColor,
+                                image: "assets/images/${carLogoList[index]}"),
                           );
                         }),
                       ),
