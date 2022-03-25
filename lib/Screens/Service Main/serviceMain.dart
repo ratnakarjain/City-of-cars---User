@@ -1,3 +1,4 @@
+import 'package:cityofcars/Screens/Service%20Main/insidCategory.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:flutter/gestures.dart';
@@ -237,29 +238,34 @@ class _ServiceMainState extends State<ServiceMain> {
                         mainAxisSpacing: 10,
                         children:
                             List.generate(carServices.length, (index) {
-                          return RRectCard(
-                            h: h * 0.18,
-                            w: h * 0.18,
-                            borderRadius: 10,
-                            widget: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                      "assets/images/${carServices[index]["image"]}"),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  FittedBox(
-                                    child: Text(
-                                      carServices[index]["services"],
-                                      style: GoogleFonts.montserrat(
-                                          fontWeight: FontWeight.w500,
-                                          height: 3,
-                                          fontSize: 11),
+                          return GestureDetector(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>InsideCategory()));
+                            },
+                            child: RRectCard(
+                              h: h * 0.18,
+                              w: h * 0.18,
+                              borderRadius: 10,
+                              widget: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                        "assets/images/${carServices[index]["image"]}"),
+                                    const SizedBox(
+                                      height: 5,
                                     ),
-                                  )
-                                ]),
+                                    FittedBox(
+                                      child: Text(
+                                        carServices[index]["services"],
+                                        style: GoogleFonts.montserrat(
+                                            fontWeight: FontWeight.w500,
+                                            height: 3,
+                                            fontSize: 11),
+                                      ),
+                                    )
+                                  ]),
+                            ),
                           );
                         }),
                       ),

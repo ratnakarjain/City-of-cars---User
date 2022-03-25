@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ThemeData().colorScheme.copyWith(
               primary: korangecolor,
             ),),
-      home: const InsideCategory(
+      home: const MyHomePage(
         
       ),
     );
