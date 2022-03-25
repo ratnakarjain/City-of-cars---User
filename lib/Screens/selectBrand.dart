@@ -95,17 +95,12 @@ class _SelectBrandState extends State<SelectBrand> {
                   color: kTextInputPlaceholderColor,
                 )),
               ),
-              isSelected
-                  ? Container()
-                  : Text(
-                      "Skip",
-                      style: GoogleFonts.montserrat(
-                          textStyle: TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w700,
-                        color: kTextInputPlaceholderColor.withOpacity(0.5),
-                      )),
-                    ),
+              Text(
+              "Skip & Explore".toUpperCase(),
+              textScaleFactor: 0.6,
+              style: GoogleFonts.montserrat(
+                  fontWeight: FontWeight.w600, color: kbluecolor),
+            ),
             ],
           ),
         ),
@@ -151,14 +146,7 @@ class _SelectBrandState extends State<SelectBrand> {
                         w: h * 0.15,
                         borderRadius: 30,
                         color: kLightOrangeBgColor,
-                        widget: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset("assets/images/${carLogoList[item!]}"),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                            ]),
+                        widget: Image.asset("assets/images/${carLogoList[item!]}"),
                       ),
                     ))
                 : Container(

@@ -1,6 +1,7 @@
 
+import 'package:cityofcars/Screens/Service%20Main/insidCategory.dart';
 import 'package:cityofcars/Screens/bottomnavBar.dart';
-import 'package:cityofcars/Screens/serviceMain.dart';
+import 'package:cityofcars/Screens/Service%20Main/serviceMain.dart';
 import 'package:flutter/material.dart';
 
 import 'Screens/myhomepage.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ThemeData().colorScheme.copyWith(
               primary: korangecolor,
             ),),
-      home: const MyHomePage(
+      home: const InsideCategory(
         
       ),
     );

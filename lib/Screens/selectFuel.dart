@@ -1,9 +1,10 @@
+import 'package:cityofcars/Screens/glance.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'serviceMain.dart';
+import 'Service Main/serviceMain.dart';
 
 class SelectFuel extends StatefulWidget {
   const SelectFuel({Key? key}) : super(key: key);
@@ -13,6 +14,7 @@ class SelectFuel extends StatefulWidget {
 }
 
 class _SelectFuelState extends State<SelectFuel> {
+  ScrollController _controller = ScrollController();
   var h;
   var w;
   List fueltype = [
@@ -26,51 +28,79 @@ class _SelectFuelState extends State<SelectFuel> {
     w = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Select Fuel",
-          textScaleFactor: 1.1,
-          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600),
-        ),
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(h * 0.08),
-          child: Container(),
-        ),
-        foregroundColor: kblackcolor,
-        backgroundColor: kTransparent,
         elevation: 0,
-      ),
-      body: Container(
-        
-        child: Column(
+        backgroundColor: kTransparent,
+        foregroundColor: kTextInputPlaceholderColor,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              height: h,
-              width: w,
-              decoration: BoxDecoration(
-                  color: kwhitecolor,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(h * 0.05),
-                    topRight: Radius.circular(h * 0.05),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                        offset: Offset(0, -5),
-                        blurRadius: 5,
-                        spreadRadius: 3,
-                        color: kblackcolor.withOpacity(0.1))
-                  ]),
-              child: Column(
-                children: [
-                  Text(
-                    "Select Cars",
-                    textScaleFactor: 1.1,
-                    style: GoogleFonts.montserrat(
-                        height: 2, fontWeight: FontWeight.w600),
-                  ),
-                  SizedBox(
-                    height: h * 0.03,
-                  ),
-                  RRectCard(
+            Text(
+              "Select Fuel",
+              textScaleFactor: 1.1,
+              style: GoogleFonts.montserrat(fontWeight: FontWeight.w600),
+            ),
+            Text(
+              "Skip & Explore".toUpperCase(),
+              textScaleFactor: 0.6,
+              style: GoogleFonts.montserrat(
+                  fontWeight: FontWeight.w600, color: kbluecolor),
+            ),
+          ],
+        ),
+      ),
+      body: Column(
+        children: [
+          SizedBox(
+            height: h * 0.04,
+          ),
+          RRectCard(
+            h: h * 0.15,
+            w: h * 0.15,
+            borderRadius: 30,
+            color: kbluecolor,
+            widget: RRectCard(
+              h: h * 0.15,
+              w: h * 0.15,
+              borderRadius: 30,
+              color: kLightOrangeBgColor,
+              widget: Image.asset("assets/images/Kia_logo.png"),
+            ),
+          ),
+          SizedBox(
+            height: h * 0.04,
+          ),
+          Container(
+            width: w,
+            decoration: BoxDecoration(
+                color: kwhitecolor,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(h * 0.05),
+                  topRight: Radius.circular(h * 0.05),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset(0, -5),
+                      blurRadius: 5,
+                      spreadRadius: 3,
+                      color: kblackcolor.withOpacity(0.1))
+                ]),
+            child: Column(
+              children: [
+                Text(
+                  "Select Cars",
+                  textScaleFactor: 1.1,
+                  style: GoogleFonts.montserrat(
+                      height: 2, fontWeight: FontWeight.w600),
+                ),
+                SizedBox(
+                  height: h * 0.03,
+                ),
+                RRectCard(
+                  borderRadius: 30,
+                  h: h * 0.12,
+                  w: h * 0.12,
+                  color: korangecolor,
+                  widget: RRectCard(
                     borderRadius: 30,
                     h: h * 0.12,
                     w: h * 0.12,
@@ -92,78 +122,79 @@ class _SelectFuelState extends State<SelectFuel> {
                           )
                         ]),
                   ),
-                  SizedBox(
-                    height: h * 0.04,
-                  ),
-                  Container(
-                    width: w,
-                    height: h * 0.28,
-                    decoration: BoxDecoration(
-                        color: kwhitecolor,
-                        borderRadius: BorderRadius.circular(h * 0.05),
-                        boxShadow: [
-                          BoxShadow(
-                              blurRadius: 8,
-                              spreadRadius: 5,
-                              color: kblackcolor.withOpacity(0.1))
-                        ]),
-                    child: Column(
-                      children: [
-                        Text(
-                          "Fuel",
-                          textScaleFactor: 1.1,
-                          style: GoogleFonts.montserrat(
-                              height: 2, fontWeight: FontWeight.w600),
-                        ),
-                        Expanded(
-                          child: GridView.count(
-                            scrollDirection: Axis.vertical,
-                            crossAxisCount: 3,
-                            children: List.generate(fueltype.length, (index) {
-                              return Center(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => const ServiceMain(),
-                                        ));
-                                  },
-                                  child: RRectCard(
-                                    h: h * 0.12,
-                                    w: h * 0.12,
-                                    borderRadius: 30,
-                                    widget: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Image.asset("assets/images/Uber1.png"),
-                                          const SizedBox(
-                                            height: 5,
+                ),
+                SizedBox(
+                  height: h * 0.04,
+                ),
+                Container(
+                  width: w,
+                  height: h * 0.28,
+                  decoration: BoxDecoration(
+                      color: kwhitecolor,
+                      borderRadius: BorderRadius.circular(h * 0.05),
+                      boxShadow: [
+                        BoxShadow(
+                            blurRadius: 8,
+                            spreadRadius: 5,
+                            color: kblackcolor.withOpacity(0.1))
+                      ]),
+                  child: Column(
+                    children: [
+                      Text(
+                        "Fuel",
+                        textScaleFactor: 1.1,
+                        style: GoogleFonts.montserrat(
+                            height: 2, fontWeight: FontWeight.w600),
+                      ),
+                      GridView.count(
+                        shrinkWrap: true,
+                        controller: _controller,
+                        scrollDirection: Axis.vertical,
+                        crossAxisCount: 3,
+                        children: List.generate(fueltype.length, (index) {
+                          return Center(
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>  Glance(),
+                                    ));
+                              },
+                              child: RRectCard(
+                                h: h * 0.12,
+                                w: h * 0.12,
+                                borderRadius: 30,
+                                widget: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                          "assets/images/${fueltype[index]["image"]}"),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      FittedBox(
+                                        child: Text(
+                                          "${fueltype[index]["type"]}",
+                                          style: GoogleFonts.montserrat(
+                                            fontWeight: FontWeight.w600,
+                                            height: 1.5,
                                           ),
-                                          FittedBox(
-                                            child: Text(
-                                              "Polo",
-                                              style: GoogleFonts.montserrat(
-                                                fontWeight: FontWeight.w600,
-                                                height: 1.5,
-                                              ),
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                ),
-                              );
-                            }),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                                        ),
+                                      )
+                                    ]),
+                              ),
+                            ),
+                          );
+                        }),
+                      ),
+                    ],
+                  ),
+                )
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
