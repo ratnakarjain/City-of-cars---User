@@ -1,6 +1,5 @@
 
 import 'package:cityofcars/Screens/Service%20Main/insidCategory.dart';
-import 'package:cityofcars/Screens/Service%20Main/slot.dart';
 import 'package:cityofcars/Screens/bottomnavBar.dart';
 import 'package:cityofcars/Screens/Service%20Main/serviceMain.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ThemeData().colorScheme.copyWith(
               primary: korangecolor,
             ),),
-      home: const Slot(
+      home: const MyHomePage(
         
       ),
     );
