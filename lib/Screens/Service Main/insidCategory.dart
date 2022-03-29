@@ -171,14 +171,14 @@ class _InsideCategoryState extends State<InsideCategory> with SingleTickerProvid
                     hintText: "Search",
                     hintStyle: GoogleFonts.montserrat(
                         fontWeight: FontWeight.w600, color: kGreenColor),
-                    suffixIcon: Icon(
+                    suffixIcon: const Icon(
                       Icons.search,
                     ),
                     focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: korangecolor, width: 1.0),
+                        borderSide: const BorderSide(color: korangecolor, width: 1.0),
                         borderRadius: BorderRadius.circular(h * 0.05)),
                     border: OutlineInputBorder(
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                             color: kTextInputPlaceholderColor, width: 1.0),
                         borderRadius: BorderRadius.circular(h * 0.05))),
               ),

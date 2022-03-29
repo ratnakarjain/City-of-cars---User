@@ -1,4 +1,5 @@
 import 'package:cityofcars/Screens/Service%20Main/insidCategory.dart';
+import 'package:cityofcars/Screens/Service%20Main/offers.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:flutter/gestures.dart';
@@ -415,46 +416,51 @@ class _ServiceMainState extends State<ServiceMain> {
                               horizontal: h * 0.023, vertical: h * 0.01),
                           itemCount: offers.length,
                           itemBuilder: (context, index) {
-                            return RRectCard(
-                              h: h * 0.1,
-                              w: w * 0.28,
-                              borderRadius: 15,
-                              widget: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                        "assets/images/${offers[index]["image"]}"),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    FittedBox(
-                                      child: Text(
-                                        offers[index]["offer"],
-                                        style: GoogleFonts.montserrat(
-                                          fontWeight: FontWeight.w600,
-                                          height: 2,
-                                        ),
+                            return InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>const Offers()));
+                              },
+                              child: RRectCard(
+                                h: h * 0.1,
+                                w: w * 0.28,
+                                borderRadius: 15,
+                                widget: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                          "assets/images/${offers[index]["image"]}"),
+                                      const SizedBox(
+                                        height: 5,
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: h * 0.01),
-                                      child: FittedBox(
+                                      FittedBox(
                                         child: Text(
-                                          offers[index]["card"],
-                                          textScaleFactor: 0.6,
+                                          offers[index]["offer"],
                                           style: GoogleFonts.montserrat(
                                             fontWeight: FontWeight.w600,
-                                            color:
-                                                kTextInputPlaceholderColor
-                                                    .withOpacity(0.6),
                                             height: 2,
                                           ),
                                         ),
                                       ),
-                                    )
-                                  ]),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: h * 0.01),
+                                        child: FittedBox(
+                                          child: Text(
+                                            offers[index]["card"],
+                                            textScaleFactor: 0.6,
+                                            style: GoogleFonts.montserrat(
+                                              fontWeight: FontWeight.w600,
+                                              color:
+                                                  kTextInputPlaceholderColor
+                                                      .withOpacity(0.6),
+                                              height: 2,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ]),
+                              ),
                             );
                           },
                         ),

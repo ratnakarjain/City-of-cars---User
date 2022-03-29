@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../Utils/Shapes/widgets.dart';
 import '../../../Utils/constants.dart';
+import '../productDetail.dart';
 
 class CommonServices extends StatefulWidget {
   const CommonServices({Key? key}) : super(key: key);
@@ -280,7 +281,7 @@ class Plans extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Image.asset("assets/images/EngineOil.png"),
+                        Image.asset("assets/images/EngineOil.png",height: h*0.03,),
                         Text(
                           "Engine Oil",
                           textScaleFactor: 0.7,
@@ -297,7 +298,7 @@ class Plans extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Image.asset("assets/images/oifilter.png"),
+                        Image.asset("assets/images/oifilter.png",height: h*0.03,),
                         Text(
                           "Oil Filter",
                           textScaleFactor: 0.7,
@@ -313,7 +314,7 @@ class Plans extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: h * 0.005),
                     child: Column(
                       children: [
-                        Image.asset("assets/images/wind.png"),
+                        Image.asset("assets/images/wind.png",height: h*0.03,),
                         Text(
                           "Air Filter",
                           textScaleFactor: 0.7,
@@ -342,6 +343,9 @@ class Plans extends StatelessWidget {
               ),
             ),
             RRecctButton2(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetails(),));
+              },
               h: h * 0.05,
               w: w * 0.3,
               radius: h * 0.025,

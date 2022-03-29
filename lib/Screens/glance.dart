@@ -23,7 +23,7 @@ class _GlanceState extends State<Glance> {
     // TODO: implement initState
     super.initState();
     Timer(
-      Duration(seconds: 5),
+      Duration(seconds: 2),
       (){
          Navigator.pushAndRemoveUntil<dynamic>(
         context,

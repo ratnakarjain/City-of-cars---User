@@ -63,7 +63,7 @@ class RRecctButton2 extends StatelessWidget {
         height: h,
         width: w,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(h! / 2), color: buttonColor),
+            borderRadius: BorderRadius.circular(radius!), color: buttonColor),
         child:widget
      
       ),

@@ -5,8 +5,8 @@ class RRectCard extends StatelessWidget {
   final double w;
   double borderRadius;
   Color? color;
-        Widget widget;
-
+  Widget widget;
+  Color? shadowColor;
 
   RRectCard(
       {Key? key,
@@ -14,6 +14,7 @@ class RRectCard extends StatelessWidget {
       required this.w,
       required this.widget,
       required this.borderRadius,
+      this.shadowColor,
       this.color})
       : super(key: key);
 
@@ -21,15 +22,11 @@ class RRectCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: color,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius)),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(borderRadius)),
       elevation: 8,
-      shadowColor: Colors.grey.withOpacity(0.2),
-      child: Container(
-        height: h,
-        width: w,
-        child: 
-        widget
-      ),
+      shadowColor: shadowColor ?? Colors.grey.withOpacity(0.2),
+      child: Container(height: h, width: w, child: widget),
     );
   }
 }
@@ -39,7 +36,13 @@ class Label extends StatelessWidget {
   TextStyle textStyle;
   Color color;
   EdgeInsetsGeometry padding;
-  Label({ Key? key , required this.text, required this.textStyle, required this.padding, required this.color}) : super(key: key);
+  Label(
+      {Key? key,
+      required this.text,
+      required this.textStyle,
+      required this.padding,
+      required this.color})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
