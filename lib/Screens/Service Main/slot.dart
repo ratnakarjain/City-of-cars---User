@@ -83,7 +83,7 @@ class _SlotState extends State<Slot> {
                           decoration: InputDecoration(
                               hintText: "Enter pick-up location",
                               hintStyle: GoogleFonts.montserrat(
-                                fontSize: 13
+                                fontSize: 13 
                               ),
                               suffixIcon: const Icon(Icons.search),
                               fillColor: korangecolor,
