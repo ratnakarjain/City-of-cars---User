@@ -1,9 +1,16 @@
 import 'dart:ui';
 
+import 'package:cityofcars/Screens/Service%20Main/payment.dart';
+import 'package:cityofcars/Screens/Service%20Main/selectLocation.dart';
+import 'package:cityofcars/Utils/Buttons/button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../Utils/constants.dart';
+
+var h;
+var w;
 
 class Slot extends StatefulWidget {
   const Slot({Key? key}) : super(key: key);
@@ -13,9 +20,8 @@ class Slot extends StatefulWidget {
 }
 
 class _SlotState extends State<Slot> {
-  var h;
-  var w;
   ScrollController _controller = ScrollController();
+  bool isTime = false;
 
   @override
   Widget build(BuildContext context) {
@@ -34,12 +40,16 @@ class _SlotState extends State<Slot> {
           ),
           bottom: PreferredSize(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: w * 0.06),
+                padding: EdgeInsets.symmetric(
+                    horizontal: w * 0.06, vertical: h * 0.005),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          isTime = false;
+                          setState(() {});
+                        },
                         child: Text(
                           "Choose Date",
                           style: GoogleFonts.montserrat(
@@ -47,7 +57,10 @@ class _SlotState extends State<Slot> {
                         ),
                       ),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          isTime = true;
+                          setState(() {});
+                        },
                         child: Text(
                           "Choose Time Slot",
                           style: GoogleFonts.montserrat(
@@ -62,7 +75,11 @@ class _SlotState extends State<Slot> {
           controller: _controller,
           child: Column(
             children: [
-              Calendar(),
+              Container(
+                height: h * 0.4,
+                width: w,
+                child: isTime ? Center(child: TimeSlot()) : Calendar(),
+              ),
               Container(
                 padding: EdgeInsets.symmetric(
                     horizontal: w * 0.06, vertical: h * 0.04),
@@ -75,29 +92,79 @@ class _SlotState extends State<Slot> {
                         style:
                             GoogleFonts.montserrat(fontWeight: FontWeight.w700),
                       ),
-                      Container(
-                        height: h * 0.06,
-                        margin: EdgeInsets.only(top: h * 0.02, bottom: 0.01),
-                        child: TextFormField(
-                          cursorColor: korangecolor,
-                          decoration: InputDecoration(
-                              hintText: "Enter pick-up location",
-                              hintStyle: GoogleFonts.montserrat(
-                                fontSize: 13 
-                              ),
-                              suffixIcon: const Icon(Icons.search),
-                              fillColor: korangecolor,
-                              focusColor: korangecolor,
-                              suffixIconColor: korangecolor,
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                      color: korangecolor, width: 1.0),
-                                  borderRadius:
-                                      BorderRadius.circular(h * 0.02)),
-                              border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(h * 0.02))),
-                        ),
+                      // Container(
+                      //   height: h * 0.06,
+                      //   margin: EdgeInsets.only(top: h * 0.02, bottom: 0.01),
+                      //   child: TextFormField(
+                      //     cursorColor: korangecolor,
+                      //     decoration: InputDecoration(
+                      //         hintText: "Enter pick-up location",
+                      //         hintStyle: GoogleFonts.montserrat(fontSize: 13),
+                      //         suffixIcon: const Icon(Icons.search),
+                      //         fillColor: korangecolor,
+                      //         focusColor: korangecolor,
+                      //         suffixIconColor: korangecolor,
+                      //         focusedBorder: OutlineInputBorder(
+                      //             borderSide: const BorderSide(
+                      //                 color: korangecolor, width: 1.0),
+                      //             borderRadius:
+                      //                 BorderRadius.circular(h * 0.02)),
+                      //         border: OutlineInputBorder(
+                      //             borderRadius:
+                      //                 BorderRadius.circular(h * 0.02))),
+                      //   ),
+                      // ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SelectLocation(),
+                              ));
+                        },
+                        child: Container(
+                            height: h * 0.06,
+                            margin:
+                                EdgeInsets.only(top: h * 0.02, bottom: 0.01),
+                            padding: EdgeInsets.symmetric(horizontal: w * 0.01),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(h * 0.02),
+                                border: Border.all(
+                                    color: kTextInputPlaceholderColor
+                                        .withOpacity(0.5))),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Enter pick-up location",
+                                  style: GoogleFonts.montserrat(fontSize: 13),
+                                ),
+                                Icon(
+                                  Icons.search,
+                                  color: kTextInputPlaceholderColor
+                                      .withOpacity(0.7),
+                                )
+                              ],
+                            )
+                            // TextFormField(
+                            //   cursorColor: korangecolor,
+                            //   decoration: InputDecoration(
+                            //       hintText: "Enter pick-up location",
+                            //       hintStyle: GoogleFonts.montserrat(fontSize: 13),
+                            //       suffixIcon: const Icon(Icons.search),
+                            //       fillColor: korangecolor,
+                            //       focusColor: korangecolor,
+                            //       suffixIconColor: korangecolor,
+                            //       focusedBorder: OutlineInputBorder(
+                            //           borderSide: const BorderSide(
+                            //               color: korangecolor, width: 1.0),
+                            //           borderRadius:
+                            //               BorderRadius.circular(h * 0.02)),
+                            //       border: OutlineInputBorder(
+                            //           borderRadius:
+                            //               BorderRadius.circular(h * 0.02))),
+                            // ),
+                            ),
                       ),
                       SizedBox(
                         height: h * 0.02,
@@ -106,9 +173,7 @@ class _SlotState extends State<Slot> {
                         cursorColor: korangecolor,
                         decoration: InputDecoration(
                             hintText: "House No.. & Floor*",
-                            hintStyle: GoogleFonts.montserrat(
-                              fontSize: 13
-                            ),
+                            hintStyle: GoogleFonts.montserrat(fontSize: 13),
                             focusColor: korangecolor,
                             focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
@@ -120,9 +185,7 @@ class _SlotState extends State<Slot> {
                         cursorColor: korangecolor,
                         decoration: InputDecoration(
                             hintText: "Street*",
-                            hintStyle: GoogleFonts.montserrat(
-                              fontSize: 13
-                            ),
+                            hintStyle: GoogleFonts.montserrat(fontSize: 13),
                             focusColor: korangecolor,
                             focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
@@ -137,9 +200,8 @@ class _SlotState extends State<Slot> {
                               cursorColor: korangecolor,
                               decoration: InputDecoration(
                                   hintText: "State*",
-                                  hintStyle: GoogleFonts.montserrat(
-                                    fontSize: 13
-                                  ),
+                                  hintStyle:
+                                      GoogleFonts.montserrat(fontSize: 13),
                                   focusColor: korangecolor,
                                   focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
@@ -156,9 +218,8 @@ class _SlotState extends State<Slot> {
                               cursorColor: korangecolor,
                               decoration: InputDecoration(
                                   hintText: "Pin Code*",
-                                  hintStyle: GoogleFonts.montserrat(
-                                    fontSize: 13
-                                  ),
+                                  hintStyle:
+                                      GoogleFonts.montserrat(fontSize: 13),
                                   focusColor: korangecolor,
                                   focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
@@ -169,83 +230,112 @@ class _SlotState extends State<Slot> {
                           )
                         ],
                       ),
-                      SizedBox(height: h*0.02,),
-                      TextFormField(
-                        cursorColor: korangecolor,
-                        decoration: InputDecoration(
-                          hintText: "Name*",
-                          hintStyle: GoogleFonts.montserrat(
-                            fontSize: 13
-                          ),
-                          focusColor: korangecolor,
-                          focusedBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: korangecolor,
-                            ),
-                            
-                          )
-                          
-                        ),
+                      SizedBox(
+                        height: h * 0.02,
                       ),
                       TextFormField(
                         cursorColor: korangecolor,
                         decoration: InputDecoration(
-                          hintText: "Contact*",
-                          hintStyle: GoogleFonts.montserrat(
-                            fontSize: 13
-                          ),
-                          focusColor: korangecolor,
-                          focusedBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: korangecolor,
-                            ),
-                            
-                          )
-                          
-                        ),
+                            hintText: "Name*",
+                            hintStyle: GoogleFonts.montserrat(fontSize: 13),
+                            focusColor: korangecolor,
+                            focusedBorder: const UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: korangecolor,
+                              ),
+                            )),
                       ),
                       TextFormField(
                         cursorColor: korangecolor,
                         decoration: InputDecoration(
-                          hintText: "E-Mail",
-                          hintStyle: GoogleFonts.montserrat(
-                            fontSize: 13
-                          ),
-                          focusColor: korangecolor,
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: korangecolor,
-                            ),
-                            
-                          )
-                          
-                        ),
+                            hintText: "Contact*",
+                            hintStyle: GoogleFonts.montserrat(fontSize: 13),
+                            focusColor: korangecolor,
+                            focusedBorder: const UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: korangecolor,
+                              ),
+                            )),
                       ),
                       TextFormField(
                         cursorColor: korangecolor,
                         decoration: InputDecoration(
-                          hintText: "Car Number",
-                          hintStyle: GoogleFonts.montserrat(
-                            fontSize: 13
-                          ),
-                          focusColor: korangecolor,
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: korangecolor,
-                            ),
-                            
-                          )
-                          
-                        ),
+                            hintText: "E-Mail",
+                            hintStyle: GoogleFonts.montserrat(fontSize: 13),
+                            focusColor: korangecolor,
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: korangecolor,
+                              ),
+                            )),
+                      ),
+                      TextFormField(
+                        cursorColor: korangecolor,
+                        decoration: InputDecoration(
+                            hintText: "Car Number",
+                            hintStyle: GoogleFonts.montserrat(fontSize: 13),
+                            focusColor: korangecolor,
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: korangecolor,
+                              ),
+                            )),
+                      ),
+                      SizedBox(
+                        height: h * 0.03,
                       ),
                       Text(
                         "Special Remarks / Preferences",
                         style: GoogleFonts.montserrat(
-                          color: kTextInputPlaceholderColor
+                            color: kTextInputPlaceholderColor),
+                      ),
+                      Container(
+                        height: h * 0.1,
+                        width: w,
+                        margin: EdgeInsets.only(top: h * 0.015),
+                        decoration: BoxDecoration(
+                            color: kwhitecolor,
+                            borderRadius: BorderRadius.circular(h * 0.025),
+                            boxShadow: [
+                              // BoxShadow(
+                              //   blurRadius: 5,
+                              //   offset:
+                              // )
+                            ]),
+                        child: Card(
+                          elevation: 5,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(h * 0.015)),
+                          child: TextFormField(
+                            minLines: 1,
+                            maxLines: 5,
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "Optional",
+                                hintStyle: GoogleFonts.montserrat(fontSize: 13),
+                                contentPadding: EdgeInsets.all(h * 0.01)),
+                          ),
                         ),
+                      ),
+                      SizedBox(
+                        height: h * 0.02,
+                      ),
+                      RRecctButton(
+                        text: "continue".toUpperCase(),
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w700, color: kwhitecolor),
+                        h: h * 0.06,
+                        buttonColor: korangecolor,
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Payment(),
+                              ));
+                        },
                       )
                     ]),
-              )
+              ),
             ],
           ),
         ));
@@ -380,5 +470,155 @@ class _CalendarState extends State<Calendar> {
         _focusedDay = focusedDay;
       },
     );
+  }
+}
+
+class TimeSlot extends StatefulWidget {
+  const TimeSlot({Key? key}) : super(key: key);
+
+  @override
+  State<TimeSlot> createState() => _TimeSlotState();
+}
+
+class _TimeSlotState extends State<TimeSlot> {
+  ScrollController _controller = ScrollController();
+  List<bool> isSelected = [];
+  List data = [
+    {
+      "start hour": "09",
+      "start min": "00",
+      "end hour": "12",
+      "end min": "00",
+    },
+    {
+      "start hour": "12",
+      "start min": "00",
+      "end hour": "03",
+      "end min": "00",
+    },
+    {
+      "start hour": "03",
+      "start min": "00",
+      "end hour": "06",
+      "end min": "00",
+    }
+  ];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    change();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      shrinkWrap: true,
+      controller: _controller,
+      itemCount: data.length,
+      padding: EdgeInsets.symmetric(
+        horizontal: w * 0.2,
+      ),
+      itemBuilder: (context, index) {
+        return Container(
+            margin: EdgeInsets.symmetric(vertical: h * 0.03),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: isSelected[index] ? kDateCircleColor : kTransparent),
+            child: InkWell(
+              onTap: () {
+                change();
+                setState(() {
+                  isSelected[index] = !isSelected[index];
+                });
+              },
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      children: [
+                        CircleAvatar(
+                          backgroundColor:
+                              isSelected[index] ? kbluecolor : kDateCircleColor,
+                          foregroundColor: isSelected[index]
+                              ? kwhitecolor
+                              : kTextInputPlaceholderColor,
+                          child: FittedBox(
+                            child: Text(
+                              data[index]["start hour"],
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: w * 0.02,
+                        ),
+                        CircleAvatar(
+                          backgroundColor:
+                              isSelected[index] ? kbluecolor : kDateCircleColor,
+                          foregroundColor: isSelected[index]
+                              ? kwhitecolor
+                              : kTextInputPlaceholderColor,
+                          child: FittedBox(
+                              child: Text(
+                            data[index]["start min"],
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600),
+                          )),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      "-",
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 17,
+                          color: kTextInputPlaceholderColor),
+                    ),
+                    Row(
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: isSelected[index]
+                              ? korangecolor
+                              : kDateCircleColor,
+                          foregroundColor: isSelected[index]
+                              ? kwhitecolor
+                              : kTextInputPlaceholderColor,
+                          child: FittedBox(
+                              child: Text(
+                            data[index]["end hour"],
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600),
+                          )),
+                        ),
+                        SizedBox(
+                          width: w * 0.02,
+                        ),
+                        CircleAvatar(
+                          backgroundColor: isSelected[index]
+                              ? korangecolor
+                              : kDateCircleColor,
+                          foregroundColor: isSelected[index]
+                              ? kwhitecolor
+                              : kTextInputPlaceholderColor,
+                          child: FittedBox(
+                              child: Text(
+                            data[index]["end min"],
+                            style: GoogleFonts.montserrat(
+                                fontSize: 15, fontWeight: FontWeight.w600),
+                          )),
+                        ),
+                      ],
+                    ),
+                  ]),
+            ));
+      },
+    );
+  }
+
+  change() {
+    isSelected = List.generate(data.length, (index) => false);
   }
 }
