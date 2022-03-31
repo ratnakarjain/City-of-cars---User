@@ -4,6 +4,8 @@ import 'package:cityofcars/Utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../tracking.dart';
+
 class OrderSuccessful extends StatefulWidget {
   const OrderSuccessful({Key? key}) : super(key: key);
 
@@ -363,6 +365,9 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
               buttonColor: kbluecolor,
             ),
             RRecctButton(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Tracking(),));
+              },
               text: "Track your order here",
               h: h * 0.06,
               w: w * 0.8,

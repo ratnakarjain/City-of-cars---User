@@ -75,11 +75,11 @@ class _SlotState extends State<Slot> {
           controller: _controller,
           child: Column(
             children: [
-              Container(
+             isTime ? Container(
                 height: h * 0.4,
                 width: w,
-                child: isTime ? Center(child: TimeSlot()) : Calendar(),
-              ),
+                child:  Center(child: TimeSlot()),
+              ) : Calendar(),
               Container(
                 padding: EdgeInsets.symmetric(
                     horizontal: w * 0.06, vertical: h * 0.04),
@@ -389,11 +389,11 @@ class _CalendarState extends State<Calendar> {
               fontWeight: FontWeight.bold,
               fontSize: 20,
               color: kTextInputPlaceholderColor)),
-
+    
       daysOfWeekStyle: DaysOfWeekStyle(
           weekdayStyle:
               GoogleFonts.montserrat(color: kTextInputPlaceholderColor)),
-
+    
       calendarStyle: CalendarStyle(
         withinRangeDecoration: BoxDecoration(
             color: _rangeEnd == null ? kDateCircleColor : kTransparent),

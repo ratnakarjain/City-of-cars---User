@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 
 class RRectCard extends StatelessWidget {
-  final double h;
-  final double w;
+   double? h;
+   double? w;
   double borderRadius;
   Color? color;
   Widget widget;
   Color? shadowColor;
+  EdgeInsetsGeometry? padding;
 
   RRectCard(
       {Key? key,
-      required this.h,
-      required this.w,
+       this.h,
+       this.w,
       required this.widget,
       required this.borderRadius,
+      this.padding,
       this.shadowColor,
       this.color})
       : super(key: key);
@@ -26,7 +28,7 @@ class RRectCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(borderRadius)),
       elevation: 8,
       shadowColor: shadowColor ?? Colors.grey.withOpacity(0.2),
-      child: Container(height: h, width: w, child: widget),
+      child: Container( padding: padding , height: h, width: w, child: widget),
     );
   }
 }

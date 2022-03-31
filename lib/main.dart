@@ -2,6 +2,9 @@
 import 'package:cityofcars/Screens/Service%20Main/insidCategory.dart';
 import 'package:cityofcars/Screens/bottomnavBar.dart';
 import 'package:cityofcars/Screens/Service%20Main/serviceMain.dart';
+import 'package:cityofcars/Screens/jobCard.dart';
+import 'package:cityofcars/Screens/orderHistory.dart';
+import 'package:cityofcars/Screens/tracking.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

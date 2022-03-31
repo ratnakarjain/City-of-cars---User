@@ -11,8 +11,8 @@ const kwhitecolor = Color(0XFFFFFFFF);
 
 const kSinginTextColor = Color(0XFF5C6E98);
 const kLightOrangeBgColor = Color(0XFFFAF7F7);
-const kShadowColor = Color(0XFF00001F);
-
+// const kShadowColor = Color(0XFF00001F);
+const kshadowColor = Color(0xff000029);
 const kTextInputPlaceholderColor = Color(0XFF241332);
 const kCursorColor = Color(0XFFD47FA6);
 const kTransparent = Colors.transparent;
@@ -24,3 +24,5 @@ const kDateCircleColor = Color(0xFFF0E1E1);
 const kStartDateColor = Color(0xFF4D3E56);
 const kStartDatrCicleColor = Color(0xFFF1E4E4);
 const kAddressTextColor = Color(0xFFDDDDDD);
+const kbg2 = Color(0xfff6f1f1);
+const kdarkpurple = Color(0xFF5F4591);
