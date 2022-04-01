@@ -1,19 +1,19 @@
-
 import 'package:cityofcars/Screens/Service%20Main/insidCategory.dart';
 import 'package:cityofcars/Screens/bottomnavBar.dart';
 import 'package:cityofcars/Screens/Service%20Main/serviceMain.dart';
+import 'package:cityofcars/Screens/carHealth.dart';
 import 'package:cityofcars/Screens/jobCard.dart';
 import 'package:cityofcars/Screens/orderHistory.dart';
+import 'package:cityofcars/Screens/support.dart';
 import 'package:cityofcars/Screens/tracking.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:cityofcars/Screens/notification.dart';
 import 'Screens/myhomepage.dart';
 
-
 void main() {
-   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
@@ -34,10 +34,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData().copyWith(
         colorScheme: ThemeData().colorScheme.copyWith(
               primary: korangecolor,
-            ),),
-      home: const MyHomePage(
-        
+            ),
       ),
+      home: const Notifications(),
     );
   }
 }

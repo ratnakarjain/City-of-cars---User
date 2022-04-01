@@ -358,26 +358,27 @@ class _JobCardState extends State<JobCard> {
                     widget: GridView.count(
                       shrinkWrap: true,
                       controller: _controller3,
-                      scrollDirection: Axis.vertical,
+                      mainAxisSpacing: h*0.01,
+                      crossAxisSpacing: w*0.01,
+                      // scrollDirection: Axis.vertical,
                       crossAxisCount: 3,
+                       childAspectRatio: 1.6,
+                      physics: NeverScrollableScrollPhysics(),
                       // padding: EdgeInsets.all(10),
                       children: List.generate(availabel.length, (index) {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(vertical: h * 0.01),
-                          child: RRectCard(
-                            color: kLightOrangeBgColor,
-                            h: 10,
-                            borderRadius: h * 0.04,
-                            padding: EdgeInsets.all(h * 0.01),
-                            widget: Center(
-                              child: Text(
-                                availabel[index],
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.montserrat(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w700,
-                                  color: kTextInputPlaceholderColor,
-                                ),
+                        return RRectCard(
+                          color: kLightOrangeBgColor,
+                          h: 10,
+                          borderRadius: h * 0.03,
+                          padding: EdgeInsets.all(h * 0.01),
+                          widget: Center(
+                            child: Text(
+                              availabel[index],
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.montserrat(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700,
+                                color: kTextInputPlaceholderColor,
                               ),
                             ),
                           ),
@@ -404,28 +405,29 @@ class _JobCardState extends State<JobCard> {
                         horizontal: w * 0.05, vertical: h * 0.02),
                     widget: GridView.count(
                       shrinkWrap: true,
+                       childAspectRatio: 1.6,
                       controller: _controller3,
                       scrollDirection: Axis.vertical,
                       crossAxisCount: 3,
+                      crossAxisSpacing: w*0.01,
+                      mainAxisSpacing: h*0.01,
+
                       // padding: EdgeInsets.all(10),
                       children: List.generate(notAvailabel.length, (index) {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(vertical: h * 0.01),
-                          child: RRectCard(
-                            padding: EdgeInsets.all(h * 0.01),
-                            color: kredcolor,
-                            h: 10,
-                            borderRadius: h * 0.04,
-                            shadowColor: kTransparent,
-                            widget: Center(
-                              child: Text(
-                                notAvailabel[index],
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.montserrat(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w700,
-                                  color: kwhitecolor,
-                                ),
+                        return RRectCard(
+                          padding: EdgeInsets.all(h * 0.01),
+                          color: kredcolor,
+                          h: 10,
+                          borderRadius: h * 0.03,
+                          shadowColor: kTransparent,
+                          widget: Center(
+                            child: Text(
+                              notAvailabel[index],
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.montserrat(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700,
+                                color: kwhitecolor,
                               ),
                             ),
                           ),
@@ -451,29 +453,29 @@ class _JobCardState extends State<JobCard> {
                     padding: EdgeInsets.symmetric(
                         horizontal: w * 0.05, vertical: h * 0.02),
                     widget: GridView.count(
+                       childAspectRatio: 1.6,
+                      crossAxisSpacing: w*0.01,
+                      mainAxisSpacing: h*0.01,
                       shrinkWrap: true,
                       controller: _controller3,
                       scrollDirection: Axis.vertical,
                       crossAxisCount: 3,
                       // padding: EdgeInsets.all(10),
                       children: List.generate(missingParts.length, (index) {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(vertical: h * 0.01),
-                          child: RRectCard(
-                            padding: EdgeInsets.all(h * 0.01),
-                            color: kLightOrangeBgColor,
-                            h: 10,
-                            borderRadius: h * 0.04,
-                            widget: Center(
-                              child: Text(
-                                missingParts[index],
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.montserrat(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w700,
-                                  color: kTextInputPlaceholderColor
-                                      .withOpacity(0.63),
-                                ),
+                        return RRectCard(
+                          padding: EdgeInsets.all(h * 0.01),
+                          color: kLightOrangeBgColor,
+                          h: 10,
+                          borderRadius: h * 0.03,
+                          widget: Center(
+                            child: Text(
+                              missingParts[index],
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.montserrat(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700,
+                                color: kTextInputPlaceholderColor
+                                    .withOpacity(0.63),
                               ),
                             ),
                           ),
@@ -505,8 +507,8 @@ class _JobCardState extends State<JobCard> {
                           child: RRectCard(
                             padding: EdgeInsets.all(h * 0.01),
                             color: kLightOrangeBgColor,
-                            h: h * 0.2,
-                            borderRadius: h * 0.07,
+                            h: h * 0.15,
+                            borderRadius: h * 0.06,
                             widget: Center(
                               child: Text(
                                 "Continental GT (3) MRGF (1)",
@@ -524,87 +526,75 @@ class _JobCardState extends State<JobCard> {
                           flex: 3,
                           child: GridView.count(
                               shrinkWrap: true,
+                              
+                       childAspectRatio: 1.6,
+                      crossAxisSpacing: w*0.01,
+                      mainAxisSpacing: h*0.01,
                               controller: _controller3,
                               scrollDirection: Axis.vertical,
                               crossAxisCount: 2,
                               // padding: EdgeInsets.all(10),
                               children: [
-                                Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(vertical: h * 0.01),
-                                  child: RRectCard(
-                                    padding: EdgeInsets.all(h * 0.01),
-                                    color: korangecolor,
-                                    borderRadius: h * 0.035,
-                                    widget: Center(
-                                      child: Text(
-                                        "FRT Left",
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.montserrat(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w700,
-                                          color: kwhitecolor,
-                                        ),
+                                RRectCard(
+                                  padding: EdgeInsets.all(h * 0.01),
+                                  color: korangecolor,
+                                  borderRadius: h * 0.025,
+                                  widget: Center(
+                                    child: Text(
+                                      "FRT Left",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.montserrat(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w700,
+                                        color: kwhitecolor,
                                       ),
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(vertical: h * 0.01),
-                                  child: RRectCard(
-                                    padding: EdgeInsets.all(h * 0.01),
-                                    color: korangecolor,
-                                    borderRadius: h * 0.035,
-                                    widget: Center(
-                                      child: Text(
-                                        "FRT Right",
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.montserrat(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w700,
-                                          color: kwhitecolor,
-                                        ),
+                                RRectCard(
+                                  padding: EdgeInsets.all(h * 0.01),
+                                  color: korangecolor,
+                                  borderRadius: h * 0.025,
+                                  widget: Center(
+                                    child: Text(
+                                      "FRT Right",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.montserrat(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w700,
+                                        color: kwhitecolor,
                                       ),
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(vertical: h * 0.01),
-                                  child: RRectCard(
-                                    padding: EdgeInsets.all(h * 0.01),
-                                    color: kGreenColor,
-                                    borderRadius: h * 0.035,
-                                    widget: Center(
-                                      child: Text(
-                                        "RR Left",
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.montserrat(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w700,
-                                          color: kwhitecolor,
-                                        ),
+                                RRectCard(
+                                  padding: EdgeInsets.all(h * 0.01),
+                                  color: kGreenColor,
+                                  borderRadius: h * 0.025,
+                                  widget: Center(
+                                    child: Text(
+                                      "RR Left",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.montserrat(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w700,
+                                        color: kwhitecolor,
                                       ),
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(vertical: h * 0.01),
-                                  child: RRectCard(
-                                    padding: EdgeInsets.all(h * 0.01),
-                                    color: kredcolor,
-                                    borderRadius: h * 0.035,
-                                    widget: Center(
-                                      child: Text(
-                                        "RR Right",
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.montserrat(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w700,
-                                          color: kwhitecolor,
-                                        ),
+                                RRectCard(
+                                  padding: EdgeInsets.all(h * 0.01),
+                                  color: kredcolor,
+                                  borderRadius: h * 0.025,
+                                  widget: Center(
+                                    child: Text(
+                                      "RR Right",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.montserrat(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w700,
+                                        color: kwhitecolor,
                                       ),
                                     ),
                                   ),
