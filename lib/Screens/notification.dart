@@ -53,7 +53,7 @@ class _NotificationsState extends State<Notifications> {
           child: Stack(children:
                List.generate(item, (index) {
                 return Container(
-                  height: h*0.3,
+                  // height: h*0.3,
                   width: w,
                   margin: EdgeInsets.only(top: index == item - 1 ? 0 : (h * 0.05)),
                   padding: EdgeInsets.only(
