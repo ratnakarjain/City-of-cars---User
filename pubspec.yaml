@@ -38,6 +38,8 @@ dependencies:
   pinput: ^2.2.4
   table_calendar: ^3.0.5
   card_swiper: ^2.0.3
+  circular_bottom_navigation: ^2.0.0
+  carousel_slider: ^4.0.0
 
 dev_dependencies:
   flutter_test:

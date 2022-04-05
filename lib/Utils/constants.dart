@@ -31,3 +31,4 @@ const carhealthColor2 = Color(0xFF4F8DCB);
 const carhealthColor3 = Color(0xFF5F4591);
 const carhealthColor4 = Color(0xFF9599B3);
 const kgrey = Color(0xFF4B516B);
+const knewstextbrif = Color(0xff817889);

@@ -83,7 +83,7 @@ class _InsideCategoryState extends State<InsideCategory> with SingleTickerProvid
   void initState() {
     // TODO: implement initState
     super.initState();
-    _tabController = new TabController(length: bodyType.length, vsync: this);
+    _tabController =  TabController(length: bodyType.length, vsync: this);
 
     whichBodyType = List.generate(bodyType.length, (index) => false);
   }

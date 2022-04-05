@@ -2,9 +2,15 @@ import 'package:cityofcars/Screens/Service%20Main/insidCategory.dart';
 import 'package:cityofcars/Screens/bottomnavBar.dart';
 import 'package:cityofcars/Screens/Service%20Main/serviceMain.dart';
 import 'package:cityofcars/Screens/carHealth.dart';
+import 'package:cityofcars/Screens/editProfile.dart';
+import 'package:cityofcars/Screens/feedback.dart';
 import 'package:cityofcars/Screens/jobCard.dart';
+import 'package:cityofcars/Screens/messages.dart';
+import 'package:cityofcars/Screens/news.dart';
 import 'package:cityofcars/Screens/orderHistory.dart';
-import 'package:cityofcars/Screens/support.dart';
+import 'package:cityofcars/Screens/profile.dart';
+import 'package:cityofcars/Screens/sos.dart';
+import 'package:cityofcars/Screens/terms.dart';
 import 'package:cityofcars/Screens/tracking.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +42,7 @@ class MyApp extends StatelessWidget {
               primary: korangecolor,
             ),
       ),
-      home: const Notifications(),
+      home: const MyHomePage(),
     );
   }
 }
