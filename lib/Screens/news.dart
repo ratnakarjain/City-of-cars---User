@@ -42,7 +42,9 @@ class _NewsState extends State<News> {
       body: Container(
         height: h,
         width: w,
+        padding: EdgeInsets.only(bottom: h*0.07),
         child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Column(
               children: List.generate(4, (index) {
             return Container(

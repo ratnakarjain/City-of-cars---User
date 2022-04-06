@@ -51,7 +51,7 @@ class _CarHealthState extends State<CarHealth> {
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
-    int item =4;
+    int item =33;
     var currentColor ;
     int currentN;
     return Scaffold(

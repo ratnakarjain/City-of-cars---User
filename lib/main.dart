@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
               primary: korangecolor,
             ),
       ),
-      home: const MyHomePage(),
+      home: const OrderHistory(),
     );
   }
 }

@@ -187,33 +187,60 @@ class _ServiceMainState extends State<ServiceMain> {
           //     ],
           //   ),
           // ),
-         Padding(
-            padding: EdgeInsets.only(
-                left: w * 0.06, right: w * 0.06, top: 20),
+        //  Padding(
+        //     padding: EdgeInsets.only(
+        //         left: w * 0.06, right: w * 0.06, top: 20),
+        //     child: Material(
+        //       color: kwhitecolor,
+        //       elevation: 8,
+        //       shadowColor: kTextInputPlaceholderColor.withOpacity(0.3),
+        //       borderRadius:  BorderRadius.circular(h*0.05),
+        //       child: TextField(
+        //         decoration: InputDecoration(
+        //             hintText: "Search",
+        //             hintStyle:
+        //                 GoogleFonts.montserrat(
+        //                 fontWeight: FontWeight.w600,
+        //                 color: kGreenColor),
+        //             suffixIcon: Icon(
+        //               Icons.search,
+        //             ),
+        //             focusedBorder: OutlineInputBorder(
+        //                 borderSide:
+        //                     BorderSide(color: korangecolor, width: 1.0),
+        //                 borderRadius: BorderRadius.circular(h*0.05)),
+        //             border: OutlineInputBorder(
+        //                 borderSide: BorderSide(
+        //                     color: kTextInputPlaceholderColor,
+        //                     width: 1.0),
+        //                 borderRadius: BorderRadius.circular(h*0.05))),
+        //       ),
+        //     ),
+        //   ),
+        Container(
+            height: h*0.08,
+            padding: EdgeInsets.only(left: w * 0.06, right: w * 0.06, top: h*0.02),
             child: Material(
               color: kwhitecolor,
               elevation: 8,
               shadowColor: kTextInputPlaceholderColor.withOpacity(0.3),
-              borderRadius:  BorderRadius.circular(h*0.05),
+              borderRadius: BorderRadius.circular(h * 0.05),
               child: TextField(
+                
                 decoration: InputDecoration(
                     hintText: "Search",
-                    hintStyle:
-                        GoogleFonts.montserrat(
-                        fontWeight: FontWeight.w600,
-                        color: kGreenColor),
-                    suffixIcon: Icon(
+                    hintStyle: GoogleFonts.montserrat(
+                        fontWeight: FontWeight.w600, color: kGreenColor),
+                    suffixIcon: const Icon(
                       Icons.search,
                     ),
                     focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: korangecolor, width: 1.0),
-                        borderRadius: BorderRadius.circular(h*0.05)),
+                        borderSide: const BorderSide(color: korangecolor, width: 1.0),
+                        borderRadius: BorderRadius.circular(h * 0.05)),
                     border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: kTextInputPlaceholderColor,
-                            width: 1.0),
-                        borderRadius: BorderRadius.circular(h*0.05))),
+                        borderSide: const BorderSide(
+                            color: kTextInputPlaceholderColor, width: 1.0),
+                        borderRadius: BorderRadius.circular(h * 0.05))),
               ),
             ),
           ),
@@ -396,77 +423,77 @@ class _ServiceMainState extends State<ServiceMain> {
                           },
                         ),
                       ),
-                      Label(
-                        color: kbluecolor,
-                        text: "offers & discounts",
-                        textStyle: GoogleFonts.montserrat(
-                          textStyle: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: kwhitecolor),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 5),
-                      ),
-                      Container(
-                        height: h * 0.18,
-                        child: ListView.builder(
-                          physics: BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: h * 0.023, vertical: h * 0.01),
-                          itemCount: offers.length,
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>const Offers()));
-                              },
-                              child: RRectCard(
-                                h: h * 0.1,
-                                w: w * 0.28,
-                                borderRadius: 15,
-                                widget: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                          "assets/images/${offers[index]["image"]}"),
-                                      const SizedBox(
-                                        height: 5,
-                                      ),
-                                      FittedBox(
-                                        child: Text(
-                                          offers[index]["offer"],
-                                          style: GoogleFonts.montserrat(
-                                            fontWeight: FontWeight.w600,
-                                            height: 2,
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: h * 0.01),
-                                        child: FittedBox(
-                                          child: Text(
-                                            offers[index]["card"],
-                                            textScaleFactor: 0.6,
-                                            style: GoogleFonts.montserrat(
-                                              fontWeight: FontWeight.w600,
-                                              color:
-                                                  kTextInputPlaceholderColor
-                                                      .withOpacity(0.6),
-                                              height: 2,
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                    ]),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
+                      // Label(
+                      //   color: kbluecolor,
+                      //   text: "offers & discounts",
+                      //   textStyle: GoogleFonts.montserrat(
+                      //     textStyle: const TextStyle(
+                      //         fontWeight: FontWeight.bold,
+                      //         color: kwhitecolor),
+                      //   ),
+                      //   padding: EdgeInsets.symmetric(
+                      //       horizontal: 10, vertical: 5),
+                      // ),
+                      // Container(
+                      //   height: h * 0.18,
+                      //   child: ListView.builder(
+                      //     physics: BouncingScrollPhysics(),
+                      //     scrollDirection: Axis.horizontal,
+                      //     padding: EdgeInsets.symmetric(
+                      //         horizontal: h * 0.023, vertical: h * 0.01),
+                      //     itemCount: offers.length,
+                      //     itemBuilder: (context, index) {
+                      //       return InkWell(
+                      //         onTap: (){
+                      //           Navigator.push(context, MaterialPageRoute(builder: (context)=>const Offers()));
+                      //         },
+                      //         child: RRectCard(
+                      //           h: h * 0.1,
+                      //           w: w * 0.28,
+                      //           borderRadius: 15,
+                      //           widget: Column(
+                      //               mainAxisAlignment:
+                      //                   MainAxisAlignment.center,
+                      //               children: [
+                      //                 Image.asset(
+                      //                     "assets/images/${offers[index]["image"]}"),
+                      //                 const SizedBox(
+                      //                   height: 5,
+                      //                 ),
+                      //                 FittedBox(
+                      //                   child: Text(
+                      //                     offers[index]["offer"],
+                      //                     style: GoogleFonts.montserrat(
+                      //                       fontWeight: FontWeight.w600,
+                      //                       height: 2,
+                      //                     ),
+                      //                   ),
+                      //                 ),
+                      //                 Padding(
+                      //                   padding: EdgeInsets.symmetric(
+                      //                       horizontal: h * 0.01),
+                      //                   child: FittedBox(
+                      //                     child: Text(
+                      //                       offers[index]["card"],
+                      //                       textScaleFactor: 0.6,
+                      //                       style: GoogleFonts.montserrat(
+                      //                         fontWeight: FontWeight.w600,
+                      //                         color:
+                      //                             kTextInputPlaceholderColor
+                      //                                 .withOpacity(0.6),
+                      //                         height: 2,
+                      //                       ),
+                      //                     ),
+                      //                   ),
+                      //                 )
+                      //               ]),
+                      //         ),
+                      //       );
+                      //     },
+                      //   ),
+                      // ),
                       SizedBox(
-                        height: h * 0.05,
+                        height: h * 0.07,
                       ),
                     ],
                   ),

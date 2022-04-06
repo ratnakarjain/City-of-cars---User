@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cityofcars/Screens/Service%20Main/serviceMain.dart';
+import 'package:cityofcars/Screens/bottomnavBar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -28,7 +29,7 @@ class _GlanceState extends State<Glance> {
          Navigator.pushAndRemoveUntil<dynamic>(
         context,
         MaterialPageRoute<dynamic>(
-          builder: (BuildContext context) =>const ServiceMain(),
+          builder: (BuildContext context) => BottomNavBar(index: 0,),
         ),
         (route) => false,//if you want to disable back feature set to false
 );

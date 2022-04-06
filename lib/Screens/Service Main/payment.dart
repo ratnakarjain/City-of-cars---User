@@ -1,3 +1,5 @@
+import 'package:cityofcars/Screens/Service%20Main/serviceMain.dart';
+import 'package:cityofcars/Screens/bottomnavBar.dart';
 import 'package:cityofcars/Utils/Buttons/button.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:cityofcars/Utils/constants.dart';
@@ -325,6 +327,16 @@ class _PaymentState extends State<Payment> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: w * 0.04),
               child: RRecctButton(
+                onTap: (){
+                  Navigator.pushAndRemoveUntil<dynamic>(
+                    context,
+                    MaterialPageRoute<dynamic>(
+                      builder: (BuildContext context) =>  BottomNavBar(index: 0,),
+                    ),
+                    (route) =>
+                        false, //if you want to disable back feature set to false
+                  );
+                },
                 text: "PAY ON DROP-OFF".toUpperCase(),
                 h: h * 0.07,
                 buttonColor: korangecolor,

@@ -1,4 +1,5 @@
 import 'package:cityofcars/Screens/Service%20Main/slot.dart';
+import 'package:cityofcars/Screens/bottomnavBar.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -213,11 +214,25 @@ class _CartState extends State<Cart> {
             ),
             Padding(
               padding: EdgeInsets.only(top: h * 0.02, left: w * 0.1),
-              child: CircleAvatar(
-                radius: h * 0.025,
-                backgroundColor: kblackcolor,
-                foregroundColor: kwhitecolor,
-                child: Icon(Icons.add),
+              child: InkWell(
+                onTap: () {
+                  Navigator.pushAndRemoveUntil<dynamic>(
+                    context,
+                    MaterialPageRoute<dynamic>(
+                      builder: (BuildContext context) => BottomNavBar(
+                        index: 0,
+                      ),
+                    ),
+                    (route) =>
+                        false, //if you want to disable back feature set to false
+                  );
+                },
+                child: CircleAvatar(
+                  radius: h * 0.025,
+                  backgroundColor: kblackcolor,
+                  foregroundColor: kwhitecolor,
+                  child: Icon(Icons.add),
+                ),
               ),
             ),
             const Spacer(),
