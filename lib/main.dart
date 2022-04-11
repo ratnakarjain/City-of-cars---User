@@ -16,10 +16,13 @@ import 'package:cityofcars/Utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cityofcars/Screens/notification.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Screens/myhomepage.dart';
+import 'Utils/preference.dart';
 
-void main() {
+Future<void> main()async {
   WidgetsFlutterBinding.ensureInitialized();
+   Prefernece.pref = await SharedPreferences.getInstance();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 

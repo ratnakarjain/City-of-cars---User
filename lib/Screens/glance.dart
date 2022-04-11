@@ -23,18 +23,17 @@ class _GlanceState extends State<Glance> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer(
-      Duration(seconds: 2),
-      (){
-         Navigator.pushAndRemoveUntil<dynamic>(
+    Timer(Duration(seconds: 2), () {
+      Navigator.pushAndRemoveUntil<dynamic>(
         context,
         MaterialPageRoute<dynamic>(
-          builder: (BuildContext context) => BottomNavBar(index: 0,),
+          builder: (BuildContext context) => BottomNavBar(
+            index: 0,
+          ),
         ),
-        (route) => false,//if you want to disable back feature set to false
-);
-      }
-    );
+        (route) => false, //if you want to disable back feature set to false
+      );
+    });
   }
 
   @override

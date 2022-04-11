@@ -1,3 +1,5 @@
+import 'package:cityofcars/Screens/Service%20Main/slot.dart';
+import 'package:cityofcars/Services/signInSignUp.dart';
 import 'package:cityofcars/Utils/Buttons/button.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,10 @@ class LoginSignUp extends StatefulWidget {
 }
 
 class _LoginSignUpState extends State<LoginSignUp> {
+  var mail = TextEditingController();
+  var mobile = TextEditingController();
+  var name = TextEditingController();
+
   var height;
   var width;
   FocusNode myFocusNode = new FocusNode();
@@ -23,6 +29,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
   FocusNode myFocusNode3 = new FocusNode();
 
   var isSelected;
+  var _formKey = GlobalKey<FormState>();
   @override
   void initState() {
     // TODO: implement initState
@@ -37,7 +44,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
     return Scaffold(
         body: SingleChildScrollView(
       child: Container(
-        height: height,
+        // height: height,
         width: width,
         padding: EdgeInsets.only(top: height * 0.08),
         child: Column(children: [
@@ -124,99 +131,133 @@ class _LoginSignUpState extends State<LoginSignUp> {
                           //   height: height * 0.45,
                           width: width - 44,
                           padding: EdgeInsets.all(20),
-                          child: Column(
-                            children: [
-                              TextFormField(
-                                onTap: () {
-                                  setState(() {});
-                                },
-                                focusNode: myFocusNode,
-                                decoration: InputDecoration(
-                                  hintText: "Name*",
-                                  hintStyle: TextStyle(
-                                      color: kTextInputPlaceholderColor
-                                          .withOpacity(0.32)),
-                                  // labelText: "Name*",
-                                  // labelStyle: TextStyle(
-                                  //     color: myFocusNode.hasFocus
-                                  //         ? kbluecolor
-                                  //         : kTextInputPlaceholderColor
-                                  //             .withOpacity(0.32)),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: kbluecolor, width: 1.0),
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              children: [
+                                TextFormField(
+                                  onTap: () {
+                                    setState(() {});
+                                  },
+                                  focusNode: myFocusNode,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Enter name";
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                  controller: name,
+                                  decoration: InputDecoration(
+                                    hintText: "Name*",
+
+                                    hintStyle: TextStyle(
+                                        color: kTextInputPlaceholderColor
+                                            .withOpacity(0.32)),
+                                    // labelText: "Name*",
+                                    // labelStyle: TextStyle(
+                                    //     color: myFocusNode.hasFocus
+                                    //         ? kbluecolor
+                                    //         : kTextInputPlaceholderColor
+                                    //             .withOpacity(0.32)),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: kbluecolor, width: 1.0),
+                                    ),
+                                  ),
+                                  cursorColor: kCursorColor,
+                                  style: GoogleFonts.montserrat(
+                                    textStyle: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 15),
                                   ),
                                 ),
-                                cursorColor: kCursorColor,
-                                style: GoogleFonts.montserrat(
-                                  textStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 15),
-                                ),
-                              ),
-                              SizedBox(height: 20),
-                              TextFormField(
-                                onTap: () {
-                                  setState(() {});
-                                },
-                                focusNode: myFocusNode1,
-                                decoration: InputDecoration(
-                                  hintText: "Mobile No.*",
-                                  hintStyle: TextStyle(
-                                      color: kTextInputPlaceholderColor
-                                          .withOpacity(0.32)),
-                                  // labelText: "Mobile No.*",
-                                  // labelStyle: TextStyle(
-                                  //     color: myFocusNode1.hasFocus
-                                  //         ? kbluecolor
-                                  //         : kTextInputPlaceholderColor
-                                  //             .withOpacity(0.32)),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: kbluecolor, width: 1.0),
+                                SizedBox(height: 20),
+                                TextFormField(
+                                  onTap: () {
+                                    setState(() {});
+                                  },
+                                  controller: mobile,
+                                  focusNode: myFocusNode1,
+                                  keyboardType: TextInputType.phone,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Enter mobile Number";
+                                    } else if (value.length != 10) {
+                                      return "Mobile no. length shuld 10";
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                  decoration: InputDecoration(
+                                    hintText: "Mobile No.*",
+                                    hintStyle: TextStyle(
+                                        color: kTextInputPlaceholderColor
+                                            .withOpacity(0.32)),
+                                    // labelText: "Mobile No.*",
+                                    // labelStyle: TextStyle(
+                                    //     color: myFocusNode1.hasFocus
+                                    //         ? kbluecolor
+                                    //         : kTextInputPlaceholderColor
+                                    //             .withOpacity(0.32)),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: kbluecolor, width: 1.0),
+                                    ),
+                                  ),
+                                  cursorColor: kCursorColor,
+                                  style: GoogleFonts.montserrat(
+                                    textStyle: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 15),
                                   ),
                                 ),
-                                cursorColor: kCursorColor,
-                                style: GoogleFonts.montserrat(
-                                  textStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 15),
-                                ),
-                              ),
-                              SizedBox(height: 20),
-                              TextFormField(
-                                onTap: () {
-                                  setState(() {});
-                                },
-                                focusNode: myFocusNode2,
-                                decoration: InputDecoration(
-                                  hintText: "E-Mail (Optional)",
-                                  hintStyle: TextStyle(
-                                      color: kTextInputPlaceholderColor
-                                          .withOpacity(0.32)),
-                                  // labelText: "E-Mail (Optional)",
-                                  // labelStyle: TextStyle(
-                                  //     color: myFocusNode2.hasFocus
-                                  //         ? kbluecolor
-                                  //         : kTextInputPlaceholderColor
-                                  //             .withOpacity(0.32)),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: kbluecolor, width: 1.0),
+                                SizedBox(height: 20),
+                                TextFormField(
+                                  onTap: () {
+                                    setState(() {});
+                                  },
+                                  focusNode: myFocusNode2,
+                                  controller: mail,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return null;
+                                    } else if (!RegExp(
+                                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                        .hasMatch(value)) {
+                                      return 'Enter a valid email!';
+                                    }
+                                    return null;
+                                  },
+                                  decoration: InputDecoration(
+                                    hintText: "E-Mail (Optional)",
+                                    hintStyle: TextStyle(
+                                        color: kTextInputPlaceholderColor
+                                            .withOpacity(0.32)),
+                                    // labelText: "E-Mail (Optional)",
+                                    // labelStyle: TextStyle(
+                                    //     color: myFocusNode2.hasFocus
+                                    //         ? kbluecolor
+                                    //         : kTextInputPlaceholderColor
+                                    //             .withOpacity(0.32)),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: kbluecolor, width: 1.0),
+                                    ),
+                                  ),
+                                  cursorColor: kCursorColor,
+                                  style: GoogleFonts.montserrat(
+                                    textStyle: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 15),
                                   ),
                                 ),
-                                cursorColor: kCursorColor,
-                                style: GoogleFonts.montserrat(
-                                  textStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 15),
-                                ),
-                              ),
-                              SizedBox(height: 20),
-                            ],
+                                SizedBox(height: 20),
+                              ],
+                            ),
                           ),
                         )),
                   ),
@@ -224,35 +265,50 @@ class _LoginSignUpState extends State<LoginSignUp> {
               : Container(
                   width: width,
                   margin: EdgeInsets.symmetric(horizontal: 22, vertical: 22),
-                  height: 293,
+                  height: height * 0.15,
                   padding: EdgeInsets.symmetric(vertical: 29, horizontal: 22),
                   child: Center(
-                    child: TextFormField(
-                      onTap: () {
-                        setState(() {});
-                      },
-                      focusNode: myFocusNode3,
-                      decoration: InputDecoration(
-                        hintText: "Mobile No.*",
-                        hintStyle: TextStyle(
-                            color:
-                                kTextInputPlaceholderColor.withOpacity(0.32)),
+                    child: Form(
+                      key: _formKey,
+                      child: TextFormField(
+                        onTap: () {
+                          setState(() {});
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Enter mobile Number";
+                          } else if (value.length != 10) {
+                            return "Mobile no. length shuld 10";
+                          } else {
+                            return null;
+                          }
+                        },
+                        focusNode: myFocusNode3,
+                        controller: mobile,
+                        keyboardType: TextInputType.phone,
+                        decoration: InputDecoration(
+                          hintText: "Mobile No.*",
+                          hintStyle: TextStyle(
+                              color:
+                                  kTextInputPlaceholderColor.withOpacity(0.32)),
 
-                        // labelText: "Mobile No.",
-                        // labelStyle: TextStyle(
-                        //     color: myFocusNode3.hasFocus
-                        //         ? kbluecolor
-                        //         : kTextInputPlaceholderColor.withOpacity(0.32)),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: kbluecolor, width: 1.0),
+                          // labelText: "Mobile No.",
+                          // labelStyle: TextStyle(
+                          //     color: myFocusNode3.hasFocus
+                          //         ? kbluecolor
+                          //         : kTextInputPlaceholderColor.withOpacity(0.32)),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide:
+                                BorderSide(color: kbluecolor, width: 1.0),
+                          ),
                         ),
-                      ),
-                      cursorColor: kCursorColor,
-                      style: GoogleFonts.montserrat(
-                        textStyle: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 15),
+                        cursorColor: kCursorColor,
+                        style: GoogleFonts.montserrat(
+                          textStyle: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15),
+                        ),
                       ),
                     ),
                   ),
@@ -260,13 +316,33 @@ class _LoginSignUpState extends State<LoginSignUp> {
           SizedBox(height: 20),
           RRecctButton(
               text: "CONTINUE",
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Verfication(),
-                    ));
-              },
+              onTap: !isSelected
+                  ? () {
+                      if (_formKey.currentState!.validate()) {
+                        // register(name.text, mail.text, mobile.text);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Verfication(),
+                            ));
+                        mobile.clear();
+                        mail.clear();
+                        name.clear();
+                        print("gogogogogogo");
+                      }
+                    }
+                  : () {
+                      if (_formKey.currentState!.validate()) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Verfication(),
+                            ));
+                        mobile.clear();
+                        mail.clear();
+                        name.clear();
+                      }
+                    },
               buttonColor: korangecolor,
               style: GoogleFonts.montserrat(
                   textStyle: const TextStyle(
@@ -288,7 +364,14 @@ class _LoginSignUpState extends State<LoginSignUp> {
                           textStyle: TextStyle(color: Colors.black)),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        isSelected = !isSelected;
+                        setState(() {
+                          mobile.clear();
+                          mail.clear();
+                          name.clear();
+                        });
+                      },
                       child: Text(
                         " Log in",
                         style: GoogleFonts.montserrat(
@@ -303,5 +386,14 @@ class _LoginSignUpState extends State<LoginSignUp> {
         ]),
       ),
     ));
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    mail.dispose();
+    mobile.dispose();
+    name.dispose();
   }
 }

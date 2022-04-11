@@ -40,6 +40,10 @@ dependencies:
   card_swiper: ^2.0.3
   circular_bottom_navigation: ^2.0.0
   carousel_slider: ^4.0.0
+  dio: ^4.0.6
+  shared_preferences: ^2.0.13
+  http: ^0.13.4
+  url_launcher: ^6.0.20
 
 dev_dependencies:
   flutter_test:

@@ -1,11 +1,13 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:cityofcars/Screens/selectCity.dart';
 import 'package:cityofcars/Utils/constants.dart';
+import 'package:cityofcars/Utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 
 import '../Utils/Buttons/button.dart';
-
 
 class Verfication extends StatefulWidget {
   const Verfication({Key? key}) : super(key: key);
@@ -15,6 +17,8 @@ class Verfication extends StatefulWidget {
 }
 
 class _VerficationState extends State<Verfication> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   var h;
   var w;
   var _controller = TextEditingController();
@@ -36,6 +40,7 @@ class _VerficationState extends State<Verfication> {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -65,10 +70,16 @@ class _VerficationState extends State<Verfication> {
                 pinAnimationType: PinAnimationType.fade,
               ),
             ),
-            Text(
-              "Resend code",
-              style: GoogleFonts.montserrat(
-                  color: kbluecolor, fontWeight: FontWeight.w500),
+            GestureDetector(
+              onTap: () {
+                _scaffoldKey.currentState!.showSnackBar(
+                    const SnackBar(content: Text("OTP resent successfully")));
+              },
+              child: Text(
+                "Resend code",
+                style: GoogleFonts.montserrat(
+                    color: kbluecolor, fontWeight: FontWeight.w500),
+              ),
             ),
             SizedBox(
               height: h * 0.05,

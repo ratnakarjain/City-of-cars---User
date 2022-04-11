@@ -12,7 +12,8 @@ class InsideCategory extends StatefulWidget {
   State<InsideCategory> createState() => _InsideCategoryState();
 }
 
-class _InsideCategoryState extends State<InsideCategory> with SingleTickerProviderStateMixin {
+class _InsideCategoryState extends State<InsideCategory>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   ScrollController _controller1 = new ScrollController();
   ScrollController _controller2 = new ScrollController();
@@ -74,7 +75,7 @@ class _InsideCategoryState extends State<InsideCategory> with SingleTickerProvid
   ];
   List bodyType = [
     "common services",
-    "breakes",
+    "brakes",
     "details",
     "suspension",
   ];
@@ -83,7 +84,7 @@ class _InsideCategoryState extends State<InsideCategory> with SingleTickerProvid
   void initState() {
     // TODO: implement initState
     super.initState();
-    _tabController =  TabController(length: bodyType.length, vsync: this);
+    _tabController = TabController(length: bodyType.length, vsync: this);
 
     whichBodyType = List.generate(bodyType.length, (index) => false);
   }
@@ -158,15 +159,15 @@ class _InsideCategoryState extends State<InsideCategory> with SingleTickerProvid
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            height: h*0.08,
-            padding: EdgeInsets.only(left: w * 0.06, right: w * 0.06, top: h*0.02),
+            height: h * 0.08,
+            padding:
+                EdgeInsets.only(left: w * 0.06, right: w * 0.06, top: h * 0.02),
             child: Material(
               color: kwhitecolor,
               elevation: 8,
               shadowColor: kTextInputPlaceholderColor.withOpacity(0.3),
               borderRadius: BorderRadius.circular(h * 0.05),
               child: TextField(
-                
                 decoration: InputDecoration(
                     hintText: "Search",
                     hintStyle: GoogleFonts.montserrat(
@@ -175,7 +176,8 @@ class _InsideCategoryState extends State<InsideCategory> with SingleTickerProvid
                       Icons.search,
                     ),
                     focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: korangecolor, width: 1.0),
+                        borderSide:
+                            const BorderSide(color: korangecolor, width: 1.0),
                         borderRadius: BorderRadius.circular(h * 0.05)),
                     border: OutlineInputBorder(
                         borderSide: const BorderSide(
@@ -187,39 +189,41 @@ class _InsideCategoryState extends State<InsideCategory> with SingleTickerProvid
           SizedBox(
             height: h * 0.015,
           ),
-           TabBar(
-             onTap: (value){
-               _tabController.index=value;
-             },
-              unselectedLabelColor: Colors.black,
-              labelColor: Colors.red,
-              tabs:List.generate(
-                  bodyType.length,
-                  (index) => Text(
-                    "${bodyType[index]}".toUpperCase(),
-                    textScaleFactor: 0.7,
-                    style: GoogleFonts.montserrat(
-                        textStyle: const TextStyle(
-                            fontWeight: FontWeight.w400,
-                            )),
-                  )),
+          TabBar(
+            isScrollable: true,
+            onTap: (value) {
+              _tabController.index = value;
+            },
+            unselectedLabelColor: Colors.black,
+            indicatorColor: kTextInputPlaceholderColor.withOpacity(0.5),
+            labelColor: Colors.red,
+            tabs: List.generate(
+                bodyType.length,
+                (index) => Text(
+                      "${bodyType[index]}".toUpperCase(),
+                      textScaleFactor: 0.7,
+                      style: GoogleFonts.montserrat(
+                          textStyle: const TextStyle(
+                        fontWeight: FontWeight.w400,
+                      )),
+                    )),
+            controller: _tabController,
+            indicatorSize: TabBarIndicatorSize.tab,
+          ),
+          Expanded(
+            child: TabBarView(
+              children: const [
+                CommonServices(),
+                CommonServices(),
+                CommonServices(),
+                CommonServices(),
+              ],
               controller: _tabController,
-              indicatorSize: TabBarIndicatorSize.tab,
             ),
-             Expanded(
-              child: TabBarView(
-                children:[
-                  CommonServices(),
-                  CommonServices(),
-                  CommonServices(),
-                  CommonServices(),
-                  ],
-                controller: _tabController,
-              ),
-            ),
+          ),
           // SingleChildScrollView(
           //   scrollDirection: Axis.horizontal,
-          //   child: 
+          //   child:
           // Row(
           //     children: List.generate(
           //         bodyType.length,

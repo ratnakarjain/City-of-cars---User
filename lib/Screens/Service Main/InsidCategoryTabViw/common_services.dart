@@ -17,10 +17,10 @@ class _CommonServicesState extends State<CommonServices> {
   var h;
   var w;
   List reccomendedPackes = [
-    {"services": "clutch", "image": "2114.png", "type": "custom services"},
-    {"services": "suspension", "image": "2117.png", "type": "custom services"},
-    {"services": "brakes", "image": "2118.png", "type": "custom services"},
-    {"services": "clutch", "image": "2114.png", "type": "custom services"},
+    {"services": "Clutch", "image": "2114.png", "type": "Custom services"},
+    {"services": "Suspension", "image": "2117.png", "type": "Custom services"},
+    {"services": "Brakes", "image": "2118.png", "type": "Custom services"},
+    {"services": "Clutch", "image": "2114.png", "type": "Custom services"},
   ];
   @override
   Widget build(BuildContext context) {

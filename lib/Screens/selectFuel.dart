@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'Service Main/serviceMain.dart';
+import 'bottomnavBar.dart';
 
 class SelectFuel extends StatefulWidget {
   const SelectFuel({Key? key}) : super(key: key);
@@ -39,11 +40,25 @@ class _SelectFuelState extends State<SelectFuel> {
               textScaleFactor: 1.1,
               style: GoogleFonts.montserrat(fontWeight: FontWeight.w600),
             ),
-            Text(
-              "Skip & Explore".toUpperCase(),
-              textScaleFactor: 0.6,
-              style: GoogleFonts.montserrat(
-                  fontWeight: FontWeight.w600, color: kbluecolor),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushAndRemoveUntil<dynamic>(
+                  context,
+                  MaterialPageRoute<dynamic>(
+                    builder: (BuildContext context) => BottomNavBar(
+                      index: 0,
+                    ),
+                  ),
+                  (route) =>
+                      false, //if you want to disable back feature set to false
+                );
+              },
+              child: Text(
+                "Skip & Explore".toUpperCase(),
+                textScaleFactor: 0.6,
+                style: GoogleFonts.montserrat(
+                    fontWeight: FontWeight.w600, color: kbluecolor),
+              ),
             ),
           ],
         ),
@@ -158,7 +173,7 @@ class _SelectFuelState extends State<SelectFuel> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>  Glance(),
+                                      builder: (context) => Glance(),
                                     ));
                               },
                               child: RRectCard(

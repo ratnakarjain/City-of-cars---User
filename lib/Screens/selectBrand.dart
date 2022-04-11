@@ -1,8 +1,10 @@
+import 'package:cityofcars/Screens/Service%20Main/serviceMain.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'bottomnavBar.dart';
 import 'selectFuel.dart';
 
 class SelectBrand extends StatefulWidget {
@@ -95,12 +97,26 @@ class _SelectBrandState extends State<SelectBrand> {
                   color: kTextInputPlaceholderColor,
                 )),
               ),
-              Text(
-              "Skip & Explore".toUpperCase(),
-              textScaleFactor: 0.6,
-              style: GoogleFonts.montserrat(
-                  fontWeight: FontWeight.w600, color: kbluecolor),
-            ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushAndRemoveUntil<dynamic>(
+                    context,
+                    MaterialPageRoute<dynamic>(
+                      builder: (BuildContext context) => BottomNavBar(
+                        index: 0,
+                      ),
+                    ),
+                    (route) =>
+                        false, //if you want to disable back feature set to false
+                  );
+                },
+                child: Text(
+                  "Skip & Explore".toUpperCase(),
+                  textScaleFactor: 0.6,
+                  style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.w600, color: kbluecolor),
+                ),
+              ),
             ],
           ),
         ),
@@ -137,54 +153,54 @@ class _SelectBrandState extends State<SelectBrand> {
                 ? Padding(
                     padding: EdgeInsets.all(h * 0.03),
                     child: RRectCard(
-                       h: h * 0.15,
-                        w: h * 0.15,
-                        borderRadius: 30,
-                        color: kbluecolor,
+                      h: h * 0.15,
+                      w: h * 0.15,
+                      borderRadius: 30,
+                      color: kbluecolor,
                       widget: RRectCard(
                         h: h * 0.15,
                         w: h * 0.15,
                         borderRadius: 30,
                         color: kLightOrangeBgColor,
-                        widget: Image.asset("assets/images/${carLogoList[item!]}"),
+                        widget:
+                            Image.asset("assets/images/${carLogoList[item!]}"),
                       ),
                     ))
                 : Container(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: w * 0.05, vertical: 50),
-                  child: GridView.count(
-                    shrinkWrap: true,
-                    controller: _controller1,
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    children: List.generate(carLogoList.length, (index) {
-                      return GestureDetector(
-                        onTap: () {
-                          bottumSheet();
-                          item = index;
-                          isSelected = true;
-                          setState(() {});
-                        },
-                        child:
-                         RRectCard(
-                  h: h * 0.18,
-                  w: h * 0.18,
-                  borderRadius: 30,
-                  color: kLightOrangeBgColor,
-                  widget: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset("assets/images/${carLogoList[index]}"),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                      ]),
-                ));
-                
-                    }),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: w * 0.05, vertical: 50),
+                    child: GridView.count(
+                      shrinkWrap: true,
+                      controller: _controller1,
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      children: List.generate(carLogoList.length, (index) {
+                        return GestureDetector(
+                            onTap: () {
+                              bottumSheet();
+                              item = index;
+                              isSelected = true;
+                              setState(() {});
+                            },
+                            child: RRectCard(
+                              h: h * 0.18,
+                              w: h * 0.18,
+                              borderRadius: 30,
+                              color: kLightOrangeBgColor,
+                              widget: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                        "assets/images/${carLogoList[index]}"),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                  ]),
+                            ));
+                      }),
+                    ),
                   ),
-                ),
           ],
         ),
       ),
@@ -234,8 +250,8 @@ class _SelectBrandState extends State<SelectBrand> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: w * 0.05, vertical: 10),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: w * 0.05, vertical: 10),
                   child: GridView.count(
                     shrinkWrap: true,
                     controller: _controller2,
@@ -251,30 +267,29 @@ class _SelectBrandState extends State<SelectBrand> {
                                 builder: (context) => const SelectFuel(),
                               ));
                         },
-                        child: 
-                         RRectCard(
-                            h: h * 0.18,
-                            w: h * 0.18,
-                            borderRadius: 30,
-                            widget: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset("assets/images/${cars[index]["image"]}"),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  FittedBox(
-                                    child: Text(
-                                      cars[index]["name"],
-                                      style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.w600,
-                                        height: 1.5,
-                                      ),
+                        child: RRectCard(
+                          h: h * 0.18,
+                          w: h * 0.18,
+                          borderRadius: 30,
+                          widget: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                    "assets/images/${cars[index]["image"]}"),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                FittedBox(
+                                  child: Text(
+                                    cars[index]["name"],
+                                    style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.w600,
+                                      height: 1.5,
                                     ),
-                                  )
-                                ]),
-                          ),
-                        
+                                  ),
+                                )
+                              ]),
+                        ),
                       );
                     }),
                   ),
