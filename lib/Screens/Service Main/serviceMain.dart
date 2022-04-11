@@ -1,5 +1,6 @@
 import 'package:cityofcars/Screens/Service%20Main/insidCategory.dart';
 import 'package:cityofcars/Screens/Service%20Main/offers.dart';
+import 'package:cityofcars/Screens/Service%20Main/productDetail.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:cityofcars/Utils/functions.dart';
@@ -341,44 +342,52 @@ class _ServiceMainState extends State<ServiceMain> {
                       padding: EdgeInsets.all(h * 0.01),
                       itemCount: carServices.length,
                       itemBuilder: (context, index) {
-                        return RRectCard(
-                          h: h * 0.1,
-                          w: w * 0.25,
-                          borderRadius: 15,
-                          widget: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                    "assets/images/${reccomendedPackes[index]["image"]}"),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                FittedBox(
-                                  child: Text(
-                                    reccomendedPackes[index]["services"],
-                                    style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.w600,
-                                      height: 2,
-                                    ),
+                        return GestureDetector(
+                          onTap: () {
+                             Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ProductDetails()));
+                          },
+                          child: RRectCard(
+                            h: h * 0.1,
+                            w: w * 0.25,
+                            borderRadius: 15,
+                            widget: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                      "assets/images/${reccomendedPackes[index]["image"]}"),
+                                  const SizedBox(
+                                    height: 5,
                                   ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: h * 0.01),
-                                  child: FittedBox(
+                                  FittedBox(
                                     child: Text(
-                                      reccomendedPackes[index]["type"],
-                                      textScaleFactor: 0.6,
+                                      reccomendedPackes[index]["services"],
                                       style: GoogleFonts.montserrat(
                                         fontWeight: FontWeight.w600,
-                                        color: kTextInputPlaceholderColor
-                                            .withOpacity(0.6),
                                         height: 2,
                                       ),
                                     ),
                                   ),
-                                )
-                              ]),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: h * 0.01),
+                                    child: FittedBox(
+                                      child: Text(
+                                        reccomendedPackes[index]["type"],
+                                        textScaleFactor: 0.6,
+                                        style: GoogleFonts.montserrat(
+                                          fontWeight: FontWeight.w600,
+                                          color: kTextInputPlaceholderColor
+                                              .withOpacity(0.6),
+                                          height: 2,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ]),
+                          ),
                         );
                       },
                     ),
@@ -400,44 +409,52 @@ class _ServiceMainState extends State<ServiceMain> {
                       padding: EdgeInsets.all(h * 0.01),
                       itemCount: carServices.length,
                       itemBuilder: (context, index) {
-                        return RRectCard(
-                          h: h * 0.1,
-                          w: w * 0.25,
-                          borderRadius: 15,
-                          widget: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                    "assets/images/${reccomendedPackes[index]["image"]}"),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                FittedBox(
-                                  child: Text(
-                                    reccomendedPackes[index]["services"],
-                                    style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.w600,
-                                      height: 2,
-                                    ),
+                        return GestureDetector(
+                          onTap: (){
+                             Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ProductDetails()));
+                          },
+                          child: RRectCard(
+                            h: h * 0.1,
+                            w: w * 0.25,
+                            borderRadius: 15,
+                            widget: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                      "assets/images/${reccomendedPackes[index]["image"]}"),
+                                  const SizedBox(
+                                    height: 5,
                                   ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: h * 0.01),
-                                  child: FittedBox(
+                                  FittedBox(
                                     child: Text(
-                                      reccomendedPackes[index]["type"],
-                                      textScaleFactor: 0.6,
+                                      reccomendedPackes[index]["services"],
                                       style: GoogleFonts.montserrat(
                                         fontWeight: FontWeight.w600,
-                                        color: kTextInputPlaceholderColor
-                                            .withOpacity(0.6),
                                         height: 2,
                                       ),
                                     ),
                                   ),
-                                )
-                              ]),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: h * 0.01),
+                                    child: FittedBox(
+                                      child: Text(
+                                        reccomendedPackes[index]["type"],
+                                        textScaleFactor: 0.6,
+                                        style: GoogleFonts.montserrat(
+                                          fontWeight: FontWeight.w600,
+                                          color: kTextInputPlaceholderColor
+                                              .withOpacity(0.6),
+                                          height: 2,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ]),
+                          ),
                         );
                       },
                     ),

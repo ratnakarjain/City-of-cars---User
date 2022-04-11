@@ -18,6 +18,9 @@ class _ProductDetailsState extends State<ProductDetails> {
   var h;
   var w;
   int currentPage = 0;
+  bool des = false;
+  bool basic = false;
+  bool service = false;
   List backimage = [
     "https://wallpaperaccess.com/full/33110.jpg",
     "https://wallpaperaccess.com/full/14444.jpg",
@@ -99,15 +102,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                   horizontal: w * 0.06, vertical: h * 0.03),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         "Basic",
-                        textScaleFactor: 1.5,
                         style: GoogleFonts.montserrat(
                             textStyle: const TextStyle(
+                          fontSize: 25,
                           fontWeight: FontWeight.bold,
                         )),
                       ),
@@ -116,6 +120,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         style: GoogleFonts.montserrat(
                             textStyle: TextStyle(
                                 fontWeight: FontWeight.bold,
+                                fontSize: 16,
                                 color: kblackcolor.withOpacity(0.50))),
                       ),
                     ],
@@ -123,21 +128,80 @@ class _ProductDetailsState extends State<ProductDetails> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "₹2700",
-                        textScaleFactor: 1.7,
-                        style: GoogleFonts.montserrat(
-                            textStyle: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                        )),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Checkbox(
+                            value: basic,
+                            side:
+                                const BorderSide(color: kGreenColor, width: 2),
+                            activeColor: kGreenColor,
+                            onChanged: (value) {
+                              basic = value!;
+                              setState(() {
+                                service = false;
+                              });
+                            },
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                "₹2700",
+                                style: GoogleFonts.montserrat(
+                                    fontSize: 21,
+                                    textStyle: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    )),
+                              ),
+                              Text(
+                                "multi-brand price",
+                                style: GoogleFonts.montserrat(
+                                    fontSize: 6,
+                                    textStyle: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        color: kblackcolor.withOpacity(0.50))),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                      Text(
-                        "Inclusive of texes",
-                        textScaleFactor: 0.9,
-                        style: GoogleFonts.montserrat(
-                            textStyle: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                color: kblackcolor.withOpacity(0.50))),
+                      Row(
+                        children: [
+                          Checkbox(
+                            side:
+                                const BorderSide(color: kGreenColor, width: 2),
+                            activeColor: kGreenColor,
+                            value: service,
+                            onChanged: (value) {
+                              service = value!;
+                              setState(() {
+                                basic = false;
+                              });
+                            },
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                "₹4700",
+                                style: GoogleFonts.montserrat(
+                                    fontSize: 12,
+                                    textStyle: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    )),
+                              ),
+                              Text(
+                                "company authorised",
+                                style: GoogleFonts.montserrat(
+                                    fontSize: 6,
+                                    textStyle: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        color: kblackcolor.withOpacity(0.50))),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ],
                   )
@@ -146,7 +210,11 @@ class _ProductDetailsState extends State<ProductDetails> {
             ),
             RRecctButton2(
               onTap: () {
-                 Navigator.push(context, MaterialPageRoute(builder: (context) => const Cart(),));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Cart(),
+                    ));
               },
               h: h * 0.05,
               w: w * 0.8,
@@ -212,33 +280,67 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: w * 0.06),
-                          child: RRectCard(
-                              h: h * 0.1,
-                              w: w,
-                              color: kLightOrangeBgColor,
-                              widget: Column(
-                                children: [
-                                  SizedBox(
-                                    height: h * 0.027,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: w * 0.09),
-                                    child: Text(
-                                      "This pack is essential every 3000 km or 6 months whichever is earlier",
-                                      style: GoogleFonts.montserrat(
-                                        fontSize: 10,
-                                        height: 1.5,
-                                        fontWeight: FontWeight.w400,
+                          child: GestureDetector(
+                            onTap: () {
+                              des = !des;
+                              setState(() {});
+                            },
+                            child: Stack(
+                              children: [
+                                RRectCard(
+                                    // h: h * des? 0.09 : ,
+                                    w: w,
+                                    color: kLightOrangeBgColor,
+                                    widget: SingleChildScrollView(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      child: Column(
+                                        children: [
+                                          SizedBox(
+                                            height: h * 0.027,
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: w * 0.09),
+                                            child: Text(
+                                              "This pack is essential every 3000 km or 6 months whichever is earlier",
+                                              style: GoogleFonts.montserrat(
+                                                fontSize: 10,
+                                                height: 1.5,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: h * 0.027,
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: w * 0.09),
+                                            child: Text(
+                                              "This pack is essential every 3000 km or 6 months whichever is earlier",
+                                              style: GoogleFonts.montserrat(
+                                                fontSize: 10,
+                                                height: 1.5,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ),
-                                  const Center(
+                                    borderRadius: h * 0.02),
+                                Positioned(
+                                  bottom: h * 0.005,
+                                  left: 0,
+                                  right: 0,
+                                  child: const Center(
                                     child: Icon(Icons.keyboard_arrow_down),
-                                  )
-                                ],
-                              ),
-                              borderRadius: h * 0.02),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
                         ),
                         Padding(
                           padding:
@@ -279,7 +381,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Image.asset(
-                                              "assets/images/EngineOil.png",height: h*0.03,),
+                                            "assets/images/EngineOil.png",
+                                            height: h * 0.03,
+                                          ),
                                           Text(
                                             "Engine Oil",
                                             textAlign: TextAlign.center,
@@ -297,7 +401,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Image.asset(
-                                              "assets/images/oifilter.png",height: h*0.03,),
+                                            "assets/images/oifilter.png",
+                                            height: h * 0.03,
+                                          ),
                                           Text(
                                             "Oil Filter",
                                             textAlign: TextAlign.center,
@@ -312,7 +418,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       ),
                                       Column(
                                         children: [
-                                          Image.asset("assets/images/wind.png",height: h*0.03,),
+                                          Image.asset(
+                                            "assets/images/wind.png",
+                                            height: h * 0.03,
+                                          ),
                                           Text(
                                             "Air Filter",
                                             textScaleFactor: 0.7,
@@ -345,7 +454,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Image.asset(
-                                              "assets/images/cabin_filter.png",height: h*0.03,),
+                                            "assets/images/cabin_filter.png",
+                                            height: h * 0.03,
+                                          ),
                                           Text(
                                             "Cabin filter",
                                             textScaleFactor: 0.7,
@@ -363,7 +474,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Image.asset(
-                                              "assets/images/clutch_overhaul.png",height: h*0.03,),
+                                            "assets/images/clutch_overhaul.png",
+                                            height: h * 0.03,
+                                          ),
                                           Text(
                                             "Clutch \noverhaul",
                                             textScaleFactor: 0.7,
@@ -379,7 +492,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       Column(
                                         children: [
                                           Image.asset(
-                                              "assets/images/break_overhaul.png",height: h*0.03,),
+                                            "assets/images/break_overhaul.png",
+                                            height: h * 0.03,
+                                          ),
                                           Text(
                                             "Breake \noverhaul",
                                             textScaleFactor: 0.7,
@@ -453,7 +568,8 @@ class _ProductDetailsState extends State<ProductDetails> {
               ],
             ),
             Container(
-              margin: EdgeInsets.only(top: h * 0.01,left: w*0.09,right: w*0.09),
+              margin: EdgeInsets.only(
+                  top: h * 0.01, left: w * 0.09, right: w * 0.09),
               padding: EdgeInsets.all(h * 0.03),
               decoration: BoxDecoration(
                   color: kwhitecolor,
@@ -473,16 +589,18 @@ class _ProductDetailsState extends State<ProductDetails> {
                       text: TextSpan(
                         text: 'Who May Use the Services?',
                         style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w700, fontSize: 9,
-                          color: Colors.black
-                          ),
+                            fontWeight: FontWeight.w700,
+                            fontSize: 9,
+                            color: Colors.black),
                         children: [
                           TextSpan(
-                              text: '\n\n\nWhen one door of happiness closes, another opens, but often we look so long at the closed door that we do not see the one that has been opened for us.\n\n\n\n\n',
-                              style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w400, fontSize: 8,
-                          color: Colors.black
-                          ),),
+                            text:
+                                '\n\n\nWhen one door of happiness closes, another opens, but often we look so long at the closed door that we do not see the one that has been opened for us.\n\n\n\n\n',
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 8,
+                                color: Colors.black),
+                          ),
                         ],
                       ),
                     ),
@@ -490,16 +608,18 @@ class _ProductDetailsState extends State<ProductDetails> {
                       text: TextSpan(
                         text: '•Step 1:',
                         style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w700, fontSize: 8,
-                          color: Colors.black
-                          ),
+                            fontWeight: FontWeight.w700,
+                            fontSize: 8,
+                            color: Colors.black),
                         children: [
                           TextSpan(
-                              text: ' You may use the Services only if you agree to form a binding contract with us and are not a person barred from receiving services under the laws of the applicable jurisdiction.\n',
-                              style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w400, fontSize: 8,
-                          color: Colors.black
-                          ),),
+                            text:
+                                ' You may use the Services only if you agree to form a binding contract with us and are not a person barred from receiving services under the laws of the applicable jurisdiction.\n',
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 8,
+                                color: Colors.black),
+                          ),
                         ],
                       ),
                     ),
@@ -507,16 +627,18 @@ class _ProductDetailsState extends State<ProductDetails> {
                       text: TextSpan(
                         text: '•Step 2:',
                         style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w700, fontSize: 8,
-                          color: Colors.black
-                          ),
+                            fontWeight: FontWeight.w700,
+                            fontSize: 8,
+                            color: Colors.black),
                         children: [
                           TextSpan(
-                              text: ' Our Privacy Policy describes how we handle the information you provide to us when you use our Services.\n\n\n\n',
-                              style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w400, fontSize: 8,
-                          color: Colors.black
-                          ),),
+                            text:
+                                ' Our Privacy Policy describes how we handle the information you provide to us when you use our Services.\n\n\n\n',
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 8,
+                                color: Colors.black),
+                          ),
                         ],
                       ),
                     ),
@@ -524,22 +646,26 @@ class _ProductDetailsState extends State<ProductDetails> {
                       text: TextSpan(
                         text: 'Privacy',
                         style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w700, fontSize: 8,
-                          color: Colors.black
-                          ),
+                            fontWeight: FontWeight.w700,
+                            fontSize: 8,
+                            color: Colors.black),
                         children: [
                           TextSpan(
-                              text: '\n\n\nWhen one door of happiness closes, another opens, but often we look so long at the closed door that we do not see the one that has been opened for us.\n\n',
-                              style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w400, fontSize: 8,
-                          color: Colors.black
-                          ),),
+                            text:
+                                '\n\n\nWhen one door of happiness closes, another opens, but often we look so long at the closed door that we do not see the one that has been opened for us.\n\n',
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 8,
+                                color: Colors.black),
+                          ),
                         ],
                       ),
                     )
                   ]),
             ),
-            SizedBox(height: h*0.02,)
+            SizedBox(
+              height: h * 0.02,
+            )
           ],
         ),
       ),

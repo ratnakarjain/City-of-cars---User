@@ -90,7 +90,7 @@ class _CommonServicesState extends State<CommonServices> {
             Plans(
               h: h,
               w: w,
-              text: "Primium",
+              text: "Premium",
               islabel: true,
               labeltext: "Reccomended",
             ),
@@ -335,7 +335,8 @@ class Plans extends StatelessWidget {
                             style: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w500,
                             )),
-                        Icon(Icons.arrow_forward_ios, size: h * 0.015),
+                            const DropDown()
+                        // Icon(Icons.arrow_forward_ios, size: h * 0.015),
                       ],
                     ),
                   )
@@ -371,5 +372,57 @@ class Plans extends StatelessWidget {
         ],
       ),
     );
+  }
+  
+}
+
+class DropDown extends StatefulWidget {
+  const DropDown({ Key? key }) : super(key: key);
+
+  @override
+  State<DropDown> createState() => _DropDownState();
+}
+
+class _DropDownState extends State<DropDown> {
+   String dropdownvalue = 'Item 1';   
+  
+  // List of items in our dropdown menu
+  var items = [    
+    'Item 1',
+    'Item 2',
+    'Item 3',
+    'Item 4',
+    'Item 5',
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonHideUnderline(
+      child: (
+      DropdownButton(
+          isDense: true,
+        // Initial Value
+        // value: dropdownvalue,
+          
+        // Down Arrow Icon
+        icon: const Icon(Icons.arrow_forward_ios,size: 10),    
+          
+        // Array list of items
+        items: items.map((String items) {
+          return DropdownMenuItem(
+            value: items,
+            child: Text(items),
+          );
+        }).toList(),
+        // After selecting the desired option,it will
+        // change button value to selected value
+        onChanged: (String? newValue) { 
+          setState(() {
+            dropdownvalue = newValue!;
+          });
+        },
+      )),
+    );
+      
+    
   }
 }

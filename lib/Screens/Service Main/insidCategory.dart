@@ -201,8 +201,9 @@ class _InsideCategoryState extends State<InsideCategory>
                 bodyType.length,
                 (index) => Text(
                       "${bodyType[index]}".toUpperCase(),
-                      textScaleFactor: 0.7,
+                     
                       style: GoogleFonts.montserrat(
+                        fontSize: 14,
                           textStyle: const TextStyle(
                         fontWeight: FontWeight.w400,
                       )),
