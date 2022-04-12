@@ -1,7 +1,10 @@
+import 'package:cityofcars/Screens/messages.dart';
 import 'package:cityofcars/Utils/Buttons/button.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'bottomnavBar.dart';
 
 class Tracking extends StatefulWidget {
   const Tracking({Key? key}) : super(key: key);
@@ -34,23 +37,24 @@ class _TrackingState extends State<Tracking> {
       ),
       body: Container(
           decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("assets/images/bg-map.png"),
-                  fit: BoxFit.fill)),
-          height: h,
+              // image: DecorationImage(
+              //     image: AssetImage("assets/images/bg-map.png"),
+              //     fit: BoxFit.fill)
+              ),
+          // height: h,
           width: w,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Padding(
-                padding:  EdgeInsets.all(h*0.01),
-                child: CircleAvatar(
-                  backgroundColor: kwhitecolor,
-                  foregroundColor: kTextInputPlaceholderColor,
-                  child: Icon(Icons.my_location),
-                ),
-              ),
+              // Padding(
+              //   padding:  EdgeInsets.all(h*0.01),
+              //   child: CircleAvatar(
+              //     backgroundColor: kwhitecolor,
+              //     foregroundColor: kTextInputPlaceholderColor,
+              //     child: Icon(Icons.my_location),
+              //   ),
+              // ),
               Container(
                 decoration: BoxDecoration(color: kwhitecolor, boxShadow: [
                   BoxShadow(
@@ -100,7 +104,18 @@ class _TrackingState extends State<Tracking> {
                         width: 1,
                       ),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushAndRemoveUntil<dynamic>(
+                            context,
+                            MaterialPageRoute<dynamic>(
+                              builder: (BuildContext context) => BottomNavBar(
+                                index: 2,
+                              ),
+                            ),
+                            (route) =>
+                                false, //if you want to disable back feature set to false
+                          );
+                        },
                         child: Text("view order",
                             style: GoogleFonts.montserrat(
                                 fontSize: 11,
@@ -108,7 +123,13 @@ class _TrackingState extends State<Tracking> {
                                 color: kTextInputPlaceholderColor)),
                       ),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const Messages(),
+                              ));
+                        },
                         child: Text("help",
                             style: GoogleFonts.montserrat(
                                 fontSize: 11,
@@ -132,11 +153,15 @@ class _TrackingState extends State<Tracking> {
                         bottomLeft: Radius.circular(h * 0.3))),
                 margin: EdgeInsets.symmetric(vertical: h * 0.01),
                 padding: EdgeInsets.only(
-                    left: w * 0.15, top: h * 0.01, bottom: h * 0.02,right: w*0.1),
+                    left: w * 0.15,
+                    top: h * 0.01,
+                    bottom: h * 0.02,
+                    right: w * 0.1),
                 child: Column(
                   children: [
                     Padding(
-                      padding:  EdgeInsets.symmetric(vertical: h*0.01, horizontal: w*0.04),
+                      padding: EdgeInsets.symmetric(
+                          vertical: h * 0.01, horizontal: w * 0.04),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -162,7 +187,7 @@ class _TrackingState extends State<Tracking> {
                     ),
                     RRecctButton2(
                       widget: Padding(
-                        padding:  EdgeInsets.all(h*0.01),
+                        padding: EdgeInsets.all(h * 0.01),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -185,23 +210,22 @@ class _TrackingState extends State<Tracking> {
                                   ]),
                             ),
                             InkWell(
-                              onTap: () {},
-                              child: CircleAvatar(
-                                backgroundColor: kredcolor,
-                                child: Center(
-                                  child: Image.asset("assets/images/x.png"),
-                                ),
-                              )
-                            ),
+                                onTap: () {},
+                                child: CircleAvatar(
+                                  backgroundColor: kredcolor,
+                                  child: Center(
+                                    child: Image.asset("assets/images/x.png"),
+                                  ),
+                                )),
                             InkWell(
-                              onTap: () {},
-                              child: CircleAvatar(
-                                backgroundColor: korangecolor,
-                                child: Center(
-                                  child: Image.asset("assets/images/check.png"),
-                                ),
-                              )
-                            ),
+                                onTap: () {},
+                                child: CircleAvatar(
+                                  backgroundColor: korangecolor,
+                                  child: Center(
+                                    child:
+                                        Image.asset("assets/images/check.png"),
+                                  ),
+                                )),
                           ],
                         ),
                       ),
@@ -218,19 +242,20 @@ class _TrackingState extends State<Tracking> {
                         topLeft: Radius.circular(h * 0.05),
                         topRight: Radius.circular(h * 0.05))),
                 margin: EdgeInsets.only(top: h * 0.01),
-                padding: EdgeInsets.all(h*0.02),
+                padding: EdgeInsets.all(h * 0.02),
                 child: Column(
                   children: [
-                     RRecctButton2(
+                    RRecctButton2(
                       widget: Padding(
-                        padding:  EdgeInsets.all(h*0.01),
+                        padding: EdgeInsets.all(h * 0.01),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Expanded(
                               child: CircleAvatar(
-                                backgroundColor: kdarkpurple,
-                                child: Image.asset("assets/images/heart.png")),
+                                  backgroundColor: kdarkpurple,
+                                  child:
+                                      Image.asset("assets/images/heart.png")),
                             ),
                             Expanded(
                               flex: 4,
@@ -253,31 +278,29 @@ class _TrackingState extends State<Tracking> {
                               ),
                             ),
                             Expanded(
-
                               child: SizedBox(
-                                height: h*0.045,
-                                width: w*0.15,
+                                height: h * 0.045,
+                                width: w * 0.15,
                                 child: Stack(
                                   children: [
-                                     Positioned(
+                                    Positioned(
                                       right: 0,
                                       child: InkWell(
-                                        onTap: () {},
-                                        child: Center(
-                                          child: Image.asset("assets/images/mask2.png"),
-                                        )
-                                      ),
+                                          onTap: () {},
+                                          child: Center(
+                                            child: Image.asset(
+                                                "assets/images/mask2.png"),
+                                          )),
                                     ),
                                     Positioned(
                                       left: 0,
                                       child: InkWell(
-                                        onTap: () {},
-                                        child: Center(
-                                          child: Image.asset("assets/images/mask1.png"),
-                                        )
-                                      ),
+                                          onTap: () {},
+                                          child: Center(
+                                            child: Image.asset(
+                                                "assets/images/mask1.png"),
+                                          )),
                                     ),
-                                   
                                   ],
                                 ),
                               ),
@@ -288,18 +311,21 @@ class _TrackingState extends State<Tracking> {
                       radius: h * 0.04,
                       buttonColor: kwhitecolor,
                     ),
-                    SizedBox(height: h*0.02,),
+                    SizedBox(
+                      height: h * 0.02,
+                    ),
                     RRecctButton2(
                       widget: Padding(
-                        padding:  EdgeInsets.all(h*0.01),
+                        padding: EdgeInsets.all(h * 0.01),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Expanded(
                               flex: 1,
                               child: CircleAvatar(
-                                backgroundColor: kdarkpurple,
-                                child: Image.asset("assets/images/heart.png")),
+                                  backgroundColor: kdarkpurple,
+                                  child:
+                                      Image.asset("assets/images/heart.png")),
                             ),
                             Expanded(
                               flex: 4,
@@ -323,29 +349,28 @@ class _TrackingState extends State<Tracking> {
                             ),
                             Expanded(
                               child: SizedBox(
-                                height: h*0.045,
-                                width: w*0.15,
+                                height: h * 0.045,
+                                width: w * 0.15,
                                 child: Stack(
                                   children: [
-                                     Positioned(
+                                    Positioned(
                                       right: 0,
                                       child: InkWell(
-                                        onTap: () {},
-                                        child: Center(
-                                          child: Image.asset("assets/images/mask3.png"),
-                                        )
-                                      ),
+                                          onTap: () {},
+                                          child: Center(
+                                            child: Image.asset(
+                                                "assets/images/mask3.png"),
+                                          )),
                                     ),
                                     Positioned(
                                       left: 0,
                                       child: InkWell(
-                                        onTap: () {},
-                                        child: Center(
-                                          child: Image.asset("assets/images/mask4.png"),
-                                        )
-                                      ),
+                                          onTap: () {},
+                                          child: Center(
+                                            child: Image.asset(
+                                                "assets/images/mask4.png"),
+                                          )),
                                     ),
-                                   
                                   ],
                                 ),
                               ),
@@ -357,11 +382,12 @@ class _TrackingState extends State<Tracking> {
                       buttonColor: kwhitecolor,
                     ),
                     SizedBox(
-                                    height: h*0.02,
-                                  ),
+                      height: h * 0.02,
+                    ),
                     RRecctButton2(
                       widget: Padding(
-                        padding:  EdgeInsets.symmetric(vertical: h*0.03, horizontal: h*0.01),
+                        padding: EdgeInsets.symmetric(
+                            vertical: h * 0.03, horizontal: h * 0.01),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -369,8 +395,9 @@ class _TrackingState extends State<Tracking> {
                             Expanded(
                               flex: 1,
                               child: CircleAvatar(
-                                backgroundColor: kCursorColor,
-                                child: Image.asset("assets/images/activity.png")),
+                                  backgroundColor: kCursorColor,
+                                  child: Image.asset(
+                                      "assets/images/activity.png")),
                             ),
                             Expanded(
                               flex: 5,
@@ -390,25 +417,27 @@ class _TrackingState extends State<Tracking> {
                                               style: GoogleFonts.montserrat(
                                                   fontSize: 10,
                                                   fontWeight: FontWeight.w600,
-                                                  color: kTextInputPlaceholderColor,
+                                                  color:
+                                                      kTextInputPlaceholderColor,
                                                   height: 2)),
-                                                  TextSpan(
-                                              text: "New to Yoga, or looking to take your mat to practice in new places? Get to know your local community and neighbours better by joining our Yoga family.",
+                                          TextSpan(
+                                              text:
+                                                  "New to Yoga, or looking to take your mat to practice in new places? Get to know your local community and neighbours better by joining our Yoga family.",
                                               style: GoogleFonts.montserrat(
                                                   fontSize: 8,
                                                   fontWeight: FontWeight.w400,
-                                                  color: kTextInputPlaceholderColor,
+                                                  color:
+                                                      kTextInputPlaceholderColor,
                                                   height: 2)),
                                         ]),
                                   ),
                                   SizedBox(
-                                    height: h*0.01,
+                                    height: h * 0.01,
                                   ),
                                   Image.asset("assets/images/images.png")
                                 ],
                               ),
                             ),
-                           
                           ],
                         ),
                       ),
@@ -416,7 +445,7 @@ class _TrackingState extends State<Tracking> {
                       buttonColor: kwhitecolor,
                     ),
                     SizedBox(
-                      height: h*0.05,
+                      height: h * 0.05,
                     )
                   ],
                 ),

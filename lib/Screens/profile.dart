@@ -3,6 +3,8 @@ import 'package:cityofcars/Screens/carHealth.dart';
 import 'package:cityofcars/Screens/editProfile.dart';
 import 'package:cityofcars/Screens/messages.dart';
 import 'package:cityofcars/Screens/myhomepage.dart';
+import 'package:cityofcars/Screens/notification.dart';
+import 'package:cityofcars/Screens/selectBrand.dart';
 import 'package:cityofcars/Screens/sos.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:cityofcars/Utils/constants.dart';
@@ -115,9 +117,14 @@ class _ProfileState extends State<Profile> {
                   children: [
                     Row(
                       children: [
-                        Icon(
-                          Icons.add,
-                          color: kbluecolor,
+                        InkWell(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const SelectBrand(),));
+                          },
+                          child: const Icon(
+                            Icons.add,
+                            color: kbluecolor,
+                          ),
                         ),
                         RichText(
                           text: TextSpan(
@@ -165,6 +172,7 @@ class _ProfileState extends State<Profile> {
                                         setState(() {
                                           if (currentCar > 0) {
                                             currentCar--;
+                                            print(currentCar);
                                           }
                                         });
                                       },
@@ -223,8 +231,9 @@ class _ProfileState extends State<Profile> {
                                   ? InkWell(
                                       onTap: () {
                                         setState(() {
-                                          if (currentCar < cars.length - 1) {
+                                          if (currentCar < cars.length - 2) {
                                             currentCar++;
+                                            print(currentCar);
                                           }
                                         });
                                       },
@@ -287,85 +296,111 @@ class _ProfileState extends State<Profile> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SizedBox(
-                              height: h * 0.07,
-                              width: w * 0.12,
-                              child: Stack(
-                                children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(Icons.mail),
-                                      Text(
-                                        "Support",
-                                        style: GoogleFonts.montserrat(
-                                          fontSize: 7,
-                                          color: ksubHading,
-                                          fontWeight: FontWeight.w700,
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const Messages(),
+                                    ));
+                              },
+                              child: SizedBox(
+                                height: h * 0.07,
+                                width: w * 0.12,
+                                child: Stack(
+                                  children: [
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.mail),
+                                        Text(
+                                          "Support",
+                                          style: GoogleFonts.montserrat(
+                                            fontSize: 7,
+                                            color: ksubHading,
+                                            fontWeight: FontWeight.w700,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  Positioned(
-                                    top: h * 0.01,
-                                    right: w * 0.02,
-                                    child: CircleAvatar(
-                                      radius: h * 0.01,
-                                      foregroundColor: kwhitecolor,
-                                      backgroundColor: kbluecolor,
-                                      child: Text(
-                                        "7",
-                                        style: GoogleFonts.montserrat(
-                                          fontSize: 8,
-                                          color: kwhitecolor,
-                                          fontWeight: FontWeight.w700,
+                                      ],
+                                    ),
+                                    Positioned(
+                                      top: h * 0.01,
+                                      right: w * 0.02,
+                                      child: CircleAvatar(
+                                        radius: h * 0.01,
+                                        foregroundColor: kwhitecolor,
+                                        backgroundColor: kbluecolor,
+                                        child: Text(
+                                          "7",
+                                          style: GoogleFonts.montserrat(
+                                            fontSize: 8,
+                                            color: kwhitecolor,
+                                            fontWeight: FontWeight.w700,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                             VerticalDivider(
                               color: kgrey,
                             ),
-                            SizedBox(
-                              height: h * 0.07,
-                              width: w * 0.12,
-                              child: Stack(
-                                children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(Icons.notifications),
-                                      Text(
-                                        "Notifications",
-                                        style: GoogleFonts.montserrat(
-                                          fontSize: 7,
-                                          color: ksubHading,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                    ],
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushAndRemoveUntil<dynamic>(
+                                  context,
+                                  MaterialPageRoute<dynamic>(
+                                    builder: (BuildContext context) =>
+                                        BottomNavBar(
+                                      index: 4,
+                                    ),
                                   ),
-                                  Positioned(
-                                    top: h * 0.01,
-                                    right: w * 0.01,
-                                    child: CircleAvatar(
-                                      radius: h * 0.01,
-                                      foregroundColor: kwhitecolor,
-                                      backgroundColor: korangecolor,
-                                      child: Text(
-                                        "5",
-                                        style: GoogleFonts.montserrat(
-                                          fontSize: 8,
-                                          color: kwhitecolor,
-                                          fontWeight: FontWeight.w700,
+                                  (route) =>
+                                      false, //if you want to disable back feature set to false
+                                );
+                              },
+                              child: SizedBox(
+                                height: h * 0.07,
+                                width: w * 0.12,
+                                child: Stack(
+                                  children: [
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.notifications),
+                                        Text(
+                                          "Notifications",
+                                          style: GoogleFonts.montserrat(
+                                            fontSize: 7,
+                                            color: ksubHading,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Positioned(
+                                      top: h * 0.01,
+                                      right: w * 0.01,
+                                      child: CircleAvatar(
+                                        radius: h * 0.01,
+                                        foregroundColor: kwhitecolor,
+                                        backgroundColor: korangecolor,
+                                        child: Text(
+                                          "5",
+                                          style: GoogleFonts.montserrat(
+                                            fontSize: 8,
+                                            color: kwhitecolor,
+                                            fontWeight: FontWeight.w700,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ],
@@ -519,14 +554,8 @@ class _ProfileState extends State<Profile> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.pushAndRemoveUntil<dynamic>(
-                    context,
-                    MaterialPageRoute<dynamic>(
-                      builder: (BuildContext context) => const MyHomePage(),
-                    ),
-                    (route) =>
-                        false, //if you want to disable back feature set to false
-                  );
+                  confirm();
+                  setState(() {});
                 },
                 child: RRectCard(
                   h: h * 0.08,
@@ -560,5 +589,61 @@ class _ProfileState extends State<Profile> {
         ),
       ),
     );
+  }
+
+  confirm() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              "Do you want to logout?",
+              style: GoogleFonts.montserrat(
+                  color: kTextInputPlaceholderColor, fontSize: 18),
+            ),
+            actions: [
+              Row(
+                children: [
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pushAndRemoveUntil<dynamic>(
+                          context,
+                          MaterialPageRoute<dynamic>(
+                            builder: (BuildContext context) =>
+                                const MyHomePage(),
+                          ),
+                          (route) =>
+                              false, //if you want to disable back feature set to false
+                        );
+                      },
+                      child: Center(
+                        child: Text(
+                          "Yes",
+                          style: GoogleFonts.montserrat(
+                              color: kbluecolor, fontSize: 16),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Center(
+                        child: Text(
+                          "No",
+                          style: GoogleFonts.montserrat(
+                              color: kredcolor, fontSize: 16),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              )
+            ],
+          );
+        });
   }
 }

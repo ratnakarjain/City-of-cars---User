@@ -1,4 +1,5 @@
 import 'package:cityofcars/Utils/constants.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -13,7 +14,7 @@ class _NotificationsState extends State<Notifications> {
   var h;
   var w;
   List selected = [];
-  int item = 22;
+  int item = 50;
   @override
   void initState() {
     // TODO: implement initState
@@ -43,14 +44,14 @@ class _NotificationsState extends State<Notifications> {
               GoogleFonts.montserrat(fontSize: 21, fontWeight: FontWeight.w700),
         ),
       ),
-      body: Container(
-        height: h,
-        width: w,
-        child: SingleChildScrollView(
-          // controller: _controller,
-          physics: BouncingScrollPhysics(),
-          padding: EdgeInsets.only(bottom: h * 0.05),
-          child: Stack(children:
+      body: SingleChildScrollView(
+        controller: _controller,
+        padding: EdgeInsets.only(bottom: h * 0.1),
+        child: Container(
+          // height: h,
+          width: w,
+          child:
+           Stack(children:
                List.generate(item, (index) {
                 return Container(
                   // height: h*0.3,
@@ -113,7 +114,8 @@ class _NotificationsState extends State<Notifications> {
 
 
                 
-              ),
+             
+          ),
         ),
       ),
     );

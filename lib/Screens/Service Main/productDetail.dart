@@ -1,4 +1,5 @@
 import 'package:cityofcars/Screens/Service%20Main/cart.dart';
+import 'package:cityofcars/Screens/Service%20Main/slot.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -187,9 +188,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 "₹4700",
                                 style: GoogleFonts.montserrat(
                                     fontSize: 12,
-                                    textStyle: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    )),
+                                    textStyle: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: kTextInputPlaceholderColor
+                                            .withOpacity(0.5))),
                               ),
                               Text(
                                 "company authorised",
@@ -213,7 +215,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const Cart(),
+                      builder: (context) => const Slot(),
                     ));
               },
               h: h * 0.05,
@@ -288,7 +290,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                             child: Stack(
                               children: [
                                 RRectCard(
-                                    // h: h * des? 0.09 : ,
                                     w: w,
                                     color: kLightOrangeBgColor,
                                     widget: SingleChildScrollView(
@@ -314,16 +315,28 @@ class _ProductDetailsState extends State<ProductDetails> {
                                           SizedBox(
                                             height: h * 0.027,
                                           ),
-                                          Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: w * 0.09),
-                                            child: Text(
-                                              "This pack is essential every 3000 km or 6 months whichever is earlier",
-                                              style: GoogleFonts.montserrat(
-                                                fontSize: 10,
-                                                height: 1.5,
-                                                fontWeight: FontWeight.w400,
-                                              ),
+                                          Visibility(
+                                            visible: des,
+                                            child: Column(
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: w * 0.09),
+                                                  child: Text(
+                                                    "This pack is essential every 3000 km or 6 months whichever is earlier",
+                                                    style:
+                                                        GoogleFonts.montserrat(
+                                                      fontSize: 10,
+                                                      height: 1.5,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: h * 0.027,
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ],
@@ -334,8 +347,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   bottom: h * 0.005,
                                   left: 0,
                                   right: 0,
-                                  child: const Center(
-                                    child: Icon(Icons.keyboard_arrow_down),
+                                  child:  Center(
+                                    child: Icon(des?Icons.keyboard_arrow_up: Icons.keyboard_arrow_down),
                                   ),
                                 )
                               ],

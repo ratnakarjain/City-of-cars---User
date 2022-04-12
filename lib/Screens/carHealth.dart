@@ -96,10 +96,10 @@ class _CarHealthState extends State<CarHealth> {
                     ),
                     Container(
                       height: h * 0.15,
-                      child: GridView.builder(
-                          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                              childAspectRatio: 2 / 2.4,
-                              maxCrossAxisExtent: w * 0.4),
+                      child: ListView.builder(
+                          // gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                          //     childAspectRatio: 2 / 2.4,
+                          //     maxCrossAxisExtent: w * 0.4),
                           physics: BouncingScrollPhysics(),
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
@@ -323,7 +323,7 @@ class _CarHealthState extends State<CarHealth> {
                           
                         });
                       },
-                      child:extend?  Icon(Icons.keyboard_arrow_up):Icon(Icons.keyboard_arrow_down),
+                      child:extend?  const Icon(Icons.keyboard_arrow_up):const Icon(Icons.keyboard_arrow_down),
                     )
                   ],
                 ),

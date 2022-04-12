@@ -1,3 +1,4 @@
+import 'package:cityofcars/Utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -50,9 +51,13 @@ class _EditProfileState extends State<EditProfile> {
                           Text(
                             "My Documment     ",
                             style: GoogleFonts.montserrat(
-                                fontSize: 9, fontWeight: FontWeight.w700),
+                                fontSize: 12, fontWeight: FontWeight.w700),
                           ),
-                          Icon(Icons.file_upload_outlined,color: kbluecolor,size:h*0.02,)
+                          Icon(
+                            Icons.file_upload_outlined,
+                            color: kbluecolor,
+                            size: h * 0.02,
+                          )
                         ],
                       ),
                       RichText(
@@ -60,34 +65,41 @@ class _EditProfileState extends State<EditProfile> {
                         text: TextSpan(
                             text: "Registration Certificate\n",
                             style: GoogleFonts.montserrat(
-                                color: kSelectedColor, fontSize: 8),
+                                color: kSelectedColor, fontSize: 10),
                             children: [
                               TextSpan(
                                   text: "Insurance Policy\n",
                                   style: GoogleFonts.montserrat(
-                                      color: kSelectedColor, fontSize: 8)),
+                                      color: kSelectedColor, fontSize: 10)),
                               TextSpan(
                                   text: "Other\n",
                                   style: GoogleFonts.montserrat(
-                                      color: kSelectedColor, fontSize: 8)),
+                                      color: kSelectedColor, fontSize: 10)),
                             ]),
                       )
                     ],
                   ),
-                  CircleAvatar(
-                    radius: h * 0.03,
-                    backgroundColor: kwhitecolor,
-                    child: Image.asset(
-                      "assets/images/ava1.png",
-                      fit: BoxFit.cover,
-                      // height: h * 0.1,
+                  GestureDetector(
+                    onTap: () {
+                      // editPic();
+                      imagePicker();
+                      setState(() {});
+                    },
+                    child: CircleAvatar(
+                      radius: h * 0.03,
+                      backgroundColor: kwhitecolor,
+                      child: Image.asset(
+                        "assets/images/ava1.png",
+                        fit: BoxFit.cover,
+                        // height: h * 0.1,
+                      ),
                     ),
                   )
                 ],
               ),
             ),
             Container(
-               decoration: BoxDecoration(
+              decoration: BoxDecoration(
                   color: kwhitecolor,
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(
@@ -200,16 +212,19 @@ class _EditProfileState extends State<EditProfile> {
                     ],
                   ),
                   SizedBox(
-                    height: h*0.04,
+                    height: h * 0.04,
                   )
                 ],
               ),
             ),
-              SizedBox(
-                    height: h*0.04,
-                  ),
-             Center(
+            SizedBox(
+              height: h * 0.04,
+            ),
+            Center(
               child: RRecctButton(
+                onTap: () {
+                  Navigator.pop(context);
+                },
                 h: h * 0.06,
                 w: w * 0.9,
                 buttonColor: kbluecolor,
@@ -222,5 +237,51 @@ class _EditProfileState extends State<EditProfile> {
         ),
       ),
     );
+  }
+
+  editPic() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              "Want to change Profile Pic",
+              style: GoogleFonts.montserrat(
+                  color: kTextInputPlaceholderColor, fontSize: 18),
+            ),
+            actions: [
+              Row(
+                children: [
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {},
+                      child: Center(
+                        child: Text(
+                          "Yes",
+                          style: GoogleFonts.montserrat(
+                              color: kbluecolor, fontSize: 16),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Center(
+                        child: Text(
+                          "No",
+                          style: GoogleFonts.montserrat(
+                              color: kredcolor, fontSize: 16),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              )
+            ],
+          );
+        });
   }
 }

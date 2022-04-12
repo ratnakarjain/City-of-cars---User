@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cityofcars/Screens/Service%20Main/cart.dart';
 import 'package:cityofcars/Screens/Service%20Main/payment.dart';
 import 'package:cityofcars/Screens/Service%20Main/selectLocation.dart';
 import 'package:cityofcars/Utils/Buttons/button.dart';
@@ -75,11 +76,13 @@ class _SlotState extends State<Slot> {
           controller: _controller,
           child: Column(
             children: [
-             isTime ? Container(
-                height: h * 0.4,
-                width: w,
-                child:  Center(child: TimeSlot()),
-              ) : Calendar(),
+              isTime
+                  ? Container(
+                      height: h * 0.35,
+                      width: w,
+                      child: Center(child: TimeSlot()),
+                    )
+                  : Calendar(),
               Container(
                 padding: EdgeInsets.symmetric(
                     horizontal: w * 0.06, vertical: h * 0.04),
@@ -114,38 +117,38 @@ class _SlotState extends State<Slot> {
                       //                 BorderRadius.circular(h * 0.02))),
                       //   ),
                       // ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SelectLocation(),
-                              ));
-                        },
-                        child: Container(
-                            height: h * 0.06,
-                            margin:
-                                EdgeInsets.only(top: h * 0.02, bottom: 0.01),
-                            padding: EdgeInsets.symmetric(horizontal: w * 0.01),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(h * 0.02),
-                                border: Border.all(
-                                    color: kTextInputPlaceholderColor
-                                        .withOpacity(0.5))),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Enter pick-up location",
-                                  style: GoogleFonts.montserrat(fontSize: 13),
-                                ),
-                                Icon(
-                                  Icons.search,
-                                  color: kTextInputPlaceholderColor
-                                      .withOpacity(0.7),
-                                )
-                              ],
-                            )
+                      // InkWell(
+                      //   onTap: () {
+                      //     Navigator.push(
+                      //         context,
+                      //         MaterialPageRoute(
+                      //           builder: (context) => SelectLocation(),
+                      //         ));
+                      //   },
+                      //   child: Container(
+                      //       height: h * 0.06,
+                      //       margin:
+                      //           EdgeInsets.only(top: h * 0.02, bottom: 0.01),
+                      //       padding: EdgeInsets.symmetric(horizontal: w * 0.01),
+                      //       decoration: BoxDecoration(
+                      //           borderRadius: BorderRadius.circular(h * 0.02),
+                      //           border: Border.all(
+                      //               color: kTextInputPlaceholderColor
+                      //                   .withOpacity(0.5))),
+                      //       child: Row(
+                      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //         children: [
+                      //           Text(
+                      //             "Enter pick-up location",
+                      //             style: GoogleFonts.montserrat(fontSize: 13),
+                      //           ),
+                      //           Icon(
+                      //             Icons.search,
+                      //             color: kTextInputPlaceholderColor
+                      //                 .withOpacity(0.7),
+                      //           )
+                      //         ],
+                      //       )
                             // TextFormField(
                             //   cursorColor: korangecolor,
                             //   decoration: InputDecoration(
@@ -164,8 +167,8 @@ class _SlotState extends State<Slot> {
                             //           borderRadius:
                             //               BorderRadius.circular(h * 0.02))),
                             // ),
-                            ),
-                      ),
+                            // ),
+                      // ),
                       SizedBox(
                         height: h * 0.02,
                       ),
@@ -330,7 +333,7 @@ class _SlotState extends State<Slot> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Payment(),
+                                builder: (context) => const Cart(),
                               ));
                         },
                       )
@@ -355,8 +358,6 @@ class _CalendarState extends State<Calendar> {
       .toggledOn; // Can be toggled on/off by longpressing a date
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
-  DateTime? _rangeStart;
-  DateTime? _rangeEnd;
 
   var kToday = DateTime.now();
   var kFirstDay;
@@ -366,7 +367,7 @@ class _CalendarState extends State<Calendar> {
     // TODO: implement initState
     super.initState();
 
-    kFirstDay = DateTime(kToday.year - 3, kToday.month, kToday.day);
+    kFirstDay = DateTime.now();
     kLastDay = DateTime(kToday.year + 3, kToday.month, kToday.day);
   }
 
@@ -378,7 +379,7 @@ class _CalendarState extends State<Calendar> {
       lastDay: kLastDay,
       focusedDay: _focusedDay,
       selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-      rangeStartDay: _rangeStart,
+
       startingDayOfWeek: StartingDayOfWeek.monday,
       headerStyle: HeaderStyle(
           leftChevronVisible: false,
@@ -389,40 +390,54 @@ class _CalendarState extends State<Calendar> {
               fontWeight: FontWeight.bold,
               fontSize: 20,
               color: kTextInputPlaceholderColor)),
-    
+
       daysOfWeekStyle: DaysOfWeekStyle(
           weekdayStyle:
               GoogleFonts.montserrat(color: kTextInputPlaceholderColor)),
-    
+
       calendarStyle: CalendarStyle(
-        withinRangeDecoration: BoxDecoration(
-            color: _rangeEnd == null ? kDateCircleColor : kTransparent),
-        defaultTextStyle: GoogleFonts.montserrat(
-          color: kTextInputPlaceholderColor,
-        ),
-        rangeStartDecoration: BoxDecoration(
-            color: _rangeEnd == null ? kbluecolor : kDateCircleColor,
-            shape: BoxShape.circle),
-        rangeHighlightColor: kStartDatrCicleColor,
-        rangeStartTextStyle: GoogleFonts.montserrat(
-            color: _rangeEnd == null ? kwhitecolor : kStartDateColor),
-        rangeEndTextStyle: GoogleFonts.montserrat(
-            fontWeight: FontWeight.w700, color: kwhitecolor),
+        // withinRangeDecoration: BoxDecoration(
+        //     color: _rangeEnd == null ? kDateCircleColor : kTransparent),
+        // defaultTextStyle: GoogleFonts.montserrat(
+        //   color: kTextInputPlaceholderColor,
+        // ),
+        // rangeStartDecoration: BoxDecoration(
+        //     color: _rangeEnd == null ? kbluecolor : kDateCircleColor,
+        //     shape: BoxShape.circle),
+        // rangeHighlightColor: kStartDatrCicleColor,
+        // rangeStartTextStyle: GoogleFonts.montserrat(
+        //     color: _rangeEnd == null ? kwhitecolor : kStartDateColor),
+        // rangeEndTextStyle: GoogleFonts.montserrat(
+        //     fontWeight: FontWeight.w700, color: kwhitecolor),
         weekendTextStyle:
             GoogleFonts.montserrat(color: kTextInputPlaceholderColor),
+        selectedTextStyle: GoogleFonts.montserrat(
+            color:
+                //  _rangeEnd == null
+                //     ? _rangeStart == null
+                kwhitecolor),
+        selectedDecoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color:
+                //  _rangeEnd == null
+                //     ? _rangeStart == null
+                kbluecolor),
         todayTextStyle: GoogleFonts.montserrat(
-            color: _rangeEnd == null
-                ? _rangeStart == null
-                    ? kwhitecolor
-                    : kTextInputPlaceholderColor
-                : kTextInputPlaceholderColor),
+          color:
+              //  _rangeEnd == null
+              //     ? _rangeStart == null
+              kwhitecolor,
+        ),
+        // : kTextInputPlaceholderColor
+        //  :  kTextInputPlaceholderColor),
         todayDecoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: _rangeEnd == null
-                ? _rangeStart == null
-                    ? kbluecolor
-                    : kDateCircleColor
-                : kDateCircleColor),
+            color:
+                //  _rangeEnd == null
+                //     ? _rangeStart == null
+                kbluecolor.withOpacity(0.5)),
+        //     : kDateCircleColor
+        // : kDateCircleColor),
         defaultDecoration: const BoxDecoration(
             shape: BoxShape.circle, color: kDateCircleColor),
         weekendDecoration: const BoxDecoration(
@@ -430,35 +445,44 @@ class _CalendarState extends State<Calendar> {
         rangeEndDecoration:
             const BoxDecoration(color: kbluecolor, shape: BoxShape.circle),
       ),
-      rangeEndDay: _rangeEnd,
+      // rangeEndDay: _rangeEnd,
       calendarFormat: _calendarFormat,
-      rangeSelectionMode: _rangeSelectionMode,
+      // rangeSelectionMode: _rangeSelectionMode,
       onDaySelected: (selectedDay, focusedDay) {
-        if (!isSameDay(_selectedDay, selectedDay)) {
-          if (_rangeStart!.day >= DateTime.now().day ||
-              _rangeStart!.month > DateTime.now().month) {
-            setState(() {
-              _selectedDay = selectedDay;
-              _focusedDay = focusedDay;
-              _rangeStart = null; // Important to clean those
-              _rangeEnd = null;
-              _rangeSelectionMode = RangeSelectionMode.toggledOff;
-            });
-          }
-        }
+        // if (!isSameDay(_selectedDay, selectedDay)) {
+        //   if (_rangeStart!.day >= DateTime.now().day ||
+        //       _rangeStart!.month > DateTime.now().month) {
+        //     setState(() {
+          _focusedDay = focusedDay;
+          _selectedDay = selectedDay;
+        // if (_selectedDay!.day < DateTime.now().day &&
+        //     _selectedDay!.month < DateTime.now().month &&
+        //     _selectedDay!.year < DateTime.now().year) {
+        //   _selectedDay =null;
+        //    setState(() {});
+          
+        // }
+
+        //       _rangeStart = null; // Important to clean those
+        //       _rangeEnd = null;
+        //       _rangeSelectionMode = RangeSelectionMode.toggledOff;
+        //     });
+        //   }
+        // }
+        setState(() {});
       },
-      onRangeSelected: (start, end, focusedDay) {
-        if (DateTime.now().day <= start!.day ||
-            DateTime.now().month < start.month) {
-          setState(() {
-            _selectedDay = null;
-            _focusedDay = focusedDay;
-            _rangeStart = start;
-            _rangeEnd = end;
-            _rangeSelectionMode = RangeSelectionMode.toggledOn;
-          });
-        }
-      },
+      // onRangeSelected: (start, end, focusedDay) {
+      //   if (DateTime.now().day <= start!.day ||
+      //       DateTime.now().month < start.month) {
+      //     setState(() {
+      //       _selectedDay = null;
+      //       _focusedDay = focusedDay;
+      //       _rangeStart = start;
+      //       _rangeEnd = end;
+      //       _rangeSelectionMode = RangeSelectionMode.toggledOn;
+      //     });
+      //   }
+      // },
       // onFormatChanged: (format) {
       //   if (_calendarFormat != format) {
       //     setState(() {
@@ -501,7 +525,8 @@ class _TimeSlotState extends State<TimeSlot> {
       "start min": "00",
       "end hour": "06",
       "end min": "00",
-    }
+    },
+    
   ];
   @override
   void initState() {

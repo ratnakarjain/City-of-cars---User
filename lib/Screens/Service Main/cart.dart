@@ -1,3 +1,4 @@
+import 'package:cityofcars/Screens/Service%20Main/payment.dart';
 import 'package:cityofcars/Screens/Service%20Main/slot.dart';
 import 'package:cityofcars/Screens/bottomnavBar.dart';
 import 'package:cityofcars/Utils/constants.dart';
@@ -16,6 +17,15 @@ class Cart extends StatefulWidget {
 class _CartState extends State<Cart> {
   var h;
   var w;
+  String dropdownvalue = '';
+
+  // List of items in our dropdown menu
+  var items = [
+    'Item 1',
+    'Item 2',
+    'Item 3',
+    
+  ];
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
@@ -112,92 +122,253 @@ class _CartState extends State<Cart> {
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          // Container(
+                          //   color: kLightOrangeBgColor,
+                          //   padding: EdgeInsets.all(h * 0.005),
+                          //   child: Row(
+                          //     children: [
+                          //       Padding(
+                          //         padding: EdgeInsets.symmetric(
+                          //             horizontal: h * 0.005),
+                          //         child: Column(
+                          //           mainAxisAlignment:
+                          //               MainAxisAlignment.spaceBetween,
+                          //           children: [
+                          //             Image.asset(
+                          //               "assets/images/EngineOil.png",
+                          //               height: h * 0.03,
+                          //             ),
+                          //             Text(
+                          //               "Engine Oil",
+                          //               textScaleFactor: 0.7,
+                          //               style: GoogleFonts.montserrat(
+                          //                   fontWeight: FontWeight.w500,
+                          //                   color: kTextInputPlaceholderColor
+                          //                       .withOpacity(0.6)),
+                          //             ),
+                          //           ],
+                          //         ),
+                          //       ),
+                          //       Padding(
+                          //         padding: EdgeInsets.symmetric(
+                          //             horizontal: h * 0.005),
+                          //         child: Column(
+                          //           mainAxisAlignment:
+                          //               MainAxisAlignment.spaceBetween,
+                          //           children: [
+                          //             Image.asset(
+                          //               "assets/images/oifilter.png",
+                          //               height: h * 0.03,
+                          //             ),
+                          //             Text(
+                          //               "Oil Filter",
+                          //               textScaleFactor: 0.7,
+                          //               style: GoogleFonts.montserrat(
+                          //                   fontWeight: FontWeight.w500,
+                          //                   color: kTextInputPlaceholderColor
+                          //                       .withOpacity(0.6)),
+                          //             ),
+                          //           ],
+                          //         ),
+                          //       ),
+                          //       Padding(
+                          //         padding: EdgeInsets.symmetric(
+                          //             horizontal: h * 0.005),
+                          //         child: Column(
+                          //           children: [
+                          //             Image.asset(
+                          //               "assets/images/wind.png",
+                          //               height: h * 0.03,
+                          //             ),
+                          //             Text(
+                          //               "Air Filter",
+                          //               textScaleFactor: 0.7,
+                          //               style: GoogleFonts.montserrat(
+                          //                   fontWeight: FontWeight.w500,
+                          //                   color: kTextInputPlaceholderColor
+                          //                       .withOpacity(0.6)),
+                          //             ),
+                          //           ],
+                          //         ),
+                          //       ),
+                          //       InkWell(
+                          //         onTap: () {},
+                          //         child: Row(
+                          //           children: [
+                          //             Text("+9 more",
+                          //                 textScaleFactor: 0.7,
+                          //                 style: GoogleFonts.montserrat(
+                          //                   fontWeight: FontWeight.w500,
+                          //                 )),
+                          //             Icon(Icons.arrow_forward_ios,
+                          //                 size: h * 0.015),
+                          //           ],
+                          //         ),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
                           Container(
                             color: kLightOrangeBgColor,
+                            height: h * 0.06,
+                            width: w * 0.6,
+                            margin: EdgeInsets.only(right: w * 0.03),
                             padding: EdgeInsets.all(h * 0.005),
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: h * 0.005),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Image.asset(
-                                        "assets/images/EngineOil.png",
-                                        height: h * 0.03,
-                                      ),
-                                      Text(
-                                        "Engine Oil",
-                                        textScaleFactor: 0.7,
-                                        style: GoogleFonts.montserrat(
-                                            fontWeight: FontWeight.w500,
-                                            color: kTextInputPlaceholderColor
-                                                .withOpacity(0.6)),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: h * 0.005),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Image.asset(
-                                        "assets/images/oifilter.png",
-                                        height: h * 0.03,
-                                      ),
-                                      Text(
-                                        "Oil Filter",
-                                        textScaleFactor: 0.7,
-                                        style: GoogleFonts.montserrat(
-                                            fontWeight: FontWeight.w500,
-                                            color: kTextInputPlaceholderColor
-                                                .withOpacity(0.6)),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: h * 0.005),
-                                  child: Column(
-                                    children: [
-                                      Image.asset(
-                                        "assets/images/wind.png",
-                                        height: h * 0.03,
-                                      ),
-                                      Text(
-                                        "Air Filter",
-                                        textScaleFactor: 0.7,
-                                        style: GoogleFonts.montserrat(
-                                            fontWeight: FontWeight.w500,
-                                            color: kTextInputPlaceholderColor
-                                                .withOpacity(0.6)),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: () {},
+                            child: DropdownButtonHideUnderline(
+                              child: (DropdownButton(
+                                hint: SizedBox(
+                                  width: w * 0.5,
                                   child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
+                                      Column(
+                                        children: [
+                                          Image.asset(
+                                            "assets/images/EngineOil.png",
+                                            height: h * 0.03,
+                                          ),
+                                          Text(
+                                            "Engine Oil ",
+                                            // textScaleFactor: 0.7,
+                                            style: GoogleFonts.montserrat(
+                                                fontSize: 8,
+                                                fontWeight: FontWeight.w500,
+                                                color:
+                                                    kTextInputPlaceholderColor
+                                                        .withOpacity(0.6)),
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        children: [
+                                          Image.asset(
+                                            "assets/images/oifilter.png",
+                                            height: h * 0.03,
+                                          ),
+                                          Text(
+                                            "Oil Filter",
+                                            // textScaleFactor: 0.7,
+                                            style: GoogleFonts.montserrat(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 8,
+                                                color:
+                                                    kTextInputPlaceholderColor
+                                                        .withOpacity(0.6)),
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        children: [
+                                          Image.asset(
+                                            "assets/images/wind.png",
+                                            height: h * 0.03,
+                                          ),
+                                          Text(
+                                            "Air Filter",
+                                            // textScaleFactor: 0.7,
+                                            style: GoogleFonts.montserrat(
+                                                fontSize: 8,
+                                                fontWeight: FontWeight.w500,
+                                                color:
+                                                    kTextInputPlaceholderColor
+                                                        .withOpacity(0.6)),
+                                          ),
+                                        ],
+                                      ),
                                       Text("+9 more",
                                           textScaleFactor: 0.7,
                                           style: GoogleFonts.montserrat(
                                             fontWeight: FontWeight.w500,
                                           )),
-                                      Icon(Icons.arrow_forward_ios,
-                                          size: h * 0.015),
                                     ],
                                   ),
                                 ),
-                              ],
+                                isDense: true,
+                                // Initial Value
+                                // value: dropdownvalue,
+
+                                // Down Arrow Icon
+                                icon: const Icon(Icons.arrow_forward_ios,
+                                    size: 10),
+
+                                // Array list of items
+                                items: items.map((String items) {
+                                  return DropdownMenuItem(
+                                    value: items,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Column(
+                                          children: [
+                                            Image.asset(
+                                              "assets/images/EngineOil.png",
+                                              height: h * 0.03,
+                                            ),
+                                            Text(
+                                              "Engine Oil ",
+                                              // textScaleFactor: 0.7,
+                                              style: GoogleFonts.montserrat(
+                                                  fontSize: 8,
+                                                  fontWeight: FontWeight.w500,
+                                                  color:
+                                                      kTextInputPlaceholderColor
+                                                          .withOpacity(0.6)),
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            Image.asset(
+                                              "assets/images/oifilter.png",
+                                              height: h * 0.03,
+                                            ),
+                                            Text(
+                                              "Oil Filter",
+                                              // textScaleFactor: 0.7,
+                                              style: GoogleFonts.montserrat(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 8,
+                                                  color:
+                                                      kTextInputPlaceholderColor
+                                                          .withOpacity(0.6)),
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            Image.asset(
+                                              "assets/images/wind.png",
+                                              height: h * 0.03,
+                                            ),
+                                            Text(
+                                              "Air Filter",
+                                              // textScaleFactor: 0.7,
+                                              style: GoogleFonts.montserrat(
+                                                  fontSize: 8,
+                                                  fontWeight: FontWeight.w500,
+                                                  color:
+                                                      kTextInputPlaceholderColor
+                                                          .withOpacity(0.6)),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }).toList(),
+                                // After selecting the desired option,it will
+                                // change button value to selected value
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    dropdownvalue = newValue!;
+                                  });
+                                },
+                              )),
                             ),
                           ),
+
                           CircleAvatar(
                             radius: h * 0.02,
                             backgroundColor: kbluecolor,
@@ -318,7 +489,7 @@ class _CartState extends State<Cart> {
               child: RRecctButton(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Slot()));
+                      MaterialPageRoute(builder: (context) => const Payment()));
                 },
                 buttonColor: korangecolor,
                 text: "Proceed".toUpperCase(),

@@ -4,6 +4,7 @@ import 'package:cityofcars/Utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../bottomnavBar.dart';
 import '../tracking.dart';
 
 class OrderSuccessful extends StatefulWidget {
@@ -227,7 +228,6 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                   Expanded(
                     flex: 6,
                     child: Column(
-                      
                       children: [
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -269,7 +269,7 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                           ],
                         ),
                         SizedBox(
-                          height: h*0.01,
+                          height: h * 0.01,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -351,10 +351,22 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
               ),
             ),
             SizedBox(
-              height: h*0.03,
+              height: h * 0.03,
             ),
             RRecctButton(
               text: "CONTINUE SHOPPING",
+              onTap: () {
+                Navigator.pushAndRemoveUntil<dynamic>(
+                  context,
+                  MaterialPageRoute<dynamic>(
+                    builder: (BuildContext context) => BottomNavBar(
+                      index: 0,
+                    ),
+                  ),
+                  (route) =>
+                      false, //if you want to disable back feature set to false
+                );
+              },
               h: h * 0.06,
               w: w * 0.8,
               style: GoogleFonts.montserrat(
@@ -365,8 +377,12 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
               buttonColor: kbluecolor,
             ),
             RRecctButton(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Tracking(),));
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Tracking(),
+                    ));
               },
               text: "Track your order here",
               h: h * 0.06,

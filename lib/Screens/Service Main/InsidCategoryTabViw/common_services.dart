@@ -6,6 +6,9 @@ import '../../../Utils/Shapes/widgets.dart';
 import '../../../Utils/constants.dart';
 import '../productDetail.dart';
 
+var h;
+var w;
+
 class CommonServices extends StatefulWidget {
   const CommonServices({Key? key}) : super(key: key);
 
@@ -14,8 +17,6 @@ class CommonServices extends StatefulWidget {
 }
 
 class _CommonServicesState extends State<CommonServices> {
-  var h;
-  var w;
   List reccomendedPackes = [
     {"services": "Clutch", "image": "2114.png", "type": "Custom services"},
     {"services": "Suspension", "image": "2117.png", "type": "Custom services"},
@@ -107,7 +108,7 @@ class _CommonServicesState extends State<CommonServices> {
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             ),
             SizedBox(
-              height: h*0.005,
+              height: h * 0.005,
             ),
             Container(
               height: h * 0.18,
@@ -270,102 +271,48 @@ class Plans extends StatelessWidget {
                   color: kTextInputPlaceholderColor.withOpacity(0.6)),
             ),
           ),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-            Container(
-              color: kLightOrangeBgColor,
-              padding: EdgeInsets.all(h * 0.005),
-              child: Row(
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: w * 0.03),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: h * 0.005),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Image.asset("assets/images/EngineOil.png",height: h*0.03,),
-                        Text(
-                          "Engine Oil",
-                          textScaleFactor: 0.7,
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w500,
-                              color:
-                                  kTextInputPlaceholderColor.withOpacity(0.6)),
-                        ),
-                      ],
+                  Expanded(
+                    flex: 2,
+                    child: DropDown(
+                    
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: h * 0.005),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Image.asset("assets/images/oifilter.png",height: h*0.03,),
-                        Text(
-                          "Oil Filter",
-                          textScaleFactor: 0.7,
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w500,
-                              color:
-                                  kTextInputPlaceholderColor.withOpacity(0.6)),
-                        ),
-                      ],
+                  Expanded(
+                    child: RRecctButton2(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ProductDetails(),
+                            ));
+                      },
+                      h: h * 0.05,
+                      w: w * 0.3,
+                      radius: h * 0.025,
+                      buttonColor: kGreenColor,
+                      widget: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Book now ".toUpperCase(),
+                              textScaleFactor: 0.8,
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w500,
+                                  color: kwhitecolor)),
+                          SizedBox(
+                            width: w * 0.01,
+                          ),
+                          Image.asset("assets/images/doublArrow.png"),
+                        ],
+                      ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: h * 0.005),
-                    child: Column(
-                      children: [
-                        Image.asset("assets/images/wind.png",height: h*0.03,),
-                        Text(
-                          "Air Filter",
-                          textScaleFactor: 0.7,
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w500,
-                              color:
-                                  kTextInputPlaceholderColor.withOpacity(0.6)),
-                        ),
-                      ],
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {},
-                    child: Row(
-                      children: [
-                        Text("+9 more",
-                            textScaleFactor: 0.7,
-                            style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w500,
-                            )),
-                            const DropDown()
-                        // Icon(Icons.arrow_forward_ios, size: h * 0.015),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            RRecctButton2(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetails(),));
-              },
-              h: h * 0.05,
-              w: w * 0.3,
-              radius: h * 0.025,
-              buttonColor: kGreenColor,
-              widget: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Book now ".toUpperCase(),
-                      textScaleFactor: 0.8,
-                      style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w500, color: kwhitecolor)),
-                  SizedBox(
-                    width: w * 0.01,
-                  ),
-                  Image.asset("assets/images/doublArrow.png"),
-                ],
-              ),
-            ),
-          ]),
+                ]),
+          ),
           SizedBox(
             height: h * 0.02,
           )
@@ -373,56 +320,243 @@ class Plans extends StatelessWidget {
       ),
     );
   }
-  
 }
 
 class DropDown extends StatefulWidget {
-  const DropDown({ Key? key }) : super(key: key);
+ 
+ const DropDown({Key? key,}) : super(key: key);
 
   @override
   State<DropDown> createState() => _DropDownState();
 }
 
 class _DropDownState extends State<DropDown> {
-   String dropdownvalue = 'Item 1';   
-  
+  String dropdownvalue = '';
+
   // List of items in our dropdown menu
-  var items = [    
+  var items = [
     'Item 1',
     'Item 2',
     'Item 3',
-    'Item 4',
-    'Item 5',
+    
   ];
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonHideUnderline(
-      child: (
-      DropdownButton(
+    return Container(
+      color: kLightOrangeBgColor,
+      height: h*0.06,
+      width: w*0.6,
+      margin: EdgeInsets.only(right: w * 0.03),
+      padding: EdgeInsets.all(h * 0.005),
+      child: DropdownButtonHideUnderline(
+        child: (DropdownButton(
+          hint: SizedBox(
+            width: w*0.5,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    Image.asset(
+                      "assets/images/EngineOil.png",
+                      height: h * 0.03,
+                    ),
+                    Text(
+                      "Engine Oil ",
+                      // textScaleFactor: 0.7,
+                      style: GoogleFonts.montserrat(
+                        fontSize: 8,
+                          fontWeight: FontWeight.w500,
+                          color: kTextInputPlaceholderColor.withOpacity(0.6)),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Image.asset(
+                      "assets/images/oifilter.png",
+                      height: h * 0.03,
+                    ),
+                    Text(
+                      "Oil Filter",
+                      // textScaleFactor: 0.7,
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 8,
+                          color: kTextInputPlaceholderColor.withOpacity(0.6)),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Image.asset(
+                      "assets/images/wind.png",
+                      height: h * 0.03,
+                    ),
+                    Text(
+                      "Air Filter",
+                      // textScaleFactor: 0.7,
+                      style: GoogleFonts.montserrat(
+                        fontSize: 8,
+                          fontWeight: FontWeight.w500,
+                          color: kTextInputPlaceholderColor.withOpacity(0.6)),
+                    ),
+                  ],
+                ),
+                Text("+9 more",
+                    textScaleFactor: 0.7,
+                    style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.w500,
+                    )),
+              ],
+            ),
+          ),
           isDense: true,
-        // Initial Value
-        // value: dropdownvalue,
-          
-        // Down Arrow Icon
-        icon: const Icon(Icons.arrow_forward_ios,size: 10),    
-          
-        // Array list of items
-        items: items.map((String items) {
-          return DropdownMenuItem(
-            value: items,
-            child: Text(items),
-          );
-        }).toList(),
-        // After selecting the desired option,it will
-        // change button value to selected value
-        onChanged: (String? newValue) { 
-          setState(() {
-            dropdownvalue = newValue!;
-          });
-        },
-      )),
+          // Initial Value
+          // value: dropdownvalue,
+
+          // Down Arrow Icon
+          icon: const Icon(Icons.arrow_forward_ios, size: 10),
+
+          // Array list of items
+          items: items.map((String items) {
+            return DropdownMenuItem(
+              value: items,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Column(
+                  children: [
+                    Image.asset(
+                      "assets/images/EngineOil.png",
+                      height: h * 0.03,
+                    ),
+                    Text(
+                      "Engine Oil ",
+                      // textScaleFactor: 0.7,
+                      style: GoogleFonts.montserrat(
+                        fontSize: 8,
+                          fontWeight: FontWeight.w500,
+                          color: kTextInputPlaceholderColor.withOpacity(0.6)),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Image.asset(
+                      "assets/images/oifilter.png",
+                      height: h * 0.03,
+                    ),
+                    Text(
+                      "Oil Filter",
+                      // textScaleFactor: 0.7,
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 8,
+                          color: kTextInputPlaceholderColor.withOpacity(0.6)),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Image.asset(
+                      "assets/images/wind.png",
+                      height: h * 0.03,
+                    ),
+                    Text(
+                      "Air Filter",
+                      // textScaleFactor: 0.7,
+                      style: GoogleFonts.montserrat(
+                        fontSize: 8,
+                          fontWeight: FontWeight.w500,
+                          color: kTextInputPlaceholderColor.withOpacity(0.6)),
+                    ),
+                  ],
+                ),
+                ],
+              ),
+            );
+          }).toList(),
+          // After selecting the desired option,it will
+          // change button value to selected value
+          onChanged: (String? newValue) {
+            setState(() {
+              dropdownvalue = newValue!;
+            });
+          },
+        )),
+      ),
     );
-      
-    
   }
 }
+
+// Row(
+//                         children: [
+//                           // Padding(
+//                           //   padding:
+//                           //       EdgeInsets.symmetric(horizontal: h * 0.005),
+//                           //   child: Column(
+//                           //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                           //     children: [
+//                           //       Image.asset(
+//                           //         "assets/images/EngineOil.png",
+//                           //         height: h * 0.03,
+//                           //       ),
+//                           //       Text(
+//                           //         "Engine Oil",
+//                           //         textScaleFactor: 0.7,
+//                           //         style: GoogleFonts.montserrat(
+//                           //             fontWeight: FontWeight.w500,
+//                           //             color: kTextInputPlaceholderColor
+//                           //                 .withOpacity(0.6)),
+//                           //       ),
+//                           //     ],
+//                           //   ),
+//                           // ),
+//                           // Padding(
+//                           //   padding:
+//                           //       EdgeInsets.symmetric(horizontal: h * 0.005),
+//                           //   child: Column(
+//                           //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                           //     children: [
+//                           //       Image.asset(
+//                           //         "assets/images/oifilter.png",
+//                           //         height: h * 0.03,
+//                           //       ),
+//                           //       Text(
+//                           //         "Oil Filter",
+//                           //         textScaleFactor: 0.7,
+//                           //         style: GoogleFonts.montserrat(
+//                           //             fontWeight: FontWeight.w500,
+//                           //             color: kTextInputPlaceholderColor
+//                           //                 .withOpacity(0.6)),
+//                           //       ),
+//                           //     ],
+//                           //   ),
+//                           // ),
+//                           // Padding(
+//                           //   padding:
+//                           //       EdgeInsets.symmetric(horizontal: h * 0.005),
+//                           //   child: Column(
+//                           //     children: [
+//                           //       Image.asset(
+//                           //         "assets/images/wind.png",
+//                           //         height: h * 0.03,
+//                           //       ),
+//                           //       Text(
+//                           //         "Air Filter",
+//                           //         textScaleFactor: 0.7,
+//                           //         style: GoogleFonts.montserrat(
+//                           //             fontWeight: FontWeight.w500,
+//                           //             color: kTextInputPlaceholderColor
+//                           //                 .withOpacity(0.6)),
+//                           //       ),
+//                           //     ],
+//                           //   ),
+//                           // ),
+//                           DropDown(
+//                             h: h,
+//                             w: w,
+//                           )
+//                         ],
+//                       ),
