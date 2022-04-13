@@ -26,7 +26,7 @@ class _MyHomePageState extends State<MyHomePage> {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         height: h,
         width: w,
         child: Column(

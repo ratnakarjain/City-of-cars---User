@@ -1,6 +1,11 @@
+// ignore_for_file: avoid_print
+
+import 'dart:io';
+
 import 'package:cityofcars/Utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../Utils/Buttons/button.dart';
 import '../Utils/constants.dart';
@@ -15,6 +20,9 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
   var h;
   var w;
+  var file;
+
+  bool isImagePicked = false;
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
@@ -34,206 +42,244 @@ class _EditProfileState extends State<EditProfile> {
       body: Container(
         height: h,
         width: w,
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: w * 0.05, vertical: h * 0.02),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            "My Documment     ",
-                            style: GoogleFonts.montserrat(
-                                fontSize: 12, fontWeight: FontWeight.w700),
-                          ),
-                          Icon(
-                            Icons.file_upload_outlined,
-                            color: kbluecolor,
-                            size: h * 0.02,
-                          )
-                        ],
-                      ),
-                      RichText(
-                        textAlign: TextAlign.start,
-                        text: TextSpan(
-                            text: "Registration Certificate\n",
-                            style: GoogleFonts.montserrat(
-                                color: kSelectedColor, fontSize: 10),
-                            children: [
-                              TextSpan(
-                                  text: "Insurance Policy\n",
-                                  style: GoogleFonts.montserrat(
-                                      color: kSelectedColor, fontSize: 10)),
-                              TextSpan(
-                                  text: "Other\n",
-                                  style: GoogleFonts.montserrat(
-                                      color: kSelectedColor, fontSize: 10)),
-                            ]),
-                      )
-                    ],
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      // editPic();
-                      imagePicker();
-                      setState(() {});
-                    },
-                    child: CircleAvatar(
-                      radius: h * 0.03,
-                      backgroundColor: kwhitecolor,
-                      child: Image.asset(
-                        "assets/images/ava1.png",
-                        fit: BoxFit.cover,
-                        // height: h * 0.1,
-                      ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: w * 0.05, vertical: h * 0.02),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              "My Documment     ",
+                              style: GoogleFonts.montserrat(
+                                  fontSize: 12, fontWeight: FontWeight.w700),
+                            ),
+                            Icon(
+                              Icons.file_upload_outlined,
+                              color: kbluecolor,
+                              size: h * 0.02,
+                            )
+                          ],
+                        ),
+                        RichText(
+                          textAlign: TextAlign.start,
+                          text: TextSpan(
+                              text: "Registration Certificate\n",
+                              style: GoogleFonts.montserrat(
+                                  color: kSelectedColor, fontSize: 10),
+                              children: [
+                                TextSpan(
+                                    text: "Insurance Policy\n",
+                                    style: GoogleFonts.montserrat(
+                                        color: kSelectedColor, fontSize: 10)),
+                                TextSpan(
+                                    text: "Other\n",
+                                    style: GoogleFonts.montserrat(
+                                        color: kSelectedColor, fontSize: 10)),
+                              ]),
+                        )
+                      ],
                     ),
-                  )
-                ],
+                    GestureDetector(
+                        onTap: () async {
+                          // editPic();
+                          file = await imagePicker();
+                          isImagePicked = true;
+                          print("============================$file");
+                          setState(() {});
+                        },
+                        child: isImagePicked
+                            ? Container(
+                                height: h * 0.06,
+                                width: h * 0.06,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: FileImage(
+                                          File(file),
+                                        ))),
+                              )
+                            : Container(
+                                height: h * 0.06,
+                                width: h * 0.06,
+                                decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image:
+                                            AssetImage("assets/images/ava1.png")
+                                        //     image:  FileImage(
+                                        //   File(file),
+                                        // ):
+        
+                                        )),
+                              )
+                        // CircleAvatar(
+                        //   radius: h * 0.03,
+                        //   backgroundColor: kwhitecolor,
+                        //   child:
+                        //   !isImagePicked?
+                        //   Image.asset(
+                        //     "assets/images/ava1.png",
+                        //     fit: BoxFit.cover,
+                        //      height: h * 0.1,
+                        //   ):
+                        //   Image.file(
+                        //     File(file),
+                        //     fit: BoxFit.cover,
+                        //     // height: h*0.07,
+                        //     ),
+                        // ),
+                        )
+                  ],
+                ),
               ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                  color: kwhitecolor,
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(
-                        h * 0.05,
-                      ),
-                      bottomLeft: Radius.circular(h * 0.05)),
-                  boxShadow: const [
-                    BoxShadow(
-                        blurRadius: 5, offset: Offset(0, 3), color: Colors.grey)
-                  ]),
-              padding: EdgeInsets.symmetric(
-                  horizontal: w * 0.05, vertical: h * 0.03),
-              child: Column(
-                children: [
-                  TextFormField(
-                    decoration: InputDecoration(
-                        hintText: "Name*",
-                        hintStyle: GoogleFonts.montserrat(
-                            color: kTextInputPlaceholderColor.withOpacity(0.32),
-                            fontSize: 13),
-                        border: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: kTextInputPlaceholderColor
-                                    .withOpacity(0.32))),
-                        contentPadding: EdgeInsets.only(left: w * 0.02)),
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        hintText: "Mobile No.*",
-                        hintStyle: GoogleFonts.montserrat(
-                            color: kTextInputPlaceholderColor.withOpacity(0.32),
-                            fontSize: 13),
-                        border: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: kTextInputPlaceholderColor
-                                    .withOpacity(0.32))),
-                        contentPadding: EdgeInsets.only(left: w * 0.02)),
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        hintText: "Email",
-                        hintStyle: GoogleFonts.montserrat(
-                            color: kTextInputPlaceholderColor.withOpacity(0.32),
-                            fontSize: 13),
-                        border: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: kTextInputPlaceholderColor
-                                    .withOpacity(0.32))),
-                        contentPadding: EdgeInsets.only(left: w * 0.02)),
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        hintText: "House No.. & Floor*",
-                        hintStyle: GoogleFonts.montserrat(
-                            color: kTextInputPlaceholderColor.withOpacity(0.32),
-                            fontSize: 13),
-                        border: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: kTextInputPlaceholderColor
-                                    .withOpacity(0.32))),
-                        contentPadding: EdgeInsets.only(left: w * 0.02)),
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        hintText: "Street*",
-                        hintStyle: GoogleFonts.montserrat(
-                            color: kTextInputPlaceholderColor.withOpacity(0.32),
-                            fontSize: 13),
-                        border: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: kTextInputPlaceholderColor
-                                    .withOpacity(0.32))),
-                        contentPadding: EdgeInsets.only(left: w * 0.02)),
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                              hintText: "State*",
-                              hintStyle: GoogleFonts.montserrat(
-                                  color: kTextInputPlaceholderColor
-                                      .withOpacity(0.32),
-                                  fontSize: 13),
-                              border: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: kTextInputPlaceholderColor
-                                          .withOpacity(0.32))),
-                              contentPadding: EdgeInsets.only(left: w * 0.02)),
+              Container(
+                decoration: BoxDecoration(
+                    color: kwhitecolor,
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(
+                          h * 0.05,
                         ),
-                      ),
-                      SizedBox(
-                        width: w * 0.02,
-                      ),
-                      Expanded(
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                              hintText: "Pin Code*",
-                              hintStyle: GoogleFonts.montserrat(
+                        bottomLeft: Radius.circular(h * 0.05)),
+                    boxShadow: const [
+                      BoxShadow(
+                          blurRadius: 5, offset: Offset(0, 3), color: Colors.grey)
+                    ]),
+                padding: EdgeInsets.symmetric(
+                    horizontal: w * 0.05, vertical: h * 0.03),
+                child: Column(
+                  children: [
+                    TextFormField(
+                      decoration: InputDecoration(
+                          hintText: "Name*",
+                          hintStyle: GoogleFonts.montserrat(
+                              color: kTextInputPlaceholderColor.withOpacity(0.32),
+                              fontSize: 13),
+                          border: UnderlineInputBorder(
+                              borderSide: BorderSide(
                                   color: kTextInputPlaceholderColor
-                                      .withOpacity(0.32),
-                                  fontSize: 13),
-                              border: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: kTextInputPlaceholderColor
-                                          .withOpacity(0.32))),
-                              contentPadding: EdgeInsets.only(left: w * 0.02)),
+                                      .withOpacity(0.32))),
+                          contentPadding: EdgeInsets.only(left: w * 0.02)),
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(
+                          hintText: "Mobile No.*",
+                          hintStyle: GoogleFonts.montserrat(
+                              color: kTextInputPlaceholderColor.withOpacity(0.32),
+                              fontSize: 13),
+                          border: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kTextInputPlaceholderColor
+                                      .withOpacity(0.32))),
+                          contentPadding: EdgeInsets.only(left: w * 0.02)),
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(
+                          hintText: "Email",
+                          hintStyle: GoogleFonts.montserrat(
+                              color: kTextInputPlaceholderColor.withOpacity(0.32),
+                              fontSize: 13),
+                          border: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kTextInputPlaceholderColor
+                                      .withOpacity(0.32))),
+                          contentPadding: EdgeInsets.only(left: w * 0.02)),
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(
+                          hintText: "House No.. & Floor*",
+                          hintStyle: GoogleFonts.montserrat(
+                              color: kTextInputPlaceholderColor.withOpacity(0.32),
+                              fontSize: 13),
+                          border: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kTextInputPlaceholderColor
+                                      .withOpacity(0.32))),
+                          contentPadding: EdgeInsets.only(left: w * 0.02)),
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(
+                          hintText: "Street*",
+                          hintStyle: GoogleFonts.montserrat(
+                              color: kTextInputPlaceholderColor.withOpacity(0.32),
+                              fontSize: 13),
+                          border: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kTextInputPlaceholderColor
+                                      .withOpacity(0.32))),
+                          contentPadding: EdgeInsets.only(left: w * 0.02)),
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                                hintText: "State*",
+                                hintStyle: GoogleFonts.montserrat(
+                                    color: kTextInputPlaceholderColor
+                                        .withOpacity(0.32),
+                                    fontSize: 13),
+                                border: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kTextInputPlaceholderColor
+                                            .withOpacity(0.32))),
+                                contentPadding: EdgeInsets.only(left: w * 0.02)),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: h * 0.04,
-                  )
-                ],
+                        SizedBox(
+                          width: w * 0.02,
+                        ),
+                        Expanded(
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                                hintText: "Pin Code*",
+                                hintStyle: GoogleFonts.montserrat(
+                                    color: kTextInputPlaceholderColor
+                                        .withOpacity(0.32),
+                                    fontSize: 13),
+                                border: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kTextInputPlaceholderColor
+                                            .withOpacity(0.32))),
+                                contentPadding: EdgeInsets.only(left: w * 0.02)),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: h * 0.04,
+                    )
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-              height: h * 0.04,
-            ),
-            Center(
-              child: RRecctButton(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                h: h * 0.06,
-                w: w * 0.9,
-                buttonColor: kbluecolor,
-                text: "SAVE CHANGES",
-                style: GoogleFonts.montserrat(
-                    color: kwhitecolor, fontWeight: FontWeight.w600),
+              SizedBox(
+                height: h * 0.04,
               ),
-            ),
-          ],
+              Center(
+                child: RRecctButton(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  h: h * 0.06,
+                  w: w * 0.9,
+                  buttonColor: kbluecolor,
+                  text: "SAVE CHANGES",
+                  style: GoogleFonts.montserrat(
+                      color: kwhitecolor, fontWeight: FontWeight.w600),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -283,5 +329,13 @@ class _EditProfileState extends State<EditProfile> {
             ],
           );
         });
+  }
+
+  imagePicker() async {
+    final ImagePicker _picker = ImagePicker();
+    XFile? image;
+    image = await _picker.pickImage(source: ImageSource.gallery);
+    print("=======================================dvsdv${image!.path}");
+    return image.path;
   }
 }

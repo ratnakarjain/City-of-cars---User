@@ -24,9 +24,3 @@ Future<void> makePhoneCall(String phoneNumber) async {
     );
     await launch(launchUri.toString());
   }
-
-imagePicker()async{
-
-final ImagePicker _picker = ImagePicker();
-final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-}
