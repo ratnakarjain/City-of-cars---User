@@ -115,7 +115,7 @@ class _PaymentState extends State<Payment> {
                                   text: TextSpan(
                                 text: "Name",
                                 style: GoogleFonts.montserrat(
-                                    fontSize: 10,
+                                    fontSize: 11,
                                     height: 2,
                                     fontWeight: FontWeight.w700,
                                     color: ksubHading),
@@ -123,7 +123,7 @@ class _PaymentState extends State<Payment> {
                                   TextSpan(
                                       text: "- Rodriques",
                                       style: GoogleFonts.montserrat(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: FontWeight.w500,
                                           height: 2,
                                           color: ksubHading)),
@@ -133,7 +133,7 @@ class _PaymentState extends State<Payment> {
                                   text: TextSpan(
                                 text: "Contact",
                                 style: GoogleFonts.montserrat(
-                                    fontSize: 10,
+                                    fontSize: 11,
                                     height: 2,
                                     fontWeight: FontWeight.w700,
                                     color: ksubHading),
@@ -141,7 +141,7 @@ class _PaymentState extends State<Payment> {
                                   TextSpan(
                                       text: " - 9987823427",
                                       style: GoogleFonts.montserrat(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           height: 2,
                                           fontWeight: FontWeight.w500,
                                           color: ksubHading)),
@@ -151,7 +151,7 @@ class _PaymentState extends State<Payment> {
                                   text: TextSpan(
                                 text: "Car",
                                 style: GoogleFonts.montserrat(
-                                    fontSize: 10,
+                                    fontSize: 11,
                                     height: 2,
                                     fontWeight: FontWeight.w700,
                                     color: ksubHading),
@@ -160,7 +160,7 @@ class _PaymentState extends State<Payment> {
                                       text: " - Hyundai i20",
                                       style: GoogleFonts.montserrat(
                                           height: 2,
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: FontWeight.w500,
                                           color: ksubHading)),
                                 ],
@@ -185,14 +185,14 @@ class _PaymentState extends State<Payment> {
                                   text: TextSpan(
                                 text: "Delivery Date",
                                 style: GoogleFonts.montserrat(
-                                    fontSize: 10,
+                                    fontSize: 11,
                                     fontWeight: FontWeight.w700,
                                     color: ksubHading),
                                 children: [
                                   TextSpan(
                                       text: " - 27th Oct",
                                       style: GoogleFonts.montserrat(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           fontWeight: FontWeight.w500,
                                           color: ksubHading)),
                                 ],
@@ -201,7 +201,7 @@ class _PaymentState extends State<Payment> {
                                   text: TextSpan(
                                 text: "Address",
                                 style: GoogleFonts.montserrat(
-                                    fontSize: 10,
+                                    fontSize: 11,
                                     height: 2,
                                     fontWeight: FontWeight.w700,
                                     color: ksubHading),
@@ -209,7 +209,7 @@ class _PaymentState extends State<Payment> {
                                   TextSpan(
                                       text: " - 2007",
                                       style: GoogleFonts.montserrat(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           height: 2,
                                           fontWeight: FontWeight.w500,
                                           color: ksubHading)),
@@ -219,7 +219,7 @@ class _PaymentState extends State<Payment> {
                                   text: TextSpan(
                                 text: "Email",
                                 style: GoogleFonts.montserrat(
-                                    fontSize: 10,
+                                    fontSize: 11,
                                     height: 2,
                                     fontWeight: FontWeight.w700,
                                     color: ksubHading),
@@ -227,7 +227,7 @@ class _PaymentState extends State<Payment> {
                                   TextSpan(
                                       text: " - cityofcars.in",
                                       style: GoogleFonts.montserrat(
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           height: 2,
                                           fontWeight: FontWeight.w500,
                                           color: ksubHading)),
@@ -254,16 +254,16 @@ class _PaymentState extends State<Payment> {
                         text: TextSpan(
                       text: "Address",
                       style: GoogleFonts.montserrat(
-                          fontSize: 10,
+                          fontSize: 11,
                           height: 2,
                           fontWeight: FontWeight.w700,
                           color: ksubHading),
                       children: [
                         TextSpan(
                             text:
-                                " - B-155, Model Town - 3, \nDelhi - 110009 \nNear R. N. Jewellers",
+                                " - B-155, Model Town - 3, \nDelhi - 111009 \nNear R. N. Jewellers",
                             style: GoogleFonts.montserrat(
-                                fontSize: 10,
+                                fontSize: 11,
                                 height: 2,
                                 fontWeight: FontWeight.w500,
                                 color: ksubHading)),
@@ -284,7 +284,7 @@ class _PaymentState extends State<Payment> {
                     text: TextSpan(
                   text: "Special Remark / Additional Jobs",
                   style: GoogleFonts.montserrat(
-                      fontSize: 10,
+                      fontSize: 11,
                       height: 2,
                       fontWeight: FontWeight.w700,
                       color: ksubHading),
@@ -292,7 +292,7 @@ class _PaymentState extends State<Payment> {
                     TextSpan(
                         text: "",
                         style: GoogleFonts.montserrat(
-                            fontSize: 10,
+                            fontSize: 11,
                             height: 2,
                             fontWeight: FontWeight.w500,
                             color: ksubHading)),

@@ -80,9 +80,9 @@ class _SlotState extends State<Slot> {
                   ? Container(
                       height: h * 0.35,
                       width: w,
-                      child: Center(child: TimeSlot()),
+                      child: const Center(child: TimeSlot()),
                     )
-                  : Calendar(),
+                  : const Calendar(),
               Container(
                 padding: EdgeInsets.symmetric(
                     horizontal: w * 0.06, vertical: h * 0.04),
@@ -169,16 +169,21 @@ class _SlotState extends State<Slot> {
                             // ),
                             // ),
                       // ),
-                      SizedBox(
-                        height: h * 0.02,
-                      ),
+                      // SizedBox(
+                      //   height: h * 0.02,
+                      // ),
                       TextFormField(
                         cursorColor: korangecolor,
                         decoration: InputDecoration(
                             hintText: "House No.. & Floor*",
-                            hintStyle: GoogleFonts.montserrat(fontSize: 13),
+                            hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.32),),
                             focusColor: korangecolor,
-                            focusedBorder: UnderlineInputBorder(
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: kTextInputPlaceholderColor.withOpacity(0.32),
+                              ),
+                            ) ,
+                            focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
                                 color: korangecolor,
                               ),
@@ -188,9 +193,14 @@ class _SlotState extends State<Slot> {
                         cursorColor: korangecolor,
                         decoration: InputDecoration(
                             hintText: "Street*",
-                            hintStyle: GoogleFonts.montserrat(fontSize: 13),
+                            hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.32),),
                             focusColor: korangecolor,
-                            focusedBorder: UnderlineInputBorder(
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: kTextInputPlaceholderColor.withOpacity(0.32),
+                              ),
+                            ) ,
+                            focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
                                 color: korangecolor,
                               ),
@@ -204,9 +214,14 @@ class _SlotState extends State<Slot> {
                               decoration: InputDecoration(
                                   hintText: "State*",
                                   hintStyle:
-                                      GoogleFonts.montserrat(fontSize: 13),
+                                      GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.32),),
                                   focusColor: korangecolor,
-                                  focusedBorder: UnderlineInputBorder(
+                                  enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: kTextInputPlaceholderColor.withOpacity(0.32),
+                              ),
+                            ) ,
+                                  focusedBorder: const UnderlineInputBorder(
                                     borderSide: BorderSide(
                                       color: korangecolor,
                                     ),
@@ -222,9 +237,14 @@ class _SlotState extends State<Slot> {
                               decoration: InputDecoration(
                                   hintText: "Pin Code*",
                                   hintStyle:
-                                      GoogleFonts.montserrat(fontSize: 13),
+                                      GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.32),),
                                   focusColor: korangecolor,
-                                  focusedBorder: UnderlineInputBorder(
+                                  enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: kTextInputPlaceholderColor.withOpacity(0.32),
+                              ),
+                            ) ,
+                                  focusedBorder: const UnderlineInputBorder(
                                     borderSide: BorderSide(
                                       color: korangecolor,
                                     ),
@@ -240,8 +260,13 @@ class _SlotState extends State<Slot> {
                         cursorColor: korangecolor,
                         decoration: InputDecoration(
                             hintText: "Name*",
-                            hintStyle: GoogleFonts.montserrat(fontSize: 13),
+                            hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.32),),
                             focusColor: korangecolor,
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: kTextInputPlaceholderColor.withOpacity(0.32),
+                              ),
+                            ) ,
                             focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
                                 color: korangecolor,
@@ -252,8 +277,13 @@ class _SlotState extends State<Slot> {
                         cursorColor: korangecolor,
                         decoration: InputDecoration(
                             hintText: "Contact*",
-                            hintStyle: GoogleFonts.montserrat(fontSize: 13),
+                            hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.32),),
                             focusColor: korangecolor,
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: kTextInputPlaceholderColor.withOpacity(0.32),
+                              ),
+                            ) ,
                             focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
                                 color: korangecolor,
@@ -264,9 +294,14 @@ class _SlotState extends State<Slot> {
                         cursorColor: korangecolor,
                         decoration: InputDecoration(
                             hintText: "E-Mail",
-                            hintStyle: GoogleFonts.montserrat(fontSize: 13),
+                            hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.32),),
                             focusColor: korangecolor,
-                            focusedBorder: UnderlineInputBorder(
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: kTextInputPlaceholderColor.withOpacity(0.32),
+                              ),
+                            ) ,
+                            focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
                                 color: korangecolor,
                               ),
@@ -276,9 +311,14 @@ class _SlotState extends State<Slot> {
                         cursorColor: korangecolor,
                         decoration: InputDecoration(
                             hintText: "Car Number",
-                            hintStyle: GoogleFonts.montserrat(fontSize: 13),
+                            hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.32),),
                             focusColor: korangecolor,
-                            focusedBorder: UnderlineInputBorder(
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: kTextInputPlaceholderColor.withOpacity(0.32),
+                              ),
+                            ) ,
+                            focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
                                 color: korangecolor,
                               ),
@@ -315,7 +355,7 @@ class _SlotState extends State<Slot> {
                             decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: "Optional",
-                                hintStyle: GoogleFonts.montserrat(fontSize: 13),
+                                hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.32),),
                                 contentPadding: EdgeInsets.all(h * 0.01)),
                           ),
                         ),
@@ -373,126 +413,134 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
-    return TableCalendar(
-      formatAnimationDuration: Duration(seconds: 0),
-      firstDay: kFirstDay,
-      lastDay: kLastDay,
-      focusedDay: _focusedDay,
-      selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-
-      startingDayOfWeek: StartingDayOfWeek.monday,
-      headerStyle: HeaderStyle(
-          leftChevronVisible: false,
-          formatButtonVisible: false,
-          rightChevronVisible: false,
-          headerMargin: EdgeInsets.only(right: 20),
-          titleTextStyle: GoogleFonts.montserrat(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              color: kTextInputPlaceholderColor)),
-
-      daysOfWeekStyle: DaysOfWeekStyle(
-          weekdayStyle:
-              GoogleFonts.montserrat(color: kTextInputPlaceholderColor)),
-
-      calendarStyle: CalendarStyle(
-        // withinRangeDecoration: BoxDecoration(
-        //     color: _rangeEnd == null ? kDateCircleColor : kTransparent),
-        // defaultTextStyle: GoogleFonts.montserrat(
-        //   color: kTextInputPlaceholderColor,
-        // ),
-        // rangeStartDecoration: BoxDecoration(
-        //     color: _rangeEnd == null ? kbluecolor : kDateCircleColor,
-        //     shape: BoxShape.circle),
-        // rangeHighlightColor: kStartDatrCicleColor,
-        // rangeStartTextStyle: GoogleFonts.montserrat(
-        //     color: _rangeEnd == null ? kwhitecolor : kStartDateColor),
-        // rangeEndTextStyle: GoogleFonts.montserrat(
-        //     fontWeight: FontWeight.w700, color: kwhitecolor),
-        weekendTextStyle:
-            GoogleFonts.montserrat(color: kTextInputPlaceholderColor),
-        selectedTextStyle: GoogleFonts.montserrat(
-            color:
-                //  _rangeEnd == null
-                //     ? _rangeStart == null
-                kwhitecolor),
-        selectedDecoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color:
-                //  _rangeEnd == null
-                //     ? _rangeStart == null
-                kbluecolor),
-        todayTextStyle: GoogleFonts.montserrat(
-          color:
-              //  _rangeEnd == null
-              //     ? _rangeStart == null
-              kwhitecolor,
-        ),
-        // : kTextInputPlaceholderColor
-        //  :  kTextInputPlaceholderColor),
-        todayDecoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color:
-                //  _rangeEnd == null
-                //     ? _rangeStart == null
-                kbluecolor.withOpacity(0.5)),
-        //     : kDateCircleColor
-        // : kDateCircleColor),
-        defaultDecoration: const BoxDecoration(
-            shape: BoxShape.circle, color: kDateCircleColor),
-        weekendDecoration: const BoxDecoration(
-            shape: BoxShape.circle, color: kDateCircleColor),
-        rangeEndDecoration:
-            const BoxDecoration(color: kbluecolor, shape: BoxShape.circle),
+    return Padding(
+      padding: EdgeInsets.only(
+        top: h*0.01,
+        bottom: h*0.02,
+        left: w*0.04,
+        right: w*0.04
       ),
-      // rangeEndDay: _rangeEnd,
-      calendarFormat: _calendarFormat,
-      // rangeSelectionMode: _rangeSelectionMode,
-      onDaySelected: (selectedDay, focusedDay) {
-        // if (!isSameDay(_selectedDay, selectedDay)) {
-        //   if (_rangeStart!.day >= DateTime.now().day ||
-        //       _rangeStart!.month > DateTime.now().month) {
-        //     setState(() {
-          _focusedDay = focusedDay;
-          _selectedDay = selectedDay;
-        // if (_selectedDay!.day < DateTime.now().day &&
-        //     _selectedDay!.month < DateTime.now().month &&
-        //     _selectedDay!.year < DateTime.now().year) {
-        //   _selectedDay =null;
-        //    setState(() {});
-          
-        // }
+      child: TableCalendar(
+        formatAnimationDuration: const Duration(seconds: 0),
+        firstDay: kFirstDay,
+        lastDay: kLastDay,
+        focusedDay: _focusedDay,
+        selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
 
-        //       _rangeStart = null; // Important to clean those
-        //       _rangeEnd = null;
-        //       _rangeSelectionMode = RangeSelectionMode.toggledOff;
+        startingDayOfWeek: StartingDayOfWeek.monday,
+        headerStyle: HeaderStyle(
+            leftChevronVisible: false,
+            formatButtonVisible: false,
+            rightChevronVisible: false,
+            headerMargin: const EdgeInsets.only(right: 20),
+            titleTextStyle: GoogleFonts.montserrat(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                color: kTextInputPlaceholderColor)),
+
+        daysOfWeekStyle: DaysOfWeekStyle(
+            weekdayStyle:
+                GoogleFonts.montserrat(color: kTextInputPlaceholderColor)),
+
+        calendarStyle: CalendarStyle(
+          // withinRangeDecoration: BoxDecoration(
+          //     color: _rangeEnd == null ? kDateCircleColor : kTransparent),
+          // defaultTextStyle: GoogleFonts.montserrat(
+          //   color: kTextInputPlaceholderColor,
+          // ),
+          // rangeStartDecoration: BoxDecoration(
+          //     color: _rangeEnd == null ? kbluecolor : kDateCircleColor,
+          //     shape: BoxShape.circle),
+          // rangeHighlightColor: kStartDatrCicleColor,
+          // rangeStartTextStyle: GoogleFonts.montserrat(
+          //     color: _rangeEnd == null ? kwhitecolor : kStartDateColor),
+          // rangeEndTextStyle: GoogleFonts.montserrat(
+          //     fontWeight: FontWeight.w700, color: kwhitecolor),
+          weekendTextStyle:
+              GoogleFonts.montserrat(color: kTextInputPlaceholderColor),
+          selectedTextStyle: GoogleFonts.montserrat(
+              color:
+                  //  _rangeEnd == null
+                  //     ? _rangeStart == null
+                  kwhitecolor),
+          selectedDecoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color:
+                  //  _rangeEnd == null
+                  //     ? _rangeStart == null
+                  kbluecolor),
+          todayTextStyle: GoogleFonts.montserrat(
+            color:
+                //  _rangeEnd == null
+                //     ? _rangeStart == null
+                kwhitecolor,
+          ),
+          // : kTextInputPlaceholderColor
+          //  :  kTextInputPlaceholderColor),
+          todayDecoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color:
+                  //  _rangeEnd == null
+                  //     ? _rangeStart == null
+                  kbluecolor.withOpacity(0.5)),
+          //     : kDateCircleColor
+          // : kDateCircleColor),
+          defaultDecoration: const BoxDecoration(
+              shape: BoxShape.circle, color: kDateCircleColor),
+          weekendDecoration: const BoxDecoration(
+              shape: BoxShape.circle, color: kDateCircleColor),
+          rangeEndDecoration:
+              const BoxDecoration(color: kbluecolor, shape: BoxShape.circle),
+        ),
+        // rangeEndDay: _rangeEnd,
+        calendarFormat: _calendarFormat,
+        // rangeSelectionMode: _rangeSelectionMode,
+        onDaySelected: (selectedDay, focusedDay) {
+          // if (!isSameDay(_selectedDay, selectedDay)) {
+          //   if (_rangeStart!.day >= DateTime.now().day ||
+          //       _rangeStart!.month > DateTime.now().month) {
+          //     setState(() {
+            _focusedDay = focusedDay;
+            _selectedDay = selectedDay;
+          // if (_selectedDay!.day < DateTime.now().day &&
+          //     _selectedDay!.month < DateTime.now().month &&
+          //     _selectedDay!.year < DateTime.now().year) {
+          //   _selectedDay =null;
+          //    setState(() {});
+            
+          // }
+
+          //       _rangeStart = null; // Important to clean those
+          //       _rangeEnd = null;
+          //       _rangeSelectionMode = RangeSelectionMode.toggledOff;
+          //     });
+          //   }
+          // }
+          setState(() {});
+        },
+        // onRangeSelected: (start, end, focusedDay) {
+        //   if (DateTime.now().day <= start!.day ||
+        //       DateTime.now().month < start.month) {
+        //     setState(() {
+        //       _selectedDay = null;
+        //       _focusedDay = focusedDay;
+        //       _rangeStart = start;
+        //       _rangeEnd = end;
+        //       _rangeSelectionMode = RangeSelectionMode.toggledOn;
         //     });
         //   }
-        // }
-        setState(() {});
-      },
-      // onRangeSelected: (start, end, focusedDay) {
-      //   if (DateTime.now().day <= start!.day ||
-      //       DateTime.now().month < start.month) {
-      //     setState(() {
-      //       _selectedDay = null;
-      //       _focusedDay = focusedDay;
-      //       _rangeStart = start;
-      //       _rangeEnd = end;
-      //       _rangeSelectionMode = RangeSelectionMode.toggledOn;
-      //     });
-      //   }
-      // },
-      // onFormatChanged: (format) {
-      //   if (_calendarFormat != format) {
-      //     setState(() {
-      //       _calendarFormat = format;
-      //     });
-      //   }
-      // },
-      onPageChanged: (focusedDay) {
-        _focusedDay = focusedDay;
-      },
+        // },
+        // onFormatChanged: (format) {
+        //   if (_calendarFormat != format) {
+        //     setState(() {
+        //       _calendarFormat = format;
+        //     });
+        //   }
+        // },
+        onPageChanged: (focusedDay) {
+          _focusedDay = focusedDay;
+        },
+      ),
     );
   }
 }

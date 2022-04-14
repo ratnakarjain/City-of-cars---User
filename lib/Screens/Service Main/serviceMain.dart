@@ -124,12 +124,12 @@ class _ServiceMainState extends State<ServiceMain> {
                         width: 8.0,
                         height: 8.0,
                         margin: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 2.0),
+                            vertical: 10.0, horizontal: 4.0),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: currentPage == index
-                              ? const Color(0xFFFFFFFF)
-                              : const Color(0xFFFFFFFF).withOpacity(0.5),
+                              ?  kdarkpurple
+                              : ksubHading.withOpacity(0.32),
                         ),
                       );
                     }).toList(),
@@ -219,7 +219,7 @@ class _ServiceMainState extends State<ServiceMain> {
           //     ),
           //   ),
           Container(
-            height: h * 0.08,
+            height: h * 0.07,
             padding:
                 EdgeInsets.only(left: w * 0.06, right: w * 0.06, top: h * 0.02),
             child: Material(
@@ -229,11 +229,14 @@ class _ServiceMainState extends State<ServiceMain> {
               borderRadius: BorderRadius.circular(h * 0.05),
               child: TextField(
                 decoration: InputDecoration(
+                    contentPadding:
+                        EdgeInsets.only(top: h * 0.01, left: w * 0.05),
                     hintText: "Search",
                     hintStyle: GoogleFonts.montserrat(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        color: kGreenColor),
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: ksearchTextColor.withOpacity(0.57),
+                    ),
                     suffixIcon: const Icon(
                       Icons.search,
                     ),
@@ -262,7 +265,7 @@ class _ServiceMainState extends State<ServiceMain> {
                     shrinkWrap: true,
                     controller: _controller1,
                     padding: EdgeInsets.symmetric(
-                        vertical: h * 0.015, horizontal: h * 0.01),
+                        vertical: h * 0.015, horizontal: h * 0.025),
                     crossAxisCount: 2,
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
@@ -299,11 +302,13 @@ class _ServiceMainState extends State<ServiceMain> {
                         ),
                       );
                     }),
+                  ),SizedBox(
+                    height: h*0.01,
                   ),
                   Row(
                     children: [
                       SizedBox(
-                        width: w * 0.04,
+                        width: w * 0.06,
                       ),
                       Text(
                         "Not sure about the problem? ",
@@ -323,7 +328,7 @@ class _ServiceMainState extends State<ServiceMain> {
                     ],
                   ),
                   SizedBox(
-                    height: h * 0.018,
+                    height: h * 0.02,
                   ),
                   Label(
                     color: kbluecolor,
@@ -334,20 +339,25 @@ class _ServiceMainState extends State<ServiceMain> {
                     ),
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   ),
+                  SizedBox(
+                    height: h*0.01,
+                  ),
                   Container(
                     height: h * 0.18,
                     child: ListView.builder(
                       physics: BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
-                      padding: EdgeInsets.all(h * 0.01),
+                      padding: EdgeInsets.symmetric(
+                          vertical: h * 0.01, horizontal: h * 0.025),
                       itemCount: carServices.length,
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {
-                             Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const ProductDetails()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ProductDetails()));
                           },
                           child: RRectCard(
                             h: h * 0.1,
@@ -391,6 +401,9 @@ class _ServiceMainState extends State<ServiceMain> {
                         );
                       },
                     ),
+                  ),
+                  SizedBox(
+                    height: h*0.01,
                   ),
                   Label(
                     color: korangecolor,
@@ -401,20 +414,25 @@ class _ServiceMainState extends State<ServiceMain> {
                     ),
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   ),
+                  SizedBox(
+                    height: h*0.01,
+                  ),
                   Container(
                     height: h * 0.18,
                     child: ListView.builder(
                       physics: BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
-                      padding: EdgeInsets.all(h * 0.01),
+                      padding: EdgeInsets.symmetric(
+                          vertical: h * 0.01, horizontal: h * 0.025),
                       itemCount: carServices.length,
                       itemBuilder: (context, index) {
                         return GestureDetector(
-                          onTap: (){
-                             Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const ProductDetails()));
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ProductDetails()));
                           },
                           child: RRectCard(
                             h: h * 0.1,
@@ -458,6 +476,9 @@ class _ServiceMainState extends State<ServiceMain> {
                         );
                       },
                     ),
+                  ),
+                  SizedBox(
+                    height: h*0.01,
                   ),
                   GestureDetector(
                     onTap: () {

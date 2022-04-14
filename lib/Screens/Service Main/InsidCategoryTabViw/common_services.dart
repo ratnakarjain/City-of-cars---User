@@ -39,6 +39,7 @@ class _CommonServicesState extends State<CommonServices> {
               text: "common services",
               textStyle: GoogleFonts.montserrat(
                 textStyle: const TextStyle(
+                  fontSize: 11,
                     fontWeight: FontWeight.bold, color: kwhitecolor),
               ),
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -71,6 +72,7 @@ class _CommonServicesState extends State<CommonServices> {
               text: "brakes",
               textStyle: GoogleFonts.montserrat(
                 textStyle: const TextStyle(
+                  fontSize: 11,
                     fontWeight: FontWeight.bold, color: kwhitecolor),
               ),
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -103,6 +105,7 @@ class _CommonServicesState extends State<CommonServices> {
               text: "recomend packes",
               textStyle: GoogleFonts.montserrat(
                 textStyle: const TextStyle(
+                  fontSize: 11,
                     fontWeight: FontWeight.bold, color: kwhitecolor),
               ),
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -197,7 +200,7 @@ class Plans extends StatelessWidget {
                   color: korangecolor,
                   text: labeltext!,
                   textStyle: GoogleFonts.montserrat(
-                    fontSize: 8,
+                    fontSize: 6,
                     textStyle: const TextStyle(
                         fontWeight: FontWeight.bold, color: kwhitecolor),
                   ),
@@ -218,16 +221,18 @@ class Plans extends StatelessWidget {
                     children: [
                       Text(
                         text,
-                        textScaleFactor: 2,
+                        
                         style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
                         "Services Pack",
-                        textScaleFactor: 0.7,
+                        
                         style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
+                          fontSize: 8,
+                            fontWeight: FontWeight.w600,
                             color: kTextInputPlaceholderColor.withOpacity(0.6)),
                       ),
                     ],
@@ -243,16 +248,17 @@ class Plans extends StatelessWidget {
                     children: [
                       Text(
                         "₹ 2700",
-                        textScaleFactor: 2,
+                        
                         style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
                         "Incl. Taxes",
-                        textScaleFactor: 0.7,
                         style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
+                          fontSize: 7,
+                            fontWeight: FontWeight.w600,
                             color: kTextInputPlaceholderColor.withOpacity(0.6)),
                       ),
                     ],
@@ -265,9 +271,10 @@ class Plans extends StatelessWidget {
             padding: EdgeInsets.only(left: w * 0.06, bottom: h * 0.01),
             child: Text(
               "Takes 4 Hrs / Every 3 Months",
-              textScaleFactor: 0.7,
+              
               style: GoogleFonts.montserrat(
-                  fontWeight: FontWeight.w500,
+                fontSize: 7,
+                  fontWeight: FontWeight.w600,
                   color: kTextInputPlaceholderColor.withOpacity(0.6)),
             ),
           ),
@@ -291,17 +298,18 @@ class Plans extends StatelessWidget {
                               builder: (context) => const ProductDetails(),
                             ));
                       },
-                      h: h * 0.05,
+                      h: h * 0.045,
                       w: w * 0.3,
-                      radius: h * 0.025,
+                      radius: h * 0.02,
                       buttonColor: kGreenColor,
                       widget: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text("Book now ".toUpperCase(),
-                              textScaleFactor: 0.8,
+                              
                               style: GoogleFonts.montserrat(
-                                  fontWeight: FontWeight.w500,
+                                fontSize: 11,
+                                  fontWeight: FontWeight.w600,
                                   color: kwhitecolor)),
                           SizedBox(
                             width: w * 0.01,
@@ -344,7 +352,7 @@ class _DropDownState extends State<DropDown> {
   Widget build(BuildContext context) {
     return Container(
       color: kLightOrangeBgColor,
-      height: h*0.06,
+      height: h*0.055,
       width: w*0.6,
       margin: EdgeInsets.only(right: w * 0.03),
       padding: EdgeInsets.all(h * 0.005),
@@ -366,7 +374,7 @@ class _DropDownState extends State<DropDown> {
                       // textScaleFactor: 0.7,
                       style: GoogleFonts.montserrat(
                         fontSize: 8,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           color: kTextInputPlaceholderColor.withOpacity(0.6)),
                     ),
                   ],
@@ -381,7 +389,7 @@ class _DropDownState extends State<DropDown> {
                       "Oil Filter",
                       // textScaleFactor: 0.7,
                       style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           fontSize: 8,
                           color: kTextInputPlaceholderColor.withOpacity(0.6)),
                     ),
@@ -398,15 +406,15 @@ class _DropDownState extends State<DropDown> {
                       // textScaleFactor: 0.7,
                       style: GoogleFonts.montserrat(
                         fontSize: 8,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           color: kTextInputPlaceholderColor.withOpacity(0.6)),
                     ),
                   ],
                 ),
                 Text("+9 more",
-                    textScaleFactor: 0.7,
                     style: GoogleFonts.montserrat(
-                      fontWeight: FontWeight.w500,
+                      fontSize: 7,
+                      fontWeight: FontWeight.w600,
                     )),
               ],
             ),
@@ -436,7 +444,7 @@ class _DropDownState extends State<DropDown> {
                       // textScaleFactor: 0.7,
                       style: GoogleFonts.montserrat(
                         fontSize: 8,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           color: kTextInputPlaceholderColor.withOpacity(0.6)),
                     ),
                   ],
@@ -451,7 +459,7 @@ class _DropDownState extends State<DropDown> {
                       "Oil Filter",
                       // textScaleFactor: 0.7,
                       style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           fontSize: 8,
                           color: kTextInputPlaceholderColor.withOpacity(0.6)),
                     ),
@@ -468,7 +476,7 @@ class _DropDownState extends State<DropDown> {
                       // textScaleFactor: 0.7,
                       style: GoogleFonts.montserrat(
                         fontSize: 8,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           color: kTextInputPlaceholderColor.withOpacity(0.6)),
                     ),
                   ],

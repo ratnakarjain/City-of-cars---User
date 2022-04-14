@@ -40,14 +40,17 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
         child: Column(
           children: [
             Container(
-              height: h * 0.4,
+              height: h * 0.3,
               width: w,
-              decoration: BoxDecoration(
+              margin: EdgeInsets.symmetric(horizontal: h*0.05),
+              decoration: const BoxDecoration(
                 color: kwhitecolor,
                 image: DecorationImage(
                   image: AssetImage(
                     "assets/images/bg1.png",
+                    
                   ),
+                  fit: BoxFit.fill
                 ),
               ),
               child: Column(
@@ -88,23 +91,23 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                   SizedBox(
                     height: h * 0.02,
                   ),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     Text(
-                  //       "Rate your experience",
-                  //       style: GoogleFonts.montserrat(
-                  //               color: kTextInputPlaceholderColor,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Rate your experience",
+                        style: GoogleFonts.montserrat(
+                                color: kTextInputPlaceholderColor,
 
-                  //               fontSize: 13,
-                  //               fontWeight: FontWeight.w400),
-                  //     ),
-                  //     Row(
-                  //       children: List.generate(5, (index) => const Icon(Icons.star,color: kDateCircleColor,size: 14)),
-                  //     )
+                                fontSize: 13,
+                                fontWeight: FontWeight.w400),
+                      ),
+                      Row(
+                        children: List.generate(5, (index) => const Icon(Icons.star,color: kDateCircleColor,size: 14)),
+                      )
 
-                  //   ],
-                  // )
+                    ],
+                  )
                 ],
               ),
             ),
@@ -116,6 +119,7 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                 text: TextSpan(
                     text: "Confirmation will be sent on your mail\n",
                     style: GoogleFonts.montserrat(
+
                         color: kTextInputPlaceholderColor, fontSize: 13),
                     children: [
                       TextSpan(
@@ -123,12 +127,13 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                         style: GoogleFonts.montserrat(
                             color: kbluecolor,
                             fontSize: 13,
+                            height: 3,
                             fontWeight: FontWeight.w700),
                       ),
                       TextSpan(
-                        text: ", C7/3A, Model Town - 3, Delhi - 110009\n",
+                        text: ", C7/3A, Model Town - 3, Delhi - 110009\n\n",
                         style: GoogleFonts.montserrat(
-                            height: 2,
+                            height: 1,
                             color: kTextInputPlaceholderColor,
                             fontSize: 13,
                             fontWeight: FontWeight.w400),
@@ -142,7 +147,7 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                             fontWeight: FontWeight.w400),
                       ),
                       TextSpan(
-                        text: "pick-up date",
+                        text: "pick-up date\n\n",
                         style: GoogleFonts.montserrat(
                             color: kTextInputPlaceholderColor,
                             height: 1.5,
@@ -351,7 +356,7 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
               ),
             ),
             SizedBox(
-              height: h * 0.03,
+              height: h * 0.05,
             ),
             RRecctButton(
               text: "CONTINUE SHOPPING",
@@ -373,7 +378,7 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                   color: kwhitecolor,
                   fontWeight: FontWeight.w700,
                   height: 1.5,
-                  fontSize: 12),
+                  fontSize: 13),
               buttonColor: kbluecolor,
             ),
             RRecctButton(
@@ -385,13 +390,13 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                     ));
               },
               text: "Track your order here",
-              h: h * 0.06,
+              h: h * 0.05,
               w: w * 0.8,
               style: GoogleFonts.montserrat(
                   color: kTextInputPlaceholderColor,
                   fontWeight: FontWeight.w400,
                   height: 1.5,
-                  fontSize: 12),
+                  fontSize: 13),
               buttonColor: kTransparent,
             )
           ],

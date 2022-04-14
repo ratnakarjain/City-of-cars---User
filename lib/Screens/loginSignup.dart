@@ -1,7 +1,10 @@
+// ignore_for_file: avoid_print
+
 import 'package:cityofcars/Screens/Service%20Main/slot.dart';
 import 'package:cityofcars/Services/signInSignUp.dart';
 import 'package:cityofcars/Utils/Buttons/button.dart';
 import 'package:cityofcars/Utils/constants.dart';
+import 'package:country_codes/country_codes.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -35,6 +38,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
     // TODO: implement initState
     super.initState();
     isSelected = widget.isSignIn;
+    // mobile.text = "1234567890";
   }
 
   @override
@@ -60,9 +64,10 @@ class _LoginSignUpState extends State<LoginSignUp> {
                         setState(() {});
                       },
                 child: Container(
-                  height: height * 0.05,
+                  height: height * 0.04,
                   width: width * 0.25,
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
                       color: isSelected ? kbluecolor : Colors.transparent,
                       borderRadius: BorderRadius.circular(height * 0.05 / 2)),
@@ -89,13 +94,16 @@ class _LoginSignUpState extends State<LoginSignUp> {
                     ? () {
                         isSelected = !isSelected;
 
-                        setState(() {});
+                        setState(() {
+                          // mobile.clear();
+                        });
                       }
                     : () {},
                 child: Container(
-                  height: height * 0.05,
+                  height: height * 0.04,
                   width: width * 0.25,
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(height * 0.05 / 2),
                       color: isSelected ? Colors.transparent : kbluecolor),
@@ -114,13 +122,14 @@ class _LoginSignUpState extends State<LoginSignUp> {
               )
             ],
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           !isSelected
               ? Container(
                   width: width,
                   // height: height * 0.5,
-                  padding: EdgeInsets.symmetric(vertical: 29, horizontal: 22),
-                  decoration: BoxDecoration(color: kLightOrangeBgColor),
+                  padding: EdgeInsets.symmetric(
+                      vertical: height * 0.02, horizontal: 22),
+                  decoration: const BoxDecoration(color: kLightOrangeBgColor),
                   child: Center(
                     child: Card(
                         elevation: 3,
@@ -130,7 +139,9 @@ class _LoginSignUpState extends State<LoginSignUp> {
                         child: Container(
                           //   height: height * 0.45,
                           width: width - 44,
-                          padding: EdgeInsets.all(20),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: width * 0.06,
+                              vertical: height * 0.035),
                           child: Form(
                             key: _formKey,
                             child: Column(
@@ -160,20 +171,27 @@ class _LoginSignUpState extends State<LoginSignUp> {
                                     //         ? kbluecolor
                                     //         : kTextInputPlaceholderColor
                                     //             .withOpacity(0.32)),
-                                    focusedBorder: UnderlineInputBorder(
+
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: kTextInputPlaceholderColor
+                                              .withOpacity(0.3)),
+                                    ),
+
+                                    focusedBorder: const UnderlineInputBorder(
                                       borderSide: BorderSide(
                                           color: kbluecolor, width: 1.0),
                                     ),
                                   ),
                                   cursorColor: kCursorColor,
                                   style: GoogleFonts.montserrat(
-                                    textStyle: TextStyle(
+                                    textStyle: const TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.w600,
                                         fontSize: 15),
                                   ),
                                 ),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 TextFormField(
                                   onTap: () {
                                     setState(() {});
@@ -192,6 +210,11 @@ class _LoginSignUpState extends State<LoginSignUp> {
                                   },
                                   decoration: InputDecoration(
                                     hintText: "Mobile No.*",
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: kTextInputPlaceholderColor
+                                              .withOpacity(0.3)),
+                                    ),
                                     hintStyle: TextStyle(
                                         color: kTextInputPlaceholderColor
                                             .withOpacity(0.32)),
@@ -201,20 +224,20 @@ class _LoginSignUpState extends State<LoginSignUp> {
                                     //         ? kbluecolor
                                     //         : kTextInputPlaceholderColor
                                     //             .withOpacity(0.32)),
-                                    focusedBorder: UnderlineInputBorder(
+                                    focusedBorder: const UnderlineInputBorder(
                                       borderSide: BorderSide(
                                           color: kbluecolor, width: 1.0),
                                     ),
                                   ),
                                   cursorColor: kCursorColor,
                                   style: GoogleFonts.montserrat(
-                                    textStyle: TextStyle(
+                                    textStyle: const TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.w600,
                                         fontSize: 15),
                                   ),
                                 ),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 TextFormField(
                                   onTap: () {
                                     setState(() {});
@@ -233,6 +256,11 @@ class _LoginSignUpState extends State<LoginSignUp> {
                                   },
                                   decoration: InputDecoration(
                                     hintText: "E-Mail (Optional)",
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: kTextInputPlaceholderColor
+                                              .withOpacity(0.3)),
+                                    ),
                                     hintStyle: TextStyle(
                                         color: kTextInputPlaceholderColor
                                             .withOpacity(0.32)),
@@ -242,20 +270,20 @@ class _LoginSignUpState extends State<LoginSignUp> {
                                     //         ? kbluecolor
                                     //         : kTextInputPlaceholderColor
                                     //             .withOpacity(0.32)),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
+                                    focusedBorder: const UnderlineInputBorder(
+                                      borderSide: const BorderSide(
                                           color: kbluecolor, width: 1.0),
                                     ),
                                   ),
                                   cursorColor: kCursorColor,
                                   style: GoogleFonts.montserrat(
-                                    textStyle: TextStyle(
+                                    textStyle: const TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.w600,
                                         fontSize: 15),
                                   ),
                                 ),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                               ],
                             ),
                           ),
@@ -264,9 +292,11 @@ class _LoginSignUpState extends State<LoginSignUp> {
                 )
               : Container(
                   width: width,
-                  margin: EdgeInsets.symmetric(horizontal: 22, vertical: 22),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 22, vertical: 22),
                   height: height * 0.15,
-                  padding: EdgeInsets.symmetric(vertical: 29, horizontal: 22),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 29, horizontal: 22),
                   child: Center(
                     child: Form(
                       key: _formKey,
@@ -283,6 +313,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
                             return null;
                           }
                         },
+                        // inputFormatters: [DialCodeFormatter()],
                         focusNode: myFocusNode3,
                         controller: mobile,
                         keyboardType: TextInputType.phone,
@@ -291,20 +322,25 @@ class _LoginSignUpState extends State<LoginSignUp> {
                           hintStyle: TextStyle(
                               color:
                                   kTextInputPlaceholderColor.withOpacity(0.32)),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: kTextInputPlaceholderColor
+                                    .withOpacity(0.3)),
+                          ),
 
                           // labelText: "Mobile No.",
                           // labelStyle: TextStyle(
                           //     color: myFocusNode3.hasFocus
                           //         ? kbluecolor
                           //         : kTextInputPlaceholderColor.withOpacity(0.32)),
-                          focusedBorder: UnderlineInputBorder(
+                          focusedBorder: const UnderlineInputBorder(
                             borderSide:
                                 BorderSide(color: kbluecolor, width: 1.0),
                           ),
                         ),
                         cursorColor: kCursorColor,
                         style: GoogleFonts.montserrat(
-                          textStyle: TextStyle(
+                          textStyle: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w600,
                               fontSize: 15),
@@ -313,7 +349,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
                     ),
                   ),
                 ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           RRecctButton(
               text: "CONTINUE",
               onTap: !isSelected
@@ -323,7 +359,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Verfication(),
+                              builder: (context) => const Verfication(),
                             ));
                         mobile.clear();
                         mail.clear();
@@ -336,7 +372,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Verfication(),
+                              builder: (context) => const Verfication(),
                             ));
                         mobile.clear();
                         mail.clear();
@@ -361,7 +397,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
                       style: GoogleFonts.montserrat(
                           fontStyle: FontStyle.normal,
                           fontSize: 12,
-                          textStyle: TextStyle(color: Colors.black)),
+                          textStyle: const TextStyle(color: Colors.black)),
                     ),
                     InkWell(
                       onTap: () {
@@ -377,7 +413,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
-                            textStyle: TextStyle(color: kredcolor)),
+                            textStyle: const TextStyle(color: kredcolor)),
                       ),
                     ),
                   ],

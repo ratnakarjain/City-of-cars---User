@@ -13,6 +13,7 @@ import 'package:cityofcars/Screens/sos.dart';
 import 'package:cityofcars/Screens/terms.dart';
 import 'package:cityofcars/Screens/tracking.dart';
 import 'package:cityofcars/Utils/constants.dart';
+import 'package:country_codes/country_codes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cityofcars/Screens/notification.dart';
@@ -22,6 +23,7 @@ import 'Utils/preference.dart';
 
 Future<void> main()async {
   WidgetsFlutterBinding.ensureInitialized();
+  await CountryCodes.init();
    Prefernece.pref = await SharedPreferences.getInstance();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);

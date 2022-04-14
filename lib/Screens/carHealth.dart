@@ -156,19 +156,22 @@ class _CarHealthState extends State<CarHealth> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Container(
-                      height: h * 0.28,
+                      height: h * 0.3,
                       width: w,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage(
                                 "assets/images/clip.png",
                               ),
                               fit: BoxFit.fill)),
                       padding: EdgeInsets.symmetric(
-                          horizontal: w * 0.13, vertical: h * 0.03),
+                          horizontal: w * 0.13, vertical: h * 0.04),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
+                          SizedBox(
+                            height: h*0.02,
+                          ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,

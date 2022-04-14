@@ -118,8 +118,12 @@ class _ProfileState extends State<Profile> {
                     Row(
                       children: [
                         InkWell(
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const SelectBrand(),));
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const SelectBrand(),
+                                ));
                           },
                           child: const Icon(
                             Icons.add,
@@ -140,7 +144,7 @@ class _ProfileState extends State<Profile> {
                                   style: GoogleFonts.montserrat(
                                     fontSize: 11,
                                     color: kTextInputPlaceholderColor,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 TextSpan(
@@ -207,7 +211,7 @@ class _ProfileState extends State<Profile> {
                                       backgroundColor:
                                           isSelected[index + currentCar]
                                               ? korangecolor
-                                              : kgrey,
+                                              : kgrey.withOpacity(0.5),
                                       child: InkWell(
                                         onTap: () {
                                           isSelected[index + currentCar] =
@@ -243,6 +247,9 @@ class _ProfileState extends State<Profile> {
                           );
                         },
                       ),
+                    ),
+                    SizedBox(
+                      height: h * 0.01,
                     ),
                     Row(
                       children: [
@@ -284,6 +291,9 @@ class _ProfileState extends State<Profile> {
                           ),
                         )
                       ],
+                    ),
+                    SizedBox(
+                      height: h * 0.01,
                     ),
                     Center(
                       child: Container(
@@ -410,6 +420,9 @@ class _ProfileState extends State<Profile> {
                   ],
                 ),
               ),
+              SizedBox(
+                height: h * 0.02,
+              ),
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -444,6 +457,9 @@ class _ProfileState extends State<Profile> {
                   ),
                   borderRadius: h * 0.04,
                 ),
+              ),
+              SizedBox(
+                height: h * 0.005,
               ),
               GestureDetector(
                 onTap: () {
@@ -482,6 +498,9 @@ class _ProfileState extends State<Profile> {
                   borderRadius: h * 0.04,
                 ),
               ),
+              SizedBox(
+                height: h * 0.005,
+              ),
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -516,6 +535,9 @@ class _ProfileState extends State<Profile> {
                   ),
                   borderRadius: h * 0.04,
                 ),
+              ),
+              SizedBox(
+                height: h * 0.005,
               ),
               GestureDetector(
                 onTap: () {
@@ -552,6 +574,9 @@ class _ProfileState extends State<Profile> {
                   borderRadius: h * 0.04,
                 ),
               ),
+              SizedBox(
+                height: h * 0.005,
+              ),
               GestureDetector(
                 onTap: () {
                   confirm();
@@ -583,7 +608,10 @@ class _ProfileState extends State<Profile> {
                   ),
                   borderRadius: h * 0.04,
                 ),
-              )
+              ),
+              SizedBox(
+                height: h * 0.15,
+              ),
             ],
           ),
         ),

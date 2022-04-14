@@ -28,9 +28,11 @@ class _SelectFuelState extends State<SelectFuel> {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: kbg2,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: kTransparent,
+        backgroundColor: kwhitecolor,
+        centerTitle: false,
         foregroundColor: kTextInputPlaceholderColor,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,28 +64,31 @@ class _SelectFuelState extends State<SelectFuel> {
             ),
           ],
         ),
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(h*0.05),
+          child: Container(),
+        ),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
-            height: h * 0.04,
+            height: h * 0.0,
           ),
           RRectCard(
-            h: h * 0.15,
-            w: h * 0.15,
+            h: h * 0.12,
+            w: h * 0.12,
             borderRadius: 30,
             color: kbluecolor,
             widget: RRectCard(
-              h: h * 0.15,
-              w: h * 0.15,
-              borderRadius: 30,
+              h: h * 0.12,
+              w: h * 0.12,
+              borderRadius: 25,
               color: kLightOrangeBgColor,
               widget: Image.asset("assets/images/Kia_logo.png"),
             ),
           ),
-          SizedBox(
-            height: h * 0.04,
-          ),
+          
           Container(
             width: w,
             decoration: BoxDecoration(
@@ -102,13 +107,13 @@ class _SelectFuelState extends State<SelectFuel> {
             child: Column(
               children: [
                 Text(
-                  "Select Cars",
+                  "Selected Cars",
                   textScaleFactor: 1.1,
                   style: GoogleFonts.montserrat(
                       height: 2, fontWeight: FontWeight.w600),
                 ),
                 SizedBox(
-                  height: h * 0.03,
+                  height: h * 0.05,
                 ),
                 RRectCard(
                   borderRadius: 30,
@@ -116,7 +121,7 @@ class _SelectFuelState extends State<SelectFuel> {
                   w: h * 0.12,
                   color: korangecolor,
                   widget: RRectCard(
-                    borderRadius: 30,
+                    borderRadius: 25,
                     h: h * 0.12,
                     w: h * 0.12,
                     widget: Column(
@@ -139,7 +144,7 @@ class _SelectFuelState extends State<SelectFuel> {
                   ),
                 ),
                 SizedBox(
-                  height: h * 0.04,
+                  height: h * 0.05,
                 ),
                 Container(
                   width: w,
@@ -153,10 +158,12 @@ class _SelectFuelState extends State<SelectFuel> {
                             spreadRadius: 5,
                             color: kblackcolor.withOpacity(0.1))
                       ]),
+                      margin: EdgeInsets.only(bottom: h*0.01),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Fuel",
+                        "Select Fuel",
                         textScaleFactor: 1.1,
                         style: GoogleFonts.montserrat(
                             height: 2, fontWeight: FontWeight.w600),
@@ -203,6 +210,7 @@ class _SelectFuelState extends State<SelectFuel> {
                           );
                         }),
                       ),
+                      SizedBox()
                     ],
                   ),
                 )

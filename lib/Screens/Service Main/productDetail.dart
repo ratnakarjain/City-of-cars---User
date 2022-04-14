@@ -77,12 +77,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                         width: 8.0,
                         height: 8.0,
                         margin: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 2.0),
+                            vertical: 10.0, horizontal: 4.0),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: currentPage == index
-                              ? const Color(0xFFFFFFFF)
-                              : const Color(0xFFFFFFFF).withOpacity(0.5),
+                              ?  kdarkpurple
+                              : ksubHading.withOpacity(0.32),
                         ),
                       );
                     }).toList(),

@@ -99,6 +99,7 @@ class _InsideCategoryState extends State<InsideCategory>
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(h * 0.18),
         child: AppBar(
+          centerTitle: false,
           backgroundColor: kTransparent,
           elevation: 0,
           foregroundColor: kwhitecolor,
@@ -139,12 +140,12 @@ class _InsideCategoryState extends State<InsideCategory>
                         width: 8.0,
                         height: 8.0,
                         margin: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 2.0),
+                            vertical: 10.0, horizontal: 4.0),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: currentPage == index
-                              ? const Color(0xFFFFFFFF)
-                              : const Color(0xFFFFFFFF).withOpacity(0.5),
+                              ? kdarkpurple
+                              : ksubHading.withOpacity(0.32),
                         ),
                       );
                     }).toList(),
@@ -158,8 +159,8 @@ class _InsideCategoryState extends State<InsideCategory>
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            height: h * 0.08,
+         Container(
+            height: h * 0.07,
             padding:
                 EdgeInsets.only(left: w * 0.06, right: w * 0.06, top: h * 0.02),
             child: Material(
@@ -169,9 +170,14 @@ class _InsideCategoryState extends State<InsideCategory>
               borderRadius: BorderRadius.circular(h * 0.05),
               child: TextField(
                 decoration: InputDecoration(
+                    contentPadding:
+                        EdgeInsets.only(top: h * 0.01, left: w * 0.05),
                     hintText: "Search",
                     hintStyle: GoogleFonts.montserrat(
-                        fontWeight: FontWeight.w600, color: kGreenColor),
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: ksearchTextColor.withOpacity(0.57),
+                    ),
                     suffixIcon: const Icon(
                       Icons.search,
                     ),
@@ -194,20 +200,24 @@ class _InsideCategoryState extends State<InsideCategory>
             onTap: (value) {
               _tabController.index = value;
             },
-            unselectedLabelColor: Colors.black,
+            unselectedLabelColor: kSelectedColor.withOpacity(0.56),
             indicatorColor: kTextInputPlaceholderColor.withOpacity(0.5),
-            labelColor: Colors.red,
+            labelColor: kSelectedColor,
             tabs: List.generate(
                 bodyType.length,
-                (index) => Text(
-                      "${bodyType[index]}".toUpperCase(),
-                     
-                      style: GoogleFonts.montserrat(
-                        fontSize: 14,
-                          textStyle: const TextStyle(
-                        fontWeight: FontWeight.w400,
-                      )),
-                    )),
+                (index) => SizedBox(
+                  height: h*0.03,
+                  child: Text(
+                        "${bodyType[index]}".toUpperCase(),
+                       
+                        style: GoogleFonts.montserrat(
+                          fontSize: 9,
+                            textStyle: const TextStyle(
+                              height: 2,
+                          fontWeight: FontWeight.bold,
+                        )),
+                      ),
+                )),
             controller: _tabController,
             indicatorSize: TabBarIndicatorSize.tab,
           ),

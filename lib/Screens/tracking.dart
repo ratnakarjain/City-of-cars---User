@@ -77,7 +77,7 @@ class _TrackingState extends State<Tracking> {
                                   text: "estimate delivery -",
                                   style: GoogleFonts.montserrat(
                                       fontSize: 12,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.bold,
                                       color: kTextInputPlaceholderColor),
                                   children: [
                                 TextSpan(
@@ -92,7 +92,7 @@ class _TrackingState extends State<Tracking> {
                             children: [
                               Text("reports & analytics ",
                                   style: GoogleFonts.montserrat(
-                                      fontSize: 12,
+                                      fontSize: 9,
                                       fontWeight: FontWeight.w400,
                                       color: kTextInputPlaceholderColor)),
                               Image.asset("assets/images/network.png")
@@ -150,7 +150,7 @@ class _TrackingState extends State<Tracking> {
                           offset: Offset(0, 3))
                     ],
                     borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(h * 0.3))),
+                        bottomLeft: Radius.circular(h * 0.12))),
                 margin: EdgeInsets.symmetric(vertical: h * 0.01),
                 padding: EdgeInsets.only(
                     left: w * 0.15,
@@ -170,7 +170,7 @@ class _TrackingState extends State<Tracking> {
                                 text: "Brake Pads\n",
                                 style: GoogleFonts.montserrat(
                                     fontSize: 13,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.bold,
                                     color: kTextInputPlaceholderColor),
                                 children: [
                                   TextSpan(
@@ -178,7 +178,7 @@ class _TrackingState extends State<Tracking> {
                                       style: GoogleFonts.montserrat(
                                           fontSize: 9,
                                           fontWeight: FontWeight.w400,
-                                          color: kTextInputPlaceholderColor)),
+                                          color: kTextInputPlaceholderColor.withOpacity(0.48))),
                                 ]),
                           ),
                           Image.asset("assets/images/images2.png")
@@ -197,7 +197,7 @@ class _TrackingState extends State<Tracking> {
                                   text: "Do you approve?\n",
                                   style: GoogleFonts.montserrat(
                                       fontSize: 12,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.bold,
                                       color: kwhitecolor),
                                   children: [
                                     TextSpan(
@@ -264,14 +264,14 @@ class _TrackingState extends State<Tracking> {
                                     text: "9:00 (25 min)\n",
                                     style: GoogleFonts.montserrat(
                                         fontSize: 12,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: kTextInputPlaceholderColor),
                                     children: [
                                       TextSpan(
                                           text: "Scout reached your location",
                                           style: GoogleFonts.montserrat(
                                               fontSize: 10,
-                                              fontWeight: FontWeight.w500,
+                                              fontWeight: FontWeight.bold,
                                               color: kTextInputPlaceholderColor,
                                               height: 2)),
                                     ]),
@@ -334,14 +334,14 @@ class _TrackingState extends State<Tracking> {
                                     text: "9:25 (47 min)\n",
                                     style: GoogleFonts.montserrat(
                                         fontSize: 12,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: kTextInputPlaceholderColor),
                                     children: [
                                       TextSpan(
                                           text: "Post Inspection scanning done",
                                           style: GoogleFonts.montserrat(
                                               fontSize: 10,
-                                              fontWeight: FontWeight.w500,
+                                              fontWeight: FontWeight.bold,
                                               color: kTextInputPlaceholderColor,
                                               height: 2)),
                                     ]),
@@ -409,14 +409,14 @@ class _TrackingState extends State<Tracking> {
                                         text: "10:02 (1:16 hr)\n",
                                         style: GoogleFonts.montserrat(
                                             fontSize: 11,
-                                            fontWeight: FontWeight.w700,
+                                            fontWeight: FontWeight.w500,
                                             color: kTextInputPlaceholderColor),
                                         children: [
                                           TextSpan(
                                               text: "Spare parts Installed\n",
                                               style: GoogleFonts.montserrat(
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 11,
+                                                  fontWeight: FontWeight.bold,
                                                   color:
                                                       kTextInputPlaceholderColor,
                                                   height: 2)),
@@ -424,7 +424,7 @@ class _TrackingState extends State<Tracking> {
                                               text:
                                                   "New to Yoga, or looking to take your mat to practice in new places? Get to know your local community and neighbours better by joining our Yoga family.",
                                               style: GoogleFonts.montserrat(
-                                                  fontSize: 8,
+                                                  fontSize: 9,
                                                   fontWeight: FontWeight.w400,
                                                   color:
                                                       kTextInputPlaceholderColor,

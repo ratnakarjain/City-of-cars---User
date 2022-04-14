@@ -27,6 +27,7 @@ class _SelectCityState extends State<SelectCity> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        centerTitle: false,
         title: Padding(
           padding: const EdgeInsets.only(left: 22, top: 20),
           child: Text(
@@ -46,23 +47,33 @@ class _SelectCityState extends State<SelectCity> {
         child: Column(
           children: [
             Container(
+              height: size.height*0.08,
               padding: EdgeInsets.only(
                   left: size.width * 0.06, right: size.width * 0.06, top: 20),
               child: TextField(
                 decoration: InputDecoration(
-                    hintText: "Search your city... ",
-                    suffixIcon: Icon(
+                    hintText: "Search",
+                    hintStyle: GoogleFonts.montserrat(
+                      fontSize:15,
+                      fontWeight: FontWeight.bold,
+                      color: ksearchTextColor,
+
+
+                    ),
+                    suffixIcon: const Icon(
                       Icons.search,
+
                       color: korangecolor,
                     ),
+                    
                     focusedBorder: OutlineInputBorder(
                         borderSide:
-                            BorderSide(color: korangecolor, width: 1.0),
-                        borderRadius: BorderRadius.circular(20)),
+                            const BorderSide(color: korangecolor, width: 1.0),
+                        borderRadius: BorderRadius.circular(size.height*0.04)),
                     border: OutlineInputBorder(
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                             color: kTextInputPlaceholderColor, width: 1.0),
-                        borderRadius: BorderRadius.circular(20))),
+                        borderRadius: BorderRadius.circular(size.height*0.04))),
               ),
             ),
             Container(

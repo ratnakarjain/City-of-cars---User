@@ -45,6 +45,9 @@ class _GlanceState extends State<Glance> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(child: Image.asset("assets/images/right_mark.png")),
+           SizedBox(
+            height:h* 0.01,
+          ),
           Text(
             "Congratulations",
             textScaleFactor: 1.2,
@@ -52,6 +55,9 @@ class _GlanceState extends State<Glance> {
               height: 1.5,
               fontWeight: FontWeight.w600,
             ),
+          ),
+           SizedBox(
+            height:h* 0.01,
           ),
           Text(
             "You have added a new car to your proflie",
@@ -61,29 +67,43 @@ class _GlanceState extends State<Glance> {
             ),
           ),
           SizedBox(
-            height: h * 0.02,
+            height: h * 0.025,
           ),
-          RRectCard(
-            h: h * 0.15,
-            w: h * 0.15,
-            borderRadius: 30,
-            color: korangecolor,
-            widget: RRectCard(
-              h: h * 0.15,
-              w: h * 0.15,
-              borderRadius: 30,
-              widget: Stack(
-                children: [
-                  Center(child: Image.asset("assets/images/Uber1.png")),
-                  Positioned(
-                    right: w * 0.03,
-                    top: h * 0.01,
-                    child: Image.asset(
-                      "assets/images/EV.png",
-                      height: h * 0.03,
-                    ),
-                  )
-                ],
+          Container(
+            height: h*0.15,
+            width: w*0.9,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                  "assets/images/bg2.png"
+                ),
+                fit: BoxFit.fitWidth
+              )
+            ),
+            child: Center(
+              child: RRectCard(
+                h: h * 0.13,
+                w: h * 0.13,
+                borderRadius: 30,
+                color: korangecolor,
+                widget: RRectCard(
+                  h: h * 0.12,
+                  w: h * 0.12,
+                  borderRadius: 25,
+                  widget: Stack(
+                    children: [
+                      Center(child: Image.asset("assets/images/Uber1.png")),
+                      Positioned(
+                        right: w * 0.03,
+                        top: h * 0.01,
+                        child: Image.asset(
+                          "assets/images/EV.png",
+                          height: h * 0.03,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ),
             ),
           ),

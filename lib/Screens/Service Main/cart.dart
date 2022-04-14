@@ -35,6 +35,7 @@ class _CartState extends State<Cart> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: kwhitecolor,
+        centerTitle: false,
         foregroundColor: kblackcolor,
         title: Text(
           "Cart",
@@ -69,16 +70,17 @@ class _CartState extends State<Cart> {
                           children: [
                             Text(
                               "Statnderd",
-                              textScaleFactor: 1.9,
+                              
                               style: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                             Text(
                               "Services Pack",
-                              textScaleFactor: 0.8,
                               style: GoogleFonts.montserrat(
-                                  fontWeight: FontWeight.w500,
+                                fontSize: 12,
+                                  fontWeight: FontWeight.w600,
                                   color: kTextInputPlaceholderColor
                                       .withOpacity(0.6)),
                             ),
@@ -89,18 +91,18 @@ class _CartState extends State<Cart> {
                           children: [
                             Text(
                               "₹ 2700",
-                              textScaleFactor: 2,
                               style: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.w500,
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                             Text(
                               "Incl. Taxes",
-                              textScaleFactor: 0.6,
                               style: GoogleFonts.montserrat(
-                                  fontWeight: FontWeight.w500,
+                                fontSize: 7,
+                                  fontWeight: FontWeight.w600,
                                   color: kTextInputPlaceholderColor
-                                      .withOpacity(0.6)),
+                                      .withOpacity(0.48)),
                             ),
                           ],
                         )
@@ -111,9 +113,10 @@ class _CartState extends State<Cart> {
                     padding: EdgeInsets.only(left: w * 0.08, bottom: h * 0.01),
                     child: Text(
                       "Takes 4 Hrs / Every 3 Months",
-                      textScaleFactor: 0.7,
+                     
                       style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 7,
                           color: kTextInputPlaceholderColor.withOpacity(0.6)),
                     ),
                   ),
@@ -233,7 +236,7 @@ class _CartState extends State<Cart> {
                                             // textScaleFactor: 0.7,
                                             style: GoogleFonts.montserrat(
                                                 fontSize: 8,
-                                                fontWeight: FontWeight.w500,
+                                                fontWeight: FontWeight.w600,
                                                 color:
                                                     kTextInputPlaceholderColor
                                                         .withOpacity(0.6)),
@@ -250,7 +253,7 @@ class _CartState extends State<Cart> {
                                             "Oil Filter",
                                             // textScaleFactor: 0.7,
                                             style: GoogleFonts.montserrat(
-                                                fontWeight: FontWeight.w500,
+                                                fontWeight: FontWeight.w600,
                                                 fontSize: 8,
                                                 color:
                                                     kTextInputPlaceholderColor
@@ -269,7 +272,7 @@ class _CartState extends State<Cart> {
                                             // textScaleFactor: 0.7,
                                             style: GoogleFonts.montserrat(
                                                 fontSize: 8,
-                                                fontWeight: FontWeight.w500,
+                                                fontWeight: FontWeight.w600,
                                                 color:
                                                     kTextInputPlaceholderColor
                                                         .withOpacity(0.6)),
@@ -277,9 +280,10 @@ class _CartState extends State<Cart> {
                                         ],
                                       ),
                                       Text("+9 more",
-                                          textScaleFactor: 0.7,
+                                      
                                           style: GoogleFonts.montserrat(
-                                            fontWeight: FontWeight.w500,
+                                            fontSize: 8,
+                                            fontWeight: FontWeight.w600,
                                           )),
                                     ],
                                   ),
@@ -311,7 +315,7 @@ class _CartState extends State<Cart> {
                                               // textScaleFactor: 0.7,
                                               style: GoogleFonts.montserrat(
                                                   fontSize: 8,
-                                                  fontWeight: FontWeight.w500,
+                                                  fontWeight: FontWeight.w600,
                                                   color:
                                                       kTextInputPlaceholderColor
                                                           .withOpacity(0.6)),
@@ -328,7 +332,7 @@ class _CartState extends State<Cart> {
                                               "Oil Filter",
                                               // textScaleFactor: 0.7,
                                               style: GoogleFonts.montserrat(
-                                                  fontWeight: FontWeight.w500,
+                                                  fontWeight: FontWeight.w600,
                                                   fontSize: 8,
                                                   color:
                                                       kTextInputPlaceholderColor
@@ -347,7 +351,7 @@ class _CartState extends State<Cart> {
                                               // textScaleFactor: 0.7,
                                               style: GoogleFonts.montserrat(
                                                   fontSize: 8,
-                                                  fontWeight: FontWeight.w500,
+                                                  fontWeight: FontWeight.w600,
                                                   color:
                                                       kTextInputPlaceholderColor
                                                           .withOpacity(0.6)),
@@ -373,7 +377,7 @@ class _CartState extends State<Cart> {
                             radius: h * 0.02,
                             backgroundColor: kbluecolor,
                             foregroundColor: kwhitecolor,
-                            child: FittedBox(child: Icon(Icons.delete)),
+                            child: FittedBox(child: Icon(Icons.delete,size: h*0.022,)),
                           )
                         ]),
                   ),
@@ -428,12 +432,12 @@ class _CartState extends State<Cart> {
                           style: GoogleFonts.montserrat(
                             fontSize: 13,
                             color: ksubHading,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.bold,
                           )),
                       Text("₹ 2500",
                           style: GoogleFonts.montserrat(
                             fontSize: 11,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.bold,
                           )),
                     ],
                   ),
@@ -444,12 +448,12 @@ class _CartState extends State<Cart> {
                           style: GoogleFonts.montserrat(
                             fontSize: 13,
                             color: ksubHading,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.bold,
                           )),
                       Text("₹ 200",
                           style: GoogleFonts.montserrat(
                             fontSize: 11,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.bold,
                           )),
                     ],
                   ),
@@ -459,7 +463,7 @@ class _CartState extends State<Cart> {
                       Text("Total",
                           style: GoogleFonts.montserrat(
                             fontSize: 22,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.bold,
                           )),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
@@ -467,13 +471,13 @@ class _CartState extends State<Cart> {
                           Text("₹ 2700",
                               style: GoogleFonts.montserrat(
                                 fontSize: 19,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.bold,
                               )),
                           Text("Incl. Taxes",
                               style: GoogleFonts.montserrat(
                                 color: ksubHading,
                                 fontSize: 6,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.bold,
                               )),
                         ],
                       ),
@@ -497,7 +501,7 @@ class _CartState extends State<Cart> {
                 w: w * 0.9,
                 style: GoogleFonts.montserrat(
                   color: kwhitecolor,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),

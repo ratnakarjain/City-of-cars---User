@@ -15,12 +15,19 @@ class _MyHomePageState extends State<MyHomePage> {
   var h;
   var w;
   int currentPage = 0;
+
   List cardData = [
     {"image": "assets/images/man_with_car.png"},
     {"image": "assets/images/man_with_car.png"},
     {"image": "assets/images/man_with_car.png"},
     {"image": "assets/images/man_with_car.png"},
   ];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    
+  }
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
@@ -158,12 +165,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 return Container(
                   width: 8.0,
                   height: 8.0,
-                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 4.0),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: currentPage == index
-                        ? Color.fromRGBO(0, 0, 0, 0.9)
-                        : Color.fromRGBO(0, 0, 0, 0.4),
+                        ? kdarkpurple : ksubHading,
                   ),
                 );
               }).toList(),
@@ -173,11 +179,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             RRecctButton(
               text: "LOGIN",
-              h: h * 0.07,
+              h: h * 0.06,
               w: w * 0.88,
               buttonColor: kbluecolor,
               style: GoogleFonts.montserrat(
-                  color: kwhitecolor, fontWeight: FontWeight.w600),
+                  color: kwhitecolor, fontWeight: FontWeight.w600,fontSize: 14,),
               onTap: () {
                 Navigator.push(
                     context,
@@ -193,11 +199,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             RRecctButton(
               text: "SIGNUP",
-              h: h * 0.07,
+              h: h * 0.06,
               w: w * 0.88,
               buttonColor: korangecolor,
               style: GoogleFonts.montserrat(
-                  color: kwhitecolor, fontWeight: FontWeight.w600),
+                  color: kwhitecolor, fontWeight: FontWeight.w600,fontSize: 14),
               onTap: () {
                 Navigator.push(
                     context,

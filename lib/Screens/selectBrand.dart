@@ -82,6 +82,7 @@ class _SelectBrandState extends State<SelectBrand> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        centerTitle: false,
         title: Padding(
           padding: const EdgeInsets.only(left: 22, top: 20),
           child: Column(
@@ -125,23 +126,35 @@ class _SelectBrandState extends State<SelectBrand> {
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(h * 0.1),
           child: Container(
-            padding: EdgeInsets.only(left: w * 0.06, right: w * 0.06, top: 20),
-            child: TextField(
-              decoration: InputDecoration(
-                  hintText: "Search",
-                  hintStyle: GoogleFonts.montserrat(color: kGreenColor),
-                  suffixIcon: Icon(
-                    Icons.search,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: korangecolor, width: 1.0),
-                      borderRadius: BorderRadius.circular(20)),
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: kTextInputPlaceholderColor, width: 1.0),
-                      borderRadius: BorderRadius.circular(20))),
+              height: h*0.08,
+              padding: EdgeInsets.only(
+                  left: w * 0.06, right: w * 0.06, top: 20),
+              child: TextField(
+                decoration: InputDecoration(
+                    hintText: "Search",
+                    hintStyle: GoogleFonts.montserrat(
+                      fontSize:15,
+                      fontWeight: FontWeight.bold,
+                      color: ksearchTextColor,
+
+
+                    ),
+                    suffixIcon: const Icon(
+                      Icons.search,
+
+                      color: korangecolor,
+                    ),
+                    
+                    focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(color: korangecolor, width: 1.0),
+                        borderRadius: BorderRadius.circular(h*0.04)),
+                    border: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: kTextInputPlaceholderColor, width: 1.0),
+                        borderRadius: BorderRadius.circular(h*0.04))),
+              ),
             ),
-          ),
         ),
       ),
       body: Container(
@@ -153,14 +166,14 @@ class _SelectBrandState extends State<SelectBrand> {
                 ? Padding(
                     padding: EdgeInsets.all(h * 0.03),
                     child: RRectCard(
-                      h: h * 0.15,
-                      w: h * 0.15,
-                      borderRadius: 30,
+                      h: h * 0.12,
+                      w: h * 0.12,
+                      borderRadius: 25,
                       color: kbluecolor,
                       widget: RRectCard(
-                        h: h * 0.15,
-                        w: h * 0.15,
-                        borderRadius: 30,
+                        h: h * 0.12,
+                        w: h * 0.12,
+                        borderRadius: 25,
                         color: kLightOrangeBgColor,
                         widget:
                             Image.asset("assets/images/${carLogoList[item!]}"),
