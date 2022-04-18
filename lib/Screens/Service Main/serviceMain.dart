@@ -32,22 +32,22 @@ class _ServiceMainState extends State<ServiceMain> {
     {
       "services": "Periodic Services",
       "image": "2110.png",
-      "type": "Custom services"
+      "type": "Brackes, AC + more"
     },
     {
-      "services": "Dent Paint Detailling",
+      "services": "body shop",
       "image": "2113.png",
-      "type": "Custom services"
+      "type": "Dent Paint, Detailling + more"
     },
     {
       "services": "Custom Services",
       "image": "2112.png",
-      "type": "Custom services"
+      "type": "clutch, transmission + more"
     },
     {
-      "services": "Tyres Batteries",
+      "services": "Tyres & Batteries",
       "image": "2111.png",
-      "type": "Custom services"
+      "type": "Accessary + more"
     },
   ];
   List reccomendedPackes = [
@@ -87,6 +87,7 @@ class _ServiceMainState extends State<ServiceMain> {
           backgroundColor: kTransparent,
           elevation: 0,
           foregroundColor: kwhitecolor,
+          centerTitle: false,
           title: Text(
             "Delhi",
             style: GoogleFonts.montserrat(
@@ -291,13 +292,20 @@ class _ServiceMainState extends State<ServiceMain> {
                                 ),
                                 FittedBox(
                                   child: Text(
-                                    carServices[index]["services"],
+                                    "${carServices[index]["services"]}".toUpperCase(),
                                     style: GoogleFonts.montserrat(
                                         fontWeight: FontWeight.w500,
                                         height: 3,
                                         fontSize: 11),
                                   ),
-                                )
+                                ),
+                                Text(
+                                    "${carServices[index]["type"]}".toUpperCase(),
+                                    style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.w400,
+                                        height: 1,
+                                        fontSize: 9),
+                                  ),
                               ]),
                         ),
                       );

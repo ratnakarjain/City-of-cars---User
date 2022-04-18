@@ -4,11 +4,15 @@ import 'package:cityofcars/Screens/Service%20Main/slot.dart';
 import 'package:cityofcars/Services/signInSignUp.dart';
 import 'package:cityofcars/Utils/Buttons/button.dart';
 import 'package:cityofcars/Utils/constants.dart';
+import 'package:cityofcars/Utils/preference.dart';
 import 'package:country_codes/country_codes.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../Services/url.dart';
 import 'verification.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
 
 class LoginSignUp extends StatefulWidget {
   bool isSignIn;
@@ -22,6 +26,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
   var mail = TextEditingController();
   var mobile = TextEditingController();
   var name = TextEditingController();
+  var prefs = Prefernece.pref;
 
   var height;
   var width;
@@ -128,166 +133,151 @@ class _LoginSignUpState extends State<LoginSignUp> {
                   width: width,
                   // height: height * 0.5,
                   padding: EdgeInsets.symmetric(
-                      vertical: height * 0.02, horizontal: 22),
+                      vertical: height * 0.04, horizontal: 22),
                   decoration: const BoxDecoration(color: kLightOrangeBgColor),
-                  child: Center(
-                    child: Card(
-                        elevation: 3,
-                        shadowColor: Colors.grey.shade100,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(width * 0.12)),
-                        child: Container(
-                          //   height: height * 0.45,
-                          width: width - 44,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: width * 0.06,
-                              vertical: height * 0.035),
-                          child: Form(
-                            key: _formKey,
-                            child: Column(
-                              children: [
-                                TextFormField(
-                                  onTap: () {
-                                    setState(() {});
-                                  },
-                                  focusNode: myFocusNode,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return "Enter name";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  controller: name,
-                                  decoration: InputDecoration(
-                                    hintText: "Name*",
-
-                                    hintStyle: TextStyle(
-                                        color: kTextInputPlaceholderColor
-                                            .withOpacity(0.32)),
-                                    // labelText: "Name*",
-                                    // labelStyle: TextStyle(
-                                    //     color: myFocusNode.hasFocus
-                                    //         ? kbluecolor
-                                    //         : kTextInputPlaceholderColor
-                                    //             .withOpacity(0.32)),
-
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: kTextInputPlaceholderColor
-                                              .withOpacity(0.3)),
-                                    ),
-
-                                    focusedBorder: const UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: kbluecolor, width: 1.0),
-                                    ),
-                                  ),
-                                  cursorColor: kCursorColor,
-                                  style: GoogleFonts.montserrat(
-                                    textStyle: const TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 15),
-                                  ),
-                                ),
-                                const SizedBox(height: 20),
-                                TextFormField(
-                                  onTap: () {
-                                    setState(() {});
-                                  },
-                                  controller: mobile,
-                                  focusNode: myFocusNode1,
-                                  keyboardType: TextInputType.phone,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return "Enter mobile Number";
-                                    } else if (value.length != 10) {
-                                      return "Mobile no. length shuld 10";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  decoration: InputDecoration(
-                                    hintText: "Mobile No.*",
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: kTextInputPlaceholderColor
-                                              .withOpacity(0.3)),
-                                    ),
-                                    hintStyle: TextStyle(
-                                        color: kTextInputPlaceholderColor
-                                            .withOpacity(0.32)),
-                                    // labelText: "Mobile No.*",
-                                    // labelStyle: TextStyle(
-                                    //     color: myFocusNode1.hasFocus
-                                    //         ? kbluecolor
-                                    //         : kTextInputPlaceholderColor
-                                    //             .withOpacity(0.32)),
-                                    focusedBorder: const UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: kbluecolor, width: 1.0),
-                                    ),
-                                  ),
-                                  cursorColor: kCursorColor,
-                                  style: GoogleFonts.montserrat(
-                                    textStyle: const TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 15),
-                                  ),
-                                ),
-                                const SizedBox(height: 20),
-                                TextFormField(
-                                  onTap: () {
-                                    setState(() {});
-                                  },
-                                  focusNode: myFocusNode2,
-                                  controller: mail,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return null;
-                                    } else if (!RegExp(
-                                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                        .hasMatch(value)) {
-                                      return 'Enter a valid email!';
-                                    }
-                                    return null;
-                                  },
-                                  decoration: InputDecoration(
-                                    hintText: "E-Mail (Optional)",
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: kTextInputPlaceholderColor
-                                              .withOpacity(0.3)),
-                                    ),
-                                    hintStyle: TextStyle(
-                                        color: kTextInputPlaceholderColor
-                                            .withOpacity(0.32)),
-                                    // labelText: "E-Mail (Optional)",
-                                    // labelStyle: TextStyle(
-                                    //     color: myFocusNode2.hasFocus
-                                    //         ? kbluecolor
-                                    //         : kTextInputPlaceholderColor
-                                    //             .withOpacity(0.32)),
-                                    focusedBorder: const UnderlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          color: kbluecolor, width: 1.0),
-                                    ),
-                                  ),
-                                  cursorColor: kCursorColor,
-                                  style: GoogleFonts.montserrat(
-                                    textStyle: const TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 15),
-                                  ),
-                                ),
-                                const SizedBox(height: 20),
-                              ],
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        Material(
+                          color: kwhitecolor,
+                          shadowColor: kTextInputPlaceholderColor.withOpacity(0.3),
+                          elevation: 5,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(height*0.05)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {});
+                            },
+                            focusNode: myFocusNode,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Enter name";
+                              } else {
+                                return null;
+                              }
+                            },
+                            controller: name,
+                            decoration: InputDecoration(
+                              hintText: "Name*",
+                        contentPadding: EdgeInsets.only(left: width*0.1),
+                              hintStyle: TextStyle(
+                                  color: kTextInputPlaceholderColor
+                                      .withOpacity(0.32)),
+                              // labelText: "Name*",
+                              // labelStyle: TextStyle(
+                              //     color: myFocusNode.hasFocus
+                              //         ? kbluecolor
+                              //         : kTextInputPlaceholderColor
+                              //             .withOpacity(0.32)),
+                        
+                              border: InputBorder.none,
+                        
+                              focusedBorder: InputBorder.none,
+                            ),
+                            cursorColor: kCursorColor,
+                            style: GoogleFonts.montserrat(
+                              textStyle: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 15),
                             ),
                           ),
-                        )),
+                        ),
+                        const SizedBox(height: 20),
+                        Material(
+                          color: kwhitecolor,
+                          shadowColor: kTextInputPlaceholderColor.withOpacity(0.3),
+                          elevation: 5,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(height*0.05)),
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {});
+                            },
+                            controller: mobile,
+                            focusNode: myFocusNode1,
+                            keyboardType: TextInputType.phone,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Enter mobile Number";
+                              } else if (value.length != 10) {
+                                return "Mobile no. length shuld 10";
+                              } else {
+                                return null;
+                              }
+                            },
+                            decoration: InputDecoration(
+                              hintText: "Mobile No.*",
+                              enabledBorder: InputBorder.none,
+                              contentPadding: EdgeInsets.only(left: width*0.1),
+                              hintStyle: TextStyle(
+                                  color: kTextInputPlaceholderColor
+                                      .withOpacity(0.32)),
+                              // labelText: "Mobile No.*",
+                              // labelStyle: TextStyle(
+                              //     color: myFocusNode1.hasFocus
+                              //         ? kbluecolor
+                              //         : kTextInputPlaceholderColor
+                              //             .withOpacity(0.32)),
+                              focusedBorder: InputBorder.none,
+                            ),
+                            cursorColor: kCursorColor,
+                            style: GoogleFonts.montserrat(
+                              textStyle: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 15),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Material(
+                          color: kwhitecolor,
+                          shadowColor: kTextInputPlaceholderColor.withOpacity(0.3),
+                          elevation: 5,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(height*0.05)),
+                          
+                          child: TextFormField(
+                            onTap: () {
+                              setState(() {});
+                            },
+                            focusNode: myFocusNode2,
+                            controller: mail,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return null;
+                              } else if (!RegExp(
+                                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                  .hasMatch(value)) {
+                                return 'Enter a valid email!';
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              hintText: "E-Mail (Optional)",
+                              enabledBorder: InputBorder.none,
+                              contentPadding: EdgeInsets.only(left: width*0.1),
+                              hintStyle: TextStyle(
+                                  color: kTextInputPlaceholderColor
+                                      .withOpacity(0.32)),
+                              // labelText: "E-Mail (Optional)",
+                              // labelStyle: TextStyle(
+                              //     color: myFocusNode2.hasFocus
+                              //         ? kbluecolor
+                              //         : kTextInputPlaceholderColor
+                              //             .withOpacity(0.32)),
+                              focusedBorder: InputBorder.none,
+                            ),
+                            cursorColor: kCursorColor,
+                            style: GoogleFonts.montserrat(
+                              textStyle: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 15),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 )
               : Container(
@@ -343,51 +333,13 @@ class _LoginSignUpState extends State<LoginSignUp> {
                           textStyle: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w600,
-                              fontSize: 15),
+                              fontSize: 16),
                         ),
                       ),
                     ),
                   ),
                 ),
           const SizedBox(height: 20),
-          RRecctButton(
-              text: "CONTINUE",
-              onTap: !isSelected
-                  ? () {
-                      if (_formKey.currentState!.validate()) {
-                        // register(name.text, mail.text, mobile.text);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Verfication(),
-                            ));
-                        mobile.clear();
-                        mail.clear();
-                        name.clear();
-                        print("gogogogogogo");
-                      }
-                    }
-                  : () {
-                      if (_formKey.currentState!.validate()) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Verfication(),
-                            ));
-                        mobile.clear();
-                        mail.clear();
-                        name.clear();
-                      }
-                    },
-              buttonColor: korangecolor,
-              style: GoogleFonts.montserrat(
-                  textStyle: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14)),
-              h: 52,
-              w: width - 44),
-          const SizedBox(height: 10),
           !isSelected
               ? Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -418,7 +370,60 @@ class _LoginSignUpState extends State<LoginSignUp> {
                     ),
                   ],
                 )
-              : Container()
+              : Container(),
+              const SizedBox(height: 10),
+          RRecctButton(
+              text: "CONTINUE",
+              onTap: !isSelected
+                  ? () {
+                      if (_formKey.currentState!.validate()) {
+                        register();
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //       builder: (context) => const Verfication(),
+                        //     ));
+      
+                        mobile.clear();
+                        mail.clear();
+                        name.clear();
+                      }
+                    }
+                  : () {
+                      if (_formKey.currentState!.validate()) {
+                        login();
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //       builder: (context) => const Verfication(),
+                        //     ));
+      
+                        mobile.clear();
+                        mail.clear();
+                        name.clear();
+                      }
+                    },
+              buttonColor: korangecolor,
+              
+              style: GoogleFonts.montserrat(
+                  textStyle: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14)),
+              h: 52,
+              w: width - 44),
+          const SizedBox(height: 10),
+          Visibility(
+            visible: !isSelected,
+            child: Text(
+                        "By clicking continue, I agree to the all the Terms",
+                        style: GoogleFonts.montserrat(
+                            fontStyle: FontStyle.normal,
+                            fontSize: 12,
+                            textStyle: const TextStyle(color: Colors.black)),
+                      ),
+          ),
+          
         ]),
       ),
     ));
@@ -431,5 +436,75 @@ class _LoginSignUpState extends State<LoginSignUp> {
     mail.dispose();
     mobile.dispose();
     name.dispose();
+  }
+  register()async{
+
+  var url = Uri.parse(registerUrl);
+  try {
+    var response = await http.post(url, body: {
+      'name': name.text,
+      'email': mail.text,
+      'mobile': mobile.text,
+    });
+    if (response.statusCode == 200) {
+      var jsonResponse =
+        convert.jsonDecode(response.body);
+      print("success");
+      if(jsonResponse["status"]){
+prefs!.setString("token", jsonResponse["token"]);
+      token = prefs!.getString("token")!;
+      print("$token");
+      Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Verfication(),
+                            ));
+                        
+      return response.body;
+      }else{
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+  content:  Text(jsonResponse["message"]),
+  
+  ));
+      }
+      
+    }
+  } catch (e) {
+    print("error $e");
+  }
+  }
+
+
+  login()async{
+      var url = Uri.parse(loginUrl);
+  try {
+    var response = await http.post(url, body: {
+      'mobile': mobile.text,
+    });
+    if (response.statusCode == 200) {
+      var jsonResponse =
+        convert.jsonDecode(response.body);
+      print("success");
+Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Verfication(),
+                            ));
+      
+       
+      
+    }else if(response.statusCode ==201){
+      var jsonResponse =
+        convert.jsonDecode(response.body);
+ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+  content:  Text(jsonResponse["message"]),
+  
+  ));
+    }
+  } catch (e) {
+    print("error $e");
+  }
   }
 }

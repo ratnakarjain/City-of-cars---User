@@ -44,91 +44,126 @@ class _SelectCityState extends State<SelectCity> {
         elevation: 0,
       ),
       body: Container(
-        child: Column(
-          children: [
-            Container(
-              height: size.height*0.08,
-              padding: EdgeInsets.only(
-                  left: size.width * 0.06, right: size.width * 0.06, top: 20),
-              child: TextField(
-                decoration: InputDecoration(
-                    hintText: "Search",
-                    hintStyle: GoogleFonts.montserrat(
-                      fontSize:15,
-                      fontWeight: FontWeight.bold,
-                      color: ksearchTextColor,
-
-
-                    ),
-                    suffixIcon: const Icon(
-                      Icons.search,
-
-                      color: korangecolor,
-                    ),
-                    
-                    focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(color: korangecolor, width: 1.0),
-                        borderRadius: BorderRadius.circular(size.height*0.04)),
-                    border: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: kTextInputPlaceholderColor, width: 1.0),
-                        borderRadius: BorderRadius.circular(size.height*0.04))),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              // Container(
+              //   height: size.height*0.08,
+              //   padding: EdgeInsets.only(
+              //       left: size.width * 0.06, right: size.width * 0.06, top: 20),
+              //   child: TextField(
+              //     decoration: InputDecoration(
+              //         hintText: "Search",
+              //         hintStyle: GoogleFonts.montserrat(
+              //           fontSize:16,
+              //           fontWeight: FontWeight.bold,
+              //           color: ksearchTextColor,
+        
+        
+              //         ),
+              //         suffixIcon: const Icon(
+              //           Icons.search,
+        
+              //           color: korangecolor,
+              //         ),
+                      
+              //         focusedBorder: OutlineInputBorder(
+              //             borderSide:
+              //                 const BorderSide(color: korangecolor, width: 1.0),
+              //             borderRadius: BorderRadius.circular(size.height*0.04)),
+              //         border: OutlineInputBorder(
+              //             borderSide: const BorderSide(
+              //                 color: kTextInputPlaceholderColor, width: 1.0),
+              //             borderRadius: BorderRadius.circular(size.height*0.04))),
+              //   ),
+              // ),
+              Container(
+              height: size.height * 0.07,
+              padding:
+                  EdgeInsets.only(left: size.width * 0.06, right: size.width * 0.06, top: size.height * 0.02),
+              child: Material(
+                color: kwhitecolor,
+                // elevation: 8,
+                shadowColor: kTextInputPlaceholderColor.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(size.height * 0.025),
+                child: TextField(
+                  decoration: InputDecoration(
+                      contentPadding:
+                          EdgeInsets.only(top: size.height * 0.01, left: size.width * 0.05),
+                      hintText: "Search",
+                      hintStyle: GoogleFonts.montserrat(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: ksearchTextColor.withOpacity(0.57),
+                      ),
+                      suffixIcon: const Icon(
+                        Icons.search,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: korangecolor, width: 1.0),
+                          borderRadius: BorderRadius.circular(size.height* 0.02)),
+                      border: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              color: kTextInputPlaceholderColor, width: 1.0),
+                          borderRadius: BorderRadius.circular(size.height* 0.02))),
+                ),
               ),
             ),
-            Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: size.width * 0.07, vertical: 50),
-              color: kLightOrangeBgColor,
-              child: GridView.count(
-                controller: _controller,
-                shrinkWrap: true,
-                mainAxisSpacing: 20,
-                crossAxisSpacing: 10,
-                crossAxisCount: 2,
-                children: List.generate(cityList.length, (index) {
-                  return Center(
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const SelectBrand(),
-                            ));
-                      },
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30)),
-                        elevation: 8,
-                        shadowColor: Colors.grey.withOpacity(0.2),
-                        child: Container(
-                          height: size.height * 0.17,
-                          width: size.height * 0.17,
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                    "assets/images/${cityList[index]["images"]}"),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  cityList[index]["name"],
-                                  style: GoogleFonts.montserrat(
-                                      textStyle: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold)),
-                                )
-                              ]),
+              Container(
+                padding: EdgeInsets.symmetric(
+                    horizontal: size.width * 0.07, vertical: 50),
+                color: kLightOrangeBgColor,
+                child: GridView.count(
+                  controller: _controller,
+                  shrinkWrap: true,
+                  mainAxisSpacing: 20,
+                  crossAxisSpacing: 10,
+                  crossAxisCount: 2,
+                  children: List.generate(cityList.length, (index) {
+                    return Center(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const SelectBrand(),
+                              ));
+                        },
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30)),
+                          elevation: 8,
+                          shadowColor: Colors.grey.withOpacity(0.2),
+                          child: Container(
+                            height: size.height * 0.17,
+                            width: size.height * 0.17,
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                      "assets/images/${cityList[index]["images"]}"),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    cityList[index]["name"],
+                                    style: GoogleFonts.montserrat(
+                                        textStyle: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold)),
+                                  )
+                                ]),
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                }),
+                    );
+                  }),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

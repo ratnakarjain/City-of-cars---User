@@ -125,96 +125,132 @@ class _SelectBrandState extends State<SelectBrand> {
         elevation: 0,
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(h * 0.1),
-          child: Container(
-              height: h*0.08,
-              padding: EdgeInsets.only(
-                  left: w * 0.06, right: w * 0.06, top: 20),
+          child: 
+          Container(
+            height: h * 0.07,
+            padding:
+                EdgeInsets.only(left: w * 0.06, right: w * 0.06, top: h * 0.02),
+            child: Material(
+              color: kwhitecolor,
+              // elevation: 8,
+              shadowColor: kTextInputPlaceholderColor.withOpacity(0.3),
+              borderRadius: BorderRadius.circular(h * 0.025),
               child: TextField(
                 decoration: InputDecoration(
+                    contentPadding:
+                        EdgeInsets.only(top: h * 0.01, left: w * 0.05),
                     hintText: "Search",
                     hintStyle: GoogleFonts.montserrat(
-                      fontSize:15,
-                      fontWeight: FontWeight.bold,
-                      color: ksearchTextColor,
-
-
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: ksearchTextColor.withOpacity(0.57),
                     ),
                     suffixIcon: const Icon(
                       Icons.search,
-
-                      color: korangecolor,
                     ),
-                    
                     focusedBorder: OutlineInputBorder(
                         borderSide:
                             const BorderSide(color: korangecolor, width: 1.0),
-                        borderRadius: BorderRadius.circular(h*0.04)),
+                        borderRadius: BorderRadius.circular(h * 0.02)),
                     border: OutlineInputBorder(
                         borderSide: const BorderSide(
                             color: kTextInputPlaceholderColor, width: 1.0),
-                        borderRadius: BorderRadius.circular(h*0.04))),
+                        borderRadius: BorderRadius.circular(h * 0.02))),
               ),
             ),
+          ),
+          // Container(
+          //     height: h*0.08,
+          //     padding: EdgeInsets.only(
+          //         left: w * 0.06, right: w * 0.06, top: 20),
+          //     child: TextField(
+          //       decoration: InputDecoration(
+          //           hintText: "Search",
+          //           hintStyle: GoogleFonts.montserrat(
+          //             fontSize:15,
+          //             fontWeight: FontWeight.bold,
+          //             color: ksearchTextColor,
+
+
+          //           ),
+          //           suffixIcon: const Icon(
+          //             Icons.search,
+
+          //             color: korangecolor,
+          //           ),
+                    
+          //           focusedBorder: OutlineInputBorder(
+          //               borderSide:
+          //                   const BorderSide(color: korangecolor, width: 1.0),
+          //               borderRadius: BorderRadius.circular(h*0.04)),
+          //           border: OutlineInputBorder(
+          //               borderSide: const BorderSide(
+          //                   color: kTextInputPlaceholderColor, width: 1.0),
+          //               borderRadius: BorderRadius.circular(h*0.04))),
+          //     ),
+          //   ),
         ),
       ),
       body: Container(
         height: h,
         width: w,
-        child: Column(
-          children: [
-            isSelected
-                ? Padding(
-                    padding: EdgeInsets.all(h * 0.03),
-                    child: RRectCard(
-                      h: h * 0.12,
-                      w: h * 0.12,
-                      borderRadius: 25,
-                      color: kbluecolor,
-                      widget: RRectCard(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              isSelected
+                  ? Padding(
+                      padding: EdgeInsets.all(h * 0.03),
+                      child: RRectCard(
                         h: h * 0.12,
                         w: h * 0.12,
                         borderRadius: 25,
-                        color: kLightOrangeBgColor,
-                        widget:
-                            Image.asset("assets/images/${carLogoList[item!]}"),
+                        color: kbluecolor,
+                        widget: RRectCard(
+                          h: h * 0.12,
+                          w: h * 0.12,
+                          borderRadius: 25,
+                          color: kLightOrangeBgColor,
+                          widget:
+                              Image.asset("assets/images/${carLogoList[item!]}"),
+                        ),
+                      ))
+                  : Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: w * 0.05, vertical: 50),
+                      child: GridView.count(
+                        shrinkWrap: true,
+                        controller: _controller1,
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        children: List.generate(carLogoList.length, (index) {
+                          return GestureDetector(
+                              onTap: () {
+                                bottumSheet();
+                                item = index;
+                                isSelected = true;
+                                setState(() {});
+                              },
+                              child: RRectCard(
+                                h: h * 0.18,
+                                w: h * 0.18,
+                                borderRadius: 30,
+                                color: kLightOrangeBgColor,
+                                widget: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                          "assets/images/${carLogoList[index]}"),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                    ]),
+                              ));
+                        }),
                       ),
-                    ))
-                : Container(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: w * 0.05, vertical: 50),
-                    child: GridView.count(
-                      shrinkWrap: true,
-                      controller: _controller1,
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                      children: List.generate(carLogoList.length, (index) {
-                        return GestureDetector(
-                            onTap: () {
-                              bottumSheet();
-                              item = index;
-                              isSelected = true;
-                              setState(() {});
-                            },
-                            child: RRectCard(
-                              h: h * 0.18,
-                              w: h * 0.18,
-                              borderRadius: 30,
-                              color: kLightOrangeBgColor,
-                              widget: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                        "assets/images/${carLogoList[index]}"),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                  ]),
-                            ));
-                      }),
                     ),
-                  ),
-          ],
+            ],
+          ),
         ),
       ),
     );

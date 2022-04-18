@@ -1,12 +1,14 @@
 // ignore_for_file: deprecated_member_use
-
+import 'package:http/http.dart' as http;
 import 'package:cityofcars/Screens/selectCity.dart';
+import 'package:cityofcars/Services/signInSignUp.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
-
+import 'dart:convert' as convert;
+import '../Services/url.dart';
 import '../Utils/Buttons/button.dart';
 
 class Verfication extends StatefulWidget {
@@ -92,13 +94,52 @@ class _VerficationState extends State<Verfication> {
               style: GoogleFonts.montserrat(
                   color: kwhitecolor, fontWeight: FontWeight.w600),
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => SelectCity())));
+                verify();
+                // Navigator.push(context,
+                //     MaterialPageRoute(builder: ((context) => SelectCity())));
+ 
               },
             ),
           ],
         ),
       ),
     );
+  }
+  verify()async{
+    var url = Uri.parse(verification);
+try {
+    var response = await http.post(url, body: {
+      'otp': _controller.text,
+    },
+    headers:{"Authorization": prefs!.getString('token').toString()}
+    );
+    if (response.statusCode == 200) {
+      print("success");
+      var jsonResponse =
+        convert.jsonDecode(response.body);
+      if(jsonResponse["status"]==true){
+ Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => SelectCity())));
+      }else{
+ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+  content:  Text(jsonResponse["message"]),
+  
+  ));
+      }
+     
+
+      return response.body;
+    }
+  } catch (e) {
+    print("error $e");
+  }
+//     verifyOtp(_controller.text).then(
+//       (value) {
+// Navigator.push(context,
+//                     MaterialPageRoute(builder: ((context) => SelectCity())));
+//       }).catchError((e){
+//         print("error $e");
+//       });
   }
 }

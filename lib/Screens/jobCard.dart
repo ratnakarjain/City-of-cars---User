@@ -394,7 +394,7 @@ class _JobCardState extends State<JobCard> {
                   style: GoogleFonts.montserrat(
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
-                    color: kTextInputPlaceholderColor.withOpacity(0.63),
+                    color: kTextInputPlaceholderColor,
                   ),
                 ),
               ),
@@ -443,7 +443,7 @@ class _JobCardState extends State<JobCard> {
                   style: GoogleFonts.montserrat(
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
-                    color: kTextInputPlaceholderColor.withOpacity(0.63),
+                    color: kTextInputPlaceholderColor,
                   ),
                 ),
               ),
@@ -491,7 +491,7 @@ class _JobCardState extends State<JobCard> {
                   style: GoogleFonts.montserrat(
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
-                    color: kTextInputPlaceholderColor.withOpacity(0.63),
+                    color: kTextInputPlaceholderColor,
                   ),
                 ),
               ),
@@ -612,7 +612,7 @@ class _JobCardState extends State<JobCard> {
                   style: GoogleFonts.montserrat(
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
-                    color: kTextInputPlaceholderColor.withOpacity(0.63),
+                    color: kTextInputPlaceholderColor,
                   ),
                 ),
               ),
@@ -643,7 +643,7 @@ class _JobCardState extends State<JobCard> {
                   style: GoogleFonts.montserrat(
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
-                    color: kTextInputPlaceholderColor.withOpacity(0.63),
+                    color: kTextInputPlaceholderColor,
                   ),
                 ),
               ),

@@ -7,6 +7,7 @@ import 'package:cityofcars/Utils/Buttons/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../Utils/constants.dart';
 
@@ -420,126 +421,153 @@ class _CalendarState extends State<Calendar> {
         left: w*0.04,
         right: w*0.04
       ),
-      child: TableCalendar(
-        formatAnimationDuration: const Duration(seconds: 0),
-        firstDay: kFirstDay,
-        lastDay: kLastDay,
-        focusedDay: _focusedDay,
-        selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+      child: Column(
 
-        startingDayOfWeek: StartingDayOfWeek.monday,
-        headerStyle: HeaderStyle(
-            leftChevronVisible: false,
-            formatButtonVisible: false,
-            rightChevronVisible: false,
-            headerMargin: const EdgeInsets.only(right: 20),
-            titleTextStyle: GoogleFonts.montserrat(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-                color: kTextInputPlaceholderColor)),
+        children: [
+        Padding(
+          padding:  EdgeInsets.only(bottom: h*0.02,right: w*0.025),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                "${DateFormat.MMMM().format(_focusedDay)}",
+                style: GoogleFonts.montserrat(
+                  fontSize: 21,
+                  fontWeight: FontWeight.bold,
 
-        daysOfWeekStyle: DaysOfWeekStyle(
-            weekdayStyle:
-                GoogleFonts.montserrat(color: kTextInputPlaceholderColor)),
-
-        calendarStyle: CalendarStyle(
-          // withinRangeDecoration: BoxDecoration(
-          //     color: _rangeEnd == null ? kDateCircleColor : kTransparent),
-          // defaultTextStyle: GoogleFonts.montserrat(
-          //   color: kTextInputPlaceholderColor,
-          // ),
-          // rangeStartDecoration: BoxDecoration(
-          //     color: _rangeEnd == null ? kbluecolor : kDateCircleColor,
-          //     shape: BoxShape.circle),
-          // rangeHighlightColor: kStartDatrCicleColor,
-          // rangeStartTextStyle: GoogleFonts.montserrat(
-          //     color: _rangeEnd == null ? kwhitecolor : kStartDateColor),
-          // rangeEndTextStyle: GoogleFonts.montserrat(
-          //     fontWeight: FontWeight.w700, color: kwhitecolor),
-          weekendTextStyle:
-              GoogleFonts.montserrat(color: kTextInputPlaceholderColor),
-          selectedTextStyle: GoogleFonts.montserrat(
-              color:
-                  //  _rangeEnd == null
-                  //     ? _rangeStart == null
-                  kwhitecolor),
-          selectedDecoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color:
-                  //  _rangeEnd == null
-                  //     ? _rangeStart == null
-                  kbluecolor),
-          todayTextStyle: GoogleFonts.montserrat(
-            color:
-                //  _rangeEnd == null
-                //     ? _rangeStart == null
-                kwhitecolor,
+                ),
+              )
+            ],
           ),
-          // : kTextInputPlaceholderColor
-          //  :  kTextInputPlaceholderColor),
-          todayDecoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color:
-                  //  _rangeEnd == null
-                  //     ? _rangeStart == null
-                  kbluecolor.withOpacity(0.5)),
-          //     : kDateCircleColor
-          // : kDateCircleColor),
-          defaultDecoration: const BoxDecoration(
-              shape: BoxShape.circle, color: kDateCircleColor),
-          weekendDecoration: const BoxDecoration(
-              shape: BoxShape.circle, color: kDateCircleColor),
-          rangeEndDecoration:
-              const BoxDecoration(color: kbluecolor, shape: BoxShape.circle),
         ),
-        // rangeEndDay: _rangeEnd,
-        calendarFormat: _calendarFormat,
-        // rangeSelectionMode: _rangeSelectionMode,
-        onDaySelected: (selectedDay, focusedDay) {
-          // if (!isSameDay(_selectedDay, selectedDay)) {
-          //   if (_rangeStart!.day >= DateTime.now().day ||
-          //       _rangeStart!.month > DateTime.now().month) {
-          //     setState(() {
-            _focusedDay = focusedDay;
-            _selectedDay = selectedDay;
-          // if (_selectedDay!.day < DateTime.now().day &&
-          //     _selectedDay!.month < DateTime.now().month &&
-          //     _selectedDay!.year < DateTime.now().year) {
-          //   _selectedDay =null;
-          //    setState(() {});
-            
-          // }
+          TableCalendar(
+            formatAnimationDuration: const Duration(seconds: 0),
+            firstDay: kFirstDay,
+            lastDay: kLastDay,
+            focusedDay: _focusedDay,
+            selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+headerVisible: false,
+            startingDayOfWeek: StartingDayOfWeek.monday,
+            headerStyle: HeaderStyle(
+                leftChevronVisible: false,
+                formatButtonVisible: false,
+                
+                rightChevronVisible: false,
+                headerMargin: const EdgeInsets.only(right: 20),
+                titleTextStyle: GoogleFonts.montserrat(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: kTextInputPlaceholderColor)),
 
-          //       _rangeStart = null; // Important to clean those
-          //       _rangeEnd = null;
-          //       _rangeSelectionMode = RangeSelectionMode.toggledOff;
-          //     });
-          //   }
-          // }
-          setState(() {});
-        },
-        // onRangeSelected: (start, end, focusedDay) {
-        //   if (DateTime.now().day <= start!.day ||
-        //       DateTime.now().month < start.month) {
-        //     setState(() {
-        //       _selectedDay = null;
-        //       _focusedDay = focusedDay;
-        //       _rangeStart = start;
-        //       _rangeEnd = end;
-        //       _rangeSelectionMode = RangeSelectionMode.toggledOn;
-        //     });
-        //   }
-        // },
-        // onFormatChanged: (format) {
-        //   if (_calendarFormat != format) {
-        //     setState(() {
-        //       _calendarFormat = format;
-        //     });
-        //   }
-        // },
-        onPageChanged: (focusedDay) {
-          _focusedDay = focusedDay;
-        },
+            daysOfWeekStyle: DaysOfWeekStyle(
+                weekdayStyle:
+                    GoogleFonts.montserrat(color: kTextInputPlaceholderColor)),
+
+            calendarStyle: CalendarStyle(
+              // withinRangeDecoration: BoxDecoration(
+              //     color: _rangeEnd == null ? kDateCircleColor : kTransparent),
+              // defaultTextStyle: GoogleFonts.montserrat(
+              //   color: kTextInputPlaceholderColor,
+              // ),
+              // rangeStartDecoration: BoxDecoration(
+              //     color: _rangeEnd == null ? kbluecolor : kDateCircleColor,
+              //     shape: BoxShape.circle),
+              // rangeHighlightColor: kStartDatrCicleColor,
+              // rangeStartTextStyle: GoogleFonts.montserrat(
+              //     color: _rangeEnd == null ? kwhitecolor : kStartDateColor),
+              // rangeEndTextStyle: GoogleFonts.montserrat(
+              //     fontWeight: FontWeight.w700, color: kwhitecolor),
+              weekendTextStyle:
+                  GoogleFonts.montserrat(color: kTextInputPlaceholderColor),
+              selectedTextStyle: GoogleFonts.montserrat(
+                  color:
+                      //  _rangeEnd == null
+                      //     ? _rangeStart == null
+                      kwhitecolor),
+              selectedDecoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color:
+                      //  _rangeEnd == null
+                      //     ? _rangeStart == null
+                      kbluecolor),
+              todayTextStyle: GoogleFonts.montserrat(
+                color:
+                    //  _rangeEnd == null
+                    //     ? _rangeStart == null
+                    kwhitecolor,
+              ),
+              // : kTextInputPlaceholderColor
+              //  :  kTextInputPlaceholderColor),
+              todayDecoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color:
+                      //  _rangeEnd == null
+                      //     ? _rangeStart == null
+                      korangecolor.withOpacity(0.7)),
+              //     : kDateCircleColor
+              // : kDateCircleColor),
+              defaultDecoration: const BoxDecoration(
+                  shape: BoxShape.circle, color: kDateCircleColor),
+              weekendDecoration: const BoxDecoration(
+                  shape: BoxShape.circle, color: kDateCircleColor),
+              rangeEndDecoration:
+                  const BoxDecoration(color: kbluecolor, shape: BoxShape.circle),
+            ),
+            // rangeEndDay: _rangeEnd,
+            calendarFormat: _calendarFormat,
+            // rangeSelectionMode: _rangeSelectionMode,
+            onDaySelected: (selectedDay, focusedDay) {
+              // if (!isSameDay(_selectedDay, selectedDay)) {
+              //   if (_rangeStart!.day >= DateTime.now().day ||
+              //       _rangeStart!.month > DateTime.now().month) {
+              //     setState(() {
+                _focusedDay = focusedDay;
+                _selectedDay = selectedDay;
+                print(selectedDay);
+              // if (_selectedDay!.day < DateTime.now().day &&
+              //     _selectedDay!.month < DateTime.now().month &&
+              //     _selectedDay!.year < DateTime.now().year) {
+              //   _selectedDay =null;
+              //    setState(() {});
+                
+              // }
+
+              //       _rangeStart = null; // Important to clean those
+              //       _rangeEnd = null;
+              //       _rangeSelectionMode = RangeSelectionMode.toggledOff;
+              //     });
+              //   }
+              // }
+              setState(() {});
+            },
+            // onRangeSelected: (start, end, focusedDay) {
+            //   if (DateTime.now().day <= start!.day ||
+            //       DateTime.now().month < start.month) {
+            //     setState(() {
+            //       _selectedDay = null;
+            //       _focusedDay = focusedDay;
+            //       _rangeStart = start;
+            //       _rangeEnd = end;
+            //       _rangeSelectionMode = RangeSelectionMode.toggledOn;
+            //     });
+            //   }
+            // },
+            // onFormatChanged: (format) {
+            //   if (_calendarFormat != format) {
+            //     setState(() {
+            //       _calendarFormat = format;
+            //     });
+            //   }
+            // },
+            onPageChanged: (focusedDay) {
+              _focusedDay = focusedDay;
+              print(focusedDay);
+              setState(() {
+                
+              });
+            },
+          ),
+        ],
       ),
     );
   }

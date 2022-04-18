@@ -40,6 +40,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           backgroundColor: kTransparent,
           elevation: 0,
           foregroundColor: kwhitecolor,
+          centerTitle: false,
           title: Text(
             "Periodic Services",
             style: GoogleFonts.montserrat(
@@ -306,7 +307,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             child: Text(
                                               "This pack is essential every 3000 km or 6 months whichever is earlier",
                                               style: GoogleFonts.montserrat(
-                                                fontSize: 10,
+                                                fontSize: 12,
                                                 height: 1.5,
                                                 fontWeight: FontWeight.w400,
                                               ),
@@ -326,7 +327,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                     "This pack is essential every 3000 km or 6 months whichever is earlier",
                                                     style:
                                                         GoogleFonts.montserrat(
-                                                      fontSize: 10,
+                                                      fontSize: 12,
                                                       height: 1.5,
                                                       fontWeight:
                                                           FontWeight.w400,
@@ -603,7 +604,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         text: 'Who May Use the Services?',
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w700,
-                            fontSize: 9,
+                            fontSize: 10,
                             color: Colors.black),
                         children: [
                           TextSpan(
@@ -611,7 +612,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 '\n\n\nWhen one door of happiness closes, another opens, but often we look so long at the closed door that we do not see the one that has been opened for us.\n\n\n\n\n',
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w400,
-                                fontSize: 8,
+                                fontSize: 9,
                                 color: Colors.black),
                           ),
                         ],
@@ -622,7 +623,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         text: '•Step 1:',
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w700,
-                            fontSize: 8,
+                            fontSize: 9,
                             color: Colors.black),
                         children: [
                           TextSpan(
@@ -630,7 +631,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 ' You may use the Services only if you agree to form a binding contract with us and are not a person barred from receiving services under the laws of the applicable jurisdiction.\n',
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w400,
-                                fontSize: 8,
+                                fontSize: 9,
                                 color: Colors.black),
                           ),
                         ],
@@ -641,7 +642,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         text: '•Step 2:',
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w700,
-                            fontSize: 8,
+                            fontSize: 9,
                             color: Colors.black),
                         children: [
                           TextSpan(
@@ -649,7 +650,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 ' Our Privacy Policy describes how we handle the information you provide to us when you use our Services.\n\n\n\n',
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w400,
-                                fontSize: 8,
+                                fontSize: 9,
                                 color: Colors.black),
                           ),
                         ],
@@ -660,7 +661,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         text: 'Privacy',
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w700,
-                            fontSize: 8,
+                            fontSize: 9,
                             color: Colors.black),
                         children: [
                           TextSpan(
@@ -668,7 +669,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 '\n\n\nWhen one door of happiness closes, another opens, but often we look so long at the closed door that we do not see the one that has been opened for us.\n\n',
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w400,
-                                fontSize: 8,
+                                fontSize: 9,
                                 color: Colors.black),
                           ),
                         ],
