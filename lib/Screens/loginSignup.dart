@@ -35,7 +35,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
 
   FocusNode myFocusNode2 = new FocusNode();
   FocusNode myFocusNode3 = new FocusNode();
-  String nameError ="";
+  String nameError = "";
   String mobileError = "";
   String emailError = "";
   var isSelected;
@@ -68,9 +68,9 @@ class _LoginSignUpState extends State<LoginSignUp> {
                     ? () {}
                     : () {
                         isSelected = !isSelected;
-                        nameError="";
-                        emailError="";
-                        mobileError="";
+                        nameError = "";
+                        emailError = "";
+                        mobileError = "";
                         mobile.clear();
                         mail.clear();
                         name.clear();
@@ -149,9 +149,12 @@ class _LoginSignUpState extends State<LoginSignUp> {
                       children: [
                         Material(
                           color: kwhitecolor,
-                          shadowColor: kTextInputPlaceholderColor.withOpacity(0.3),
+                          shadowColor:
+                              kTextInputPlaceholderColor.withOpacity(0.3),
                           elevation: 5,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(height*0.05)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(height * 0.05)),
                           child: TextFormField(
                             onTap: () {
                               setState(() {});
@@ -160,9 +163,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
                             validator: (value) {
                               if (value!.isEmpty) {
                                 nameError = "Enter name";
-                                setState(() {
-                                  
-                                });
+                                setState(() {});
                                 return "";
                               } else {
                                 return null;
@@ -174,7 +175,8 @@ class _LoginSignUpState extends State<LoginSignUp> {
                               errorStyle: const TextStyle(
                                 height: 0,
                               ),
-                        contentPadding: EdgeInsets.only(left: width*0.1),
+                              contentPadding:
+                                  EdgeInsets.only(left: width * 0.1),
                               hintStyle: TextStyle(
                                   color: kTextInputPlaceholderColor
                                       .withOpacity(0.32)),
@@ -184,9 +186,9 @@ class _LoginSignUpState extends State<LoginSignUp> {
                               //         ? kbluecolor
                               //         : kTextInputPlaceholderColor
                               //             .withOpacity(0.32)),
-                        
+
                               border: InputBorder.none,
-                        
+
                               focusedBorder: InputBorder.none,
                             ),
                             cursorColor: kCursorColor,
@@ -203,18 +205,17 @@ class _LoginSignUpState extends State<LoginSignUp> {
                           child: Row(
                             children: [
                               SizedBox(
-                                width: width*0.1,
-                                
+                                width: width * 0.1,
                               ),
                               Text(
                                 nameError,
                                 style: GoogleFonts.montserrat(
-                                textStyle: const TextStyle(
-                                    color: kredcolor,
-                                    height: 2,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 10),
-                              ),
+                                  textStyle: const TextStyle(
+                                      color: kredcolor,
+                                      height: 2,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 10),
+                                ),
                               ),
                             ],
                           ),
@@ -222,9 +223,12 @@ class _LoginSignUpState extends State<LoginSignUp> {
                         const SizedBox(height: 20),
                         Material(
                           color: kwhitecolor,
-                          shadowColor: kTextInputPlaceholderColor.withOpacity(0.3),
+                          shadowColor:
+                              kTextInputPlaceholderColor.withOpacity(0.3),
                           elevation: 5,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(height*0.05)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(height * 0.05)),
                           child: TextFormField(
                             onTap: () {
                               setState(() {});
@@ -235,14 +239,10 @@ class _LoginSignUpState extends State<LoginSignUp> {
                             validator: (value) {
                               if (value!.isEmpty) {
                                 mobileError = "Enter mobile Number";
-                                setState(() {
-                                  
-                                });
+                                setState(() {});
                                 return "";
                               } else if (value.length != 10) {
-                                setState(() {
-                                  
-                                });
+                                setState(() {});
                                 mobileError = "Mobile no. length shuld 10";
                                 return "";
                               } else {
@@ -255,7 +255,8 @@ class _LoginSignUpState extends State<LoginSignUp> {
                                 height: 0,
                               ),
                               border: InputBorder.none,
-                              contentPadding: EdgeInsets.only(left: width*0.1),
+                              contentPadding:
+                                  EdgeInsets.only(left: width * 0.1),
                               hintStyle: TextStyle(
                                   color: kTextInputPlaceholderColor
                                       .withOpacity(0.32)),
@@ -281,18 +282,17 @@ class _LoginSignUpState extends State<LoginSignUp> {
                           child: Row(
                             children: [
                               SizedBox(
-                                width: width*0.1,
-                                
+                                width: width * 0.1,
                               ),
                               Text(
                                 mobileError,
                                 style: GoogleFonts.montserrat(
-                                textStyle: const TextStyle(
-                                    color: kredcolor,
-                                    height: 2,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 10),
-                              ),
+                                  textStyle: const TextStyle(
+                                      color: kredcolor,
+                                      height: 2,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 10),
+                                ),
                               ),
                             ],
                           ),
@@ -300,10 +300,12 @@ class _LoginSignUpState extends State<LoginSignUp> {
                         const SizedBox(height: 20),
                         Material(
                           color: kwhitecolor,
-                          shadowColor: kTextInputPlaceholderColor.withOpacity(0.3),
+                          shadowColor:
+                              kTextInputPlaceholderColor.withOpacity(0.3),
                           elevation: 5,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(height*0.05)),
-                          
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(height * 0.05)),
                           child: TextFormField(
                             onTap: () {
                               setState(() {});
@@ -316,7 +318,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
                               } else if (!RegExp(
                                       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                   .hasMatch(value)) {
-                                    emailError = "Enter a valid email!";
+                                emailError = "Enter a valid email!";
                                 return '';
                               }
                               return null;
@@ -327,7 +329,8 @@ class _LoginSignUpState extends State<LoginSignUp> {
                                 height: 0,
                               ),
                               border: InputBorder.none,
-                              contentPadding: EdgeInsets.only(left: width*0.1),
+                              contentPadding:
+                                  EdgeInsets.only(left: width * 0.1),
                               hintStyle: TextStyle(
                                   color: kTextInputPlaceholderColor
                                       .withOpacity(0.32)),
@@ -353,18 +356,17 @@ class _LoginSignUpState extends State<LoginSignUp> {
                           child: Row(
                             children: [
                               SizedBox(
-                                width: width*0.1,
-                                
+                                width: width * 0.1,
                               ),
                               Text(
                                 emailError,
                                 style: GoogleFonts.montserrat(
-                                textStyle: const TextStyle(
-                                    color: kredcolor,
-                                    height: 2,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 10),
-                              ),
+                                  textStyle: const TextStyle(
+                                      color: kredcolor,
+                                      height: 2,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 10),
+                                ),
                               ),
                             ],
                           ),
@@ -467,7 +469,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
                   ],
                 )
               : Container(),
-              const SizedBox(height: 10),
+          const SizedBox(height: 10),
           RRecctButton(
               text: "CONTINUE",
               onTap: !isSelected
@@ -479,7 +481,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
                         //     MaterialPageRoute(
                         //       builder: (context) => const Verfication(),
                         //     ));
-      
+
                         mobile.clear();
                         mail.clear();
                         name.clear();
@@ -493,14 +495,13 @@ class _LoginSignUpState extends State<LoginSignUp> {
                         //     MaterialPageRoute(
                         //       builder: (context) => const Verfication(),
                         //     ));
-      
+
                         mobile.clear();
                         mail.clear();
                         name.clear();
                       }
                     },
               buttonColor: korangecolor,
-              
               style: GoogleFonts.montserrat(
                   textStyle: const TextStyle(
                       color: Colors.white,
@@ -512,14 +513,13 @@ class _LoginSignUpState extends State<LoginSignUp> {
           Visibility(
             visible: !isSelected,
             child: Text(
-                        "By clicking continue, I agree to the all the Terms",
-                        style: GoogleFonts.montserrat(
-                            fontStyle: FontStyle.normal,
-                            fontSize: 12,
-                            textStyle: const TextStyle(color: Colors.black)),
-                      ),
+              "By clicking continue, I agree to the all the Terms",
+              style: GoogleFonts.montserrat(
+                  fontStyle: FontStyle.normal,
+                  fontSize: 12,
+                  textStyle: const TextStyle(color: Colors.black)),
+            ),
           ),
-          
         ]),
       ),
     ));
@@ -533,77 +533,65 @@ class _LoginSignUpState extends State<LoginSignUp> {
     mobile.dispose();
     name.dispose();
   }
-  register()async{
 
-  var url = Uri.parse(registerUrl);
-  try {
-    var response = await http.post(url, body: {
-      'name': name.text,
-      'email': mail.text,
-      'mobile': mobile.text,
-    });
-    if (response.statusCode == 200) {
-      var jsonResponse =
-        convert.jsonDecode(response.body);
-      print("success");
-      if(jsonResponse["status"]){
-prefs!.setString("token", jsonResponse["token"]);
-      token = prefs!.getString("token")!;
-      print("$token");
-      Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Verfication(),
-                            ));
-                        
-      return response.body;
-      }else{
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-  content:  Text(jsonResponse["message"]),
-  
-  ));
+  register() async {
+    var url = Uri.parse(registerUrl);
+    try {
+      var response = await http.post(url, body: {
+        'name': name.text,
+        'email': mail.text,
+        'mobile': mobile.text,
+      });
+      if (response.statusCode == 200) {
+        var jsonResponse = convert.jsonDecode(response.body);
+        print("success");
+        if (jsonResponse["status"]) {
+          prefs!.setString("token", jsonResponse["token"]);
+          token = prefs!.getString("token")!;
+          print("$token");
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const Verfication(),
+              ));
+
+          return response.body;
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(jsonResponse["message"]),
+          ));
+        }
       }
-      
+    } catch (e) {
+      print("error $e");
     }
-  } catch (e) {
-    print("error $e");
-  }
   }
 
-
-  login()async{
-      var url = Uri.parse(loginUrl);
-  try {
-    var response = await http.post(url, body: {
-      'mobile': mobile.text,
-    });
-    if (response.statusCode == 200) {
-      var jsonResponse =
-        convert.jsonDecode(response.body);
-      print("success");
-      prefs!.setString("token", jsonResponse["token"]);
-      token = prefs!.getString("token")!;
-      print("$token");
-Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Verfication(),
-                            ));
-      
-       
-      
-    }else if(response.statusCode ==201){
-      var jsonResponse =
-        convert.jsonDecode(response.body);
-ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-  content:  Text(jsonResponse["message"]),
-  
-  ));
+  login() async {
+    var url = Uri.parse(loginUrl);
+    try {
+      var response = await http.post(url, body: {
+        'mobile': mobile.text,
+      });
+      if (response.statusCode == 200) {
+        var jsonResponse = convert.jsonDecode(response.body);
+        print("success");
+        prefs!.setString("token", jsonResponse["token"]);
+        token = prefs!.getString("token")!;
+        print("$token");
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const Verfication(),
+            ));
+      } else if (response.statusCode == 201) {
+        var jsonResponse = convert.jsonDecode(response.body);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(jsonResponse["message"]),
+        ));
+      }
+    } catch (e) {
+      print("error $e");
     }
-  } catch (e) {
-    print("error $e");
-  }
   }
 }
