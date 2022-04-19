@@ -339,7 +339,10 @@ class _LoginSignUpState extends State<LoginSignUp> {
                     ),
                   ),
                 ),
-          const SizedBox(height: 20),
+
+//sjahjkdshdjkhakjd sjkndkjand
+
+          const SizedBox(height: 22),
           !isSelected
               ? Row(
                   mainAxisAlignment: MainAxisAlignment.center,
