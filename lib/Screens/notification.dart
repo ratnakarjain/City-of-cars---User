@@ -452,7 +452,7 @@ class _TryState extends State<Try> {
               child: ConstrainedBox(
                 constraints: BoxConstraints(
                     minHeight:
-                        viewportConstraints.maxHeight, // h*0.12*(item-1),
+                       viewportConstraints.maxHeight, // h*0.12*(item-1),
                     maxHeight: double.infinity),
                 child: IntrinsicHeight(
                   child: Stack(

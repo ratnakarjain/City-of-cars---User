@@ -35,7 +35,9 @@ class _LoginSignUpState extends State<LoginSignUp> {
 
   FocusNode myFocusNode2 = new FocusNode();
   FocusNode myFocusNode3 = new FocusNode();
-
+  String nameError ="";
+  String mobileError = "";
+  String emailError = "";
   var isSelected;
   var _formKey = GlobalKey<FormState>();
   @override
@@ -66,6 +68,12 @@ class _LoginSignUpState extends State<LoginSignUp> {
                     ? () {}
                     : () {
                         isSelected = !isSelected;
+                        nameError="";
+                        emailError="";
+                        mobileError="";
+                        mobile.clear();
+                        mail.clear();
+                        name.clear();
                         setState(() {});
                       },
                 child: Container(
@@ -151,7 +159,11 @@ class _LoginSignUpState extends State<LoginSignUp> {
                             focusNode: myFocusNode,
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return "Enter name";
+                                nameError = "Enter name";
+                                setState(() {
+                                  
+                                });
+                                return "";
                               } else {
                                 return null;
                               }
@@ -159,6 +171,9 @@ class _LoginSignUpState extends State<LoginSignUp> {
                             controller: name,
                             decoration: InputDecoration(
                               hintText: "Name*",
+                              errorStyle: const TextStyle(
+                                height: 0,
+                              ),
                         contentPadding: EdgeInsets.only(left: width*0.1),
                               hintStyle: TextStyle(
                                   color: kTextInputPlaceholderColor
@@ -183,6 +198,27 @@ class _LoginSignUpState extends State<LoginSignUp> {
                             ),
                           ),
                         ),
+                        Visibility(
+                          visible: nameError != "",
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: width*0.1,
+                                
+                              ),
+                              Text(
+                                nameError,
+                                style: GoogleFonts.montserrat(
+                                textStyle: const TextStyle(
+                                    color: kredcolor,
+                                    height: 2,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 10),
+                              ),
+                              ),
+                            ],
+                          ),
+                        ),
                         const SizedBox(height: 20),
                         Material(
                           color: kwhitecolor,
@@ -198,16 +234,27 @@ class _LoginSignUpState extends State<LoginSignUp> {
                             keyboardType: TextInputType.phone,
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return "Enter mobile Number";
+                                mobileError = "Enter mobile Number";
+                                setState(() {
+                                  
+                                });
+                                return "";
                               } else if (value.length != 10) {
-                                return "Mobile no. length shuld 10";
+                                setState(() {
+                                  
+                                });
+                                mobileError = "Mobile no. length shuld 10";
+                                return "";
                               } else {
                                 return null;
                               }
                             },
                             decoration: InputDecoration(
                               hintText: "Mobile No.*",
-                              enabledBorder: InputBorder.none,
+                              errorStyle: const TextStyle(
+                                height: 0,
+                              ),
+                              border: InputBorder.none,
                               contentPadding: EdgeInsets.only(left: width*0.1),
                               hintStyle: TextStyle(
                                   color: kTextInputPlaceholderColor
@@ -229,6 +276,27 @@ class _LoginSignUpState extends State<LoginSignUp> {
                             ),
                           ),
                         ),
+                        Visibility(
+                          visible: mobileError != "",
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: width*0.1,
+                                
+                              ),
+                              Text(
+                                mobileError,
+                                style: GoogleFonts.montserrat(
+                                textStyle: const TextStyle(
+                                    color: kredcolor,
+                                    height: 2,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 10),
+                              ),
+                              ),
+                            ],
+                          ),
+                        ),
                         const SizedBox(height: 20),
                         Material(
                           color: kwhitecolor,
@@ -248,13 +316,17 @@ class _LoginSignUpState extends State<LoginSignUp> {
                               } else if (!RegExp(
                                       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                   .hasMatch(value)) {
-                                return 'Enter a valid email!';
+                                    emailError = "Enter a valid email!";
+                                return '';
                               }
                               return null;
                             },
                             decoration: InputDecoration(
                               hintText: "E-Mail (Optional)",
-                              enabledBorder: InputBorder.none,
+                              errorStyle: const TextStyle(
+                                height: 0,
+                              ),
+                              border: InputBorder.none,
                               contentPadding: EdgeInsets.only(left: width*0.1),
                               hintStyle: TextStyle(
                                   color: kTextInputPlaceholderColor
@@ -274,6 +346,27 @@ class _LoginSignUpState extends State<LoginSignUp> {
                                   fontWeight: FontWeight.w600,
                                   fontSize: 15),
                             ),
+                          ),
+                        ),
+                        Visibility(
+                          visible: emailError != "",
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: width*0.1,
+                                
+                              ),
+                              Text(
+                                emailError,
+                                style: GoogleFonts.montserrat(
+                                textStyle: const TextStyle(
+                                    color: kredcolor,
+                                    height: 2,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 10),
+                              ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -489,6 +582,9 @@ prefs!.setString("token", jsonResponse["token"]);
       var jsonResponse =
         convert.jsonDecode(response.body);
       print("success");
+      prefs!.setString("token", jsonResponse["token"]);
+      token = prefs!.getString("token")!;
+      print("$token");
 Navigator.push(
                             context,
                             MaterialPageRoute(

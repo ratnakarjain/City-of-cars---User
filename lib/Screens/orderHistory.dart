@@ -45,10 +45,13 @@ class _OrderHistoryState extends State<OrderHistory> {
       body: Container(
           height: h,
           width: w,
-          padding: EdgeInsets.all(h * 0.02),
+          padding: EdgeInsets.symmetric(horizontal: h * 0.02),
           child: SingleChildScrollView(
             child: Column(
               children: [
+                SizedBox(
+                  height: h*0.01,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -83,6 +86,17 @@ class _OrderHistoryState extends State<OrderHistory> {
                 ),
           
                 Swiper(
+                  itemCount: 4,
+                  layout: SwiperLayout.TINDER,
+                  scrollDirection: Axis.horizontal,
+                  axisDirection: AxisDirection.left,
+                  itemWidth: w,
+                  itemHeight: h * 0.61,
+                  onIndexChanged: (value) {
+                    setState(() {
+                      currentPage = value;
+                    });
+                  },
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
@@ -92,144 +106,164 @@ class _OrderHistoryState extends State<OrderHistory> {
                               builder: (context) => const JobCard(),
                             ));
                       },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: w * 0.03, vertical: h * 0.03),
-                        decoration: BoxDecoration(
-                            color: kwhitecolor,
-                            boxShadow: [
-                              BoxShadow(
-                                  blurRadius: 2,
-                                  offset: const Offset(0, 2),
-                                  color: kshadowColor.withOpacity(0.2))
-                            ],
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(h * 0.06),
-                              bottomLeft: Radius.circular(h * 0.06),
-                            )),
-                        child: Column(
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      child: Stack(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(bottom: h*0.01),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: w * 0.03, vertical: h * 0.03),
+                            decoration: BoxDecoration(
+                                color: kwhitecolor,
+                                boxShadow: [
+                                  BoxShadow(
+                                      blurRadius: 2,
+                                      spreadRadius: 1,
+                                      offset: const Offset(0, 3),
+                                      color: kshadowColor.withOpacity(0.3))
+                                ],
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(h * 0.06),
+                                  bottomLeft: Radius.circular(h * 0.06),
+                                )),
+                            child: Column(
                               children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: w*0.02),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      RichText(
+                                          text: TextSpan(
+                                              text: "DELIVERY DATE: ",
+                                              style: GoogleFonts.montserrat(
+                                                  fontSize: 8,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: kTextInputPlaceholderColor),
+                                              children: [
+                                            TextSpan(
+                                                text: "27th Oct\n",
+                                                style: GoogleFonts.montserrat(
+                                                    fontSize: 8,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: kTextInputPlaceholderColor)),
+                                            TextSpan(
+                                                text: "BOOKING ID: ",
+                                                style: GoogleFonts.montserrat(
+                                                    fontSize: 8,
+                                                    fontWeight: FontWeight.w400,
+                                                    color: kTextInputPlaceholderColor)),
+                                            TextSpan(
+                                                text: "271292",
+                                                style: GoogleFonts.montserrat(
+                                                    fontSize: 8,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: kTextInputPlaceholderColor))
+                                          ])),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        children: [
+                                          Text("₹2700",
+                                              style: GoogleFonts.montserrat(
+                                                  fontSize: 19,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: kTextInputPlaceholderColor)),
+                                          RRecctButton(
+                                            text: "Paid",
+                                            style: GoogleFonts.montserrat(
+                                                fontSize: 9,
+                                                fontWeight: FontWeight.w700,
+                                                color: kwhitecolor),
+                                            buttonColor: kGreenColor,
+                                            w: w * 0.17,
+                                            h: h * 0.03,
+                                          ),
+                                          Text("view invoice     ",
+                                              textAlign: TextAlign.center,
+                                              style: GoogleFonts.montserrat(
+                                                  fontSize: 9,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: kTextInputPlaceholderColor)),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Image.asset(
+                                  "assets/images/Uber.png",
+                                  height: h * 0.15,
+                                ),
                                 RichText(
                                     text: TextSpan(
-                                        text: "DELIVERY DATE: ",
+                                        text: "I20  ",
                                         style: GoogleFonts.montserrat(
-                                            fontSize: 8,
-                                            fontWeight: FontWeight.w400,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w700,
+                                            height: 2,
                                             color: kTextInputPlaceholderColor),
                                         children: [
                                       TextSpan(
-                                          text: "27th Oct\n",
-                                          style: GoogleFonts.montserrat(
-                                              fontSize: 8,
-                                              fontWeight: FontWeight.w700,
-                                              color: kTextInputPlaceholderColor)),
-                                      TextSpan(
-                                          text: "BOOKING ID: ",
-                                          style: GoogleFonts.montserrat(
-                                              fontSize: 8,
-                                              fontWeight: FontWeight.w400,
-                                              color: kTextInputPlaceholderColor)),
-                                      TextSpan(
-                                          text: "271292",
-                                          style: GoogleFonts.montserrat(
-                                              fontSize: 8,
-                                              fontWeight: FontWeight.w700,
-                                              color: kTextInputPlaceholderColor))
-                                    ])),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text("₹2700",
-                                        style: GoogleFonts.montserrat(
-                                            fontSize: 19,
-                                            fontWeight: FontWeight.w700,
-                                            color: kTextInputPlaceholderColor)),
-                                    RRecctButton(
-                                      text: "Paid",
-                                      style: GoogleFonts.montserrat(
-                                          fontSize: 9,
-                                          fontWeight: FontWeight.w700,
-                                          color: kwhitecolor),
-                                      buttonColor: kGreenColor,
-                                      w: w * 0.17,
-                                      h: h * 0.03,
-                                    ),
-                                    Text("view invoice     ",
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.montserrat(
-                                            fontSize: 9,
-                                            fontWeight: FontWeight.w400,
-                                            color: kTextInputPlaceholderColor)),
-                                  ],
-                                )
-                              ],
-                            ),
-                            Image.asset(
-                              "assets/images/Uber.png",
-                              height: h * 0.15,
-                            ),
-                            RichText(
-                                text: TextSpan(
-                                    text: "I20  ",
-                                    style: GoogleFonts.montserrat(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700,
-                                        color: kTextInputPlaceholderColor),
-                                    children: [
-                                  TextSpan(
-                                      text: "Hyundai",
-                                      style: GoogleFonts.montserrat(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400,
-                                          color: kTextInputPlaceholderColor)),
-                                ])),
-                            Image.asset(
-                              "assets/images/map.png",
-                              height: h * 0.15,
-                            ),
-                            RichText(
-                                textAlign: TextAlign.center,
-                                text: TextSpan(
-                                    text: "Premium\n",
-                                    style: GoogleFonts.montserrat(
-                                        fontSize: 32,
-                                        fontWeight: FontWeight.w700,
-                                        color: kTextInputPlaceholderColor),
-                                    children: [
-                                      TextSpan(
-                                          text: "Service Pack\n",
-                                          style: GoogleFonts.montserrat(
-                                              fontSize: 11,
-                                              fontWeight: FontWeight.w400,
-                                              color: kTextInputPlaceholderColor)),
-                                      TextSpan(
-                                          text:
-                                              "The package includes the use of 3M products and services",
+                                          text: "Hyundai",
                                           style: GoogleFonts.montserrat(
                                               fontSize: 12,
-                                              height: 2,
                                               fontWeight: FontWeight.w400,
-                                              color: kTextInputPlaceholderColor
-                                                  .withOpacity(0.49))),
+                                              color: kTextInputPlaceholderColor)),
                                     ])),
-                          ],
-                        ),
+                                Image.asset(
+                                  "assets/images/map.png",
+                                  height: h * 0.15,
+                                ),
+                                RichText(
+                                    textAlign: TextAlign.center,
+                                    text: TextSpan(
+                                        text: "Premium\n",
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: 32,
+                                            fontWeight: FontWeight.w700,
+                                            color: kTextInputPlaceholderColor),
+                                        children: [
+                                          TextSpan(
+                                              text: "Service Pack\n",
+                                              style: GoogleFonts.montserrat(
+                                                  fontSize: 11,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: kTextInputPlaceholderColor)),
+                                          TextSpan(
+                                              text:
+                                                  "The package includes the use of 3M products and services",
+                                              style: GoogleFonts.montserrat(
+                                                  fontSize: 12,
+                                                  height: 2,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: kTextInputPlaceholderColor
+                                                      .withOpacity(0.49))),
+                                        ])),
+                              ],
+                            ),
+                          ),
+                          // Container(
+                          //   margin: EdgeInsets.only(
+                          //     bottom: h*0.01
+                          //   ),
+                          //   decoration: BoxDecoration(
+                          //       color:index==currentPage? kTransparent : kblackcolor.withOpacity(0.1+(index/10)),
+                          //       // boxShadow: [
+                          //       //   BoxShadow(
+                          //       //       blurRadius: 2,
+                          //       //       spreadRadius: 1,
+                          //       //       offset: const Offset(0, 3),
+                          //       //       color: kshadowColor.withOpacity(0.3))
+                          //       // ],
+                          //       borderRadius: BorderRadius.only(
+                          //         topRight: Radius.circular(h * 0.06),
+                          //         bottomLeft: Radius.circular(h * 0.06),
+                          //       )),
+                          // )
+                        ],
                       ),
                     );
                   },
-                  itemCount: 4,
-                  layout: SwiperLayout.TINDER,
-                  itemWidth: w,
-                  itemHeight: h * 0.6,
-                  onIndexChanged: (value) {
-                    setState(() {
-                      currentPage = value;
-                    });
-                  },
+                  
                   // pagination: const SwiperPagination(
                   //     alignment: Alignment.bottomCenter,
                   //     builder: SwiperPagination.dots),
@@ -407,6 +441,9 @@ class _OrderHistoryState extends State<OrderHistory> {
                   w: w,
                   h: h * 0.06,
                 ),
+                SizedBox(
+                  height: h*0.1,
+                )
               ],
             ),
           )
