@@ -358,74 +358,76 @@ class _DropDownState extends State<DropDown> {
       padding: EdgeInsets.all(h * 0.005),
       child: DropdownButtonHideUnderline(
         child: (DropdownButton(
-          hint: SizedBox(
-            width: w*0.5,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    Image.asset(
-                      "assets/images/EngineOil.png",
-                      height: h * 0.03,
-                    ),
-                    Text(
-                      "Engine Oil ",
-                      // textScaleFactor: 0.7,
-                      style: GoogleFonts.montserrat(
-                        fontSize: 8,
-                          fontWeight: FontWeight.w600,
-                          color: kTextInputPlaceholderColor.withOpacity(0.6)),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Image.asset(
-                      "assets/images/oifilter.png",
-                      height: h * 0.03,
-                    ),
-                    Text(
-                      "Oil Filter",
-                      // textScaleFactor: 0.7,
-                      style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w600,
+          hint: FittedBox(
+            child: SizedBox(
+              width: w*0.5,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      Image.asset(
+                        "assets/images/EngineOil.png",
+                        height: h * 0.03,
+                      ),
+                      Text(
+                        "Engine Oil ",
+                        // textScaleFactor: 0.7,
+                        style: GoogleFonts.montserrat(
                           fontSize: 8,
-                          color: kTextInputPlaceholderColor.withOpacity(0.6)),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Image.asset(
-                      "assets/images/wind.png",
-                      height: h * 0.03,
-                    ),
-                    Text(
-                      "Air Filter",
-                      // textScaleFactor: 0.7,
+                            fontWeight: FontWeight.w600,
+                            color: kTextInputPlaceholderColor.withOpacity(0.6)),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Image.asset(
+                        "assets/images/oifilter.png",
+                        height: h * 0.03,
+                      ),
+                      Text(
+                        "Oil Filter",
+                        // textScaleFactor: 0.7,
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 8,
+                            color: kTextInputPlaceholderColor.withOpacity(0.6)),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Image.asset(
+                        "assets/images/wind.png",
+                        height: h * 0.03,
+                      ),
+                      Text(
+                        "Air Filter",
+                        // textScaleFactor: 0.7,
+                        style: GoogleFonts.montserrat(
+                          fontSize: 8,
+                            fontWeight: FontWeight.w600,
+                            color: kTextInputPlaceholderColor.withOpacity(0.6)),
+                      ),
+                    ],
+                  ),
+                  Text("+9 more",
                       style: GoogleFonts.montserrat(
-                        fontSize: 8,
-                          fontWeight: FontWeight.w600,
-                          color: kTextInputPlaceholderColor.withOpacity(0.6)),
-                    ),
-                  ],
-                ),
-                Text("+9 more",
-                    style: GoogleFonts.montserrat(
-                      fontSize: 7,
-                      fontWeight: FontWeight.w600,
-                    )),
-              ],
+                        fontSize: 7,
+                        fontWeight: FontWeight.w600,
+                      )),
+                ],
+              ),
             ),
           ),
           isDense: true,
           // Initial Value
           // value: dropdownvalue,
-
+      
           // Down Arrow Icon
           icon: const Icon(Icons.arrow_forward_ios, size: 10),
-
+      
           // Array list of items
           items: items.map((String items) {
             return DropdownMenuItem(

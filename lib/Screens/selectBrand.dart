@@ -1,9 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cityofcars/Screens/Service%20Main/serviceMain.dart';
+import 'package:cityofcars/Services/url.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../Services/servies.dart';
 import 'bottomnavBar.dart';
 import 'selectFuel.dart';
 
@@ -125,8 +128,7 @@ class _SelectBrandState extends State<SelectBrand> {
         elevation: 0,
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(h * 0.1),
-          child: 
-          Container(
+          child: Container(
             height: h * 0.07,
             padding:
                 EdgeInsets.only(left: w * 0.06, right: w * 0.06, top: h * 0.02),
@@ -171,14 +173,13 @@ class _SelectBrandState extends State<SelectBrand> {
           //             fontWeight: FontWeight.bold,
           //             color: ksearchTextColor,
 
-
           //           ),
           //           suffixIcon: const Icon(
           //             Icons.search,
 
           //             color: korangecolor,
           //           ),
-                    
+
           //           focusedBorder: OutlineInputBorder(
           //               borderSide:
           //                   const BorderSide(color: korangecolor, width: 1.0),
@@ -210,8 +211,8 @@ class _SelectBrandState extends State<SelectBrand> {
                           w: h * 0.12,
                           borderRadius: 25,
                           color: kLightOrangeBgColor,
-                          widget:
-                              Image.asset("assets/images/${carLogoList[item!]}"),
+                          widget: Image.asset(
+                              "assets/images/${carLogoList[item!]}"),
                         ),
                       ))
                   : Container(
@@ -281,69 +282,100 @@ class _SelectBrandState extends State<SelectBrand> {
                   topLeft: Radius.circular(h * 0.03),
                   topRight: Radius.circular(h * 0.03),
                 )),
-            child: Column(
-              children: [
-                Text(
-                  "Select Cars",
-                  textScaleFactor: 1.3,
-                  style: GoogleFonts.montserrat(
-                      height: 2, fontWeight: FontWeight.w600),
-                ),
-                Text(
-                  "269 shots",
-                  textScaleFactor: 0.8,
-                  style: GoogleFonts.montserrat(
-                    fontWeight: FontWeight.w600,
-                    height: 1.5,
-                    color: kblackcolor.withOpacity(0.6),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Text(
+                    "Select Cars",
+                    textScaleFactor: 1.3,
+                    style: GoogleFonts.montserrat(
+                        height: 2, fontWeight: FontWeight.w600),
                   ),
-                ),
-                Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: w * 0.05, vertical: 10),
-                  child: GridView.count(
-                    shrinkWrap: true,
-                    controller: _controller2,
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    children: List.generate(cars.length, (index) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const SelectFuel(),
-                              ));
-                        },
-                        child: RRectCard(
-                          h: h * 0.18,
-                          w: h * 0.18,
-                          borderRadius: 30,
-                          widget: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                    "assets/images/${cars[index]["image"]}"),
-                                const SizedBox(
-                                  height: 5,
+                  Text(
+                    "269 shots",
+                    textScaleFactor: 0.8,
+                    style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.w600,
+                      height: 1.5,
+                      color: kblackcolor.withOpacity(0.6),
+                    ),
+                  ),
+                  FutureBuilder(
+                    
+                    future: getCarData(),
+                    builder: (context, AsyncSnapshot snapshot) {
+                      print(snapshot.data.length);
+                      if(snapshot.hasError){
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      if (snapshot.hasData) {
+                        return Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: w * 0.05, vertical: 10),
+                          child: GridView.count(
+                            shrinkWrap: true,
+                            controller: _controller2,
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                            children: List.generate(snapshot.data.length, (index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SelectFuel(),
+                                      ));
+                                },
+                                child: RRectCard(
+                                  h: h * 0.18,
+                                  w: h * 0.18,
+                                  borderRadius: 30,
+                                  widget: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          child: 
+                                          CachedNetworkImage(
+                                              imageUrl:
+                                                  snapshot.data[index]["image"],
+                                              placeholder: (context, url) =>
+                                                  const Center(child: CircularProgressIndicator()),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      const Icon(Icons.error),
+                                            ),
+                                          // Image.network(
+                                          //     "${snapshot.data[index]["image"]}"),
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        FittedBox(
+                                          child: Text(
+                                            snapshot.data[index]["cars"],
+                                            style: GoogleFonts.montserrat(
+                                              fontWeight: FontWeight.w600,
+                                              height: 1.5,
+                                            ),
+                                          ),
+                                        )
+                                      ]),
                                 ),
-                                FittedBox(
-                                  child: Text(
-                                    cars[index]["name"],
-                                    style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.w600,
-                                      height: 1.5,
-                                    ),
-                                  ),
-                                )
-                              ]),
-                        ),
+                              );
+                            }),
+                          ),
+                        );
+                      }
+                      return const Center(
+                        child: CircularProgressIndicator(),
                       );
-                    }),
-                  ),
-                ),
-              ],
+                    },
+                  )
+                ],
+              ),
             ),
           );
         }).whenComplete(() {

@@ -127,7 +127,12 @@ class _SelectFuelState extends State<SelectFuel> {
                     widget: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset("assets/images/Uber1.png"),
+                          Expanded(child: Padding(
+                            padding: const EdgeInsets.all(2.0),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(h*0.04),
+                              child: Image.asset("assets/images/Uber1.png")),
+                          )),
                           const SizedBox(
                             height: 5,
                           ),

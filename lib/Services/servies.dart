@@ -1,5 +1,8 @@
 // ignore_for_file: avoid_print
 
+import 'dart:convert';
+
+import 'package:cityofcars/Services/models/citiesModel.dart';
 import 'package:cityofcars/Services/url.dart';
 import 'package:cityofcars/Utils/preference.dart';
 import 'package:http/http.dart' as http;
@@ -62,3 +65,60 @@ var prefs = Prefernece.pref;
 //     print("error $e");
 //   }
 // }
+
+Future getcities()async{
+  var url = Uri.parse(getCities);
+  try {
+    var respnse = await  http.get(
+      url,
+      headers:{"Authorization": prefs!.getString('token').toString()}
+    );
+    if(respnse.statusCode==200){
+      var data = jsonDecode(respnse.body);
+      if(data["status"]){
+        print(data["getCities"]);
+        return data["getCities"];
+      }else{
+        return Future.error(data["msg"]);
+      }
+      // Future city = data["getCities"];
+      // print("success============== ${data["getCities"]}");
+      
+      
+    }else{
+      return Future.error("Server Error");
+    }
+  } catch (e) {
+    print(
+      "error $e"
+    );
+  }
+}
+Future getCarData()async{
+  var url = Uri.parse(getcarData);
+  try {
+    var respnse = await  http.get(
+      url,
+      headers:{"Authorization": prefs!.getString('token').toString()}
+    );
+    if(respnse.statusCode==200){
+      var data = jsonDecode(respnse.body);
+      if(data["status"]){
+        print(data["data"]);
+        return data["data"];
+      }else{
+        return Future.error(data["msg"]);
+      }
+      // Future city = data["getCities"];
+      // print("success============== ${data["getCities"]}");
+      
+      
+    }else{
+      return Future.error("Server Error");
+    }
+  } catch (e) {
+    print(
+      "error $e"
+    );
+  }
+}

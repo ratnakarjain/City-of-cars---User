@@ -9,6 +9,7 @@ const String searchCity = baseUrl+"/searchCity";
 const String searchBrand = baseUrl+"/searchBrand";
 const String getcarData= baseUrl+"/getCar";
 const String searchdata = baseUrl+"/searchCars";
+const String getCities = baseUrl+"/getCities";
 const String getFuel = baseUrl+"/get-fuel Api";
 const String getcategry = baseUrl+"/getcategory";
 String token = "";
