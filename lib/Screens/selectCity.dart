@@ -23,13 +23,8 @@ class _SelectCityState extends State<SelectCity> {
     {"name": "Noida", "images": "3.png"},
     {"name": "Chandigarh", "images": "5.png"}
   ];
-  List cities = [];
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    //  cities = getcities();
-  }
+  bool loading =true;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +46,7 @@ class _SelectCityState extends State<SelectCity> {
             )),
           ),
         ),
-        backgroundColor: Colors.transparent,
+        backgroundColor: kwhitecolor,
         elevation: 0,
       ),
       body: Container(
@@ -88,10 +83,13 @@ class _SelectCityState extends State<SelectCity> {
               //   ),
               // ),
               Container(
-                height: size.height * 0.07,
+                height: size.height * 0.11,
+                color: kwhitecolor,
+                
                 padding: EdgeInsets.only(
                     left: size.width * 0.06,
                     right: size.width * 0.06,
+                    bottom: size.width*0.05,
                     top: size.height * 0.02),
                 child: Material(
                   color: kwhitecolor,
@@ -129,21 +127,30 @@ class _SelectCityState extends State<SelectCity> {
                     horizontal: size.width * 0.07, vertical: 50),
                 color: kLightOrangeBgColor,
                 child: FutureBuilder(
-                    future: getcities(),
+                    future: getcities().whenComplete(() {
+                      loading = false;
+                    }),
                     builder: (context, AsyncSnapshot snapshot) {
-                      print(snapshot.data.length);
-                      if (snapshot.hasData) {
+                      // print(snapshot.data.length);
+                      if (loading){
+                        return loder ;
+                      }else{
+                        if (snapshot.hasData) {
                         return GridView.count(
                           controller: _controller,
                           shrinkWrap: true,
-                          mainAxisSpacing: 20,
-                          crossAxisSpacing: 10,
+                          mainAxisSpacing: size.height*0.02,
+                          crossAxisSpacing: size.width*0.02,
                           crossAxisCount: 2,
                           children:
                               List.generate(snapshot.data.length, (index) {
                             return Center(
                               child: GestureDetector(
                                 onTap: () {
+                                  CarsData.city = snapshot.data[index]["city"];
+                                  CarsData.cityimage = snapshot.data[index]["image"];
+                                  print(CarsData.city);
+                                  print(CarsData.cityimage);
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -165,18 +172,28 @@ class _SelectCityState extends State<SelectCity> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
+                                          SizedBox(
+                                            height: size.height*0.01,
+                                          ),
                                           Expanded(
-                                            child: CachedNetworkImage(
-                                              imageUrl:
-                                                  "${snapshot.data[index]["images"]}",
-                                              placeholder: (context, url) =>
-                                                  const Center(child: CircularProgressIndicator()),
-                                              errorWidget:
-                                                  (context, url, error) =>
-                                                      const Icon(Icons.error),
+                                            child: 
+                                            ClipRRect(
+                                              borderRadius: BorderRadius.circular(size.height*0.01),
+                                              child: CachedNetworkImage(
+                                                fit: BoxFit.cover,
+                                                imageUrl:
+                                                    snapshot.data[index]["image"].toString(),
+                                                placeholder: (context, url) =>
+                                                
+                                                    loder,
+                                                    
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        const Icon(Icons.error),
+                                              ),
                                             ),
                                             // Image.network(
-                                            //     "${snapshot.data[index]["images"]}"),
+                                            //     snapshot.data[index]["image"].toString()),
                                           ),
                                           const SizedBox(
                                             height: 5,
@@ -198,7 +215,9 @@ class _SelectCityState extends State<SelectCity> {
                           }),
                         );
                       }
-                      return const Center(child: CircularProgressIndicator());
+                      return loder;
+                      }
+                      
                     }),
               ),
             ],

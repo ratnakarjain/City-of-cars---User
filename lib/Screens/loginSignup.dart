@@ -548,9 +548,14 @@ class _LoginSignUpState extends State<LoginSignUp> {
       });
       if (response.statusCode == 200) {
         var jsonResponse = convert.jsonDecode(response.body);
+
         print("success");
         if (jsonResponse["status"]) {
-          prefs!.setString("token", jsonResponse["token"]);
+          prefs!.setString("token", jsonResponse["token"].toString());
+          prefs!.setString("name", jsonResponse["data"]["name"].toString());
+          prefs!.setString("email", jsonResponse["data"]["email"].toString());
+          prefs!.setString("id", jsonResponse["data"]["_id"].toString());
+          prefs!.setString("mobile", jsonResponse["data"]["mobile"].toString());
           token = prefs!.getString("token")!;
           print("$token");
           Navigator.push(
@@ -582,6 +587,10 @@ class _LoginSignUpState extends State<LoginSignUp> {
         print("success");
         prefs!.setString("token", jsonResponse["token"]);
         token = prefs!.getString("token")!;
+          prefs!.setString("name", jsonResponse["data"]["name"].toString());
+          prefs!.setString("email", jsonResponse["data"]["email"].toString());
+          prefs!.setString("id", jsonResponse["data"]["_id"].toString());
+          prefs!.setString("mobile", jsonResponse["data"]["mobile"].toString());
         print("$token");
         Navigator.push(
             context,

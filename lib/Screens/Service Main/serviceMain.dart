@@ -1,6 +1,7 @@
 import 'package:cityofcars/Screens/Service%20Main/insidCategory.dart';
 import 'package:cityofcars/Screens/Service%20Main/offers.dart';
 import 'package:cityofcars/Screens/Service%20Main/productDetail.dart';
+import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:cityofcars/Utils/functions.dart';
@@ -73,6 +74,7 @@ class _ServiceMainState extends State<ServiceMain> {
       "card": "using HDFC cradit card"
     },
   ];
+  bool loding1 = true;
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +131,7 @@ class _ServiceMainState extends State<ServiceMain> {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: currentPage == index
-                              ?  kdarkpurple
+                              ? kdarkpurple
                               : ksubHading.withOpacity(0.32),
                         ),
                       );
@@ -262,56 +264,74 @@ class _ServiceMainState extends State<ServiceMain> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GridView.count(
-                    shrinkWrap: true,
-                    controller: _controller1,
-                    padding: EdgeInsets.symmetric(
-                        vertical: h * 0.015, horizontal: h * 0.025),
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    children: List.generate(carServices.length, (index) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => InsideCategory()));
-                        },
-                        child: RRectCard(
-                          h: h * 0.18,
-                          w: h * 0.18,
-                          borderRadius: 10,
-                          widget: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                    "assets/images/${carServices[index]["image"]}"),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                FittedBox(
-                                  child: Text(
-                                    "${carServices[index]["services"]}".toUpperCase(),
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.w500,
-                                        height: 3,
-                                        fontSize: 11),
-                                  ),
-                                ),
-                                Text(
-                                    "${carServices[index]["type"]}".toUpperCase(),
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.w400,
-                                        height: 1,
-                                        fontSize: 9),
-                                  ),
-                              ]),
-                        ),
-                      );
+                  FutureBuilder(
+                    future: getcategaries().whenComplete(() {
+                      loding1 = false;
                     }),
-                  ),SizedBox(
-                    height: h*0.01,
+                    builder: (context, AsyncSnapshot snapshot) {
+                      
+                      if (loding1) {
+                        return loder;
+                      } else {
+                        print(snapshot.data.length);
+                        return GridView.count(
+                          shrinkWrap: true,
+                          controller: _controller1,
+                          padding: EdgeInsets.symmetric(
+                              vertical: h * 0.015, horizontal: h * 0.025),
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                          children: List.generate(snapshot.data.length, (index) {
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            InsideCategory()));
+                              },
+                              child: RRectCard(
+                                h: h * 0.18,
+                                w: h * 0.18,
+                                borderRadius: 10,
+                                widget: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                          "assets/images/${carServices[index]["image"]}"),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      FittedBox(
+                                        child: Text(
+                                          "${snapshot.data[index]["category"]}"
+                                              .toUpperCase(),
+                                          style: GoogleFonts.montserrat(
+                                              fontWeight: FontWeight.w500,
+                                              height: 3,
+                                              fontSize: 11),
+                                        ),
+                                      ),
+                                      Text(
+                                        "${carServices[index]["type"]}"
+                                            .toUpperCase(),
+                                        style: GoogleFonts.montserrat(
+                                            fontWeight: FontWeight.w400,
+                                            height: 1,
+                                            fontSize: 9),
+                                      ),
+                                    ]),
+                              ),
+                            );
+                          }),
+                        );
+                      }
+                    },
+                  ),
+
+                  SizedBox(
+                    height: h * 0.01,
                   ),
                   Row(
                     children: [
@@ -348,7 +368,7 @@ class _ServiceMainState extends State<ServiceMain> {
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   ),
                   SizedBox(
-                    height: h*0.01,
+                    height: h * 0.01,
                   ),
                   Container(
                     height: h * 0.18,
@@ -411,7 +431,7 @@ class _ServiceMainState extends State<ServiceMain> {
                     ),
                   ),
                   SizedBox(
-                    height: h*0.01,
+                    height: h * 0.01,
                   ),
                   Label(
                     color: korangecolor,
@@ -423,7 +443,7 @@ class _ServiceMainState extends State<ServiceMain> {
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   ),
                   SizedBox(
-                    height: h*0.01,
+                    height: h * 0.01,
                   ),
                   Container(
                     height: h * 0.18,
@@ -486,7 +506,7 @@ class _ServiceMainState extends State<ServiceMain> {
                     ),
                   ),
                   SizedBox(
-                    height: h*0.01,
+                    height: h * 0.01,
                   ),
                   GestureDetector(
                     onTap: () {

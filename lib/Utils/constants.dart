@@ -8,7 +8,7 @@ const kblacklightshadecolor = Color(0XFF767676);
 const kredcolor = Color(0XFFB2002D);
 const klightpurpulcolor = Color(0XFF8A56AC);
 const kwhitecolor = Color(0XFFFFFFFF);
-
+const kbg3 = Color(0xFFFFF7F7);
 const kSinginTextColor = Color(0XFF5C6E98);
 const kLightOrangeBgColor = Color(0XFFFAF7F7);
 // const kShadowColor = Color(0XFF00001F);
@@ -32,3 +32,21 @@ const carhealthColor3 = Color(0xFF5F4591);
 const carhealthColor4 = Color(0xFF9599B3);
 const kgrey = Color(0xFF4B516B);
 const knewstextbrif = Color(0xff817889);
+
+
+
+const Widget loder = Center(child: CircularProgressIndicator.adaptive(),);
+
+
+
+class CarsData{
+  static String city = "";
+  static String name = "";
+  static String brand = "";
+  static String brandimage = "";
+  static String carimage = "";
+  static String cityimage = "";
+  static String fuel = "";
+  static String fuelimage = "";
+
+}

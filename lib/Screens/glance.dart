@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cityofcars/Screens/Service%20Main/serviceMain.dart';
 import 'package:cityofcars/Screens/bottomnavBar.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class _GlanceState extends State<Glance> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer(Duration(seconds: 2), () {
+    Timer(Duration(seconds: 5), () {
       Navigator.pushAndRemoveUntil<dynamic>(
         context,
         MaterialPageRoute<dynamic>(
@@ -45,8 +46,8 @@ class _GlanceState extends State<Glance> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(child: Image.asset("assets/images/right_mark.png")),
-           SizedBox(
-            height:h* 0.01,
+          SizedBox(
+            height: h * 0.01,
           ),
           Text(
             "Congratulations",
@@ -56,8 +57,8 @@ class _GlanceState extends State<Glance> {
               fontWeight: FontWeight.w600,
             ),
           ),
-           SizedBox(
-            height:h* 0.01,
+          SizedBox(
+            height: h * 0.01,
           ),
           Text(
             "You have added a new car to your proflie",
@@ -70,16 +71,12 @@ class _GlanceState extends State<Glance> {
             height: h * 0.025,
           ),
           Container(
-            height: h*0.15,
-            width: w*0.9,
+            height: h * 0.15,
+            width: w * 0.9,
             decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                  "assets/images/bg2.png"
-                ),
-                fit: BoxFit.fitWidth
-              )
-            ),
+                image: DecorationImage(
+                    image: AssetImage("assets/images/bg2.png"),
+                    fit: BoxFit.fitWidth)),
             child: Center(
               child: RRectCard(
                 h: h * 0.13,
@@ -92,14 +89,37 @@ class _GlanceState extends State<Glance> {
                   borderRadius: 25,
                   widget: Stack(
                     children: [
-                      Center(child: Image.asset("assets/images/Uber1.png")),
+                      Padding(
+                        padding: EdgeInsets.all(h*0.01),
+                        child: Center(
+                          child: CachedNetworkImage(
+                            fit: BoxFit.fill,
+                            imageUrl: CarsData.carimage,
+                            placeholder: (context, url) => loder,
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                          ),
+                          // Image.asset("assets/images/Uber1.png"),
+                        ),
+                      ),
                       Positioned(
                         right: w * 0.03,
                         top: h * 0.01,
-                        child: Image.asset(
-                          "assets/images/EV.png",
-                          height: h * 0.03,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(h*0.01),
+                          child: CachedNetworkImage(
+                              fit: BoxFit.fill,
+                              imageUrl: CarsData.fuelimage,
+                              height: h*0.03,
+                              placeholder: (context, url) => loder,
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                            ),
                         ),
+                        // Image.asset(
+                        //   "assets/images/EV.png",
+                        //   height: h * 0.03,
+                        // ),
                       )
                     ],
                   ),
@@ -109,7 +129,7 @@ class _GlanceState extends State<Glance> {
           ),
           RichText(
             text: TextSpan(
-              text: 'Polo ',
+              text: CarsData.brand+" ",
               style: GoogleFonts.montserrat(
                 color: kTextInputPlaceholderColor,
                 fontWeight: FontWeight.w700,
@@ -117,14 +137,14 @@ class _GlanceState extends State<Glance> {
               ),
               children: <TextSpan>[
                 TextSpan(
-                    text: 'Volkswagon',
+                    text: CarsData.name+" ",
                     style: GoogleFonts.montserrat(
                       color: kTextInputPlaceholderColor,
                       fontWeight: FontWeight.w400,
                       height: 1.7,
                     )),
                 TextSpan(
-                  text: ' EV',
+                  text: CarsData.fuel,
                   style: GoogleFonts.montserrat(
                     color: kTextInputPlaceholderColor,
                     fontWeight: FontWeight.w700,

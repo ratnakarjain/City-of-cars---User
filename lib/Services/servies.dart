@@ -76,8 +76,8 @@ Future getcities()async{
     if(respnse.statusCode==200){
       var data = jsonDecode(respnse.body);
       if(data["status"]){
-        print(data["getCities"]);
-        return data["getCities"];
+        print(data["data"]);
+        return data["data"];
       }else{
         return Future.error(data["msg"]);
       }
@@ -106,6 +106,94 @@ Future getCarData()async{
       if(data["status"]){
         print(data["data"]);
         return data["data"];
+      }else{
+        return Future.error(data["msg"]);
+      }
+      // Future city = data["getCities"];
+      // print("success============== ${data["getCities"]}");
+      
+      
+    }else{
+      return Future.error("Server Error");
+    }
+  } catch (e) {
+    print(
+      "error $e"
+    );
+  }
+}
+
+Future getBrandss()async{
+  var url = Uri.parse(getBrands);
+  try {
+    var respnse = await  http.get(
+      url,
+      headers:{"Authorization": prefs!.getString('token').toString()}
+    );
+    if(respnse.statusCode==200){
+      var data = jsonDecode(respnse.body);
+      if(data["status"]){
+        print(data["data"]);
+        return data["data"];
+      }else{
+        return Future.error(data["msg"]);
+      }
+      // Future city = data["getCities"];
+      // print("success============== ${data["getCities"]}");
+      
+      
+    }else{
+      return Future.error("Server Error");
+    }
+  } catch (e) {
+    print(
+      "error $e"
+    );
+  }
+}
+
+Future getfuel()async{
+  var url = Uri.parse(getFuel);
+  try {
+    var respnse = await  http.get(
+      url,
+      headers:{"Authorization": prefs!.getString('token').toString()}
+    );
+    if(respnse.statusCode==200){
+      var data = jsonDecode(respnse.body);
+      if(data["status"]){
+        print(data["data"]);
+        return data["data"];
+      }else{
+        return Future.error(data["msg"]);
+      }
+      // Future city = data["getCities"];
+      // print("success============== ${data["getCities"]}");
+      
+      
+    }else{
+      return Future.error("Server Error");
+    }
+  } catch (e) {
+    print(
+      "error $e"
+    );
+  }
+}
+
+
+Future getcategaries()async{
+  var url = Uri.parse(getcategryUrl);
+  try {
+    var respnse = await  http.get(
+      url,
+      headers:{"Authorization": prefs!.getString('token').toString()}
+    );
+    if(respnse.statusCode==200){
+      var data = jsonDecode(respnse.body);
+      if(data["status"]){
+        print(data["getdata"]);
+        return data["getdata"];
       }else{
         return Future.error(data["msg"]);
       }

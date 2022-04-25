@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cityofcars/Screens/glance.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../Services/servies.dart';
 import 'Service Main/serviceMain.dart';
 import 'bottomnavBar.dart';
 
@@ -18,6 +20,7 @@ class _SelectFuelState extends State<SelectFuel> {
   ScrollController _controller = ScrollController();
   var h;
   var w;
+  bool loading = true;
   List fueltype = [
     {"image": "Diesel.png", "type": "Diesel"},
     {"image": "Petrol.png", "type": "Petrol"},
@@ -65,7 +68,7 @@ class _SelectFuelState extends State<SelectFuel> {
           ],
         ),
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(h*0.05),
+          preferredSize: Size.fromHeight(h * 0.05),
           child: Container(),
         ),
       ),
@@ -84,11 +87,16 @@ class _SelectFuelState extends State<SelectFuel> {
               h: h * 0.12,
               w: h * 0.12,
               borderRadius: 25,
-              color: kLightOrangeBgColor,
-              widget: Image.asset("assets/images/Kia_logo.png"),
+              padding: EdgeInsets.all(h * 0.01),
+              color: kwhitecolor,
+              widget: CachedNetworkImage(
+                fit: BoxFit.fill,
+                imageUrl: CarsData.brandimage.toString(),
+                placeholder: (context, url) => loder,
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+              ),
             ),
           ),
-          
           Container(
             width: w,
             decoration: BoxDecoration(
@@ -124,21 +132,25 @@ class _SelectFuelState extends State<SelectFuel> {
                     borderRadius: 25,
                     h: h * 0.12,
                     w: h * 0.12,
+                    padding: EdgeInsets.all(h * 0.01),
                     widget: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Expanded(child: Padding(
-                            padding: const EdgeInsets.all(2.0),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(h*0.04),
-                              child: Image.asset("assets/images/Uber1.png")),
-                          )),
+                          Expanded(
+                            child: CachedNetworkImage(
+                              fit: BoxFit.fill,
+                              imageUrl: CarsData.carimage.toString(),
+                              placeholder: (context, url) => loder,
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                            ),
+                          ),
                           const SizedBox(
                             height: 5,
                           ),
                           FittedBox(
                             child: Text(
-                              "Polo",
+                              CarsData.name,
                               style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w600,
                                 height: 1.5,
@@ -163,7 +175,7 @@ class _SelectFuelState extends State<SelectFuel> {
                             spreadRadius: 5,
                             color: kblackcolor.withOpacity(0.1))
                       ]),
-                      margin: EdgeInsets.only(bottom: h*0.01),
+                  margin: EdgeInsets.only(bottom: h * 0.01),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -173,47 +185,79 @@ class _SelectFuelState extends State<SelectFuel> {
                         style: GoogleFonts.montserrat(
                             height: 2, fontWeight: FontWeight.w600),
                       ),
-                      GridView.count(
-                        shrinkWrap: true,
-                        controller: _controller,
-                        scrollDirection: Axis.vertical,
-                        crossAxisCount: 3,
-                        children: List.generate(fueltype.length, (index) {
-                          return Center(
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => Glance(),
-                                    ));
-                              },
-                              child: RRectCard(
-                                h: h * 0.12,
-                                w: h * 0.12,
-                                borderRadius: 30,
-                                widget: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                          "assets/images/${fueltype[index]["image"]}"),
-                                      const SizedBox(
-                                        height: 5,
+                      Expanded(
+                        child: FutureBuilder(
+                          future: getfuel().whenComplete(() {
+                            loading = false;
+                          }),
+                          initialData: loder,
+                          builder:
+                              (BuildContext context, AsyncSnapshot snapshot) {
+                            if (loading) {
+                              return loder;
+                            } else {
+                              print(snapshot.data.length);
+                              return GridView.count(
+                                shrinkWrap: true,
+                                controller: _controller,
+                                scrollDirection: Axis.vertical,
+                                crossAxisCount: 3,
+                                children: List.generate(snapshot.data.length, (index) {
+                                  return Center(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        CarsData.fuel = snapshot.data[index]["fuel"];
+                                        CarsData.fuelimage = snapshot.data[index]["image"];
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => const Glance(),
+                                            ));
+                                      },
+                                      child: RRectCard(
+                                        h: h * 0.12,
+                                        w: h * 0.12,
+                                        borderRadius: 30,
+                                        padding: EdgeInsets.all(h*0.01),
+                                        widget: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Expanded(
+                                                child: CachedNetworkImage(
+                                                  fit: BoxFit.fill,
+                                                  imageUrl: snapshot.data[index]["image"],
+                                                  placeholder: (context, url) =>
+                                                      loder,
+                                                  errorWidget:
+                                                      (context, url, error) =>
+                                                          const Icon(Icons.error),
+                                                ),
+                                              ),
+                                              // Image.asset(
+                                              //     "assets/images/${fueltype[index]["image"]}"),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              FittedBox(
+                                                child: Text(
+                                                  "${snapshot.data[index]["fuel"]}",
+                                                  style: GoogleFonts.montserrat(
+                                                    fontWeight: FontWeight.w600,
+                                                    height: 1.5,
+                                                  ),
+                                                ),
+                                              )
+                                            ]),
                                       ),
-                                      FittedBox(
-                                        child: Text(
-                                          "${fueltype[index]["type"]}",
-                                          style: GoogleFonts.montserrat(
-                                            fontWeight: FontWeight.w600,
-                                            height: 1.5,
-                                          ),
-                                        ),
-                                      )
-                                    ]),
-                              ),
-                            ),
-                          );
-                        }),
+                                    ),
+                                  );
+                                }),
+                              );
+                              ;
+                            }
+                          },
+                        ),
                       ),
                       SizedBox()
                     ],

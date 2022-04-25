@@ -2,7 +2,9 @@
 
 import 'dart:io';
 
+import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Utils/functions.dart';
+import 'package:cityofcars/Utils/preference.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
@@ -21,8 +23,23 @@ class _EditProfileState extends State<EditProfile> {
   var h;
   var w;
   var file;
-
+  var prefs = Prefernece.pref;
+  var name = TextEditingController();
+  var mobile = TextEditingController();
+  var email = TextEditingController();
+  var houseNo = TextEditingController();
+  var street = TextEditingController();
+  var state = TextEditingController();
+  var pinCode = TextEditingController();
   bool isImagePicked = false;
+  @override
+  void initState() {
+    name.text = prefs!.getString("name").toString();
+    mobile.text = prefs!.getString("mobile").toString();
+    email.text = prefs!.getString("email").toString();
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
@@ -160,6 +177,8 @@ class _EditProfileState extends State<EditProfile> {
                 child: Column(
                   children: [
                     TextFormField(
+                      controller: name,
+
                       decoration: InputDecoration(
                           hintText: "Name*",
                           hintStyle: GoogleFonts.montserrat(
@@ -170,8 +189,11 @@ class _EditProfileState extends State<EditProfile> {
                                   color: kTextInputPlaceholderColor
                                       .withOpacity(0.32))),
                           contentPadding: EdgeInsets.only(left: w * 0.02)),
+                    ),SizedBox(
+                      height: h * 0.01,
                     ),
                     TextFormField(
+                      controller: mobile,
                       decoration: InputDecoration(
                           hintText: "Mobile No.*",
                           hintStyle: GoogleFonts.montserrat(
@@ -182,8 +204,11 @@ class _EditProfileState extends State<EditProfile> {
                                   color: kTextInputPlaceholderColor
                                       .withOpacity(0.32))),
                           contentPadding: EdgeInsets.only(left: w * 0.02)),
+                    ),SizedBox(
+                      height: h * 0.01,
                     ),
                     TextFormField(
+                      controller: email,
                       decoration: InputDecoration(
                           hintText: "Email",
                           hintStyle: GoogleFonts.montserrat(
@@ -194,8 +219,11 @@ class _EditProfileState extends State<EditProfile> {
                                   color: kTextInputPlaceholderColor
                                       .withOpacity(0.32))),
                           contentPadding: EdgeInsets.only(left: w * 0.02)),
+                    ),SizedBox(
+                      height: h * 0.01,
                     ),
                     TextFormField(
+                      controller: houseNo,
                       decoration: InputDecoration(
                           hintText: "House No.. & Floor*",
                           hintStyle: GoogleFonts.montserrat(
@@ -206,8 +234,11 @@ class _EditProfileState extends State<EditProfile> {
                                   color: kTextInputPlaceholderColor
                                       .withOpacity(0.32))),
                           contentPadding: EdgeInsets.only(left: w * 0.02)),
+                    ),SizedBox(
+                      height: h * 0.01,
                     ),
                     TextFormField(
+                      controller: street,
                       decoration: InputDecoration(
                           hintText: "Street*",
                           hintStyle: GoogleFonts.montserrat(
@@ -219,10 +250,14 @@ class _EditProfileState extends State<EditProfile> {
                                       .withOpacity(0.32))),
                           contentPadding: EdgeInsets.only(left: w * 0.02)),
                     ),
+                    SizedBox(
+                      height: h * 0.01,
+                    ),
                     Row(
                       children: [
                         Expanded(
                           child: TextFormField(
+                            controller: state,
                             decoration: InputDecoration(
                                 hintText: "State*",
                                 hintStyle: GoogleFonts.montserrat(
@@ -237,10 +272,11 @@ class _EditProfileState extends State<EditProfile> {
                           ),
                         ),
                         SizedBox(
-                          width: w * 0.02,
+                          width: w * 0.05,
                         ),
                         Expanded(
                           child: TextFormField(
+                            controller: pinCode,
                             decoration: InputDecoration(
                                 hintText: "Pin Code*",
                                 hintStyle: GoogleFonts.montserrat(

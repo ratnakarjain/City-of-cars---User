@@ -33,6 +33,8 @@ class _SlotState extends State<Slot> {
     return Scaffold(
         backgroundColor: kLightOrangeBgColor,
         appBar: AppBar(
+          titleSpacing: -10,
+          centerTitle: false,
           elevation: 0,
           backgroundColor: kwhitecolor,
           foregroundColor: kblackcolor,

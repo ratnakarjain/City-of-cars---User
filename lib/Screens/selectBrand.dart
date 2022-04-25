@@ -75,7 +75,10 @@ class _SelectBrandState extends State<SelectBrand> {
     },
   ];
   bool isSelected = false;
+  bool loading = true;
+  bool brandsloading = true;
   int? item;
+  String selctedImage = "";
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +86,7 @@ class _SelectBrandState extends State<SelectBrand> {
     w = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      backgroundColor: kbg3,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: false,
@@ -124,12 +128,13 @@ class _SelectBrandState extends State<SelectBrand> {
             ],
           ),
         ),
-        backgroundColor: Colors.transparent,
+        backgroundColor: kwhitecolor,
         elevation: 0,
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(h * 0.1),
           child: Container(
             height: h * 0.07,
+            margin: EdgeInsets.only(bottom: h * 0.025),
             padding:
                 EdgeInsets.only(left: w * 0.06, right: w * 0.06, top: h * 0.02),
             child: Material(
@@ -210,46 +215,107 @@ class _SelectBrandState extends State<SelectBrand> {
                           h: h * 0.12,
                           w: h * 0.12,
                           borderRadius: 25,
-                          color: kLightOrangeBgColor,
-                          widget: Image.asset(
-                              "assets/images/${carLogoList[item!]}"),
+                          color: kwhitecolor,
+                          padding: EdgeInsets.all(h * 0.01),
+                          widget: Container(
+                            height: h * 0.1,
+                            width: h * 0.1,
+
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(h * 0.015),
+                                image: DecorationImage(
+                                    image: NetworkImage(
+                                      selctedImage.toString(),
+                                    ),
+                                    fit: BoxFit.fill)),
+                            // child: Image.network(
+                            //   snapshot.data[index]["image"]
+                            //       .toString(),
+                            //   fit: BoxFit.fill,
+                            // ),
+                          ),
                         ),
                       ))
                   : Container(
                       padding: EdgeInsets.symmetric(
                           horizontal: w * 0.05, vertical: 50),
-                      child: GridView.count(
-                        shrinkWrap: true,
-                        controller: _controller1,
-                        crossAxisCount: 3,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                        children: List.generate(carLogoList.length, (index) {
-                          return GestureDetector(
-                              onTap: () {
-                                bottumSheet();
-                                item = index;
-                                isSelected = true;
-                                setState(() {});
-                              },
-                              child: RRectCard(
-                                h: h * 0.18,
-                                w: h * 0.18,
-                                borderRadius: 30,
-                                color: kLightOrangeBgColor,
-                                widget: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                          "assets/images/${carLogoList[index]}"),
-                                      const SizedBox(
-                                        height: 5,
-                                      ),
-                                    ]),
-                              ));
+                      child: FutureBuilder(
+                        future: getBrandss().whenComplete(() {
+                          brandsloading = false;
                         }),
-                      ),
-                    ),
+                        builder: (context, AsyncSnapshot snapshot) {
+                          if (brandsloading) {
+                            return loder;
+                          } else {
+                            if (snapshot.hasError) {
+                              return const Center(
+                                child: Icon(Icons.error),
+                              );
+                            }
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return loder;
+                            }
+                            if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              return GridView.count(
+                                shrinkWrap: true,
+                                controller: _controller1,
+                                crossAxisCount: 3,
+                                crossAxisSpacing: h * 0.01,
+                                mainAxisSpacing: h * 0.01,
+                                padding: EdgeInsets.only(bottom: h * 0.02),
+                                children: List.generate(snapshot.data.length,
+                                    (index) {
+                                  return GestureDetector(
+                                      onTap: () {
+                                        CarsData.brand =snapshot.data[index]["brands"];
+                                        CarsData.brandimage =snapshot.data[index]["image"];
+                                        print(CarsData.brand);
+                                        print(CarsData.brandimage);
+                                        bottumSheet();
+                                        item = index;
+                                        isSelected = true;
+                                        selctedImage =
+                                            snapshot.data[index]["image"];
+                                        print(selctedImage);
+                                        setState(() {});
+                                      },
+                                      child: RRectCard(
+                                        h: h * 0.18,
+                                        w: h * 0.18,
+                                        borderRadius: 30,
+                                        padding: EdgeInsets.all(h * 0.015),
+                                        color: kwhitecolor,
+                                        widget: Container(
+                                          height: h * 0.1,
+                                          width: h * 0.1,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      h * 0.015),
+                                              image: DecorationImage(
+                                                  image: NetworkImage(
+                                                    snapshot.data[index]
+                                                            ["image"]
+                                                        .toString(),
+                                                  ),
+                                                  fit: BoxFit.fill)),
+                                          // child: Image.network(
+                                          //   snapshot.data[index]["image"]
+                                          //       .toString(),
+                                          //   fit: BoxFit.fill,
+                                          // ),
+                                        ),
+                                      ));
+                                }),
+                              );
+                            } else {
+                              return loder;
+                            }
+                          }
+                        },
+                      )),
             ],
           ),
         ),
@@ -301,77 +367,96 @@ class _SelectBrandState extends State<SelectBrand> {
                     ),
                   ),
                   FutureBuilder(
-                    
-                    future: getCarData(),
+                    future: getCarData().whenComplete(() {
+                      loading = false;
+                    }),
+                    initialData: const Center(
+                      child: CircularProgressIndicator(),
+                    ),
                     builder: (context, AsyncSnapshot snapshot) {
-                      print(snapshot.data.length);
-                      if(snapshot.hasError){
-                        return const Center(child: CircularProgressIndicator());
-                      }
-                      if (snapshot.hasData) {
-                        return Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: w * 0.05, vertical: 10),
-                          child: GridView.count(
-                            shrinkWrap: true,
-                            controller: _controller2,
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                            children: List.generate(snapshot.data.length, (index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SelectFuel(),
-                                      ));
-                                },
-                                child: RRectCard(
-                                  h: h * 0.18,
-                                  w: h * 0.18,
-                                  borderRadius: 30,
-                                  widget: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Expanded(
-                                          child: 
-                                          CachedNetworkImage(
-                                              imageUrl:
-                                                  snapshot.data[index]["image"],
+                      // print(snapshot.data.length);
+                      if (loading) {
+                        return loder;
+                      } else {
+                        if (snapshot.hasError) {
+                          return const Center(
+                            child: Icon(Icons.error),
+                          );
+                        }
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return loder;
+                        }
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: w * 0.05, vertical: 10),
+                            child: GridView.count(
+                              shrinkWrap: true,
+                              controller: _controller2,
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                              children:
+                                  List.generate(snapshot.data.length, (index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                        CarsData.name =snapshot.data[index]["cars"];
+                                        CarsData.carimage =snapshot.data[index]["image"];
+                                        print(CarsData.brand);
+                                        print(CarsData.brandimage);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const SelectFuel(),
+                                        ));
+                                        setState(() {
+                                          
+                                        });
+                                  },
+                                  child: RRectCard(
+                                    h: h * 0.18,
+                                    w: h * 0.18,
+                                    borderRadius: 30,
+                                    widget: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Expanded(
+                                            child: CachedNetworkImage(
+                                              imageUrl: snapshot.data[index]
+                                                  ["image"],
                                               placeholder: (context, url) =>
-                                                  const Center(child: CircularProgressIndicator()),
+                                                  loder,
                                               errorWidget:
                                                   (context, url, error) =>
                                                       const Icon(Icons.error),
                                             ),
-                                          // Image.network(
-                                          //     "${snapshot.data[index]["image"]}"),
-                                        ),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        FittedBox(
-                                          child: Text(
-                                            snapshot.data[index]["cars"],
-                                            style: GoogleFonts.montserrat(
-                                              fontWeight: FontWeight.w600,
-                                              height: 1.5,
-                                            ),
+                                            // Image.network(
+                                            //     "${snapshot.data[index]["image"]}"),
                                           ),
-                                        )
-                                      ]),
-                                ),
-                              );
-                            }),
-                          ),
-                        );
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          FittedBox(
+                                            child: Text(
+                                              snapshot.data[index]["cars"],
+                                              style: GoogleFonts.montserrat(
+                                                fontWeight: FontWeight.w600,
+                                                height: 1.5,
+                                              ),
+                                            ),
+                                          )
+                                        ]),
+                                  ),
+                                );
+                              }),
+                            ),
+                          );
+                        }
+                        return loder;
                       }
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
                     },
                   )
                 ],
