@@ -17,12 +17,7 @@ class CommonServices extends StatefulWidget {
 }
 
 class _CommonServicesState extends State<CommonServices> {
-  List reccomendedPackes = [
-    {"services": "Clutch", "image": "2114.png", "type": "Custom services"},
-    {"services": "Suspension", "image": "2117.png", "type": "Custom services"},
-    {"services": "Brakes", "image": "2118.png", "type": "Custom services"},
-    {"services": "Clutch", "image": "2114.png", "type": "Custom services"},
-  ];
+  
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
@@ -34,16 +29,7 @@ class _CommonServicesState extends State<CommonServices> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Label(
-              color: kbluecolor,
-              text: "common services",
-              textStyle: GoogleFonts.montserrat(
-                textStyle: const TextStyle(
-                  fontSize: 11,
-                    fontWeight: FontWeight.bold, color: kwhitecolor),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            ),
+            
             Plans(
               h: h,
               w: w,
@@ -67,104 +53,12 @@ class _CommonServicesState extends State<CommonServices> {
             SizedBox(
               height: h * 0.018,
             ),
-            Label(
-              color: kbluecolor,
-              text: "brakes",
-              textStyle: GoogleFonts.montserrat(
-                textStyle: const TextStyle(
-                  fontSize: 11,
-                    fontWeight: FontWeight.bold, color: kwhitecolor),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            ),
-            Plans(
-              h: h,
-              w: w,
-              text: "Basic",
-              islabel: true,
-              labeltext: "Frequently Booked",
-            ),
-            Plans(
-              h: h,
-              w: w,
-              text: "Standerd",
-              islabel: false,
-            ),
-            Plans(
-              h: h,
-              w: w,
-              text: "Premium",
-              islabel: true,
-              labeltext: "Reccomended",
-            ),
+            
             SizedBox(
               height: h * 0.018,
             ),
-            Label(
-              color: korangecolor,
-              text: "recomend packes",
-              textStyle: GoogleFonts.montserrat(
-                textStyle: const TextStyle(
-                  fontSize: 11,
-                    fontWeight: FontWeight.bold, color: kwhitecolor),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            ),
-            SizedBox(
-              height: h * 0.005,
-            ),
-            Container(
-              height: h * 0.18,
-              child: ListView.builder(
-                physics: BouncingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                padding: EdgeInsets.all(h * 0.01),
-                itemCount: reccomendedPackes.length,
-                itemBuilder: (context, index) {
-                  return RRectCard(
-                    h: h * 0.1,
-                    w: w * 0.25,
-                    borderRadius: 15,
-                    widget: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                              "assets/images/${reccomendedPackes[index]["image"]}"),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          FittedBox(
-                            child: Text(
-                              reccomendedPackes[index]["services"],
-                              style: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.w600,
-                                height: 2,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: h * 0.01),
-                            child: FittedBox(
-                              child: Text(
-                                reccomendedPackes[index]["type"],
-                                textScaleFactor: 0.6,
-                                style: GoogleFonts.montserrat(
-                                  fontWeight: FontWeight.w600,
-                                  color: kTextInputPlaceholderColor
-                                      .withOpacity(0.6),
-                                  height: 2,
-                                ),
-                              ),
-                            ),
-                          )
-                        ]),
-                  );
-                },
-              ),
-            ),
-            SizedBox(
-              height: h * 0.02,
-            ),
+            
+            
           ],
         ),
       ),

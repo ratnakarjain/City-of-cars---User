@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../Utils/Buttons/button.dart';
 import '../Utils/constants.dart';
+import 'bottomnavBar.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -23,6 +24,8 @@ class _EditProfileState extends State<EditProfile> {
   var h;
   var w;
   var file;
+  String image = "";
+  String id = "";
   var prefs = Prefernece.pref;
   var name = TextEditingController();
   var mobile = TextEditingController();
@@ -35,11 +38,18 @@ class _EditProfileState extends State<EditProfile> {
   @override
   void initState() {
     name.text = prefs!.getString("name").toString();
+    id = prefs!.getString("id").toString();
     mobile.text = prefs!.getString("mobile").toString();
     email.text = prefs!.getString("email").toString();
+    street.text = prefs!.getString("street").toString();
+    state.text = prefs!.getString("state").toString();
+    pinCode.text = prefs!.getString("pincode").toString();
+    image = prefs!.getString("image").toString();
+    print(image);
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
@@ -113,31 +123,46 @@ class _EditProfileState extends State<EditProfile> {
                           print("============================$file");
                           setState(() {});
                         },
-                        child: isImagePicked
-                            ? Container(
+                        child: image.isEmpty || image == "null"
+                            ? isImagePicked
+                                ? Container(
+                                    height: h * 0.06,
+                                    width: h * 0.06,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                            fit: BoxFit.fill,
+                                            image: FileImage(
+                                              File(file),
+                                            ))),
+                                  )
+                                : Container(
+                                    height: h * 0.06,
+                                    width: h * 0.06,
+                                    decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                            fit: BoxFit.fill,
+                                            image: AssetImage(
+                                                "assets/images/ava1.png")
+                                            //     image:  FileImage(
+                                            //   File(file),
+                                            // ):
+
+                                            )),
+                                  )
+                            : Container(
                                 height: h * 0.06,
                                 width: h * 0.06,
                                 decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
                                         fit: BoxFit.fill,
-                                        image: FileImage(
-                                          File(file),
-                                        ))),
-                              )
-                            : Container(
-                                height: h * 0.06,
-                                width: h * 0.06,
-                                decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image:
-                                            AssetImage("assets/images/ava1.png")
+                                        image: NetworkImage(image.toString())
                                         //     image:  FileImage(
                                         //   File(file),
                                         // ):
-        
+
                                         )),
                               )
                         // CircleAvatar(
@@ -170,7 +195,9 @@ class _EditProfileState extends State<EditProfile> {
                         bottomLeft: Radius.circular(h * 0.05)),
                     boxShadow: const [
                       BoxShadow(
-                          blurRadius: 5, offset: Offset(0, 3), color: Colors.grey)
+                          blurRadius: 5,
+                          offset: Offset(0, 3),
+                          color: Colors.grey)
                     ]),
                 padding: EdgeInsets.symmetric(
                     horizontal: w * 0.05, vertical: h * 0.03),
@@ -178,18 +205,19 @@ class _EditProfileState extends State<EditProfile> {
                   children: [
                     TextFormField(
                       controller: name,
-
                       decoration: InputDecoration(
                           hintText: "Name*",
                           hintStyle: GoogleFonts.montserrat(
-                              color: kTextInputPlaceholderColor.withOpacity(0.32),
+                              color:
+                                  kTextInputPlaceholderColor.withOpacity(0.32),
                               fontSize: 13),
                           border: UnderlineInputBorder(
                               borderSide: BorderSide(
                                   color: kTextInputPlaceholderColor
                                       .withOpacity(0.32))),
                           contentPadding: EdgeInsets.only(left: w * 0.02)),
-                    ),SizedBox(
+                    ),
+                    SizedBox(
                       height: h * 0.01,
                     ),
                     TextFormField(
@@ -197,14 +225,16 @@ class _EditProfileState extends State<EditProfile> {
                       decoration: InputDecoration(
                           hintText: "Mobile No.*",
                           hintStyle: GoogleFonts.montserrat(
-                              color: kTextInputPlaceholderColor.withOpacity(0.32),
+                              color:
+                                  kTextInputPlaceholderColor.withOpacity(0.32),
                               fontSize: 13),
                           border: UnderlineInputBorder(
                               borderSide: BorderSide(
                                   color: kTextInputPlaceholderColor
                                       .withOpacity(0.32))),
                           contentPadding: EdgeInsets.only(left: w * 0.02)),
-                    ),SizedBox(
+                    ),
+                    SizedBox(
                       height: h * 0.01,
                     ),
                     TextFormField(
@@ -212,14 +242,16 @@ class _EditProfileState extends State<EditProfile> {
                       decoration: InputDecoration(
                           hintText: "Email",
                           hintStyle: GoogleFonts.montserrat(
-                              color: kTextInputPlaceholderColor.withOpacity(0.32),
+                              color:
+                                  kTextInputPlaceholderColor.withOpacity(0.32),
                               fontSize: 13),
                           border: UnderlineInputBorder(
                               borderSide: BorderSide(
                                   color: kTextInputPlaceholderColor
                                       .withOpacity(0.32))),
                           contentPadding: EdgeInsets.only(left: w * 0.02)),
-                    ),SizedBox(
+                    ),
+                    SizedBox(
                       height: h * 0.01,
                     ),
                     TextFormField(
@@ -227,14 +259,16 @@ class _EditProfileState extends State<EditProfile> {
                       decoration: InputDecoration(
                           hintText: "House No.. & Floor*",
                           hintStyle: GoogleFonts.montserrat(
-                              color: kTextInputPlaceholderColor.withOpacity(0.32),
+                              color:
+                                  kTextInputPlaceholderColor.withOpacity(0.32),
                               fontSize: 13),
                           border: UnderlineInputBorder(
                               borderSide: BorderSide(
                                   color: kTextInputPlaceholderColor
                                       .withOpacity(0.32))),
                           contentPadding: EdgeInsets.only(left: w * 0.02)),
-                    ),SizedBox(
+                    ),
+                    SizedBox(
                       height: h * 0.01,
                     ),
                     TextFormField(
@@ -242,7 +276,8 @@ class _EditProfileState extends State<EditProfile> {
                       decoration: InputDecoration(
                           hintText: "Street*",
                           hintStyle: GoogleFonts.montserrat(
-                              color: kTextInputPlaceholderColor.withOpacity(0.32),
+                              color:
+                                  kTextInputPlaceholderColor.withOpacity(0.32),
                               fontSize: 13),
                           border: UnderlineInputBorder(
                               borderSide: BorderSide(
@@ -268,7 +303,8 @@ class _EditProfileState extends State<EditProfile> {
                                     borderSide: BorderSide(
                                         color: kTextInputPlaceholderColor
                                             .withOpacity(0.32))),
-                                contentPadding: EdgeInsets.only(left: w * 0.02)),
+                                contentPadding:
+                                    EdgeInsets.only(left: w * 0.02)),
                           ),
                         ),
                         SizedBox(
@@ -277,6 +313,7 @@ class _EditProfileState extends State<EditProfile> {
                         Expanded(
                           child: TextFormField(
                             controller: pinCode,
+                            keyboardType: TextInputType.number,
                             decoration: InputDecoration(
                                 hintText: "Pin Code*",
                                 hintStyle: GoogleFonts.montserrat(
@@ -287,7 +324,8 @@ class _EditProfileState extends State<EditProfile> {
                                     borderSide: BorderSide(
                                         color: kTextInputPlaceholderColor
                                             .withOpacity(0.32))),
-                                contentPadding: EdgeInsets.only(left: w * 0.02)),
+                                contentPadding:
+                                    EdgeInsets.only(left: w * 0.02)),
                           ),
                         ),
                       ],
@@ -304,7 +342,27 @@ class _EditProfileState extends State<EditProfile> {
               Center(
                 child: RRecctButton(
                   onTap: () {
-                    Navigator.pop(context);
+                    
+                    editProfile(
+                      id,
+                      name.text,
+                      email.text,
+                      mobile.text,
+                      street.text,
+                      state.text,
+                      pinCode.text,
+                      file == null ? null : File(file),
+                      context,
+                    ).whenComplete(() => Navigator.pushAndRemoveUntil<dynamic>(
+                          context,
+                          MaterialPageRoute<dynamic>(
+                            builder: (BuildContext context) => BottomNavBar(
+                              index: 0,
+                            ),
+                          ),
+                          (route) =>
+                              false, //if you want to disable back feature set to false
+                        ));
                   },
                   h: h * 0.06,
                   w: w * 0.9,

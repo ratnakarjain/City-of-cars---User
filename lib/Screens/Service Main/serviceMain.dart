@@ -298,8 +298,10 @@ class _ServiceMainState extends State<ServiceMain> {
                                 widget: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Image.asset(
-                                          "assets/images/${carServices[index]["image"]}"),
+                                      Expanded(
+                                        child: Image.network(
+                                            "${snapshot.data[index]["image"]}",fit: BoxFit.fill,),
+                                      ),
                                       const SizedBox(
                                         height: 5,
                                       ),
@@ -314,12 +316,16 @@ class _ServiceMainState extends State<ServiceMain> {
                                         ),
                                       ),
                                       Text(
-                                        "${carServices[index]["type"]}"
+                                        "${snapshot.data[index]["subcategory"]}"
                                             .toUpperCase(),
+                                            textAlign: TextAlign.center,
                                         style: GoogleFonts.montserrat(
                                             fontWeight: FontWeight.w400,
                                             height: 1,
                                             fontSize: 9),
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
                                       ),
                                     ]),
                               ),
@@ -572,75 +578,75 @@ class _ServiceMainState extends State<ServiceMain> {
                     ),
                   ),
 
-                  // Label(
-                  //   color: kbluecolor,
-                  //   text: "offers & discounts",
-                  //   textStyle: GoogleFonts.montserrat(
-                  //     textStyle: const TextStyle(
-                  //         fontWeight: FontWeight.bold,
-                  //         color: kwhitecolor),
-                  //   ),
-                  //   padding: EdgeInsets.symmetric(
-                  //       horizontal: 10, vertical: 5),
-                  // ),
-                  // Container(
-                  //   height: h * 0.18,
-                  //   child: ListView.builder(
-                  //     physics: BouncingScrollPhysics(),
-                  //     scrollDirection: Axis.horizontal,
-                  //     padding: EdgeInsets.symmetric(
-                  //         horizontal: h * 0.023, vertical: h * 0.01),
-                  //     itemCount: offers.length,
-                  //     itemBuilder: (context, index) {
-                  //       return InkWell(
-                  //         onTap: (){
-                  //           Navigator.push(context, MaterialPageRoute(builder: (context)=>const Offers()));
-                  //         },
-                  //         child: RRectCard(
-                  //           h: h * 0.1,
-                  //           w: w * 0.28,
-                  //           borderRadius: 15,
-                  //           widget: Column(
-                  //               mainAxisAlignment:
-                  //                   MainAxisAlignment.center,
-                  //               children: [
-                  //                 Image.asset(
-                  //                     "assets/images/${offers[index]["image"]}"),
-                  //                 const SizedBox(
-                  //                   height: 5,
-                  //                 ),
-                  //                 FittedBox(
-                  //                   child: Text(
-                  //                     offers[index]["offer"],
-                  //                     style: GoogleFonts.montserrat(
-                  //                       fontWeight: FontWeight.w600,
-                  //                       height: 2,
-                  //                     ),
-                  //                   ),
-                  //                 ),
-                  //                 Padding(
-                  //                   padding: EdgeInsets.symmetric(
-                  //                       horizontal: h * 0.01),
-                  //                   child: FittedBox(
-                  //                     child: Text(
-                  //                       offers[index]["card"],
-                  //                       textScaleFactor: 0.6,
-                  //                       style: GoogleFonts.montserrat(
-                  //                         fontWeight: FontWeight.w600,
-                  //                         color:
-                  //                             kTextInputPlaceholderColor
-                  //                                 .withOpacity(0.6),
-                  //                         height: 2,
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                 )
-                  //               ]),
-                  //         ),
-                  //       );
-                  //     },
-                  //   ),
-                  // ),
+                  Label(
+                    color: kbluecolor,
+                    text: "offers & discounts",
+                    textStyle: GoogleFonts.montserrat(
+                      textStyle: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: kwhitecolor),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 5),
+                  ),
+                  Container(
+                    height: h * 0.2,
+                    child: ListView.builder(
+                      physics: BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: h * 0.023, vertical: h * 0.01),
+                      itemCount: offers.length,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>const Offers()));
+                          },
+                          child: RRectCard(
+                            h: h * 0.1,
+                            w: w * 0.28,
+                            borderRadius: 15,
+                            widget: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                      "assets/images/${offers[index]["image"]}"),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  FittedBox(
+                                    child: Text(
+                                      offers[index]["offer"],
+                                      style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.w600,
+                                        height: 2,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: h * 0.01),
+                                    child: FittedBox(
+                                      child: Text(
+                                        offers[index]["card"],
+                                        textScaleFactor: 0.6,
+                                        style: GoogleFonts.montserrat(
+                                          fontWeight: FontWeight.w600,
+                                          color:
+                                              kTextInputPlaceholderColor
+                                                  .withOpacity(0.6),
+                                          height: 2,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ]),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                   SizedBox(
                     height: h * 0.1,
                   ),

@@ -544,7 +544,8 @@ class _LoginSignUpState extends State<LoginSignUp> {
         'name': name.text,
         'email': mail.text,
         'mobile': mobile.text,
-        "type":"customer"
+        "type": "customer"
+        // "role":"624c7a3c9b4a12e570e35d4f"
       });
       if (response.statusCode == 200) {
         var jsonResponse = convert.jsonDecode(response.body);
@@ -581,6 +582,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
     try {
       var response = await http.post(url, body: {
         'mobile': mobile.text,
+        // "roleId":"624c7a3c9b4a12e570e35d4f"
       });
       if (response.statusCode == 200) {
         var jsonResponse = convert.jsonDecode(response.body);

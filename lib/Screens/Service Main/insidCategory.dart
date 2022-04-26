@@ -4,6 +4,7 @@ import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class InsideCategory extends StatefulWidget {
   const InsideCategory({Key? key}) : super(key: key);
@@ -20,14 +21,19 @@ class _InsideCategoryState extends State<InsideCategory>
   var h;
   var w;
   int currentPage = 0;
-
+  PageController _pageController = PageController();
   List backimage = [
     "https://wallpaperaccess.com/full/33110.jpg",
     "https://wallpaperaccess.com/full/14444.jpg",
     "https://wallpaperaccess.com/full/33116.jpg",
     "https://wallpaperaccess.com/full/33118.jpg"
   ];
-
+List reccomendedPackes = [
+    {"services": "Clutch", "image": "2114.png", "type": "Custom services"},
+    {"services": "Suspension", "image": "2117.png", "type": "Custom services"},
+    {"services": "Brakes", "image": "2118.png", "type": "Custom services"},
+    {"services": "Clutch", "image": "2114.png", "type": "Custom services"},
+  ];
   List carServices = [
     {
       "services": "Periodic Services",
@@ -80,17 +86,34 @@ class _InsideCategoryState extends State<InsideCategory>
     "suspension",
   ];
   List whichBodyType = [];
+  final itemKey1 = GlobalKey();
+  final itemKey2 = GlobalKey();
+  final itemKey3 = GlobalKey();
+  final itemKey4 = GlobalKey();
+  List keys = [];
+
+  ScrollController _scrollController = ScrollController();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    keys.add(itemKey1);
+    keys.add(itemKey2);
+    keys.add(itemKey3);
+    keys.add(itemKey4);
     _tabController = TabController(length: bodyType.length, vsync: this);
 
     whichBodyType = List.generate(bodyType.length, (index) => false);
   }
-
   @override
   Widget build(BuildContext context) {
+    _scrollController.addListener(() { 
+      if(context = keys[0].currentContext!){
+        _tabController.index = 0;
+        setState(() {
+        });
+      }
+    });
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -159,7 +182,7 @@ class _InsideCategoryState extends State<InsideCategory>
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-         Container(
+          Container(
             height: h * 0.07,
             padding:
                 EdgeInsets.only(left: w * 0.06, right: w * 0.06, top: h * 0.02),
@@ -199,6 +222,9 @@ class _InsideCategoryState extends State<InsideCategory>
             isScrollable: true,
             onTap: (value) {
               _tabController.index = value;
+
+              // scollToItem(_tabController.index);
+              setState(() {});
             },
             unselectedLabelColor: kSelectedColor.withOpacity(0.56),
             indicatorColor: kTextInputPlaceholderColor.withOpacity(0.5),
@@ -206,32 +232,169 @@ class _InsideCategoryState extends State<InsideCategory>
             tabs: List.generate(
                 bodyType.length,
                 (index) => SizedBox(
-                  height: h*0.03,
-                  child: Text(
+                      height: h * 0.03,
+                      child: Text(
                         "${bodyType[index]}".toUpperCase(),
-                       
                         style: GoogleFonts.montserrat(
-                          fontSize: 9,
+                            fontSize: 9,
                             textStyle: const TextStyle(
                               height: 2,
-                          fontWeight: FontWeight.bold,
-                        )),
+                              fontWeight: FontWeight.bold,
+                            )),
                       ),
-                )),
+                    )),
             controller: _tabController,
             indicatorSize: TabBarIndicatorSize.tab,
           ),
           Expanded(
-            child: TabBarView(
-              children: const [
-                CommonServices(),
-                CommonServices(),
-                CommonServices(),
-                CommonServices(),
-              ],
-              controller: _tabController,
+              child: SingleChildScrollView(
+                controller: _scrollController,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: h * 0.02,
+                ),
+                Container(
+                  key: itemKey1,
+                  child: Label(
+                    color: kbluecolor,
+                    text: "common services",
+                    textStyle: GoogleFonts.montserrat(
+                      textStyle: const TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                          color: kwhitecolor),
+                    ),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  ),
+                ),
+                const CommonServices(),
+                Container(
+                  key: itemKey2,
+                  child: Label(
+                    color: kbluecolor,
+                    text: "brakes",
+                    textStyle: GoogleFonts.montserrat(
+                      textStyle: const TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                          color: kwhitecolor),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  ),
+                ),
+                const CommonServices(),
+                Container(
+                  key: itemKey3,
+                  child: Label(
+                    color: kbluecolor,
+                    text: "details",
+                    textStyle: GoogleFonts.montserrat(
+                      textStyle: const TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                          color: kwhitecolor),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  ),
+                ),
+                const CommonServices(),
+                Container(
+                  key: itemKey4,
+                  child: Label(
+                    color: kbluecolor,
+                    text: "susoension",
+                    textStyle: GoogleFonts.montserrat(
+                      textStyle: const TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                          color: kwhitecolor),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  ),
+                ),
+                const CommonServices(),
+                Label(
+              color: korangecolor,
+              text: "recomend packes",
+              textStyle: GoogleFonts.montserrat(
+                textStyle: const TextStyle(
+                  fontSize: 11,
+                    fontWeight: FontWeight.bold, color: kwhitecolor),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             ),
-          ),
+                SizedBox(
+              height: h * 0.005,
+            ),
+            Container(
+              height: h * 0.18,
+              child: ListView.builder(
+                physics: BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.all(h * 0.01),
+                itemCount: reccomendedPackes.length,
+                itemBuilder: (context, index) {
+                  return RRectCard(
+                    h: h * 0.1,
+                    w: w * 0.25,
+                    borderRadius: 15,
+                    widget: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                              "assets/images/${reccomendedPackes[index]["image"]}"),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          FittedBox(
+                            child: Text(
+                              reccomendedPackes[index]["services"],
+                              style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                                height: 2,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: h * 0.01),
+                            child: FittedBox(
+                              child: Text(
+                                reccomendedPackes[index]["type"],
+                                textScaleFactor: 0.6,
+                                style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w600,
+                                  color: kTextInputPlaceholderColor
+                                      .withOpacity(0.6),
+                                  height: 2,
+                                ),
+                              ),
+                            ),
+                          )
+                        ]),
+                  );
+                },
+              ),
+            ),
+            SizedBox(
+              height: h * 0.02,
+            ),
+              ],
+            ),
+          )
+              // TabBarView(
+
+              //   children: const [
+              //     CommonServices(),
+              //     CommonServices(),
+              //     CommonServices(),
+              //     CommonServices(),
+              //   ],
+              //   controller: _tabController,
+              // ),
+              ),
           // SingleChildScrollView(
           //   scrollDirection: Axis.horizontal,
           //   child:
@@ -268,5 +431,11 @@ class _InsideCategoryState extends State<InsideCategory>
         ],
       ),
     );
+  }
+
+  Future scollToItem(int index) async {
+    final context = keys[index].currentContext!;
+    await Scrollable.ensureVisible(context,
+        duration: const Duration(seconds: 1));
   }
 }
