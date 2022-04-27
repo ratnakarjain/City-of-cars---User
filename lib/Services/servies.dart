@@ -195,6 +195,7 @@ Future getcategaries()async{
       var data = jsonDecode(respnse.body);
       if(data["status"]){
         print(data["getdata"]);
+        print(data["getdata"].length);
         return data["getdata"];
       }else{
         return Future.error(data["msg"]);

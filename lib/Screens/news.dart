@@ -21,13 +21,18 @@ class _NewsState extends State<News> {
     super.initState();
     generate1();
     generate2();
+    // _modalBottomSheetMenu();
+    // bottemSheet();
+    
   }
 
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
+   
     return Scaffold(
+
       backgroundColor: kwhitecolor,
       appBar: AppBar(
         elevation: 0,
@@ -216,6 +221,29 @@ class _NewsState extends State<News> {
       ),
     );
   }
+  // void _modalBottomSheetMenu() {
+  //   WidgetsBinding.instance!.addPostFrameCallback((_) async {
+  //     await showModalBottomSheet(
+  //         context: context,
+  //         builder: (builder) {
+  //           return new Container(
+  //             height: 350.0,
+  //             color:
+  //                 Colors.transparent, //could change this to Color(0xFF737373),
+  //             //so you don't have to change MaterialApp canvasColor
+  //             child: new Container(
+  //                 decoration: new BoxDecoration(
+  //                     color: Colors.white,
+  //                     borderRadius: new BorderRadius.only(
+  //                         topLeft: const Radius.circular(10.0),
+  //                         topRight: const Radius.circular(10.0))),
+  //                 child: new Center(
+  //                   child: new Text("This is a modal sheet"),
+  //                 )),
+  //           );
+  //         });
+  //   });
+  // }
 
   generate1() {
     isSelected = List.generate(10, (index) => false);

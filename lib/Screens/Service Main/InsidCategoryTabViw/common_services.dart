@@ -10,7 +10,8 @@ var h;
 var w;
 
 class CommonServices extends StatefulWidget {
-  const CommonServices({Key? key}) : super(key: key);
+  String label;
+  CommonServices({Key? key, required this.label}) : super(key: key);
 
   @override
   State<CommonServices> createState() => _CommonServicesState();
@@ -25,11 +26,22 @@ class _CommonServicesState extends State<CommonServices> {
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       child: Container(
-        padding: EdgeInsets.only(top: h * 0.01),
+        padding: EdgeInsets.only(top: h * 0.005),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            
+            Label(
+                    color: kbluecolor,
+                    text: "common services",
+                    textStyle: GoogleFonts.montserrat(
+                      textStyle: const TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                          color: kwhitecolor),
+                    ),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  ),
             Plans(
               h: h,
               w: w,
@@ -54,9 +66,6 @@ class _CommonServicesState extends State<CommonServices> {
               height: h * 0.018,
             ),
             
-            SizedBox(
-              height: h * 0.018,
-            ),
             
             
           ],

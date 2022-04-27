@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cityofcars/Screens/Service%20Main/insidCategory.dart';
 import 'package:cityofcars/Screens/Service%20Main/offers.dart';
 import 'package:cityofcars/Screens/Service%20Main/productDetail.dart';
@@ -143,518 +144,530 @@ class _ServiceMainState extends State<ServiceMain> {
           ),
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Container(
-          //   height: h*0.2,
-          //   child: Stack(
-          //     children: [
-          //       PageView.builder(
-          //           onPageChanged: (value) {
-          //             setState(() {
-          //               currentPage = value;
-          //             });
-          //           },
-          //           itemCount: backimage.length,
-          //           itemBuilder: (context, index) => Container(
-          //                 decoration: BoxDecoration(
-          //                     image: DecorationImage(
-          //                         image: NetworkImage(
-          //                           backimage[index],
-          //                         ),
-          //                         fit: BoxFit.cover)),
-          //               )),
-          //       Positioned(
-          //         bottom: 0,
-          //         left: 0,
-          //         right: 0,
-          //         child: Row(
-          //           mainAxisAlignment: MainAxisAlignment.center,
-          //           children: backimage.map((url) {
-          //             int index = backimage.indexOf(url);
-          //             return Container(
-          //               width: 8.0,
-          //               height: 8.0,
-          //               margin: const EdgeInsets.symmetric(
-          //                   vertical: 10.0, horizontal: 2.0),
-          //               decoration: BoxDecoration(
-          //                 shape: BoxShape.circle,
-          //                 color: currentPage == index
-          //                     ? const Color(0xFFFFFFFF)
-          //                     : const Color(0xFFFFFFFF).withOpacity(0.5),
-          //               ),
-          //             );
-          //           }).toList(),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          //  Padding(
-          //     padding: EdgeInsets.only(
-          //         left: w * 0.06, right: w * 0.06, top: 20),
-          //     child: Material(
-          //       color: kwhitecolor,
-          //       elevation: 8,
-          //       shadowColor: kTextInputPlaceholderColor.withOpacity(0.3),
-          //       borderRadius:  BorderRadius.circular(h*0.05),
-          //       child: TextField(
-          //         decoration: InputDecoration(
-          //             hintText: "Search",
-          //             hintStyle:
-          //                 GoogleFonts.montserrat(
-          //                 fontWeight: FontWeight.w600,
-          //                 color: kGreenColor),
-          //             suffixIcon: Icon(
-          //               Icons.search,
-          //             ),
-          //             focusedBorder: OutlineInputBorder(
-          //                 borderSide:
-          //                     BorderSide(color: korangecolor, width: 1.0),
-          //                 borderRadius: BorderRadius.circular(h*0.05)),
-          //             border: OutlineInputBorder(
-          //                 borderSide: BorderSide(
-          //                     color: kTextInputPlaceholderColor,
-          //                     width: 1.0),
-          //                 borderRadius: BorderRadius.circular(h*0.05))),
-          //       ),
-          //     ),
-          //   ),
-          Container(
-            height: h * 0.07,
-            padding:
-                EdgeInsets.only(left: w * 0.06, right: w * 0.06, top: h * 0.02),
-            child: Material(
-              color: kwhitecolor,
-              elevation: 8,
-              shadowColor: kTextInputPlaceholderColor.withOpacity(0.3),
-              borderRadius: BorderRadius.circular(h * 0.05),
-              child: TextField(
-                decoration: InputDecoration(
-                    contentPadding:
-                        EdgeInsets.only(top: h * 0.01, left: w * 0.05),
-                    hintText: "Search",
-                    hintStyle: GoogleFonts.montserrat(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: ksearchTextColor.withOpacity(0.57),
-                    ),
-                    suffixIcon: const Icon(
-                      Icons.search,
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(color: korangecolor, width: 1.0),
-                        borderRadius: BorderRadius.circular(h * 0.05)),
-                    border: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: kTextInputPlaceholderColor, width: 1.0),
-                        borderRadius: BorderRadius.circular(h * 0.05))),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Container(
+            //   height: h*0.2,
+            //   child: Stack(
+            //     children: [
+            //       PageView.builder(
+            //           onPageChanged: (value) {
+            //             setState(() {
+            //               currentPage = value;
+            //             });
+            //           },
+            //           itemCount: backimage.length,
+            //           itemBuilder: (context, index) => Container(
+            //                 decoration: BoxDecoration(
+            //                     image: DecorationImage(
+            //                         image: NetworkImage(
+            //                           backimage[index],
+            //                         ),
+            //                         fit: BoxFit.cover)),
+            //               )),
+            //       Positioned(
+            //         bottom: 0,
+            //         left: 0,
+            //         right: 0,
+            //         child: Row(
+            //           mainAxisAlignment: MainAxisAlignment.center,
+            //           children: backimage.map((url) {
+            //             int index = backimage.indexOf(url);
+            //             return Container(
+            //               width: 8.0,
+            //               height: 8.0,
+            //               margin: const EdgeInsets.symmetric(
+            //                   vertical: 10.0, horizontal: 2.0),
+            //               decoration: BoxDecoration(
+            //                 shape: BoxShape.circle,
+            //                 color: currentPage == index
+            //                     ? const Color(0xFFFFFFFF)
+            //                     : const Color(0xFFFFFFFF).withOpacity(0.5),
+            //               ),
+            //             );
+            //           }).toList(),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            //  Padding(
+            //     padding: EdgeInsets.only(
+            //         left: w * 0.06, right: w * 0.06, top: 20),
+            //     child: Material(
+            //       color: kwhitecolor,
+            //       elevation: 8,
+            //       shadowColor: kTextInputPlaceholderColor.withOpacity(0.3),
+            //       borderRadius:  BorderRadius.circular(h*0.05),
+            //       child: TextField(
+            //         decoration: InputDecoration(
+            //             hintText: "Search",
+            //             hintStyle:
+            //                 GoogleFonts.montserrat(
+            //                 fontWeight: FontWeight.w600,
+            //                 color: kGreenColor),
+            //             suffixIcon: Icon(
+            //               Icons.search,
+            //             ),
+            //             focusedBorder: OutlineInputBorder(
+            //                 borderSide:
+            //                     BorderSide(color: korangecolor, width: 1.0),
+            //                 borderRadius: BorderRadius.circular(h*0.05)),
+            //             border: OutlineInputBorder(
+            //                 borderSide: BorderSide(
+            //                     color: kTextInputPlaceholderColor,
+            //                     width: 1.0),
+            //                 borderRadius: BorderRadius.circular(h*0.05))),
+            //       ),
+            //     ),
+            //   ),
+            Container(
+              height: h * 0.07,
+              padding:
+                  EdgeInsets.only(left: w * 0.06, right: w * 0.06, top: h * 0.02),
+              child: Material(
+                color: kwhitecolor,
+                elevation: 8,
+                shadowColor: kTextInputPlaceholderColor.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(h * 0.05),
+                child: TextField(
+                  decoration: InputDecoration(
+                      contentPadding:
+                          EdgeInsets.only(top: h * 0.01, left: w * 0.05),
+                      hintText: "Search",
+                      hintStyle: GoogleFonts.montserrat(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: ksearchTextColor.withOpacity(0.57),
+                      ),
+                      suffixIcon: const Icon(
+                        Icons.search,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: korangecolor, width: 1.0),
+                          borderRadius: BorderRadius.circular(h * 0.05)),
+                      border: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              color: kTextInputPlaceholderColor, width: 1.0),
+                          borderRadius: BorderRadius.circular(h * 0.05))),
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            height: h * 0.015,
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              controller: _controller2,
-              physics: BouncingScrollPhysics(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  FutureBuilder(
-                    future: getcategaries().whenComplete(() {
-                      loding1 = false;
-                    }),
-                    builder: (context, AsyncSnapshot snapshot) {
-                      
-                      if (loding1) {
-                        return loder;
-                      } else {
-                        print(snapshot.data.length);
-                        return GridView.count(
-                          shrinkWrap: true,
-                          controller: _controller1,
-                          padding: EdgeInsets.symmetric(
-                              vertical: h * 0.015, horizontal: h * 0.025),
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                          children: List.generate(snapshot.data.length, (index) {
-                            return GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            InsideCategory()));
-                              },
-                              child: RRectCard(
-                                h: h * 0.18,
-                                w: h * 0.18,
-                                borderRadius: 10,
-                                widget: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Expanded(
-                                        child: Image.network(
-                                            "${snapshot.data[index]["image"]}",fit: BoxFit.fill,),
-                                      ),
-                                      const SizedBox(
-                                        height: 5,
-                                      ),
-                                      FittedBox(
-                                        child: Text(
-                                          "${snapshot.data[index]["category"]}"
-                                              .toUpperCase(),
-                                          style: GoogleFonts.montserrat(
-                                              fontWeight: FontWeight.w500,
-                                              height: 3,
-                                              fontSize: 11),
-                                        ),
-                                      ),
-                                      Text(
-                                        "${snapshot.data[index]["subcategory"]}"
-                                            .toUpperCase(),
-                                            textAlign: TextAlign.center,
-                                        style: GoogleFonts.montserrat(
-                                            fontWeight: FontWeight.w400,
-                                            height: 1,
-                                            fontSize: 9),
-                                      ),
-                                      const SizedBox(
-                                        height: 5,
-                                      ),
-                                    ]),
-                              ),
-                            );
-                          }),
-                        );
-                      }
-                    },
-                  ),
+            SizedBox(
+              height: h * 0.015,
+            ),
+            FutureBuilder(
+              future: getcategaries().whenComplete(() {
+                loding1 = false;
+              }),
+              builder: (context, AsyncSnapshot snapshot) {
+                
+                if (loding1) {
+                  return loder;
+                } else {
+                  return GridView.count(
+                    // physics:  const ScrollPhysics(),
+                    // physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    controller: _controller2,
+                    padding: EdgeInsets.symmetric(
+                        vertical: h * 0.015, horizontal: h * 0.025),
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    children: List.generate(4, (index) {
 
-                  SizedBox(
-                    height: h * 0.01,
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: w * 0.06,
-                      ),
-                      Text(
-                        "Not sure about the problem? ",
-                        style: GoogleFonts.montserrat(
-                          fontSize: 12,
-                          color: kTextInputPlaceholderColor,
-                        ),
-                      ),
-                      Text(
-                        "Click here",
-                        style: GoogleFonts.montserrat(
-                          fontSize: 12,
-                          color: kbluecolor,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: h * 0.02,
-                  ),
-                  Label(
-                    color: kbluecolor,
-                    text: "most populer packs",
-                    textStyle: GoogleFonts.montserrat(
-                      textStyle: const TextStyle(
-                          fontWeight: FontWeight.bold, color: kwhitecolor),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  ),
-                  SizedBox(
-                    height: h * 0.01,
-                  ),
-                  Container(
-                    height: h * 0.18,
-                    child: ListView.builder(
-                      physics: BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      padding: EdgeInsets.symmetric(
-                          vertical: h * 0.01, horizontal: h * 0.025),
-                      itemCount: carServices.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const ProductDetails()));
-                          },
-                          child: RRectCard(
-                            h: h * 0.1,
-                            w: w * 0.25,
-                            borderRadius: 15,
-                            widget: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                      "assets/images/${reccomendedPackes[index]["image"]}"),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  FittedBox(
-                                    child: Text(
-                                      reccomendedPackes[index]["services"],
-                                      style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.w600,
-                                        height: 2,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: h * 0.01),
-                                    child: FittedBox(
-                                      child: Text(
-                                        reccomendedPackes[index]["type"],
-                                        textScaleFactor: 0.6,
-                                        style: GoogleFonts.montserrat(
-                                          fontWeight: FontWeight.w600,
-                                          color: kTextInputPlaceholderColor
-                                              .withOpacity(0.6),
-                                          height: 2,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ]),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: h * 0.01,
-                  ),
-                  Label(
-                    color: korangecolor,
-                    text: "recommended packs",
-                    textStyle: GoogleFonts.montserrat(
-                      textStyle: const TextStyle(
-                          fontWeight: FontWeight.bold, color: kwhitecolor),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  ),
-                  SizedBox(
-                    height: h * 0.01,
-                  ),
-                  Container(
-                    height: h * 0.18,
-                    child: ListView.builder(
-                      physics: BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      padding: EdgeInsets.symmetric(
-                          vertical: h * 0.01, horizontal: h * 0.025),
-                      itemCount: carServices.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const ProductDetails()));
-                          },
-                          child: RRectCard(
-                            h: h * 0.1,
-                            w: w * 0.25,
-                            borderRadius: 15,
-                            widget: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                      "assets/images/${reccomendedPackes[index]["image"]}"),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  FittedBox(
-                                    child: Text(
-                                      reccomendedPackes[index]["services"],
-                                      style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.w600,
-                                        height: 2,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: h * 0.01),
-                                    child: FittedBox(
-                                      child: Text(
-                                        reccomendedPackes[index]["type"],
-                                        textScaleFactor: 0.6,
-                                        style: GoogleFonts.montserrat(
-                                          fontWeight: FontWeight.w600,
-                                          color: kTextInputPlaceholderColor
-                                              .withOpacity(0.6),
-                                          height: 2,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ]),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: h * 0.01,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      makePhoneCall("9999955555");
-                      setState(() {});
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          "assets/images/call.png",
-                          height: h * 0.03,
-                        ),
-                        RichText(
-                          text: TextSpan(
-                              text: "Call us ",
-                              style: GoogleFonts.montserrat(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w700,
-                                color: kbluecolor,
-                                height: 2,
-                              ),
+                  print(snapshot.data.length);
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      InsideCategory()));
+                        },
+                        child: RRectCard(
+                          h: h * 0.18,
+                          w: h * 0.18,
+                          borderRadius: 10,
+                          widget: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                TextSpan(
-                                  text: "at",
-                                  style: GoogleFonts.montserrat(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w400,
-                                    color: kTextInputPlaceholderColor,
-                                    height: 2,
+                                Expanded(
+                                  child: Padding(
+                                    padding:  EdgeInsets.all(h*0.01),
+                                    child:
+                                     CachedNetworkImage(
+                                              fit: BoxFit.fill,
+                                              imageUrl: snapshot.data[index]["image"].toString(),
+                                              placeholder: (context, url) =>
+                                                  loder,
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Image.network(
+                                                        "https://i.gifer.com/DKke.gif"
+                                                      ),
+                                            ),
+                                  ),
+                                  // Image.network(
+                                  //     "${snapshot.data[index]["image"]}",fit: BoxFit.fill,),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                FittedBox(
+                                  child: Text(
+                                    snapshot.data[index]["title"] == null || snapshot.data[index]["title"] == "" ? "":
+                                    "${snapshot.data[index]["title"]}"
+                                        .toUpperCase(),
+                                    style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.w500,
+                                        height: 3,
+                                        fontSize: 11),
                                   ),
                                 ),
-                                TextSpan(
-                                  text: " 99999",
+                                Text(
+                                  snapshot.data[index]["discreption"] == null || snapshot.data[index]["description"] == "" ? "":
+                                  "${snapshot.data[index]["discreption"]}"
+                                      .toUpperCase(),
+                                      textAlign: TextAlign.center,
                                   style: GoogleFonts.montserrat(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w700,
-                                    color: kbluecolor,
-                                    height: 2,
-                                  ),
+                                      fontWeight: FontWeight.w400,
+                                      height: 1,
+                                      fontSize: 9),
                                 ),
-                                TextSpan(
-                                  text: "55555",
-                                  style: GoogleFonts.montserrat(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w700,
-                                    color: kGreenColor,
-                                    height: 2,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: "?",
-                                  style: GoogleFonts.montserrat(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w700,
-                                    color: kTextInputPlaceholderColor,
-                                    height: 2,
-                                  ),
+                                const SizedBox(
+                                  height: 5,
                                 ),
                               ]),
-                        )
-                      ],
-                    ),
+                        ),
+                      );
+                    }),
+                  );
+                }
+              },
+            ),
+      
+            SizedBox(
+              height: h * 0.01,
+            ),
+            Row(
+              children: [
+                SizedBox(
+                  width: w * 0.06,
+                ),
+                Text(
+                  "Not sure about the problem? ",
+                  style: GoogleFonts.montserrat(
+                    fontSize: 12,
+                    color: kTextInputPlaceholderColor,
                   ),
-
-                  Label(
+                ),
+                Text(
+                  "Click here",
+                  style: GoogleFonts.montserrat(
+                    fontSize: 12,
                     color: kbluecolor,
-                    text: "offers & discounts",
-                    textStyle: GoogleFonts.montserrat(
-                      textStyle: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: kwhitecolor),
-                    ),
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 5),
+                    fontWeight: FontWeight.w700,
                   ),
-                  Container(
-                    height: h * 0.2,
-                    child: ListView.builder(
-                      physics: BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: h * 0.023, vertical: h * 0.01),
-                      itemCount: offers.length,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>const Offers()));
-                          },
-                          child: RRectCard(
-                            h: h * 0.1,
-                            w: w * 0.28,
-                            borderRadius: 15,
-                            widget: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                      "assets/images/${offers[index]["image"]}"),
-                                  const SizedBox(
-                                    height: 5,
+                )
+              ],
+            ),
+            SizedBox(
+              height: h * 0.02,
+            ),
+            Label(
+              color: kbluecolor,
+              text: "most populer packs",
+              textStyle: GoogleFonts.montserrat(
+                textStyle: const TextStyle(
+                    fontWeight: FontWeight.bold, color: kwhitecolor),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            ),
+            SizedBox(
+              height: h * 0.01,
+            ),
+            Container(
+              height: h * 0.18,
+              child: ListView.builder(
+                controller: _controller2,
+                physics: BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.symmetric(
+                    vertical: h * 0.01, horizontal: h * 0.025),
+                itemCount: carServices.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const ProductDetails()));
+                    },
+                    child: RRectCard(
+                      h: h * 0.1,
+                      w: w * 0.25,
+                      borderRadius: 15,
+                      widget: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                                "assets/images/${reccomendedPackes[index]["image"]}"),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            FittedBox(
+                              child: Text(
+                                reccomendedPackes[index]["services"],
+                                style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w600,
+                                  height: 2,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: h * 0.01),
+                              child: FittedBox(
+                                child: Text(
+                                  reccomendedPackes[index]["type"],
+                                  textScaleFactor: 0.6,
+                                  style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w600,
+                                    color: kTextInputPlaceholderColor
+                                        .withOpacity(0.6),
+                                    height: 2,
                                   ),
-                                  FittedBox(
-                                    child: Text(
-                                      offers[index]["offer"],
-                                      style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.w600,
-                                        height: 2,
-                                      ),
-                                    ),
+                                ),
+                              ),
+                            )
+                          ]),
+                    ),
+                  );
+                },
+              ),
+            ),
+            SizedBox(
+              height: h * 0.01,
+            ),
+            Label(
+              color: korangecolor,
+              text: "recommended packs",
+              textStyle: GoogleFonts.montserrat(
+                textStyle: const TextStyle(
+                    fontWeight: FontWeight.bold, color: kwhitecolor),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            ),
+            SizedBox(
+              height: h * 0.01,
+            ),
+            Container(
+              height: h * 0.18,
+              child: ListView.builder(
+                physics: BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.symmetric(
+                    vertical: h * 0.01, horizontal: h * 0.025),
+                itemCount: carServices.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const ProductDetails()));
+                    },
+                    child: RRectCard(
+                      h: h * 0.1,
+                      w: w * 0.25,
+                      borderRadius: 15,
+                      widget: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                                "assets/images/${reccomendedPackes[index]["image"]}"),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            FittedBox(
+                              child: Text(
+                                reccomendedPackes[index]["services"],
+                                style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w600,
+                                  height: 2,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: h * 0.01),
+                              child: FittedBox(
+                                child: Text(
+                                  reccomendedPackes[index]["type"],
+                                  textScaleFactor: 0.6,
+                                  style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w600,
+                                    color: kTextInputPlaceholderColor
+                                        .withOpacity(0.6),
+                                    height: 2,
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: h * 0.01),
-                                    child: FittedBox(
-                                      child: Text(
-                                        offers[index]["card"],
-                                        textScaleFactor: 0.6,
-                                        style: GoogleFonts.montserrat(
-                                          fontWeight: FontWeight.w600,
-                                          color:
-                                              kTextInputPlaceholderColor
-                                                  .withOpacity(0.6),
-                                          height: 2,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ]),
+                                ),
+                              ),
+                            )
+                          ]),
+                    ),
+                  );
+                },
+              ),
+            ),
+            SizedBox(
+              height: h * 0.01,
+            ),
+            GestureDetector(
+              onTap: () {
+                makePhoneCall("9999955555");
+                setState(() {});
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    "assets/images/call.png",
+                    height: h * 0.03,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                        text: "Call us ",
+                        style: GoogleFonts.montserrat(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                          color: kbluecolor,
+                          height: 2,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: "at",
+                            style: GoogleFonts.montserrat(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400,
+                              color: kTextInputPlaceholderColor,
+                              height: 2,
+                            ),
                           ),
-                        );
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: h * 0.1,
-                  ),
+                          TextSpan(
+                            text: " 99999",
+                            style: GoogleFonts.montserrat(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
+                              color: kbluecolor,
+                              height: 2,
+                            ),
+                          ),
+                          TextSpan(
+                            text: "55555",
+                            style: GoogleFonts.montserrat(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
+                              color: kGreenColor,
+                              height: 2,
+                            ),
+                          ),
+                          TextSpan(
+                            text: "?",
+                            style: GoogleFonts.montserrat(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
+                              color: kTextInputPlaceholderColor,
+                              height: 2,
+                            ),
+                          ),
+                        ]),
+                  )
                 ],
               ),
             ),
-          ),
-        ],
+      
+            Label(
+              color: kbluecolor,
+              text: "offers & discounts",
+              textStyle: GoogleFonts.montserrat(
+                textStyle: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: kwhitecolor),
+              ),
+              padding: EdgeInsets.symmetric(
+                  horizontal: 10, vertical: 5),
+            ),
+            Container(
+              height: h * 0.2,
+              child: ListView.builder(
+                physics: BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.symmetric(
+                    horizontal: h * 0.023, vertical: h * 0.01),
+                itemCount: offers.length,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const Offers()));
+                    },
+                    child: RRectCard(
+                      h: h * 0.1,
+                      w: w * 0.28,
+                      borderRadius: 15,
+                      widget: Column(
+                          mainAxisAlignment:
+                              MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                                "assets/images/${offers[index]["image"]}"),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            FittedBox(
+                              child: Text(
+                                offers[index]["offer"],
+                                style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w600,
+                                  height: 2,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: h * 0.01),
+                              child: FittedBox(
+                                child: Text(
+                                  offers[index]["card"],
+                                  textScaleFactor: 0.6,
+                                  style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w600,
+                                    color:
+                                        kTextInputPlaceholderColor
+                                            .withOpacity(0.6),
+                                    height: 2,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ]),
+                    ),
+                  );
+                },
+              ),
+            ),
+            SizedBox(
+              height: h * 0.1,
+            ),
+          ],
+        ),
       ),
     );
   }
