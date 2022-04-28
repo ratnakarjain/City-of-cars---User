@@ -5,6 +5,7 @@ import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import '../Services/servies.dart';
 import 'bottomnavBar.dart';
@@ -79,11 +80,20 @@ class _SelectBrandState extends State<SelectBrand> {
   bool brandsloading = true;
   int? item;
   String selctedImage = "";
-
+  int ?shots;
+  final _brand = TextEditingController();
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+   // shots= 0;
+  }
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
+    // var abc = Provider.of<Shots>(context, listen: true);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: kbg3,
@@ -143,6 +153,7 @@ class _SelectBrandState extends State<SelectBrand> {
               shadowColor: kTextInputPlaceholderColor.withOpacity(0.3),
               borderRadius: BorderRadius.circular(h * 0.025),
               child: TextField(
+                controller: _brand,
                 decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.only(top: h * 0.01, left: w * 0.05),
@@ -152,8 +163,15 @@ class _SelectBrandState extends State<SelectBrand> {
                       fontWeight: FontWeight.w600,
                       color: ksearchTextColor.withOpacity(0.57),
                     ),
-                    suffixIcon: const Icon(
-                      Icons.search,
+                    suffixIcon: InkWell(
+                      onTap: (){
+                        setState(() {
+                          
+                        });
+                      },
+                      child: const Icon(
+                        Icons.search,
+                      ),
                     ),
                     focusedBorder: OutlineInputBorder(
                         borderSide:
@@ -203,6 +221,10 @@ class _SelectBrandState extends State<SelectBrand> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              Visibility(
+                visible: _brand.text.isNotEmpty,
+                child: const Center(child: Text("Your search cities"),),
+              ),
               isSelected
                   ? Padding(
                       padding: EdgeInsets.all(h * 0.03),
@@ -240,8 +262,12 @@ class _SelectBrandState extends State<SelectBrand> {
                       padding: EdgeInsets.symmetric(
                           horizontal: w * 0.05, vertical: 50),
                       child: FutureBuilder(
-                        future: getBrandss().whenComplete(() {
+                        future: _brand.text.isEmpty? getBrandss().whenComplete(() {
+                          print("=======================get");
                           brandsloading = false;
+                        }) : searchBrand(_brand.text.toString()).whenComplete(() {
+                          print("=======================search");
+                          brandsloading = false; 
                         }),
                         builder: (context, AsyncSnapshot snapshot) {
                           if (brandsloading) {
@@ -324,6 +350,7 @@ class _SelectBrandState extends State<SelectBrand> {
   }
 
   bottumSheet() {
+    // var abc = Provider.of<Shots>(context, listen: true);
     showModalBottomSheet(
         context: context,
         elevation: 8,
@@ -358,7 +385,7 @@ class _SelectBrandState extends State<SelectBrand> {
                         height: 2, fontWeight: FontWeight.w600),
                   ),
                   Text(
-                    "269 shots",
+                    "245 shots",
                     textScaleFactor: 0.8,
                     style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.w600,
@@ -368,7 +395,9 @@ class _SelectBrandState extends State<SelectBrand> {
                   ),
                   FutureBuilder(
                     future: getCarData().whenComplete(() {
+                      
                       loading = false;
+                      
                     }),
                     initialData: const Center(
                       child: CircularProgressIndicator(),
@@ -388,6 +417,7 @@ class _SelectBrandState extends State<SelectBrand> {
                           return loder;
                         }
                         if (snapshot.connectionState == ConnectionState.done) {
+                          
                           return Container(
                             padding: EdgeInsets.symmetric(
                                 horizontal: w * 0.05, vertical: 10),
@@ -399,6 +429,10 @@ class _SelectBrandState extends State<SelectBrand> {
                               mainAxisSpacing: 10,
                               children:
                                   List.generate(snapshot.data.length, (index) {
+                                    // abc.SetTotalPrice(
+                                    //   snapshot.data.length
+                                    // );
+                                    shots = snapshot.data.length;
                                 return GestureDetector(
                                   onTap: () {
                                         CarsData.name =snapshot.data[index]["cars"];
@@ -428,7 +462,8 @@ class _SelectBrandState extends State<SelectBrand> {
                                               imageUrl: snapshot.data[index]
                                                   ["image"],
                                               placeholder: (context, url) =>
-                                                  loder,
+                                                  // loder,
+                                                  Container(),
                                               errorWidget:
                                                   (context, url, error) =>
                                                       const Icon(Icons.error),
@@ -468,5 +503,17 @@ class _SelectBrandState extends State<SelectBrand> {
       isSelected = false;
       setState(() {});
     });
+  }
+}
+class Shots extends ChangeNotifier {
+  int shots = 0;
+
+  getTotalPrice() {
+    return shots;
+  }
+
+  SetTotalPrice(int _value) {
+    shots = _value;
+    notifyListeners();
   }
 }

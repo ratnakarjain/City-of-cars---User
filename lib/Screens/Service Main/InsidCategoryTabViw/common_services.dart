@@ -23,53 +23,50 @@ class _CommonServicesState extends State<CommonServices> {
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
-    return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
-      child: Container(
-        padding: EdgeInsets.only(top: h * 0.005),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Label(
-                    color: kbluecolor,
-                    text: "common services",
-                    textStyle: GoogleFonts.montserrat(
-                      textStyle: const TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.bold,
-                          color: kwhitecolor),
-                    ),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+    return Container(
+      padding: EdgeInsets.only(top: h * 0.005),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Label(
+                  color: kbluecolor,
+                  text: widget.label.toString(),
+                  textStyle: GoogleFonts.montserrat(
+                    textStyle: const TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                        color: kwhitecolor),
                   ),
-            Plans(
-              h: h,
-              w: w,
-              text: "Basic",
-              islabel: true,
-              labeltext: "Frequently Booked",
-            ),
-            Plans(
-              h: h,
-              w: w,
-              text: "Standerd",
-              islabel: false,
-            ),
-            Plans(
-              h: h,
-              w: w,
-              text: "Primium",
-              islabel: true,
-              labeltext: "Reccomended",
-            ),
-            SizedBox(
-              height: h * 0.018,
-            ),
-            
-            
-            
-          ],
-        ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                ),
+          Plans(
+            h: h,
+            w: w,
+            text: "Basic",
+            islabel: true,
+            labeltext: "Frequently Booked",
+          ),
+          Plans(
+            h: h,
+            w: w,
+            text: "Standerd",
+            islabel: false,
+          ),
+          Plans(
+            h: h,
+            w: w,
+            text: "Primium",
+            islabel: true,
+            labeltext: "Reccomended",
+          ),
+          SizedBox(
+            height: h * 0.018,
+          ),
+          
+          
+          
+        ],
       ),
     );
   }

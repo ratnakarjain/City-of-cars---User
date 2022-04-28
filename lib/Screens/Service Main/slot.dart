@@ -179,11 +179,11 @@ class _SlotState extends State<Slot> {
                         cursorColor: korangecolor,
                         decoration: InputDecoration(
                             hintText: "House No.. & Floor*",
-                            hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.32),),
+                            hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.25),),
                             focusColor: korangecolor,
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: kTextInputPlaceholderColor.withOpacity(0.32),
+                                color: kTextInputPlaceholderColor.withOpacity(0.25),
                               ),
                             ) ,
                             focusedBorder: const UnderlineInputBorder(
@@ -192,15 +192,18 @@ class _SlotState extends State<Slot> {
                               ),
                             )),
                       ),
+                      SizedBox(
+                        height: h*0.01,
+                      ),
                       TextFormField(
                         cursorColor: korangecolor,
                         decoration: InputDecoration(
                             hintText: "Street*",
-                            hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.32),),
+                            hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.25),),
                             focusColor: korangecolor,
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: kTextInputPlaceholderColor.withOpacity(0.32),
+                                color: kTextInputPlaceholderColor.withOpacity(0.25),
                               ),
                             ) ,
                             focusedBorder: const UnderlineInputBorder(
@@ -208,6 +211,8 @@ class _SlotState extends State<Slot> {
                                 color: korangecolor,
                               ),
                             )),
+                      ),SizedBox(
+                        height: h*0.01,
                       ),
                       Row(
                         children: [
@@ -217,11 +222,11 @@ class _SlotState extends State<Slot> {
                               decoration: InputDecoration(
                                   hintText: "State*",
                                   hintStyle:
-                                      GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.32),),
+                                      GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.25),),
                                   focusColor: korangecolor,
                                   enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: kTextInputPlaceholderColor.withOpacity(0.32),
+                                color: kTextInputPlaceholderColor.withOpacity(0.25),
                               ),
                             ) ,
                                   focusedBorder: const UnderlineInputBorder(
@@ -232,7 +237,7 @@ class _SlotState extends State<Slot> {
                             ),
                           ),
                           SizedBox(
-                            width: w * 0.02,
+                            width: w * 0.05,
                           ),
                           Expanded(
                             child: TextFormField(
@@ -240,11 +245,11 @@ class _SlotState extends State<Slot> {
                               decoration: InputDecoration(
                                   hintText: "Pin Code*",
                                   hintStyle:
-                                      GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.32),),
+                                      GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.25),),
                                   focusColor: korangecolor,
                                   enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: kTextInputPlaceholderColor.withOpacity(0.32),
+                                color: kTextInputPlaceholderColor.withOpacity(0.25),
                               ),
                             ) ,
                                   focusedBorder: const UnderlineInputBorder(
@@ -257,17 +262,17 @@ class _SlotState extends State<Slot> {
                         ],
                       ),
                       SizedBox(
-                        height: h * 0.02,
+                        height: h * 0.01,
                       ),
                       TextFormField(
                         cursorColor: korangecolor,
                         decoration: InputDecoration(
                             hintText: "Name*",
-                            hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.32),),
+                            hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.25),),
                             focusColor: korangecolor,
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: kTextInputPlaceholderColor.withOpacity(0.32),
+                                color: kTextInputPlaceholderColor.withOpacity(0.25),
                               ),
                             ) ,
                             focusedBorder: const UnderlineInputBorder(
@@ -275,16 +280,18 @@ class _SlotState extends State<Slot> {
                                 color: korangecolor,
                               ),
                             )),
+                      ),SizedBox(
+                        height: h*0.01,
                       ),
                       TextFormField(
                         cursorColor: korangecolor,
                         decoration: InputDecoration(
                             hintText: "Contact*",
-                            hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.32),),
+                            hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.25),),
                             focusColor: korangecolor,
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: kTextInputPlaceholderColor.withOpacity(0.32),
+                                color: kTextInputPlaceholderColor.withOpacity(0.25),
                               ),
                             ) ,
                             focusedBorder: const UnderlineInputBorder(
@@ -292,16 +299,18 @@ class _SlotState extends State<Slot> {
                                 color: korangecolor,
                               ),
                             )),
+                      ),SizedBox(
+                        height: h*0.01,
                       ),
                       TextFormField(
                         cursorColor: korangecolor,
                         decoration: InputDecoration(
                             hintText: "E-Mail",
-                            hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.32),),
+                            hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.25),),
                             focusColor: korangecolor,
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: kTextInputPlaceholderColor.withOpacity(0.32),
+                                color: kTextInputPlaceholderColor.withOpacity(0.25),
                               ),
                             ) ,
                             focusedBorder: const UnderlineInputBorder(
@@ -309,16 +318,18 @@ class _SlotState extends State<Slot> {
                                 color: korangecolor,
                               ),
                             )),
+                      ),SizedBox(
+                        height: h*0.01,
                       ),
                       TextFormField(
                         cursorColor: korangecolor,
                         decoration: InputDecoration(
                             hintText: "Car Number",
-                            hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.32),),
+                            hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.25),),
                             focusColor: korangecolor,
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: kTextInputPlaceholderColor.withOpacity(0.32),
+                                color: kTextInputPlaceholderColor.withOpacity(0.25),
                               ),
                             ) ,
                             focusedBorder: const UnderlineInputBorder(
@@ -358,7 +369,7 @@ class _SlotState extends State<Slot> {
                             decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: "Optional",
-                                hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.32),),
+                                hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.25),),
                                 contentPadding: EdgeInsets.all(h * 0.01)),
                           ),
                         ),

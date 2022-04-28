@@ -17,6 +17,9 @@ class SelectCity extends StatefulWidget {
 class _SelectCityState extends State<SelectCity> {
   ScrollController _controller = ScrollController();
   var size;
+  var citydata;
+  var searchdata;
+
   List cityList = [
     {"name": "Delhi", "images": "4.png"},
     {"name": "Gurgoan", "images": "2.png"},
@@ -25,7 +28,15 @@ class _SelectCityState extends State<SelectCity> {
   ];
   bool loading =true;
   
-
+  final _search = TextEditingController();
+  @override
+  void initState() {
+    getcities().then((value) {
+      citydata = value ;
+    });
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
@@ -96,7 +107,8 @@ class _SelectCityState extends State<SelectCity> {
                   // elevation: 8,
                   shadowColor: kTextInputPlaceholderColor.withOpacity(0.3),
                   borderRadius: BorderRadius.circular(size.height * 0.025),
-                  child: TextField(
+                  child: TextFormField(
+                    controller: _search,
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.only(
                             top: size.height * 0.01, left: size.width * 0.05),
@@ -106,8 +118,16 @@ class _SelectCityState extends State<SelectCity> {
                           fontWeight: FontWeight.w600,
                           color: ksearchTextColor.withOpacity(0.57),
                         ),
-                        suffixIcon: const Icon(
-                          Icons.search,
+                        suffixIcon: InkWell(
+                          onTap: (){
+                            searchCity(_search.text.toString());
+                            setState(() {
+                              
+                            });
+                          },
+                          child: const Icon(
+                            Icons.search,
+                          ),
                         ),
                         focusedBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
@@ -122,15 +142,22 @@ class _SelectCityState extends State<SelectCity> {
                   ),
                 ),
               ),
+              Visibility(
+                visible: _search.text.isNotEmpty,
+                child: const Center(child: Text("Your search cities"),),
+              ),
               Container(
                 padding: EdgeInsets.symmetric(
                     horizontal: size.width * 0.07, vertical: 50),
                 color: kLightOrangeBgColor,
                 child: FutureBuilder(
-                    future: getcities().whenComplete(() {
-                      loading = false;
-                    }),
+                    future: _search.text.isEmpty? getcities() : searchCity(_search.text.toString()),
                     builder: (context, AsyncSnapshot snapshot) {
+                      if(snapshot.connectionState == ConnectionState.done){
+                        if(snapshot.hasData){
+                          loading=false;
+                        }
+                      }
                       // print(snapshot.data.length);
                       if (loading){
                         return loder ;
@@ -184,8 +211,9 @@ class _SelectCityState extends State<SelectCity> {
                                                 imageUrl:
                                                     snapshot.data[index]["image"].toString(),
                                                 placeholder: (context, url) =>
-                                                
-                                                    loder,
+                                                  
+                                                  Container(),
+                                                    // loder,
                                                     
                                                 errorWidget:
                                                     (context, url, error) =>

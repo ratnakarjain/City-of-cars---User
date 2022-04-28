@@ -1,3 +1,5 @@
+
+
 import 'package:cityofcars/Screens/Service%20Main/InsidCategoryTabViw/common_services.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
@@ -91,7 +93,7 @@ class _InsideCategoryState extends State<InsideCategory>
   final itemKey2 = GlobalKey();
   final itemKey3 = GlobalKey();
   final itemKey4 = GlobalKey();
-  final _scaffoldkey = GlobalKey();
+  final _scrollkey = GlobalKey();
   List keys = [];
 
   ScrollController _scrollController = ScrollController();
@@ -494,33 +496,45 @@ class _InsideCategoryState extends State<InsideCategory>
                 child: SingleChildScrollView(
               controller: _scrollController,
               child: Column(
-                key: _scaffoldkey,
+                
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
                     height: h * 0.02,
                   ),
-                  Container(
-                      key: itemKey1,
-                      child: CommonServices(
-                        label: bodyType[0],
-                      )),
-                  Container(
-                      key: itemKey2,
-                      child: CommonServices(
-                        label: bodyType[1],
-                      )),
-                  Container(
-                      key: itemKey3,
-                      child: CommonServices(
-                        label: bodyType[2],
-                      )),
-                  Container(
-                    key: itemKey4,
-                    child: CommonServices(
-                      label: bodyType[3],
-                    ),
+                  ListView.builder(
+                    key: _scrollkey,
+                    shrinkWrap: true,
+                    controller: _controller1,
+                    itemCount: bodyType.length,
+                    itemBuilder: (context, index) {
+                      return CommonServices(
+                        key: keys[index],
+                        label: bodyType[index],
+                      );
+                    },
                   ),
+                  // Container(
+                  //     key: itemKey1,
+                  //     child: CommonServices(
+                  //       label: bodyType[0],
+                  //     )),
+                  // Container(
+                  //     key: itemKey2,
+                  //     child: CommonServices(
+                  //       label: bodyType[1],
+                  //     )),
+                  // Container(
+                  //     key: itemKey3,
+                  //     child: CommonServices(
+                  //       label: bodyType[2],
+                  //     )),
+                  // Container(
+                  //   key: itemKey4,
+                  //   child: CommonServices(
+                  //     label: bodyType[3],
+                  //   ),
+                  // ),
                   Label(
                     color: korangecolor,
                     text: "recomend packes",
@@ -643,9 +657,9 @@ class _InsideCategoryState extends State<InsideCategory>
 
   check() {
     print(_scrollController.offset);
-    print(_scaffoldkey.currentContext!.size!.height);
+    print(_scrollkey.currentContext!.size!.height);
     _tabController.index = (_scrollController.offset) ~/
-        (_scaffoldkey.currentContext!.size!.height ~/ 4.5);
+        (_scrollkey.currentContext!.size!.height ~/ 4.5);
     print(_tabController.index);
     setState(() {});
   }
@@ -653,6 +667,6 @@ class _InsideCategoryState extends State<InsideCategory>
   Future scollToItem(int index) async {
     contexte = keys[index].currentContext!;
     await Scrollable.ensureVisible(contexte,
-        duration: const Duration(milliseconds: 600));
+        duration: const Duration(milliseconds: 1000));
   }
 }

@@ -9,6 +9,7 @@ import 'package:cityofcars/Screens/messages.dart';
 import 'package:cityofcars/Screens/news.dart';
 import 'package:cityofcars/Screens/orderHistory.dart';
 import 'package:cityofcars/Screens/profile.dart';
+import 'package:cityofcars/Screens/selectBrand.dart';
 import 'package:cityofcars/Screens/sos.dart';
 import 'package:cityofcars/Screens/terms.dart';
 import 'package:cityofcars/Screens/tracking.dart';
@@ -17,6 +18,7 @@ import 'package:country_codes/country_codes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cityofcars/Screens/notification.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Screens/myhomepage.dart';
 import 'Utils/preference.dart';
@@ -39,15 +41,20 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'City of Cars',
-      theme: ThemeData().copyWith(
-        colorScheme: ThemeData().colorScheme.copyWith(
-              primary: korangecolor,
-            ),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) =>  Shots()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'City of Cars',
+        theme: ThemeData().copyWith(
+          colorScheme: ThemeData().colorScheme.copyWith(
+                primary: korangecolor,
+              ),
+        ),
+        home: const MyHomePage(),
       ),
-      home: const MyHomePage(),
     );
   }
 }

@@ -37,14 +37,14 @@ class _EditProfileState extends State<EditProfile> {
   bool isImagePicked = false;
   @override
   void initState() {
-    name.text = prefs!.getString("name").toString();
-    id = prefs!.getString("id").toString();
-    mobile.text = prefs!.getString("mobile").toString();
-    email.text = prefs!.getString("email").toString();
-    street.text = prefs!.getString("street").toString();
-    state.text = prefs!.getString("state").toString();
-    pinCode.text = prefs!.getString("pincode").toString();
-    image = prefs!.getString("image").toString();
+    name.text =prefs!.getString("name").toString()== "null"? "" : prefs!.getString("name").toString();
+    id =prefs!.getString("id").toString()== "null"? "" : prefs!.getString("id").toString();
+    mobile.text = prefs!.getString("mobile").toString()== "null"? "" : prefs!.getString("mobile").toString();
+    email.text =prefs!.getString("email").toString()== "null"? "" : prefs!.getString("email").toString();
+    street.text =prefs!.getString("street").toString()== "null"? "" : prefs!.getString("street").toString();
+    state.text =prefs!.getString("state").toString()== "null"? "" : prefs!.getString("state").toString();
+    pinCode.text = prefs!.getString("pincode").toString()== "null"? "" :prefs!.getString("pincode").toString();
+    image =prefs!.getString("image").toString()== "null"? "" : prefs!.getString("image").toString();
     print(image);
     // TODO: implement initState
     super.initState();
@@ -209,12 +209,20 @@ class _EditProfileState extends State<EditProfile> {
                           hintText: "Name*",
                           hintStyle: GoogleFonts.montserrat(
                               color:
-                                  kTextInputPlaceholderColor.withOpacity(0.32),
+                                  kTextInputPlaceholderColor.withOpacity(0.25),
                               fontSize: 13),
+                              focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kTextInputPlaceholderColor
+                                            .withOpacity(0.25))),
+                                    enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kTextInputPlaceholderColor
+                                            .withOpacity(0.25))),
                           border: UnderlineInputBorder(
                               borderSide: BorderSide(
                                   color: kTextInputPlaceholderColor
-                                      .withOpacity(0.32))),
+                                      .withOpacity(0.25))),
                           contentPadding: EdgeInsets.only(left: w * 0.02)),
                     ),
                     SizedBox(
@@ -226,12 +234,20 @@ class _EditProfileState extends State<EditProfile> {
                           hintText: "Mobile No.*",
                           hintStyle: GoogleFonts.montserrat(
                               color:
-                                  kTextInputPlaceholderColor.withOpacity(0.32),
+                                  kTextInputPlaceholderColor.withOpacity(0.25),
                               fontSize: 13),
+                              focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kTextInputPlaceholderColor
+                                            .withOpacity(0.25))),
+                                    enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kTextInputPlaceholderColor
+                                            .withOpacity(0.25))),
                           border: UnderlineInputBorder(
                               borderSide: BorderSide(
                                   color: kTextInputPlaceholderColor
-                                      .withOpacity(0.32))),
+                                      .withOpacity(0.25))),
                           contentPadding: EdgeInsets.only(left: w * 0.02)),
                     ),
                     SizedBox(
@@ -243,12 +259,20 @@ class _EditProfileState extends State<EditProfile> {
                           hintText: "Email",
                           hintStyle: GoogleFonts.montserrat(
                               color:
-                                  kTextInputPlaceholderColor.withOpacity(0.32),
+                                  kTextInputPlaceholderColor.withOpacity(0.25),
                               fontSize: 13),
+                              focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kTextInputPlaceholderColor
+                                            .withOpacity(0.25))),
+                                    enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kTextInputPlaceholderColor
+                                            .withOpacity(0.25))),
                           border: UnderlineInputBorder(
                               borderSide: BorderSide(
                                   color: kTextInputPlaceholderColor
-                                      .withOpacity(0.32))),
+                                      .withOpacity(0.25))),
                           contentPadding: EdgeInsets.only(left: w * 0.02)),
                     ),
                     SizedBox(
@@ -260,12 +284,20 @@ class _EditProfileState extends State<EditProfile> {
                           hintText: "House No.. & Floor*",
                           hintStyle: GoogleFonts.montserrat(
                               color:
-                                  kTextInputPlaceholderColor.withOpacity(0.32),
+                                  kTextInputPlaceholderColor.withOpacity(0.25),
                               fontSize: 13),
+                              focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kTextInputPlaceholderColor
+                                            .withOpacity(0.25))),
+                                    enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kTextInputPlaceholderColor
+                                            .withOpacity(0.25))),
                           border: UnderlineInputBorder(
                               borderSide: BorderSide(
                                   color: kTextInputPlaceholderColor
-                                      .withOpacity(0.32))),
+                                      .withOpacity(0.25))),
                           contentPadding: EdgeInsets.only(left: w * 0.02)),
                     ),
                     SizedBox(
@@ -277,12 +309,20 @@ class _EditProfileState extends State<EditProfile> {
                           hintText: "Street*",
                           hintStyle: GoogleFonts.montserrat(
                               color:
-                                  kTextInputPlaceholderColor.withOpacity(0.32),
+                                  kTextInputPlaceholderColor.withOpacity(0.25),
                               fontSize: 13),
+                              focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kTextInputPlaceholderColor
+                                            .withOpacity(0.25))),
+                                    enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kTextInputPlaceholderColor
+                                            .withOpacity(0.25))),
                           border: UnderlineInputBorder(
                               borderSide: BorderSide(
                                   color: kTextInputPlaceholderColor
-                                      .withOpacity(0.32))),
+                                      .withOpacity(0.25))),
                           contentPadding: EdgeInsets.only(left: w * 0.02)),
                     ),
                     SizedBox(
@@ -297,12 +337,20 @@ class _EditProfileState extends State<EditProfile> {
                                 hintText: "State*",
                                 hintStyle: GoogleFonts.montserrat(
                                     color: kTextInputPlaceholderColor
-                                        .withOpacity(0.32),
+                                        .withOpacity(0.25),
                                     fontSize: 13),
+                                    focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kTextInputPlaceholderColor
+                                            .withOpacity(0.25))),
+                                    enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kTextInputPlaceholderColor
+                                            .withOpacity(0.25))),
                                 border: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                         color: kTextInputPlaceholderColor
-                                            .withOpacity(0.32))),
+                                            .withOpacity(0.25))),
                                 contentPadding:
                                     EdgeInsets.only(left: w * 0.02)),
                           ),
@@ -318,12 +366,20 @@ class _EditProfileState extends State<EditProfile> {
                                 hintText: "Pin Code*",
                                 hintStyle: GoogleFonts.montserrat(
                                     color: kTextInputPlaceholderColor
-                                        .withOpacity(0.32),
+                                        .withOpacity(0.25),
                                     fontSize: 13),
+                                    focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kTextInputPlaceholderColor
+                                            .withOpacity(0.25))),
+                                    enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: kTextInputPlaceholderColor
+                                            .withOpacity(0.25))),
                                 border: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                         color: kTextInputPlaceholderColor
-                                            .withOpacity(0.32))),
+                                            .withOpacity(0.25))),
                                 contentPadding:
                                     EdgeInsets.only(left: w * 0.02)),
                           ),

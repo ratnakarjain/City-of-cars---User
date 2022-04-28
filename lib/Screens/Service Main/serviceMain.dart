@@ -278,7 +278,7 @@ class _ServiceMainState extends State<ServiceMain> {
                     crossAxisCount: 2,
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
-                    children: List.generate(4, (index) {
+                    children: List.generate(snapshot.data.length, (index) {
 
                   print(snapshot.data.length);
                       return GestureDetector(

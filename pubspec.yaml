@@ -50,6 +50,7 @@ dependencies:
   cached_network_image: ^3.2.0
   scrollable_positioned_list: ^0.2.3
   scrollable_list_tabview: ^0.2.0-nullsafety
+  provider: ^6.0.2
 
 dev_dependencies:
   flutter_test:
