@@ -283,11 +283,15 @@ class _ServiceMainState extends State<ServiceMain> {
                   print(snapshot.data.length);
                       return GestureDetector(
                         onTap: () {
+                          print(snapshot.data[index]["_id"].toString());
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      InsideCategory()));
+                                       InsideCategory(
+                                         id: snapshot.data[index]["_id"].toString(),
+                                       )));
+                                      
                         },
                         child: RRectCard(
                           h: h * 0.18,
@@ -403,11 +407,11 @@ class _ServiceMainState extends State<ServiceMain> {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const ProductDetails()));
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) =>
+                      //             const ProductDetails()));
                     },
                     child: RRectCard(
                       h: h * 0.1,
@@ -478,11 +482,11 @@ class _ServiceMainState extends State<ServiceMain> {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const ProductDetails()));
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) =>
+                      //             const ProductDetails()));
                     },
                     child: RRectCard(
                       h: h * 0.1,

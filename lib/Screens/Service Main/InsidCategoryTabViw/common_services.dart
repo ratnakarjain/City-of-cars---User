@@ -1,3 +1,4 @@
+
 import 'package:cityofcars/Utils/Buttons/button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,14 +12,24 @@ var w;
 
 class CommonServices extends StatefulWidget {
   String label;
-  CommonServices({Key? key, required this.label}) : super(key: key);
+  List data;
+
+  CommonServices({Key? key, required this.label, required this.data}) : super(key: key);
 
   @override
   State<CommonServices> createState() => _CommonServicesState();
 }
 
 class _CommonServicesState extends State<CommonServices> {
-  
+  @override
+  List plans = [];
+  ScrollController _scrollController =ScrollController();
+  void initState() {
+    // TODO: implement initState
+     plans = widget.data;
+     print(plans.toString()+"===============");
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
@@ -40,65 +51,22 @@ class _CommonServicesState extends State<CommonServices> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 ),
-          Plans(
-            h: h,
-            w: w,
-            text: "Basic",
-            islabel: true,
-            labeltext: "Frequently Booked",
-          ),
-          Plans(
-            h: h,
-            w: w,
-            text: "Standerd",
-            islabel: false,
-          ),
-          Plans(
-            h: h,
-            w: w,
-            text: "Primium",
-            islabel: true,
-            labeltext: "Reccomended",
-          ),
-          SizedBox(
-            height: h * 0.018,
-          ),
-          
-          
-          
-        ],
-      ),
-    );
-  }
-}
-
-class Plans extends StatelessWidget {
-  bool islabel;
-  String? labeltext;
-  double h;
-  double w;
-  String text;
-  Plans(
-      {Key? key,
-      required this.h,
-      required this.w,
-      required this.text,
-      required this.islabel,
-      this.labeltext})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
+          ListView.builder(
+            shrinkWrap: true,
+            controller: _scrollController,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: plans.length,
+            itemBuilder: (context, index){
+              return Container(
       color: kwhitecolor,
       margin: EdgeInsets.only(top: h * 0.018, left: w * 0.01, right: w * 0.01),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          islabel
+          plans[index]["label"]!=null
               ? Label(
                   color: korangecolor,
-                  text: labeltext!,
+                  text: plans[index]["label"],
                   textStyle: GoogleFonts.montserrat(
                     fontSize: 6,
                     textStyle: const TextStyle(
@@ -120,7 +88,7 @@ class Plans extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        text,
+                        plans[index]["planName"],
                         
                         style: GoogleFonts.montserrat(
                           fontSize: 18,
@@ -128,7 +96,7 @@ class Plans extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "Services Pack",
+                        plans[index]["servicepack"],
                         
                         style: GoogleFonts.montserrat(
                           fontSize: 8,
@@ -147,7 +115,7 @@ class Plans extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        "₹ 2700",
+                        "₹"+plans[index]["typeprice"][0]["price"],
                         
                         style: GoogleFonts.montserrat(
                           fontSize: 18,
@@ -170,7 +138,7 @@ class Plans extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: w * 0.06, bottom: h * 0.01),
             child: Text(
-              "Takes 4 Hrs / Every 3 Months",
+              "Takes ${plans[index]["timming"][0]["hours"]} Hrs / Every ${plans[index]["timming"][0]["month"]} Months",
               
               style: GoogleFonts.montserrat(
                 fontSize: 7,
@@ -195,7 +163,7 @@ class Plans extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const ProductDetails(),
+                              builder: (context) =>  ProductDetails(planDetails: plans[index],),
                             ));
                       },
                       h: h * 0.045,
@@ -227,8 +195,196 @@ class Plans extends StatelessWidget {
         ],
       ),
     );
+            },
+          ),
+          // Plans(
+          //   h: h,
+          //   w: w,
+          //   text: "Basic",
+          //   islabel: true,
+          //   labeltext: "Frequently Booked",
+          // ),
+          // Plans(
+          //   h: h,
+          //   w: w,
+          //   text: "Standerd",
+          //   islabel: false,
+          // ),
+          // Plans(
+          //   h: h,
+          //   w: w,
+          //   text: "Primium",
+          //   islabel: true,
+          //   labeltext: "Reccomended",
+          // ),
+          SizedBox(
+            height: h * 0.018,
+          ),
+          
+          
+          
+        ],
+      ),
+    );
   }
 }
+
+// class Plans extends StatelessWidget {
+//   String? labeltext;
+//   double h;
+//   double w;
+//   String text;
+//   Plans(
+//       {Key? key,
+//       required this.h,
+//       required this.w,
+//       required this.text,
+      
+//       this.labeltext})
+//       : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       color: kwhitecolor,
+//       margin: EdgeInsets.only(top: h * 0.018, left: w * 0.01, right: w * 0.01),
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           labeltext!.isNotEmpty
+//               ? Label(
+//                   color: korangecolor,
+//                   text: labeltext!,
+//                   textStyle: GoogleFonts.montserrat(
+//                     fontSize: 6,
+//                     textStyle: const TextStyle(
+//                         fontWeight: FontWeight.bold, color: kwhitecolor),
+//                   ),
+//                   padding: EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+//                 )
+//               : SizedBox(
+//                   height: h * 0.015,
+//                 ),
+//           Padding(
+//             padding:
+//                 EdgeInsets.symmetric(horizontal: w * 0.06, vertical: h * 0.01),
+//             child: Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: [
+//                 Container(
+//                   child: Column(
+//                     crossAxisAlignment: CrossAxisAlignment.start,
+//                     children: [
+//                       Text(
+//                         text,
+                        
+//                         style: GoogleFonts.montserrat(
+//                           fontSize: 18,
+//                           fontWeight: FontWeight.bold,
+//                         ),
+//                       ),
+//                       Text(
+//                         "Services Pack",
+                        
+//                         style: GoogleFonts.montserrat(
+//                           fontSize: 8,
+//                             fontWeight: FontWeight.w600,
+//                             color: kTextInputPlaceholderColor.withOpacity(0.6)),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//                 Container(
+//                   padding: EdgeInsets.all(h * 0.01),
+//                   decoration: BoxDecoration(
+//                       color: kLightOrangeBgColor,
+//                       borderRadius: BorderRadius.circular(h * 0.01)),
+//                   child: Column(
+//                     crossAxisAlignment: CrossAxisAlignment.end,
+//                     children: [
+//                       Text(
+//                         "₹ 2700",
+                        
+//                         style: GoogleFonts.montserrat(
+//                           fontSize: 18,
+//                           fontWeight: FontWeight.bold,
+//                         ),
+//                       ),
+//                       Text(
+//                         "Incl. Taxes",
+//                         style: GoogleFonts.montserrat(
+//                           fontSize: 7,
+//                             fontWeight: FontWeight.w600,
+//                             color: kTextInputPlaceholderColor.withOpacity(0.6)),
+//                       ),
+//                     ],
+//                   ),
+//                 )
+//               ],
+//             ),
+//           ),
+//           Padding(
+//             padding: EdgeInsets.only(left: w * 0.06, bottom: h * 0.01),
+//             child: Text(
+//               "Takes 4 Hrs / Every 3 Months",
+              
+//               style: GoogleFonts.montserrat(
+//                 fontSize: 7,
+//                   fontWeight: FontWeight.w600,
+//                   color: kTextInputPlaceholderColor.withOpacity(0.6)),
+//             ),
+//           ),
+//           Padding(
+//             padding: EdgeInsets.symmetric(horizontal: w * 0.03),
+//             child: Row(
+//                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+//                 children: [
+//                   Expanded(
+//                     flex: 2,
+//                     child: DropDown(
+                    
+//                     ),
+//                   ),
+//                   Expanded(
+//                     child: RRecctButton2(
+//                       onTap: () {
+//                         Navigator.push(
+//                             context,
+//                             MaterialPageRoute(
+//                               builder: (context) => const ProductDetails(),
+//                             ));
+//                       },
+//                       h: h * 0.045,
+//                       w: w * 0.3,
+//                       radius: h * 0.02,
+//                       buttonColor: kGreenColor,
+//                       widget: Row(
+//                         mainAxisAlignment: MainAxisAlignment.center,
+//                         children: [
+//                           Text("Book now ".toUpperCase(),
+                              
+//                               style: GoogleFonts.montserrat(
+//                                 fontSize: 11,
+//                                   fontWeight: FontWeight.w600,
+//                                   color: kwhitecolor)),
+//                           SizedBox(
+//                             width: w * 0.01,
+//                           ),
+//                           Image.asset("assets/images/doublArrow.png"),
+//                         ],
+//                       ),
+//                     ),
+//                   ),
+//                 ]),
+//           ),
+//           SizedBox(
+//             height: h * 0.02,
+//           )
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 class DropDown extends StatefulWidget {
  

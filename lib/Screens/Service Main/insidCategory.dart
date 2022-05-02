@@ -1,6 +1,9 @@
-
+import 'dart:math';
 
 import 'package:cityofcars/Screens/Service%20Main/InsidCategoryTabViw/common_services.dart';
+import 'package:cityofcars/Services/models/subcategory.dart';
+import 'package:cityofcars/Services/servies.dart';
+import 'package:cityofcars/Services/url.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +11,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:scrollable_list_tabview/scrollable_list_tabview.dart';
 
 class InsideCategory extends StatefulWidget {
-  const InsideCategory({Key? key}) : super(key: key);
+  String id;
+  InsideCategory({
+    Key? key,
+    required this.id,
+  }) : super(key: key);
 
   @override
   State<InsideCategory> createState() => _InsideCategoryState();
@@ -23,7 +30,7 @@ class _InsideCategoryState extends State<InsideCategory>
   var w;
   var contexte;
   int currentPage = 0;
-
+  String _id = "";
   PageController _pageController = PageController();
   List backimage = [
     "https://wallpaperaccess.com/full/33110.jpg",
@@ -95,8 +102,10 @@ class _InsideCategoryState extends State<InsideCategory>
   final itemKey4 = GlobalKey();
   final _scrollkey = GlobalKey();
   List keys = [];
-
+  Subcategory? subcategory;
+  List<Data> subdata = [];
   ScrollController _scrollController = ScrollController();
+  List service = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -107,24 +116,29 @@ class _InsideCategoryState extends State<InsideCategory>
 
     //     });
     // });_
-    _scrollController.addListener(() {
-      check();
-    });
+    _id = widget.id;
+  
+    fecthdata();
+    
+    // _scrollController.addListener(() {
+    //   check();
+    // });
     super.initState();
-    keys.add(itemKey1);
-    keys.add(itemKey2);
-    keys.add(itemKey3);
-    keys.add(itemKey4);
-    _tabController = TabController(length: bodyType.length, vsync: this);
+    // keys.add(itemKey1);
+    // keys.add(itemKey2);
+    // keys.add(itemKey3);
+    // keys.add(itemKey4);
 
-    whichBodyType = List.generate(bodyType.length, (index) => false);
+    // whichBodyType = List.generate(bodyType.length, (index) => false);
   }
 
   @override
   Widget build(BuildContext context) {
+    print("service "+ service.length.toString());
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
-    return Scaffold(
+    return 
+    Scaffold(
       // key: _scaffoldkey,
       backgroundColor: kLightOrangeBgColor,
       extendBody: true,
@@ -188,7 +202,7 @@ class _InsideCategoryState extends State<InsideCategory>
           ),
         ),
       ),
-      body: Column(
+      body:service.isEmpty?loder: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -463,40 +477,45 @@ class _InsideCategoryState extends State<InsideCategory>
             //   //       ),
 
             //   //   ],
+            
             //   ),
             // ),
             TabBar(
-              isScrollable: true,
-              onTap: (value) {
-                _tabController.index = value;
-                scollToItem(_tabController.index);
-                setState(() {});
-              },
-              unselectedLabelColor: kSelectedColor.withOpacity(0.56),
-              indicatorColor: kTextInputPlaceholderColor.withOpacity(0.5),
-              labelColor: kSelectedColor,
-              tabs: List.generate(
-                  bodyType.length,
-                  (index) => SizedBox(
-                        height: h * 0.03,
-                        child: Text(
-                          "${bodyType[index]}".toUpperCase(),
-                          style: GoogleFonts.montserrat(
-                              fontSize: 9,
-                              textStyle: const TextStyle(
-                                height: 2,
-                                fontWeight: FontWeight.bold,
-                              )),
-                        ),
-                      )),
-              controller: _tabController,
-              indicatorSize: TabBarIndicatorSize.tab,
-            ),
+                  isScrollable: true,
+                  onTap: (value) {
+                    _tabController.index = value;
+                    scollToItem(_tabController.index);
+                    setState(() {});
+                  },
+                  unselectedLabelColor: kSelectedColor.withOpacity(0.56),
+                  indicatorColor: kTextInputPlaceholderColor.withOpacity(0.5),
+                  labelColor: kSelectedColor,
+                  tabs: List.generate(service.length, (index) {
+                     print(service.length.toString()+"+++++++++++");
+                  
+                    return SizedBox(
+                      height: h * 0.03,
+                      child: Text(
+                        "${service[index]["title"]}".toUpperCase(),
+                        style: GoogleFonts.montserrat(
+                            fontSize: 9,
+                            textStyle: const TextStyle(
+                              height: 2,
+                              fontWeight: FontWeight.bold,
+                            )),
+                      ),
+                    );
+                  }),
+                  controller: _tabController,
+                  indicatorSize: TabBarIndicatorSize.tab,
+                ),
+          
+            
+
             Expanded(
                 child: SingleChildScrollView(
               controller: _scrollController,
               child: Column(
-                
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
@@ -506,11 +525,12 @@ class _InsideCategoryState extends State<InsideCategory>
                     key: _scrollkey,
                     shrinkWrap: true,
                     controller: _controller1,
-                    itemCount: bodyType.length,
+                    itemCount: service.length,
                     itemBuilder: (context, index) {
                       return CommonServices(
+                        data: service[index]["plan_id"],
                         key: keys[index],
-                        label: bodyType[index],
+                        label: service[index]["title"],
                       );
                     },
                   ),
@@ -666,7 +686,26 @@ class _InsideCategoryState extends State<InsideCategory>
 
   Future scollToItem(int index) async {
     contexte = keys[index].currentContext!;
+    print(keys[index].currentContext!);
     await Scrollable.ensureVisible(contexte,
         duration: const Duration(milliseconds: 1000));
+  }
+
+  fecthdata(){
+    getSubcategory(_id).then((value) {
+      
+      setState(() {
+            service.addAll(value);
+                 print("================="+service.toString());
+      print("================="+service[0]["title"].toString());
+      });
+    }).whenComplete((){
+    _tabController = TabController(length: service.length, vsync: this);
+     for(int i=0;i< service.length; i++){
+        keys.add(i); 
+        keys[i]= GlobalKey(); 
+       }
+     
+    });
   }
 }

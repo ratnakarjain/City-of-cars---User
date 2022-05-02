@@ -3,7 +3,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cityofcars/Services/models/citiesModel.dart';
+import 'package:cityofcars/Services/models/subcategory.dart';
 import 'package:cityofcars/Services/url.dart';
 import 'package:cityofcars/Utils/preference.dart';
 import 'package:flutter/material.dart';
@@ -297,6 +297,85 @@ Future editProfile(
       
     }else{
       return Future.error("Server Error");
+    }
+  } catch (e) {
+    print(
+      "error $e"
+    );
+  }
+}
+
+//    Future <Subcategory?> getSubcategory(String _id)async{
+//   var url = Uri.parse(getSubcategoryUrl+"?categoryid="+_id);
+//   try {
+//     var respnse = await  http.get(
+//       url,
+//       headers:{"Authorization": prefs!.getString('token').toString()}
+//     );
+//     if(respnse.statusCode==200){
+//       var data = jsonDecode(respnse.body);
+//       if(data["status"]){
+//         // print(data["data"].toString());
+//         // print(data["data"].length.toString());
+//        final Subcategory value = subcategoryFromJson(respnse.body);
+//        print(value.data!.length);
+//         // return data["data"];
+//         return value;
+//       }else{
+//         // return Future.error(data["msg"]);
+//         print(
+//           "Error====="
+//         );
+//       }
+//       // Future city = data["getCities"];
+//       // print("success============== ${data["getCities"]}");
+      
+      
+//     }else{
+//       // return Future.error("Server Error");
+//       print(
+//           "Error====="
+//         );
+//     }
+//   } catch (e) {
+//     print(
+//       "error $e"
+//     );
+//   }
+// }
+
+  Future  getSubcategory(String _id)async{
+    print("id"+_id.toString()+"========");
+  var url = Uri.parse(getSubcategoryUrl+"?categoryid="+_id);
+  try {
+    var respnse = await  http.get(
+      url,
+      headers:{"Authorization": prefs!.getString('token').toString()}
+    );
+    if(respnse.statusCode==200){
+      var data = jsonDecode(respnse.body);
+      if(data["status"]){
+        // print(data["data"].toString());
+        print(data["data"].length.toString());
+      //  final Subcategory value = subcategoryFromJson(respnse.body);
+      //  print(value.data!.length);
+        // return data["data"];
+        return data["data"];
+      }else{
+        return Future.error(data["msg"]);
+        // print(
+        //   "Error====="
+        // );
+      }
+      // Future city = data["getCities"];
+      // print("success============== ${data["getCities"]}");
+      
+      
+    }else{
+      return Future.error("Server Error");
+      print(
+          "Error====="
+        );
     }
   } catch (e) {
     print(

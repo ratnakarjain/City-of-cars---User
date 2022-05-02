@@ -8,7 +8,8 @@ import '../../Utils/Buttons/button.dart';
 import '../../Utils/constants.dart';
 
 class ProductDetails extends StatefulWidget {
-  const ProductDetails({Key? key}) : super(key: key);
+  var planDetails;
+   ProductDetails({Key? key, required this.planDetails }) : super(key: key);
 
   @override
   State<ProductDetails> createState() => _ProductDetailsState();
@@ -22,12 +23,22 @@ class _ProductDetailsState extends State<ProductDetails> {
   bool des = false;
   bool basic = false;
   bool service = false;
+  List terms=[];
   List backimage = [
     "https://wallpaperaccess.com/full/33110.jpg",
     "https://wallpaperaccess.com/full/14444.jpg",
     "https://wallpaperaccess.com/full/33116.jpg",
     "https://wallpaperaccess.com/full/33118.jpg"
   ];
+  var details;
+  @override
+  void initState() {
+    details = widget.planDetails;
+    terms = details["Subcategory"];
+    print(terms);
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
@@ -110,7 +121,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Basic",
+                        details["planName"],
                         style: GoogleFonts.montserrat(
                             textStyle: const TextStyle(
                           fontSize: 25,
@@ -118,7 +129,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         )),
                       ),
                       Text(
-                        "Service Pack",
+                        details["planName"],
                         style: GoogleFonts.montserrat(
                             textStyle: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -149,7 +160,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                "₹2700",
+                                "₹"+details["typeprice"][0]["price"],
                                 style: GoogleFonts.montserrat(
                                     fontSize: 21,
                                     textStyle: const TextStyle(
@@ -186,7 +197,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                "₹4700",
+                                "₹"+details["servicepackprice"][0]["price"],
                                 style: GoogleFonts.montserrat(
                                     fontSize: 12,
                                     textStyle: TextStyle(
@@ -305,7 +316,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: w * 0.09),
                                             child: Text(
-                                              "This pack is essential every 3000 km or 6 months whichever is earlier",
+                                              details["description"],
                                               style: GoogleFonts.montserrat(
                                                 fontSize: 12,
                                                 height: 1.5,
@@ -316,30 +327,30 @@ class _ProductDetailsState extends State<ProductDetails> {
                                           SizedBox(
                                             height: h * 0.027,
                                           ),
-                                          Visibility(
-                                            visible: des,
-                                            child: Column(
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: w * 0.09),
-                                                  child: Text(
-                                                    "This pack is essential every 3000 km or 6 months whichever is earlier",
-                                                    style:
-                                                        GoogleFonts.montserrat(
-                                                      fontSize: 12,
-                                                      height: 1.5,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: h * 0.027,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
+                                          // Visibility(
+                                          //   visible: des,
+                                          //   child: Column(
+                                          //     children: [
+                                          //       Padding(
+                                          //         padding: EdgeInsets.symmetric(
+                                          //             horizontal: w * 0.09),
+                                          //         child: Text(
+                                          //           "This pack is essential every 3000 km or 6 months whichever is earlier",
+                                          //           style:
+                                          //               GoogleFonts.montserrat(
+                                          //             fontSize: 12,
+                                          //             height: 1.5,
+                                          //             fontWeight:
+                                          //                 FontWeight.w400,
+                                          //           ),
+                                          //         ),
+                                          //       ),
+                                          //       SizedBox(
+                                          //         height: h * 0.027,
+                                          //       ),
+                                          //     ],
+                                          //   ),
+                                          // ),
                                         ],
                                       ),
                                     ),
@@ -538,12 +549,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                         widget: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Text("Takes 4 hrs",
+                            Text("Takes ${details["timming"][0]["hours"]} hrs",
                                 style: GoogleFonts.montserrat(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w500,
                                 )),
-                            Text("Every 3 months",
+                            Text("Every ${details["timming"][0]["month"]} months",
                                 style: GoogleFonts.montserrat(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w500,
@@ -601,7 +612,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   children: [
                     RichText(
                       text: TextSpan(
-                        text: 'Who May Use the Services?',
+                        text:  "",//'Who May Use the Services?',
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w700,
                             fontSize: 10,
