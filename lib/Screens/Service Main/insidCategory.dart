@@ -528,6 +528,7 @@ class _InsideCategoryState extends State<InsideCategory>
                     itemCount: service.length,
                     itemBuilder: (context, index) {
                       return CommonServices(
+                        subcategoryid: service[index]["_id"],
                         data: service[index]["plan_id"],
                         key: keys[index],
                         label: service[index]["title"],
@@ -693,7 +694,6 @@ class _InsideCategoryState extends State<InsideCategory>
 
   fecthdata(){
     getSubcategory(_id).then((value) {
-      
       setState(() {
             service.addAll(value);
                  print("================="+service.toString());

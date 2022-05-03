@@ -14,4 +14,7 @@ const String getCities = baseUrl+"/getCities";
 const String getFuel = baseUrl+"/getfuel";
 const String getcategryUrl = baseUrl+"/getcategory";
 const String getSubcategoryUrl = baseUrl+"/get-Sub-Category";
+const String slotUrl = baseUrl+"/BookingDetils";
+const String addcartUrl = baseUrl+"";
+const String getcartUrl = baseUrl+"/getcartList";
 String token = "";

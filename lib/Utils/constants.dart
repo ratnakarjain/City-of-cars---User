@@ -50,3 +50,10 @@ class CarsData{
   static String fuelimage = "";
 
 }
+
+class Ids{
+  static String categoryid="";
+  static String subcategoryid="";
+  static String planid="";
+  static String slotid="";
+}

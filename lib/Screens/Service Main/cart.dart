@@ -1,3 +1,4 @@
+
 import 'package:cityofcars/Screens/Service%20Main/payment.dart';
 import 'package:cityofcars/Screens/Service%20Main/slot.dart';
 import 'package:cityofcars/Screens/bottomnavBar.dart';
@@ -5,6 +6,7 @@ import 'package:cityofcars/Utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../Services/servies.dart';
 import '../../Utils/Buttons/button.dart';
 
 class Cart extends StatefulWidget {
@@ -26,6 +28,14 @@ class _CartState extends State<Cart> {
     'Item 3',
     
   ];
+  List data=[];
+  
+  @override
+  void initState() {
+    // TODO: implement initState
+  fecthdata();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
@@ -42,11 +52,18 @@ class _CartState extends State<Cart> {
           style: GoogleFonts.montserrat(fontWeight: FontWeight.w600),
         ),
       ),
-      body: Container(
+      body:
+      data.isEmpty? loder:
+       Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: data.length,
+              itemBuilder: (context, index){
+               
+                return Container(
               decoration: BoxDecoration(
                   color: kwhitecolor,
                   borderRadius: BorderRadius.only(
@@ -69,7 +86,7 @@ class _CartState extends State<Cart> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Statnderd",
+                              data[index]["Plans"]["planName"],
                               
                               style: GoogleFonts.montserrat(
                                 fontSize: 20,
@@ -77,7 +94,7 @@ class _CartState extends State<Cart> {
                               ),
                             ),
                             Text(
-                              "Services Pack",
+                              data[index]["Plans"]["servicepack"],
                               style: GoogleFonts.montserrat(
                                 fontSize: 12,
                                   fontWeight: FontWeight.w600,
@@ -90,14 +107,16 @@ class _CartState extends State<Cart> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
-                              "₹ 2700",
+                              "₹"+data[index]["Plans"]["typeprice"][0]["price"],
+                              
                               style: GoogleFonts.montserrat(
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             Text(
-                              "Incl. Taxes",
+                              data[index]["Plans"]["typeprice"][0]["typename"],
+                              
                               style: GoogleFonts.montserrat(
                                 fontSize: 7,
                                   fontWeight: FontWeight.w600,
@@ -112,7 +131,7 @@ class _CartState extends State<Cart> {
                   Padding(
                     padding: EdgeInsets.only(left: w * 0.08, bottom: h * 0.01),
                     child: Text(
-                      "Takes 4 Hrs / Every 3 Months",
+                      "Takes ${data[index]["Plans"]["timming"][0]["hours"]} Hrs / Every ${data[index]["Plans"]["timming"][0]["hours"]} Months",
                      
                       style: GoogleFonts.montserrat(
                           fontWeight: FontWeight.w600,
@@ -386,8 +405,11 @@ class _CartState extends State<Cart> {
                   )
                 ],
               ),
+            );
+
+              },
             ),
-            Padding(
+                        Padding(
               padding: EdgeInsets.only(top: h * 0.02, left: w * 0.1),
               child: InkWell(
                 onTap: () {
@@ -512,5 +534,23 @@ class _CartState extends State<Cart> {
         ),
       ),
     );
+  }
+  fecthdata()async{
+    await getcartitems().then((value) {
+      
+      setState(() {
+        data.addAll(value);
+        print(data.toString()+"============");
+        // for(int i=0; i<data.length; i++){
+        //   plan=data[i]["Plans"];
+        //   print(plan.toString()+"+++++++++++=====");
+        // }
+      //       service.addAll(value);
+      //            print("================="+service.toString());
+      // print("================="+service[0]["title"].toString());
+      });
+    }).whenComplete((){
+         
+    });
   }
 }

@@ -9,7 +9,7 @@ import '../../Utils/constants.dart';
 
 class ProductDetails extends StatefulWidget {
   var planDetails;
-   ProductDetails({Key? key, required this.planDetails }) : super(key: key);
+  ProductDetails({Key? key, required this.planDetails}) : super(key: key);
 
   @override
   State<ProductDetails> createState() => _ProductDetailsState();
@@ -23,7 +23,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   bool des = false;
   bool basic = false;
   bool service = false;
-  List terms=[];
+  List terms = [];
   List backimage = [
     "https://wallpaperaccess.com/full/33110.jpg",
     "https://wallpaperaccess.com/full/14444.jpg",
@@ -39,6 +39,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
@@ -52,6 +53,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           elevation: 0,
           foregroundColor: kwhitecolor,
           centerTitle: false,
+          titleSpacing: -w*0.02,
           title: Text(
             "Periodic Services",
             style: GoogleFonts.montserrat(
@@ -93,7 +95,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: currentPage == index
-                              ?  kdarkpurple
+                              ? kdarkpurple
                               : ksubHading.withOpacity(0.32),
                         ),
                       );
@@ -143,6 +145,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     children: [
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Checkbox(
                             value: basic,
@@ -160,7 +163,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                "₹"+details["typeprice"][0]["price"],
+                                "₹" + details["typeprice"][0]["price"],
                                 style: GoogleFonts.montserrat(
                                     fontSize: 21,
                                     textStyle: const TextStyle(
@@ -168,7 +171,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     )),
                               ),
                               Text(
-                                "multi-brand price",
+                                details["typeprice"][0]["typename"],
+                                // "multi-brand price",
                                 style: GoogleFonts.montserrat(
                                     fontSize: 6,
                                     textStyle: TextStyle(
@@ -180,6 +184,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ],
                       ),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Checkbox(
                             side:
@@ -197,7 +203,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                "₹"+details["servicepackprice"][0]["price"],
+                                "₹" + details["servicepackprice"][0]["price"],
                                 style: GoogleFonts.montserrat(
                                     fontSize: 12,
                                     textStyle: TextStyle(
@@ -206,7 +212,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             .withOpacity(0.5))),
                               ),
                               Text(
-                                "company authorised",
+                                details["servicepackprice"][0]["servicename"],
+                                // "company authorised",
                                 style: GoogleFonts.montserrat(
                                     fontSize: 6,
                                     textStyle: TextStyle(
@@ -359,8 +366,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   bottom: h * 0.005,
                                   left: 0,
                                   right: 0,
-                                  child:  Center(
-                                    child: Icon(des?Icons.keyboard_arrow_up: Icons.keyboard_arrow_down),
+                                  child: Center(
+                                    child: Icon(des
+                                        ? Icons.keyboard_arrow_up
+                                        : Icons.keyboard_arrow_down),
                                   ),
                                 )
                               ],
@@ -390,7 +399,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           child: RRectCard(
                             borderRadius: h * 0.01,
                             color: kLightOrangeBgColor,
-                            h: h * 0.21,
+                            // h: h * 0.21,
                             w: w * 0.8,
                             widget: Padding(
                               padding: EdgeInsets.symmetric(
@@ -546,25 +555,37 @@ class _ProductDetailsState extends State<ProductDetails> {
                     child: RRectCard(
                         h: h * 0.06,
                         w: w * 0.7,
-                        widget: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text("Takes ${details["timming"][0]["hours"]} hrs",
-                                style: GoogleFonts.montserrat(
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w500,
-                                )),
-                            Text("Every ${details["timming"][0]["month"]} months",
-                                style: GoogleFonts.montserrat(
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w500,
-                                )),
-                            Text("Rate Card",
-                                style: GoogleFonts.montserrat(
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w500,
-                                )),
-                          ],
+                        padding: EdgeInsets.symmetric(horizontal: w * 0.01),
+                        widget: FittedBox(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              FittedBox(
+                                child: Text(
+                                    "Takes ${details["timming"][0]["hours"]} hrs",
+                                    style: GoogleFonts.montserrat(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w500,
+                                    )),
+                              ),
+                              
+                              FittedBox(
+                                child: Text(
+                                    "    Every ${details["timming"][0]["month"]} months    ",
+                                    style: GoogleFonts.montserrat(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w500,
+                                    )),
+                              ),
+                              FittedBox(
+                                child: Text("Rate Card",
+                                    style: GoogleFonts.montserrat(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w500,
+                                    )),
+                              ),
+                            ],
+                          ),
                         ),
                         borderRadius: h * 0.01),
                   )
@@ -593,6 +614,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               ],
             ),
             Container(
+              width: w,
               margin: EdgeInsets.only(
                   top: h * 0.01, left: w * 0.09, right: w * 0.09),
               padding: EdgeInsets.all(h * 0.03),
@@ -612,7 +634,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   children: [
                     RichText(
                       text: TextSpan(
-                        text:  "",//'Who May Use the Services?',
+                        text: details["heading"], //'Who May Use the Services?',
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w700,
                             fontSize: 10,
@@ -620,7 +642,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         children: [
                           TextSpan(
                             text:
-                                '\n\n\nWhen one door of happiness closes, another opens, but often we look so long at the closed door that we do not see the one that has been opened for us.\n\n\n\n\n',
+                                '\n\n\n${details["textField"]}\n\n\n\n\n',
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 9,
@@ -629,63 +651,63 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ],
                       ),
                     ),
-                    RichText(
-                      text: TextSpan(
-                        text: '•Step 1:',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 9,
-                            color: Colors.black),
-                        children: [
-                          TextSpan(
-                            text:
-                                ' You may use the Services only if you agree to form a binding contract with us and are not a person barred from receiving services under the laws of the applicable jurisdiction.\n',
-                            style: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 9,
-                                color: Colors.black),
-                          ),
-                        ],
-                      ),
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        text: '•Step 2:',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 9,
-                            color: Colors.black),
-                        children: [
-                          TextSpan(
-                            text:
-                                ' Our Privacy Policy describes how we handle the information you provide to us when you use our Services.\n\n\n\n',
-                            style: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 9,
-                                color: Colors.black),
-                          ),
-                        ],
-                      ),
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        text: 'Privacy',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 9,
-                            color: Colors.black),
-                        children: [
-                          TextSpan(
-                            text:
-                                '\n\n\nWhen one door of happiness closes, another opens, but often we look so long at the closed door that we do not see the one that has been opened for us.\n\n',
-                            style: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 9,
-                                color: Colors.black),
-                          ),
-                        ],
-                      ),
-                    )
+                    // RichText(
+                    //   text: TextSpan(
+                    //     text: '•Step 1:',
+                    //     style: GoogleFonts.montserrat(
+                    //         fontWeight: FontWeight.w700,
+                    //         fontSize: 9,
+                    //         color: Colors.black),
+                    //     children: [
+                    //       TextSpan(
+                    //         text:
+                    //             ' You may use the Services only if you agree to form a binding contract with us and are not a person barred from receiving services under the laws of the applicable jurisdiction.\n',
+                    //         style: GoogleFonts.montserrat(
+                    //             fontWeight: FontWeight.w400,
+                    //             fontSize: 9,
+                    //             color: Colors.black),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    // RichText(
+                    //   text: TextSpan(
+                    //     text: '•Step 2:',
+                    //     style: GoogleFonts.montserrat(
+                    //         fontWeight: FontWeight.w700,
+                    //         fontSize: 9,
+                    //         color: Colors.black),
+                    //     children: [
+                    //       TextSpan(
+                    //         text:
+                    //             ' Our Privacy Policy describes how we handle the information you provide to us when you use our Services.\n\n\n\n',
+                    //         style: GoogleFonts.montserrat(
+                    //             fontWeight: FontWeight.w400,
+                    //             fontSize: 9,
+                    //             color: Colors.black),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    // RichText(
+                    //   text: TextSpan(
+                    //     text: 'Privacy',
+                    //     style: GoogleFonts.montserrat(
+                    //         fontWeight: FontWeight.w700,
+                    //         fontSize: 9,
+                    //         color: Colors.black),
+                    //     children: [
+                    //       TextSpan(
+                    //         text:
+                    //             '\n\n\nWhen one door of happiness closes, another opens, but often we look so long at the closed door that we do not see the one that has been opened for us.\n\n',
+                    //         style: GoogleFonts.montserrat(
+                    //             fontWeight: FontWeight.w400,
+                    //             fontSize: 9,
+                    //             color: Colors.black),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // )
                   ]),
             ),
             SizedBox(

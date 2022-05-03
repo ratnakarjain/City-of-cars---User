@@ -3,8 +3,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+
 import 'package:cityofcars/Services/models/subcategory.dart';
 import 'package:cityofcars/Services/url.dart';
+import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Utils/preference.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -347,6 +349,116 @@ Future editProfile(
   Future  getSubcategory(String _id)async{
     print("id"+_id.toString()+"========");
   var url = Uri.parse(getSubcategoryUrl+"?categoryid="+_id);
+  try {
+    var respnse = await  http.get(
+      url,
+      headers:{"Authorization": prefs!.getString('token').toString()}
+    );
+    if(respnse.statusCode==200){
+      var data = jsonDecode(respnse.body);
+      if(data["status"]){
+        // print(data["data"].toString());
+        print(data["data"].length.toString());
+      //  final Subcategory value = subcategoryFromJson(respnse.body);
+      //  print(value.data!.length);
+        // return data["data"];
+        return data["data"];
+      }else{
+        return Future.error(data["msg"]);
+        // print(
+        //   "Error====="
+        // );
+      }
+      // Future city = data["getCities"];
+      // print("success============== ${data["getCities"]}");
+      
+      
+    }else{
+      return Future.error("Server Error");
+      print(
+          "Error====="
+        );
+    }
+  } catch (e) {
+    print(
+      "error $e"
+    );
+  }
+}
+
+Future slot(
+  String name,
+  String mail,
+  String contact,
+  String carNo,
+  String houseNo,
+  String state,
+  String street,
+  String pinCode,
+  String option,
+  String date,
+  String time,
+
+) async {
+    var url = Uri.parse(slotUrl);
+    try {
+      var response = await http.post(url, body: {
+        
+        "date": date,
+        "time": time,
+        "Street": street,
+        "state": state,
+        "pincode": pinCode,
+        "name": name,
+        "email": mail,
+        "carno": carNo,
+        "contect": contact,
+        "optional": option,
+        "houseNo":houseNo
+      },
+      headers:{"Authorization": prefs!.getString('token').toString()}
+
+      );
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        print(data);
+        return data["data"];
+      } 
+    } catch (e) {
+      print("error $e");
+    }
+  }
+
+
+
+Future addcartitem(
+) async {
+    var url = Uri.parse(slotUrl);
+    try {
+      var response = await http.post(url, body: {
+        
+        "date": Ids.categoryid,
+        "time": Ids.subcategoryid,
+        "Street": Ids.planid,
+        "state": Ids.slotid,
+      },
+      headers:{"Authorization": prefs!.getString('token').toString()}
+
+      );
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        print(data);
+        return data["data"];
+      } 
+    } catch (e) {
+      print("error $e");
+    }
+  }
+
+
+  Future  getcartitems()async{
+    
+  var url = Uri.parse(getcartUrl);
   try {
     var respnse = await  http.get(
       url,

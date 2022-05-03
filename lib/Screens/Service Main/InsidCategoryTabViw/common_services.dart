@@ -13,8 +13,9 @@ var w;
 class CommonServices extends StatefulWidget {
   String label;
   List data;
+  String subcategoryid;
 
-  CommonServices({Key? key, required this.label, required this.data}) : super(key: key);
+  CommonServices({Key? key, required this.label, required this.data, required this.subcategoryid}) : super(key: key);
 
   @override
   State<CommonServices> createState() => _CommonServicesState();
@@ -28,6 +29,7 @@ class _CommonServicesState extends State<CommonServices> {
     // TODO: implement initState
      plans = widget.data;
      print(plans.toString()+"===============");
+     print("++++++++++++++"+widget.subcategoryid);
     super.initState();
   }
   @override
@@ -160,6 +162,12 @@ class _CommonServicesState extends State<CommonServices> {
                   Expanded(
                     child: RRecctButton2(
                       onTap: () {
+                        Ids.subcategoryid=widget.subcategoryid;
+                        Ids.planid= plans[index]["_id"];
+                        print(Ids.categoryid);
+                        print(Ids.subcategoryid);
+                        print(Ids.planid);
+                        // print(plans[index]["_id"]);
                         Navigator.push(
                             context,
                             MaterialPageRoute(

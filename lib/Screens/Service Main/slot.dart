@@ -1,8 +1,7 @@
-import 'dart:ui';
-
 import 'package:cityofcars/Screens/Service%20Main/cart.dart';
 import 'package:cityofcars/Screens/Service%20Main/payment.dart';
 import 'package:cityofcars/Screens/Service%20Main/selectLocation.dart';
+import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Utils/Buttons/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -13,6 +12,8 @@ import '../../Utils/constants.dart';
 
 var h;
 var w;
+String date = "";
+String time = "";
 
 class Slot extends StatefulWidget {
   const Slot({Key? key}) : super(key: key);
@@ -24,6 +25,16 @@ class Slot extends StatefulWidget {
 class _SlotState extends State<Slot> {
   ScrollController _controller = ScrollController();
   bool isTime = false;
+
+  final houseNo = TextEditingController();
+  final street = TextEditingController();
+  final state = TextEditingController();
+  final pinCode = TextEditingController();
+  final name = TextEditingController();
+  final contect = TextEditingController();
+  final mail = TextEditingController();
+  final carNumber = TextEditingController();
+  final option = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -152,40 +163,47 @@ class _SlotState extends State<Slot> {
                       //           )
                       //         ],
                       //       )
-                            // TextFormField(
-                            //   cursorColor: korangecolor,
-                            //   decoration: InputDecoration(
-                            //       hintText: "Enter pick-up location",
-                            //       hintStyle: GoogleFonts.montserrat(fontSize: 13),
-                            //       suffixIcon: const Icon(Icons.search),
-                            //       fillColor: korangecolor,
-                            //       focusColor: korangecolor,
-                            //       suffixIconColor: korangecolor,
-                            //       focusedBorder: OutlineInputBorder(
-                            //           borderSide: const BorderSide(
-                            //               color: korangecolor, width: 1.0),
-                            //           borderRadius:
-                            //               BorderRadius.circular(h * 0.02)),
-                            //       border: OutlineInputBorder(
-                            //           borderRadius:
-                            //               BorderRadius.circular(h * 0.02))),
-                            // ),
-                            // ),
+                      // TextFormField(
+                      //   cursorColor: korangecolor,
+                      //   decoration: InputDecoration(
+                      //       hintText: "Enter pick-up location",
+                      //       hintStyle: GoogleFonts.montserrat(fontSize: 13),
+                      //       suffixIcon: const Icon(Icons.search),
+                      //       fillColor: korangecolor,
+                      //       focusColor: korangecolor,
+                      //       suffixIconColor: korangecolor,
+                      //       focusedBorder: OutlineInputBorder(
+                      //           borderSide: const BorderSide(
+                      //               color: korangecolor, width: 1.0),
+                      //           borderRadius:
+                      //               BorderRadius.circular(h * 0.02)),
+                      //       border: OutlineInputBorder(
+                      //           borderRadius:
+                      //               BorderRadius.circular(h * 0.02))),
+                      // ),
+                      // ),
                       // ),
                       // SizedBox(
                       //   height: h * 0.02,
                       // ),
                       TextFormField(
                         cursorColor: korangecolor,
+                        controller: houseNo,
+                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                             hintText: "House No.. & Floor*",
-                            hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.25),),
+                            hintStyle: GoogleFonts.montserrat(
+                              fontSize: 13,
+                              color:
+                                  kTextInputPlaceholderColor.withOpacity(0.25),
+                            ),
                             focusColor: korangecolor,
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: kTextInputPlaceholderColor.withOpacity(0.25),
+                                color: kTextInputPlaceholderColor
+                                    .withOpacity(0.25),
                               ),
-                            ) ,
+                            ),
                             focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
                                 color: korangecolor,
@@ -193,42 +211,54 @@ class _SlotState extends State<Slot> {
                             )),
                       ),
                       SizedBox(
-                        height: h*0.01,
+                        height: h * 0.01,
                       ),
                       TextFormField(
                         cursorColor: korangecolor,
+                        controller: street,
                         decoration: InputDecoration(
                             hintText: "Street*",
-                            hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.25),),
+                            hintStyle: GoogleFonts.montserrat(
+                              fontSize: 13,
+                              color:
+                                  kTextInputPlaceholderColor.withOpacity(0.25),
+                            ),
                             focusColor: korangecolor,
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: kTextInputPlaceholderColor.withOpacity(0.25),
+                                color: kTextInputPlaceholderColor
+                                    .withOpacity(0.25),
                               ),
-                            ) ,
+                            ),
                             focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
                                 color: korangecolor,
                               ),
                             )),
-                      ),SizedBox(
-                        height: h*0.01,
+                      ),
+                      SizedBox(
+                        height: h * 0.01,
                       ),
                       Row(
                         children: [
                           Expanded(
                             child: TextFormField(
+                              controller: state,
                               cursorColor: korangecolor,
                               decoration: InputDecoration(
                                   hintText: "State*",
-                                  hintStyle:
-                                      GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.25),),
+                                  hintStyle: GoogleFonts.montserrat(
+                                    fontSize: 13,
+                                    color: kTextInputPlaceholderColor
+                                        .withOpacity(0.25),
+                                  ),
                                   focusColor: korangecolor,
                                   enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: kTextInputPlaceholderColor.withOpacity(0.25),
-                              ),
-                            ) ,
+                                    borderSide: BorderSide(
+                                      color: kTextInputPlaceholderColor
+                                          .withOpacity(0.25),
+                                    ),
+                                  ),
                                   focusedBorder: const UnderlineInputBorder(
                                     borderSide: BorderSide(
                                       color: korangecolor,
@@ -241,17 +271,23 @@ class _SlotState extends State<Slot> {
                           ),
                           Expanded(
                             child: TextFormField(
+                              keyboardType: TextInputType.number,
+                              controller: pinCode,
                               cursorColor: korangecolor,
                               decoration: InputDecoration(
                                   hintText: "Pin Code*",
-                                  hintStyle:
-                                      GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.25),),
+                                  hintStyle: GoogleFonts.montserrat(
+                                    fontSize: 13,
+                                    color: kTextInputPlaceholderColor
+                                        .withOpacity(0.25),
+                                  ),
                                   focusColor: korangecolor,
                                   enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: kTextInputPlaceholderColor.withOpacity(0.25),
-                              ),
-                            ) ,
+                                    borderSide: BorderSide(
+                                      color: kTextInputPlaceholderColor
+                                          .withOpacity(0.25),
+                                    ),
+                                  ),
                                   focusedBorder: const UnderlineInputBorder(
                                     borderSide: BorderSide(
                                       color: korangecolor,
@@ -266,72 +302,101 @@ class _SlotState extends State<Slot> {
                       ),
                       TextFormField(
                         cursorColor: korangecolor,
+                        controller: name,
                         decoration: InputDecoration(
                             hintText: "Name*",
-                            hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.25),),
+                            hintStyle: GoogleFonts.montserrat(
+                              fontSize: 13,
+                              color:
+                                  kTextInputPlaceholderColor.withOpacity(0.25),
+                            ),
                             focusColor: korangecolor,
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: kTextInputPlaceholderColor.withOpacity(0.25),
+                                color: kTextInputPlaceholderColor
+                                    .withOpacity(0.25),
                               ),
-                            ) ,
+                            ),
                             focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
                                 color: korangecolor,
                               ),
                             )),
-                      ),SizedBox(
-                        height: h*0.01,
+                      ),
+                      SizedBox(
+                        height: h * 0.01,
                       ),
                       TextFormField(
+                        controller: contect,
+                        keyboardType: TextInputType.number,
                         cursorColor: korangecolor,
                         decoration: InputDecoration(
                             hintText: "Contact*",
-                            hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.25),),
+                            hintStyle: GoogleFonts.montserrat(
+                              fontSize: 13,
+                              color:
+                                  kTextInputPlaceholderColor.withOpacity(0.25),
+                            ),
                             focusColor: korangecolor,
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: kTextInputPlaceholderColor.withOpacity(0.25),
+                                color: kTextInputPlaceholderColor
+                                    .withOpacity(0.25),
                               ),
-                            ) ,
+                            ),
                             focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
                                 color: korangecolor,
                               ),
                             )),
-                      ),SizedBox(
-                        height: h*0.01,
+                      ),
+                      SizedBox(
+                        height: h * 0.01,
                       ),
                       TextFormField(
+                        keyboardType: TextInputType.emailAddress,
+                        controller: mail,
                         cursorColor: korangecolor,
                         decoration: InputDecoration(
                             hintText: "E-Mail",
-                            hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.25),),
+                            hintStyle: GoogleFonts.montserrat(
+                              fontSize: 13,
+                              color:
+                                  kTextInputPlaceholderColor.withOpacity(0.25),
+                            ),
                             focusColor: korangecolor,
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: kTextInputPlaceholderColor.withOpacity(0.25),
+                                color: kTextInputPlaceholderColor
+                                    .withOpacity(0.25),
                               ),
-                            ) ,
+                            ),
                             focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
                                 color: korangecolor,
                               ),
                             )),
-                      ),SizedBox(
-                        height: h*0.01,
+                      ),
+                      SizedBox(
+                        height: h * 0.01,
                       ),
                       TextFormField(
+                        controller: carNumber,
                         cursorColor: korangecolor,
                         decoration: InputDecoration(
                             hintText: "Car Number",
-                            hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.25),),
+                            hintStyle: GoogleFonts.montserrat(
+                              fontSize: 13,
+                              color:
+                                  kTextInputPlaceholderColor.withOpacity(0.25),
+                            ),
                             focusColor: korangecolor,
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: kTextInputPlaceholderColor.withOpacity(0.25),
+                                color: kTextInputPlaceholderColor
+                                    .withOpacity(0.25),
                               ),
-                            ) ,
+                            ),
                             focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
                                 color: korangecolor,
@@ -366,10 +431,15 @@ class _SlotState extends State<Slot> {
                           child: TextFormField(
                             minLines: 1,
                             maxLines: 5,
+                            controller: option,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: "Optional",
-                                hintStyle: GoogleFonts.montserrat(fontSize: 13,color: kTextInputPlaceholderColor.withOpacity(0.25),),
+                                hintStyle: GoogleFonts.montserrat(
+                                  fontSize: 13,
+                                  color: kTextInputPlaceholderColor
+                                      .withOpacity(0.25),
+                                ),
                                 contentPadding: EdgeInsets.all(h * 0.01)),
                           ),
                         ),
@@ -384,11 +454,8 @@ class _SlotState extends State<Slot> {
                         h: h * 0.06,
                         buttonColor: korangecolor,
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const Cart(),
-                              ));
+                          bookSlot();
+                          setState(() {});
                         },
                       )
                     ]),
@@ -396,6 +463,24 @@ class _SlotState extends State<Slot> {
             ],
           ),
         ));
+  }
+
+  bookSlot() {
+    slot(name.text, mail.text, contect.text, carNumber.text, houseNo.text,
+            state.text, street.text, pinCode.text, option.text, date, time)
+        .then((value) {
+ 
+      Ids.slotid = value["_id"];
+      print(Ids.categoryid);
+      print(Ids.subcategoryid);
+      print(Ids.planid);
+      print(Ids.slotid);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Cart(),
+          ));
+    });
   }
 }
 
@@ -429,42 +514,35 @@ class _CalendarState extends State<Calendar> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        top: h*0.01,
-        bottom: h*0.02,
-        left: w*0.04,
-        right: w*0.04
-      ),
+          top: h * 0.01, bottom: h * 0.02, left: w * 0.04, right: w * 0.04),
       child: Column(
-
         children: [
-        Padding(
-          padding:  EdgeInsets.only(bottom: h*0.02,right: w*0.025),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text(
-                "${DateFormat.MMMM().format(_focusedDay)}",
-                style: GoogleFonts.montserrat(
-                  fontSize: 21,
-                  fontWeight: FontWeight.bold,
-
-                ),
-              )
-            ],
+          Padding(
+            padding: EdgeInsets.only(bottom: h * 0.02, right: w * 0.025),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  "${DateFormat.MMMM().format(_focusedDay)}",
+                  style: GoogleFonts.montserrat(
+                    fontSize: 21,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+              ],
+            ),
           ),
-        ),
           TableCalendar(
             formatAnimationDuration: const Duration(seconds: 0),
             firstDay: kFirstDay,
             lastDay: kLastDay,
             focusedDay: _focusedDay,
             selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-headerVisible: false,
+            headerVisible: false,
             startingDayOfWeek: StartingDayOfWeek.monday,
             headerStyle: HeaderStyle(
                 leftChevronVisible: false,
                 formatButtonVisible: false,
-                
                 rightChevronVisible: false,
                 headerMargin: const EdgeInsets.only(right: 20),
                 titleTextStyle: GoogleFonts.montserrat(
@@ -523,8 +601,8 @@ headerVisible: false,
                   shape: BoxShape.circle, color: kDateCircleColor),
               weekendDecoration: const BoxDecoration(
                   shape: BoxShape.circle, color: kDateCircleColor),
-              rangeEndDecoration:
-                  const BoxDecoration(color: kbluecolor, shape: BoxShape.circle),
+              rangeEndDecoration: const BoxDecoration(
+                  color: kbluecolor, shape: BoxShape.circle),
             ),
             // rangeEndDay: _rangeEnd,
             calendarFormat: _calendarFormat,
@@ -534,15 +612,17 @@ headerVisible: false,
               //   if (_rangeStart!.day >= DateTime.now().day ||
               //       _rangeStart!.month > DateTime.now().month) {
               //     setState(() {
-                _focusedDay = focusedDay;
-                _selectedDay = selectedDay;
-                print(selectedDay);
+              _focusedDay = focusedDay;
+              _selectedDay = selectedDay;
+              date = DateFormat('yyyy-MMM-dd').format(_selectedDay!);
+              print(date);
+              print(selectedDay);
               // if (_selectedDay!.day < DateTime.now().day &&
               //     _selectedDay!.month < DateTime.now().month &&
               //     _selectedDay!.year < DateTime.now().year) {
               //   _selectedDay =null;
               //    setState(() {});
-                
+
               // }
 
               //       _rangeStart = null; // Important to clean those
@@ -575,9 +655,7 @@ headerVisible: false,
             onPageChanged: (focusedDay) {
               _focusedDay = focusedDay;
               print(focusedDay);
-              setState(() {
-                
-              });
+              setState(() {});
             },
           ),
         ],
@@ -615,7 +693,6 @@ class _TimeSlotState extends State<TimeSlot> {
       "end hour": "06",
       "end min": "00",
     },
-    
   ];
   @override
   void initState() {
@@ -644,6 +721,14 @@ class _TimeSlotState extends State<TimeSlot> {
                 change();
                 setState(() {
                   isSelected[index] = !isSelected[index];
+                  time = data[index]["start hour"] +
+                      " " +
+                      data[index]["start min"] +
+                      " : " +
+                      data[index]["end hour"] +
+                      " " +
+                      data[index]["end min"];
+                  print(time);
                 });
               },
               child: Row(

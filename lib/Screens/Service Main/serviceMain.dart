@@ -284,6 +284,8 @@ class _ServiceMainState extends State<ServiceMain> {
                       return GestureDetector(
                         onTap: () {
                           print(snapshot.data[index]["_id"].toString());
+                          Ids.categoryid=snapshot.data[index]["_id"].toString();
+                          print(Ids.categoryid+"===============");
                           Navigator.push(
                               context,
                               MaterialPageRoute(
