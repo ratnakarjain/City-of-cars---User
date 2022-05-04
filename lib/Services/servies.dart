@@ -433,14 +433,14 @@ Future slot(
 
 Future addcartitem(
 ) async {
-    var url = Uri.parse(slotUrl);
+    var url = Uri.parse(addcartUrl);
     try {
       var response = await http.post(url, body: {
         
-        "date": Ids.categoryid,
-        "time": Ids.subcategoryid,
-        "Street": Ids.planid,
-        "state": Ids.slotid,
+        "category": Ids.categoryid,
+        "subcategory": Ids.subcategoryid,
+        "Plans": Ids.planid,
+        "slot": Ids.slotid,
       },
       headers:{"Authorization": prefs!.getString('token').toString()}
 
@@ -448,7 +448,7 @@ Future addcartitem(
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         print(data);
-        return data["data"];
+        return data;
       } 
     } catch (e) {
       print("error $e");
@@ -495,3 +495,23 @@ Future addcartitem(
     );
   }
 }
+
+Future deletecartitem(String _id) async {
+    var url = Uri.parse(deletecartUrl);
+    try {
+      var response = await http.post(url, body: {
+        
+        "cartid": _id
+      },
+      headers:{"Authorization": prefs!.getString('token').toString()}
+
+      );
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        print(data);
+        return data;
+      } 
+    } catch (e) {
+      print("error $e");
+    }
+  }

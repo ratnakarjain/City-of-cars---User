@@ -30,6 +30,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
 
   var height;
   var width;
+  bool istaped = false;
   FocusNode myFocusNode = new FocusNode();
   FocusNode myFocusNode1 = new FocusNode();
 
@@ -471,11 +472,12 @@ class _LoginSignUpState extends State<LoginSignUp> {
                   )
                 : Container(),
             const SizedBox(height: 10),
-            RRecctButton(
+           istaped?loder: RRecctButton(
                 text: "CONTINUE",
                 onTap: !isSelected
                     ? () {
                         if (_formKey.currentState!.validate()) {
+                          istaped=true;
                           register();
                           // Navigator.push(
                           //     context,
@@ -486,10 +488,14 @@ class _LoginSignUpState extends State<LoginSignUp> {
                           mobile.clear();
                           mail.clear();
                           name.clear();
+                          setState(() {
+                            
+                          });
                         }
                       }
                     : () {
                         if (_formKey.currentState!.validate()) {
+                          istaped=true;
                           login();
                           // Navigator.push(
                           //     context,
@@ -500,6 +506,9 @@ class _LoginSignUpState extends State<LoginSignUp> {
                           mobile.clear();
                           mail.clear();
                           name.clear();
+                          setState(() {
+                            
+                          });
                         }
                       },
                 buttonColor: korangecolor,
@@ -559,11 +568,13 @@ class _LoginSignUpState extends State<LoginSignUp> {
           prefs!.setString("mobile", jsonResponse["data"]["mobile"].toString());
           token = prefs!.getString("token")!;
           print("$token");
+          istaped=false;
           Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => const Verfication(),
               ));
+
 
           return response.body;
         } else {
@@ -594,6 +605,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
           prefs!.setString("id", jsonResponse["data"]["_id"].toString());
           prefs!.setString("mobile", jsonResponse["data"]["mobile"].toString());
         print("$token");
+        istaped=false;
         Navigator.push(
             context,
             MaterialPageRoute(
