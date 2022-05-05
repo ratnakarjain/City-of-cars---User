@@ -1,4 +1,5 @@
 // ignore_for_file: deprecated_member_use
+import 'package:cityofcars/Screens/Service%20Main/slot.dart';
 import 'package:http/http.dart' as http;
 import 'package:cityofcars/Screens/selectCity.dart';
 import 'package:cityofcars/Services/servies.dart';
@@ -23,6 +24,7 @@ class _VerficationState extends State<Verfication> {
 
   var h;
   var w;
+  bool istaped = false;
   var _controller = TextEditingController();
   final defaultPinTheme = PinTheme(
     width: 56,
@@ -86,7 +88,7 @@ class _VerficationState extends State<Verfication> {
             SizedBox(
               height: h * 0.05,
             ),
-            RRecctButton(
+           istaped ? loder : RRecctButton(
               text: "CONTINUE",
               h: h * 0.07,
               w: w * 0.88,
@@ -94,7 +96,17 @@ class _VerficationState extends State<Verfication> {
               style: GoogleFonts.montserrat(
                   color: kwhitecolor, fontWeight: FontWeight.w600),
               onTap: () {
-                verify();
+                istaped=true;
+                
+                verify().whenComplete(() {
+                  istaped=false;
+                  setState(() {
+                    
+                  });
+                });
+                setState(() {
+                  
+                });
                 // Navigator.push(context,
                 //     MaterialPageRoute(builder: ((context) => SelectCity())));
  
@@ -105,7 +117,7 @@ class _VerficationState extends State<Verfication> {
       ),
     );
   }
-  verify()async{
+ Future verify()async{
     var url = Uri.parse(verification);
 try {
     var response = await http.post(url, body: {

@@ -18,4 +18,5 @@ const String slotUrl = baseUrl+"/BookingDetils";
 const String addcartUrl = baseUrl+"/AddCart";
 const String getcartUrl = baseUrl+"/getcartList";
 const String deletecartUrl = baseUrl+"/DeleteCart";
+const String sosUrl = baseUrl+"/AddSOS";
 String token = "";

@@ -1,3 +1,5 @@
+import 'package:cityofcars/Screens/Service%20Main/slot.dart';
+import 'package:cityofcars/Services/servies.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -15,7 +17,9 @@ class Sos extends StatefulWidget {
 class _SosState extends State<Sos> {
   var h;
   var w;
+  bool istap = false;
   var _controller = TextEditingController();
+  var prob = TextEditingController();
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
@@ -56,6 +60,7 @@ class _SosState extends State<Sos> {
               ),
               Container(
                 width: w,
+                height: h * 0.38,
                 decoration: BoxDecoration(
                     color: kwhitecolor,
                     borderRadius: BorderRadius.only(
@@ -71,40 +76,55 @@ class _SosState extends State<Sos> {
                     ]),
                 padding: EdgeInsets.symmetric(
                     horizontal: w * 0.15, vertical: h * 0.06),
-                child: Column(
-                  children: [
-                    Text(
-                      "This pack is essential every 3000 kms or 6 months whichever is earlier",
-                      style: GoogleFonts.montserrat(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w400,
-                        height: 2,
-                      ),
-                    ),
-                    SizedBox(
-                      height: h * 0.02,
-                    ),
-                    Text(
-                      "This pack is essential every 3000 kms or 6 months whichever is earlier",
-                      style: GoogleFonts.montserrat(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w400,
-                        height: 2,
-                      ),
-                    ),
-                    SizedBox(
-                      height: h * 0.02,
-                    ),
-                    Text(
-                      "This pack is essential every 3000 kms or 6 months whichever is earlier",
-                      style: GoogleFonts.montserrat(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w400,
-                        height: 2,
-                      ),
-                    ),
-                  ],
+                child: TextFormField(
+                  controller: prob,
+                  maxLines: 8,
+                  style: GoogleFonts.montserrat(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w400,
+                    height: 2,
+                  ),
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                  ),
                 ),
+                // child:
+                // Column(
+                //   children: [
+                //     Text(
+                //       "This pack is essential every 3000 kms or 6 months whichever is earlier",
+                //       style: GoogleFonts.montserrat(
+                //         fontSize: 10,
+                //         fontWeight: FontWeight.w400,
+                //         height: 2,
+                //       ),
+                //     ),
+                //     SizedBox(
+                //       height: h * 0.02,
+                //     ),
+                //     Text(
+                //       "This pack is essential every 3000 kms or 6 months whichever is earlier",
+                //       style: GoogleFonts.montserrat(
+                //         fontSize: 10,
+                //         fontWeight: FontWeight.w400,
+                //         height: 2,
+                //       ),
+                //     ),
+                //     SizedBox(
+                //       height: h * 0.02,
+                //     ),
+                //     Text(
+                //       "This pack is essential every 3000 kms or 6 months whichever is earlier",
+                //       style: GoogleFonts.montserrat(
+                //         fontSize: 10,
+                //         fontWeight: FontWeight.w400,
+                //         height: 2,
+                //       ),
+                //     ),
+                //   ],
+                // ),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
@@ -130,16 +150,23 @@ class _SosState extends State<Sos> {
                   ),
                 ),
               ),
-              Center(
-                child: RRecctButton(
-                  h: h * 0.06,
-                  w: w * 0.88,
-                  buttonColor: korangecolor,
-                  text: "CONFIRM REQUEST",
-                  style: GoogleFonts.montserrat(
-                      color: kwhitecolor, fontWeight: FontWeight.w600),
-                ),
-              ),
+              istaped
+                  ? loder
+                  : Center(
+                      child: RRecctButton(
+                        h: h * 0.06,
+                        w: w * 0.88,
+                        onTap: () {
+                          istaped = true;
+                          tosos();
+                          setState(() {});
+                        },
+                        buttonColor: korangecolor,
+                        text: "CONFIRM REQUEST",
+                        style: GoogleFonts.montserrat(
+                            color: kwhitecolor, fontWeight: FontWeight.w600),
+                      ),
+                    ),
               Center(
                 child: Text(
                   "We will respond you as soon as possible!",
@@ -228,5 +255,25 @@ class _SosState extends State<Sos> {
         ),
       ),
     );
+  }
+
+  Future tosos() async {
+    await sos(_controller.text, prob.text).then((value) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(value["msg"]),
+      ));
+    }).whenComplete(() async {
+      istaped = false;
+      _controller.clear();
+      prob.clear();
+      setState(() {});
+      // for(int i=0; i<data.length; i++){
+      //   plan=data[i]["Plans"];
+      //   print(plan.toString()+"+++++++++++=====");
+      // }
+      //       service.addAll(value);
+      //            print("================="+service.toString());
+      // print("================="+service[0]["title"].toString());
+    });
   }
 }
