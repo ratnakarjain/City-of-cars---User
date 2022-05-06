@@ -163,7 +163,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                "₹" + details["typeprice"][0]["price"],
+                                "₹" + details["typeprice"].toString(),
                                 style: GoogleFonts.montserrat(
                                     fontSize: 21,
                                     textStyle: const TextStyle(
@@ -171,7 +171,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     )),
                               ),
                               Text(
-                                details["typeprice"][0]["typename"],
+                                details["typename"],
                                 // "multi-brand price",
                                 style: GoogleFonts.montserrat(
                                     fontSize: 6,
@@ -203,7 +203,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                "₹" + details["servicepackprice"][0]["price"],
+                                "₹" + details["servicepackprice"].toString(),
                                 style: GoogleFonts.montserrat(
                                     fontSize: 12,
                                     textStyle: TextStyle(
@@ -212,7 +212,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             .withOpacity(0.5))),
                               ),
                               Text(
-                                details["servicepackprice"][0]["servicename"],
+                                details["servicename"],
                                 // "company authorised",
                                 style: GoogleFonts.montserrat(
                                     fontSize: 6,
@@ -562,7 +562,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             children: [
                               FittedBox(
                                 child: Text(
-                                    "Takes ${details["timming"][0]["hours"]} hrs",
+                                    "Takes ${details["hours"]} hrs",
                                     style: GoogleFonts.montserrat(
                                       fontSize: 11,
                                       fontWeight: FontWeight.w500,
@@ -571,7 +571,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               
                               FittedBox(
                                 child: Text(
-                                    "    Every ${details["timming"][0]["month"]} months    ",
+                                    "    Every ${details["month"]} months    ",
                                     style: GoogleFonts.montserrat(
                                       fontSize: 11,
                                       fontWeight: FontWeight.w500,

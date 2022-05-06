@@ -1,6 +1,5 @@
 // ignore_for_file: avoid_print
 
-import 'package:cityofcars/Screens/Service%20Main/slot.dart';
 import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Utils/Buttons/button.dart';
 import 'package:cityofcars/Utils/constants.dart';
@@ -30,7 +29,8 @@ class _LoginSignUpState extends State<LoginSignUp> {
 
   var height;
   var width;
-  bool istaped = false;
+  bool istaped1 = false;
+  bool istaped2 = false;
   FocusNode myFocusNode = new FocusNode();
   FocusNode myFocusNode1 = new FocusNode();
 
@@ -108,7 +108,8 @@ class _LoginSignUpState extends State<LoginSignUp> {
                   onTap: isSelected
                       ? () {
                           isSelected = !isSelected;
-    
+                          mobile.clear();
+                           
                           setState(() {
                             // mobile.clear();
                           });
@@ -171,6 +172,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
                                   return null;
                                 }
                               },
+                          // autovalidateMode: AutovalidateMode.onUserInteraction,
                               controller: name,
                               decoration: InputDecoration(
                                 hintText: "Name*",
@@ -232,12 +234,12 @@ class _LoginSignUpState extends State<LoginSignUp> {
                                 borderRadius:
                                     BorderRadius.circular(height * 0.05)),
                             child: TextFormField(
-                              onTap: () {
-                                setState(() {});
-                              },
+                              
+                              
                               controller: mobile,
                               focusNode: myFocusNode1,
                               keyboardType: TextInputType.phone,
+                          // autovalidateMode: AutovalidateMode.onUserInteraction,
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   mobileError = "Enter mobile Number";
@@ -245,14 +247,16 @@ class _LoginSignUpState extends State<LoginSignUp> {
                                   return "";
                                 } else if (value.length != 10) {
                                   setState(() {});
-                                  mobileError = "Mobile no. length shuld 10";
+                                  mobileError = "Mobile no. should be enter 10 digit";
                                   return "";
                                 } else {
                                   return null;
                                 }
                               },
+                              maxLength: 10,
                               decoration: InputDecoration(
                                 hintText: "Mobile No.*",
+                                counterText: "",
                                 errorStyle: const TextStyle(
                                   height: 0,
                                 ),
@@ -320,11 +324,13 @@ class _LoginSignUpState extends State<LoginSignUp> {
                                 } else if (!RegExp(
                                         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                     .hasMatch(value)) {
-                                  emailError = "Enter a valid email!";
+                                  emailError = "Enter a valid email";
                                   return '';
                                 }
                                 return null;
                               },
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+
                               decoration: InputDecoration(
                                 hintText: "E-Mail (Optional)",
                                 errorStyle: const TextStyle(
@@ -395,16 +401,19 @@ class _LoginSignUpState extends State<LoginSignUp> {
                             if (value!.isEmpty) {
                               return "Enter mobile Number";
                             } else if (value.length != 10) {
-                              return "Mobile no. length shuld 10";
+                              return "Mobile no. should be enter 10 digit";
                             } else {
                               return null;
                             }
                           },
+                          maxLength: 10,
                           // inputFormatters: [DialCodeFormatter()],
                           focusNode: myFocusNode3,
                           controller: mobile,
                           keyboardType: TextInputType.phone,
+                          // autovalidateMode: AutovalidateMode.onUserInteraction,
                           decoration: InputDecoration(
+                            counterText: "",
                             hintText: "Mobile No.*",
                             hintStyle: TextStyle(
                                 color:
@@ -472,53 +481,81 @@ class _LoginSignUpState extends State<LoginSignUp> {
                   )
                 : Container(),
             const SizedBox(height: 10),
-           istaped?loder: RRecctButton(
-                text: "CONTINUE",
-                onTap: !isSelected
-                    ? () {
-                        if (_formKey.currentState!.validate()) {
-                          istaped=true;
-                          register();
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //       builder: (context) => const Verfication(),
-                          //     ));
-    
-                          mobile.clear();
-                          mail.clear();
-                          name.clear();
-                          setState(() {
+            //this is login button
+            Visibility(
+              visible: isSelected,
+              child:istaped1?loder: RRecctButton(
+                  text: "CONTINUE",
+                  onTap:  () {
+                          if (_formKey.currentState!.validate()) {
+                            istaped1=true;
+                            login();
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //       builder: (context) => const Verfication(),
+                            //     ));
+                
+                            // mobile.clear();
+                            // mail.clear();
+                            // name.clear();
+                            setState(() {
+                              
+                            });
+                          }
+                        },
+                  buttonColor: korangecolor,
+                  style: GoogleFonts.montserrat(
+                      textStyle: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14)),
+                  h: 52,
+                  w: width - 44),
+            ),
+            // this is register button
+            Visibility(
+             visible: !isSelected,
+             child:istaped2?loder: RRecctButton(
+                  text: "CONTINUE",
+                  onTap: () {
+                          if (_formKey.currentState!.validate()) {
+                            istaped2=true;nameError="";
+                              emailError="";
+                              mobileError = "";
+                            register().whenComplete((){
+                              nameError="";
+                              emailError="";
+                              mobileError = "";
+                            });
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //       builder: (context) => const Verfication(),
+                            //     ));
+               
+                            // mobile.clear();
+                            // mail.clear();
+                            // name.clear();
+                            setState(() {
+                              
+                            });
                             
-                          });
-                        }
-                      }
-                    : () {
-                        if (_formKey.currentState!.validate()) {
-                          istaped=true;
-                          login();
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //       builder: (context) => const Verfication(),
-                          //     ));
-    
-                          mobile.clear();
-                          mail.clear();
-                          name.clear();
+                          }
                           setState(() {
-                            
-                          });
-                        }
-                      },
-                buttonColor: korangecolor,
-                style: GoogleFonts.montserrat(
-                    textStyle: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14)),
-                h: 52,
-                w: width - 44),
+                              
+                            });
+                        },
+                      
+                  buttonColor: korangecolor,
+                  style: GoogleFonts.montserrat(
+                      textStyle: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14)),
+                  h: 52,
+                  w: width - 44),
+           ),
             const SizedBox(height: 10),
             Visibility(
               visible: !isSelected,
@@ -546,7 +583,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
     name.dispose();
   }
 
-  register() async {
+ Future register() async {
     var url = Uri.parse(registerUrl);
     try {
       var response = await http.post(url, body: {
@@ -568,7 +605,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
           prefs!.setString("mobile", jsonResponse["data"]["mobile"].toString());
           token = prefs!.getString("token")!;
           print("$token");
-          istaped=false;
+          istaped2=false;
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -578,6 +615,10 @@ class _LoginSignUpState extends State<LoginSignUp> {
 
           return response.body;
         } else {
+          istaped2=false;
+          setState(() {
+            
+          });
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(jsonResponse["message"]),
           ));
@@ -605,13 +646,17 @@ class _LoginSignUpState extends State<LoginSignUp> {
           prefs!.setString("id", jsonResponse["data"]["_id"].toString());
           prefs!.setString("mobile", jsonResponse["data"]["mobile"].toString());
         print("$token");
-        istaped=false;
+        istaped1=false;
         Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => const Verfication(),
             ));
       } else if (response.statusCode == 201) {
+        istaped1=false;
+        setState(() {
+          
+        });
         var jsonResponse = convert.jsonDecode(response.body);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(jsonResponse["message"]),

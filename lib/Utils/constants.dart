@@ -56,4 +56,5 @@ class Ids{
   static String subcategoryid="";
   static String planid="";
   static String slotid="";
+  static String fuelid="";
 }

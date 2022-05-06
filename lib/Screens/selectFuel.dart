@@ -208,6 +208,7 @@ class _SelectFuelState extends State<SelectFuel> {
                                       onTap: () {
                                         CarsData.fuel = snapshot.data[index]["fuel"];
                                         CarsData.fuelimage = snapshot.data[index]["image"];
+                                        Ids.fuelid = snapshot.data[index]["_id"];
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
@@ -226,9 +227,9 @@ class _SelectFuelState extends State<SelectFuel> {
                                               Expanded(
                                                 child: CachedNetworkImage(
                                                   fit: BoxFit.fill,
-                                                  imageUrl: snapshot.data[index]["image"],
+                                                  imageUrl: snapshot.data[index]["image"] ?? "",
                                                   placeholder: (context, url) =>
-                                                      loder,
+                                                      Container(),
                                                   errorWidget:
                                                       (context, url, error) =>
                                                           const Icon(Icons.error),
