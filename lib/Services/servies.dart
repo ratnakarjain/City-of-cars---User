@@ -388,12 +388,14 @@ Future addcartitem() async {
       "category": Ids.categoryid,
       "subcategory": Ids.subcategoryid,
       "Plans": Ids.planid,
-      "slot": Ids.slotid,
+      "bookingdata": Ids.slotid,
     }, headers: {
       "Authorization": prefs!.getString('token').toString()
     });
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
+      Ids.cartid = data["data"]["_id"];
+      print(Ids.cartid+"123456789012345678901234567890");
       print(data);
       return data;
     }
@@ -403,7 +405,7 @@ Future addcartitem() async {
 }
 
 Future getcartitems() async {
-  var url = Uri.parse(getcartUrl);
+  var url = Uri.parse(getcartUrl+"?cartid="+Ids.cartid);
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -455,6 +457,22 @@ Future sos(String number, String problem) async {
   try {
     var response = await http.post(url,
         body: {"text": problem, "MobileNo": number},
+        headers: {"Authorization": prefs!.getString('token').toString()});
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      print(data);
+      return data;
+    }
+  } catch (e) {
+    print("error $e");
+  }
+}
+
+Future proceed(String cartid,) async {
+  var url = Uri.parse(proceedUrl);
+  try {
+    var response = await http.post(url,
+        body: {"cartid":cartid},
         headers: {"Authorization": prefs!.getString('token').toString()});
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);

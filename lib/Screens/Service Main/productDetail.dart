@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cityofcars/Screens/Service%20Main/cart.dart';
 import 'package:cityofcars/Screens/Service%20Main/slot.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
@@ -53,7 +54,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           elevation: 0,
           foregroundColor: kwhitecolor,
           centerTitle: false,
-          titleSpacing: -w*0.02,
+          titleSpacing: -w * 0.02,
           title: Text(
             "Periodic Services",
             style: GoogleFonts.montserrat(
@@ -397,156 +398,206 @@ class _ProductDetailsState extends State<ProductDetails> {
                               right: w * 0.15,
                               bottom: h * 0.035),
                           child: RRectCard(
-                            borderRadius: h * 0.01,
-                            color: kLightOrangeBgColor,
-                            // h: h * 0.21,
-                            w: w * 0.8,
-                            widget: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: w * 0.05, vertical: h * 0.03),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                              borderRadius: h * 0.01,
+                              color: kLightOrangeBgColor,
+                              // h: h * 0.21,
+                              w: w * 0.8,
+                              widget: Center(
+                                child: GridView.count(
+                                  crossAxisCount: 3,
+                                  childAspectRatio: 1.35,
+                                  shrinkWrap: true,
+                                  padding: EdgeInsets.only(
+                                      left: w * 0.05, right: w * 0.05, bottom: h*0.01,top:h*0.01),
+                                  children: List.generate(
+                                      details["services_id"].length, (index) {
+                                    return Container(
+                                      margin: EdgeInsets.only(top: h*0.01,),
+                                      decoration:  BoxDecoration(
+                                        border: index>details["services_id"].length-3 ? const Border(): const Border(bottom: BorderSide(color: Colors.blueGrey,width: .5))
+                                      ),
+                                      child: Column(
                                         children: [
-                                          Image.asset(
-                                            "assets/images/EngineOil.png",
+                                          CachedNetworkImage(
+                                            fit: BoxFit.fill,
                                             height: h * 0.03,
+                                            imageUrl: details["services_id"][index]
+                                                    ["image"]
+                                                .toString(),
+                                            placeholder: (context, url) =>
+                                                Container(),
+                                            errorWidget: (context, url, error) =>
+                                                Image.network(
+                                                    "https://i.gifer.com/DKke.gif"),
                                           ),
+                                          // Image.asset(
+                                          //   "assets/images/EngineOil.png",
+                                          //   height: h * 0.03,
+                                          // ),
                                           Text(
-                                            "Engine Oil",
-                                            textAlign: TextAlign.center,
-                                            textScaleFactor: 0.7,
+                                            details["services_id"][index]
+                                                    ["title"] ??
+                                                "",
+                                            // "Engine Oil ",
+                                            // textScaleFactor: 0.7,
                                             style: GoogleFonts.montserrat(
-                                                fontWeight: FontWeight.w500,
-                                                color:
-                                                    kTextInputPlaceholderColor
-                                                        .withOpacity(0.6)),
+                                                fontSize: 8,
+                                                fontWeight: FontWeight.w600,
+                                                color: kTextInputPlaceholderColor
+                                                    .withOpacity(0.6)),
                                           ),
                                         ],
                                       ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Image.asset(
-                                            "assets/images/oifilter.png",
-                                            height: h * 0.03,
-                                          ),
-                                          Text(
-                                            "Oil Filter",
-                                            textAlign: TextAlign.center,
-                                            textScaleFactor: 0.7,
-                                            style: GoogleFonts.montserrat(
-                                                fontWeight: FontWeight.w500,
-                                                color:
-                                                    kTextInputPlaceholderColor
-                                                        .withOpacity(0.6)),
-                                          ),
-                                        ],
-                                      ),
-                                      Column(
-                                        children: [
-                                          Image.asset(
-                                            "assets/images/wind.png",
-                                            height: h * 0.03,
-                                          ),
-                                          Text(
-                                            "Air Filter",
-                                            textScaleFactor: 0.7,
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.montserrat(
-                                                fontWeight: FontWeight.w500,
-                                                color:
-                                                    kTextInputPlaceholderColor
-                                                        .withOpacity(0.6)),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: h * 0.01,
-                                  ),
-                                  const Divider(
-                                    color: Colors.blueGrey,
-                                  ),
-                                  SizedBox(
-                                    height: h * 0.01,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Image.asset(
-                                            "assets/images/cabin_filter.png",
-                                            height: h * 0.03,
-                                          ),
-                                          Text(
-                                            "Cabin filter",
-                                            textScaleFactor: 0.7,
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.montserrat(
-                                                fontWeight: FontWeight.w500,
-                                                color:
-                                                    kTextInputPlaceholderColor
-                                                        .withOpacity(0.6)),
-                                          ),
-                                        ],
-                                      ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Image.asset(
-                                            "assets/images/clutch_overhaul.png",
-                                            height: h * 0.03,
-                                          ),
-                                          Text(
-                                            "Clutch \noverhaul",
-                                            textScaleFactor: 0.7,
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.montserrat(
-                                                fontWeight: FontWeight.w500,
-                                                color:
-                                                    kTextInputPlaceholderColor
-                                                        .withOpacity(0.6)),
-                                          ),
-                                        ],
-                                      ),
-                                      Column(
-                                        children: [
-                                          Image.asset(
-                                            "assets/images/break_overhaul.png",
-                                            height: h * 0.03,
-                                          ),
-                                          Text(
-                                            "Breake \noverhaul",
-                                            textScaleFactor: 0.7,
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.montserrat(
-                                                fontWeight: FontWeight.w500,
-                                                color:
-                                                    kTextInputPlaceholderColor
-                                                        .withOpacity(0.6)),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                    );
+                                  }),
+                                ),
+                              )
+                              //  Padding(
+                              //   padding: EdgeInsets.symmetric(
+                              //       horizontal: w * 0.05, vertical: h * 0.03),
+                              //   child: Column(
+                              //     children: [
+                              //       Row(
+                              //         mainAxisAlignment:
+                              //             MainAxisAlignment.spaceAround,
+                              //         children: [
+                              //           Column(
+                              //             mainAxisAlignment:
+                              //                 MainAxisAlignment.spaceBetween,
+                              //             children: [
+                              //               Image.asset(
+                              //                 "assets/images/EngineOil.png",
+                              //                 height: h * 0.03,
+                              //               ),
+                              //               Text(
+                              //                 "Engine Oil",
+                              //                 textAlign: TextAlign.center,
+                              //                 textScaleFactor: 0.7,
+                              //                 style: GoogleFonts.montserrat(
+                              //                     fontWeight: FontWeight.w500,
+                              //                     color:
+                              //                         kTextInputPlaceholderColor
+                              //                             .withOpacity(0.6)),
+                              //               ),
+                              //             ],
+                              //           ),
+                              //           Column(
+                              //             mainAxisAlignment:
+                              //                 MainAxisAlignment.spaceBetween,
+                              //             children: [
+                              //               Image.asset(
+                              //                 "assets/images/oifilter.png",
+                              //                 height: h * 0.03,
+                              //               ),
+                              //               Text(
+                              //                 "Oil Filter",
+                              //                 textAlign: TextAlign.center,
+                              //                 textScaleFactor: 0.7,
+                              //                 style: GoogleFonts.montserrat(
+                              //                     fontWeight: FontWeight.w500,
+                              //                     color:
+                              //                         kTextInputPlaceholderColor
+                              //                             .withOpacity(0.6)),
+                              //               ),
+                              //             ],
+                              //           ),
+                              //           Column(
+                              //             children: [
+                              //               Image.asset(
+                              //                 "assets/images/wind.png",
+                              //                 height: h * 0.03,
+                              //               ),
+                              //               Text(
+                              //                 "Air Filter",
+                              //                 textScaleFactor: 0.7,
+                              //                 textAlign: TextAlign.center,
+                              //                 style: GoogleFonts.montserrat(
+                              //                     fontWeight: FontWeight.w500,
+                              //                     color:
+                              //                         kTextInputPlaceholderColor
+                              //                             .withOpacity(0.6)),
+                              //               ),
+                              //             ],
+                              //           ),
+                              //         ],
+                              //       ),
+                              //       SizedBox(
+                              //         height: h * 0.01,
+                              //       ),
+                              //       const Divider(
+                              //         color: Colors.blueGrey,
+                              //       ),
+                              //       SizedBox(
+                              //         height: h * 0.01,
+                              //       ),
+                              //       Row(
+                              //         mainAxisAlignment:
+                              //             MainAxisAlignment.spaceAround,
+                              //         children: [
+                              //           Column(
+                              //             mainAxisAlignment:
+                              //                 MainAxisAlignment.spaceBetween,
+                              //             children: [
+                              //               Image.asset(
+                              //                 "assets/images/cabin_filter.png",
+                              //                 height: h * 0.03,
+                              //               ),
+                              //               Text(
+                              //                 "Cabin filter",
+                              //                 textScaleFactor: 0.7,
+                              //                 textAlign: TextAlign.center,
+                              //                 style: GoogleFonts.montserrat(
+                              //                     fontWeight: FontWeight.w500,
+                              //                     color:
+                              //                         kTextInputPlaceholderColor
+                              //                             .withOpacity(0.6)),
+                              //               ),
+                              //             ],
+                              //           ),
+                              //           Column(
+                              //             mainAxisAlignment:
+                              //                 MainAxisAlignment.spaceBetween,
+                              //             children: [
+                              //               Image.asset(
+                              //                 "assets/images/clutch_overhaul.png",
+                              //                 height: h * 0.03,
+                              //               ),
+                              //               Text(
+                              //                 "Clutch \noverhaul",
+                              //                 textScaleFactor: 0.7,
+                              //                 textAlign: TextAlign.center,
+                              //                 style: GoogleFonts.montserrat(
+                              //                     fontWeight: FontWeight.w500,
+                              //                     color:
+                              //                         kTextInputPlaceholderColor
+                              //                             .withOpacity(0.6)),
+                              //               ),
+                              //             ],
+                              //           ),
+                              //           Column(
+                              //             children: [
+                              //               Image.asset(
+                              //                 "assets/images/break_overhaul.png",
+                              //                 height: h * 0.03,
+                              //               ),
+                              //               Text(
+                              //                 "Breake \noverhaul",
+                              //                 textScaleFactor: 0.7,
+                              //                 textAlign: TextAlign.center,
+                              //                 style: GoogleFonts.montserrat(
+                              //                     fontWeight: FontWeight.w500,
+                              //                     color:
+                              //                         kTextInputPlaceholderColor
+                              //                             .withOpacity(0.6)),
+                              //               ),
+                              //             ],
+                              //           ),
+                              //         ],
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
                               ),
-                            ),
-                          ),
                         )
                       ],
                     ),
@@ -561,14 +612,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               FittedBox(
-                                child: Text(
-                                    "Takes ${details["hours"]} hrs",
+                                child: Text("Takes ${details["hours"]} hrs",
                                     style: GoogleFonts.montserrat(
                                       fontSize: 11,
                                       fontWeight: FontWeight.w500,
                                     )),
                               ),
-                              
                               FittedBox(
                                 child: Text(
                                     "    Every ${details["month"]} months    ",
@@ -641,8 +690,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             color: Colors.black),
                         children: [
                           TextSpan(
-                            text:
-                                '\n\n\n${details["textField"]}\n\n\n\n\n',
+                            text: '\n\n\n${details["textField"]}\n\n\n\n\n',
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 9,

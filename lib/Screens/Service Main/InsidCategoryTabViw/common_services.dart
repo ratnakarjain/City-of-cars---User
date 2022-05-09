@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cityofcars/Utils/Buttons/button.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +29,7 @@ class _CommonServicesState extends State<CommonServices> {
   @override
   List plans = [];
   List keys = [];
+  List<bool> drop = [];
 
   int dropvalue = 0;
   ScrollController _scrollController = ScrollController();
@@ -37,6 +37,9 @@ class _CommonServicesState extends State<CommonServices> {
     // TODO: implement initState
     plans = widget.data;
     print(plans.toString() + "===============");
+    drop = List.generate(plans.length, (index) {
+      return false;
+    });
     print("++++++++++++++" + widget.subcategoryid);
     for (int i = 0; i < plans.length; i++) {
       keys.add(i);
@@ -72,357 +75,366 @@ class _CommonServicesState extends State<CommonServices> {
             itemCount: plans.length,
             itemBuilder: (context, index) {
               return Container(
-                color: kwhitecolor,
-                margin: EdgeInsets.only(
-                    top: h * 0.018, left: w * 0.01, right: w * 0.01),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    plans[index]["label"] != null
-                        ? Label(
-                            color: korangecolor,
-                            text: plans[index]["label"],
-                            textStyle: GoogleFonts.montserrat(
-                              fontSize: 6,
-                              textStyle: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: kwhitecolor),
-                            ),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 7, vertical: 3),
-                          )
-                        : SizedBox(
-                            height: h * 0.015,
-                          ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: w * 0.06, vertical: h * 0.01),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  plans[index]["planName"],
-                                  style: GoogleFonts.montserrat(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  plans[index]["servicepack"],
-                                  style: GoogleFonts.montserrat(
-                                      fontSize: 8,
-                                      fontWeight: FontWeight.w600,
-                                      color: kTextInputPlaceholderColor
-                                          .withOpacity(0.6)),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.all(h * 0.01),
-                            decoration: BoxDecoration(
-                                color: kLightOrangeBgColor,
-                                borderRadius: BorderRadius.circular(h * 0.01)),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text(
-                                  "₹" + plans[index]["typeprice"].toString(),
-                                  style: GoogleFonts.montserrat(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  "Incl. Taxes",
-                                  style: GoogleFonts.montserrat(
-                                      fontSize: 7,
-                                      fontWeight: FontWeight.w600,
-                                      color: kTextInputPlaceholderColor
-                                          .withOpacity(0.6)),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsets.only(left: w * 0.06, bottom: h * 0.01),
-                      child: Text(
-                        "Takes ${plans[index]["hours"]} Hrs / Every ${plans[index]["month"]} Months",
-                        style: GoogleFonts.montserrat(
-                            fontSize: 7,
-                            fontWeight: FontWeight.w600,
-                            color: kTextInputPlaceholderColor.withOpacity(0.6)),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: w * 0.03),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                child: GestureDetector(
+                  onTap: (){
+                    dropvalue=0;
+                    setState(() {
+                      
+                    });
+                  },
+                  child: Stack(
+                    children: [
+                      Container(
+                        height:  dropvalue == index+1 ?     h * 0.4 : h * 0.19,
+                        color: kwhitecolor,
+                        margin: EdgeInsets.only(
+                            top: h * 0.018, left: w * 0.01, right: w * 0.01),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Expanded(
-                                flex: 2,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    dropvalue = index;
-                                    // showGeneralDialog(context: keys[index].currentContext!, pageBuilder: pageBuilder)
-                                    // showGeneralDialog(
-                                    //   context: keys[index].currentContext!,
-                                    //   pageBuilder: ( context,
-                                    //       Animation<double> animation,
-                                    //       Animation<double>
-                                    //           secondaryAnimation) {
-                                    //     return AlertDialog(
-                                    //       content: Container(
-                                    //         width: 200.0,
-                                    //         height: 200.0,
-                                    //         color: Colors.orange,
-                                    //       ),
-                                    //     );
-                                    //   },
-                                    //   barrierDismissible: true,
-                                    //   barrierLabel:
-                                    //       MaterialLocalizations.of(context)
-                                    //           .modalBarrierDismissLabel,
-                                    //   barrierColor: Colors.black,
-                                    //   transitionDuration:
-                                    //       const Duration(milliseconds: 200),
-                                    // );
-                                    
-                                    setState(() {});
-                                  },
-                                  child: Container(
-                                    color: kLightOrangeBgColor,
-                                    height: h * 0.055,
-                                    width: w * 0.6,
-                                    margin: EdgeInsets.only(right: w * 0.03),
-                                    padding: EdgeInsets.all(h * 0.005),
-                                    child: Stack(children: [
-                                      Row(
-                                        children: [
-                                          SizedBox(
-                                              key: keys[index],
-                                              width: w * 0.55,
-                                              child: Row(
-                                                children: [
-                                                  Expanded(
-                                                    child: Row(
-                                                      children: [
-                                                        Center(
-                                                          child:
-                                                              ListView.builder(
-                                                            itemCount: plans[index]
-                                                                            [
-                                                                            "services_id"]
-                                                                        .length >
-                                                                    3
-                                                                ? 3
-                                                                : plans[index][
-                                                                        "services_id"]
-                                                                    .length,
-                                                            scrollDirection:
-                                                                Axis.horizontal,
-                                                            shrinkWrap: true,
-                                                            physics:
-                                                                const NeverScrollableScrollPhysics(),
-                                                            itemBuilder:
-                                                                (context,
-                                                                    indexx) {
-                                                              return Padding(
-                                                                padding: EdgeInsets
-                                                                    .symmetric(
-                                                                        horizontal:
-                                                                            w * 0.02),
-                                                                child: Column(
-                                                                  children: [
-                                                                    CachedNetworkImage(
-                                                                      fit: BoxFit
-                                                                          .fill,
-                                                                      height: h *
-                                                                          0.03,
-                                                                      imageUrl: plans[index]["services_id"][indexx]
-                                                                              [
-                                                                              "image"]
-                                                                          .toString(),
-                                                                      placeholder:
-                                                                          (context, url) =>
-                                                                              loder,
-                                                                      errorWidget: (context,
-                                                                              url,
-                                                                              error) =>
-                                                                          Image.network(
-                                                                              "https://i.gifer.com/DKke.gif"),
-                                                                    ),
-                                                                    // Image.asset(
-                                                                    //   "assets/images/EngineOil.png",
-                                                                    //   height: h * 0.03,
-                                                                    // ),
-                                                                    Text(
-                                                                      plans[index]["services_id"][indexx]
-                                                                              [
-                                                                              "title"] ??
-                                                                          "",
-                                                                      // "Engine Oil ",
-                                                                      // textScaleFactor: 0.7,
-                                                                      style: GoogleFonts.montserrat(
-                                                                          fontSize:
-                                                                              8,
-                                                                          fontWeight: FontWeight
-                                                                              .w600,
-                                                                          color:
-                                                                              kTextInputPlaceholderColor.withOpacity(0.6)),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              );
-                                                            },
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          width: w * 0.02,
-                                                        ),
-                                                        // Visibility(
-                                                        //   visible: plans[index][
-                                                        //               "services_id"]
-                                                        //           .length >
-                                                        //       3,
-                                                        //   child: Text(
-                                                        //       "+${plans[index]["services_id"].length - 3} more",
-                                                        //       style: GoogleFonts
-                                                        //           .montserrat(
-                                                        //         fontSize: 7,
-                                                        //         fontWeight:
-                                                        //             FontWeight
-                                                        //                 .w600,
-                                                        //       )),
-                                                        // ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  const Icon(
-                                                      Icons.arrow_forward_ios,
-                                                      size: 10),
-                                                ],
-                                              ))
-                                        ],
-                                      ),
-                                      // Visibility(
-                                      //   // visible: dropvalue.toString()==index.toString(),
-                                      //   visible: true,
-                                      //   child: Container(
-                                      //     width: w * 0.6,
-                                      //     child: GridView.count(
-                                      //       // controller: _controller,
-                                      //       shrinkWrap: true,
-                                      //       // mainAxisSpacing: 16,
-                                      //       // crossAxisSpacing: 16,
-                                      //       // childAspectRatio: 0.8,
-                                      //       crossAxisCount: 3,
-                                      //       children: List.generate(
-                                      //           plans[index]["services_id"]
-                                      //               .length, (indexx) {
-                                      //         return Padding(
-                                      //           padding: EdgeInsets.symmetric(
-                                      //               horizontal: w * 0.02),
-                                      //           child: Column(
-                                      //             children: [
-                                      //               CachedNetworkImage(
-                                      //                 fit: BoxFit.fill,
-                                      //                 height: h * 0.03,
-                                      //                 imageUrl: plans[index][
-                                      //                             "services_id"]
-                                      //                         [indexx]["image"]
-                                      //                     .toString(),
-                                      //                 placeholder:
-                                      //                     (context, url) =>
-                                      //                         loder,
-                                      //                 errorWidget: (context,
-                                      //                         url, error) =>
-                                      //                     Image.network(
-                                      //                         "https://i.gifer.com/DKke.gif"),
-                                      //               ),
-                                      //               // Image.asset(
-                                      //               //   "assets/images/EngineOil.png",
-                                      //               //   height: h * 0.03,
-                                      //               // ),
-                                      //               Text(
-                                      //                 plans[index]["services_id"]
-                                      //                             [indexx]
-                                      //                         ["title"] ??
-                                      //                     "",
-                                      //                 // "Engine Oil ",
-                                      //                 // textScaleFactor: 0.7,
-                                      //                 style: GoogleFonts.montserrat(
-                                      //                     fontSize: 8,
-                                      //                     fontWeight:
-                                      //                         FontWeight.w600,
-                                      //                     color:
-                                      //                         kTextInputPlaceholderColor
-                                      //                             .withOpacity(
-                                      //                                 0.6)),
-                                      //               ),
-                                      //             ],
-                                      //           ),
-                                      //         );
-                                      //       }),
-                                      //     ),
-                                      //   ),
-                                      // )
-                                    ]),
-                                  ),
-                                )
-                                // DropDown(data: plans[index]["services_id"]),
-                                ),
-                            Expanded(
-                              child: RRecctButton2(
-                                onTap: () {
-                                  Ids.subcategoryid = widget.subcategoryid;
-                                  Ids.planid = plans[index]["_id"];
-                                  print(Ids.categoryid);
-                                  print(Ids.subcategoryid);
-                                  print(Ids.planid);
-                                  // print(plans[index]["_id"]);
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ProductDetails(
-                                          planDetails: plans[index],
-                                        ),
-                                      ));
-                                },
-                                h: h * 0.045,
-                                w: w * 0.3,
-                                radius: h * 0.02,
-                                buttonColor: kGreenColor,
-                                widget: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("Book now ".toUpperCase(),
-                                        style: GoogleFonts.montserrat(
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.w600,
-                                            color: kwhitecolor)),
-                                    SizedBox(
-                                      width: w * 0.01,
+                            plans[index]["label"] != null
+                                ? Label(
+                                    color: korangecolor,
+                                    text: plans[index]["label"],
+                                    textStyle: GoogleFonts.montserrat(
+                                      fontSize: 6,
+                                      textStyle: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: kwhitecolor),
                                     ),
-                                    Image.asset("assets/images/doublArrow.png"),
-                                  ],
-                                ),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 7, vertical: 3),
+                                  )
+                                : SizedBox(
+                                    height: h * 0.015,
+                                  ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: w * 0.06, vertical: h * 0.01),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          plans[index]["planName"],
+                                          style: GoogleFonts.montserrat(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          plans[index]["servicepack"],
+                                          style: GoogleFonts.montserrat(
+                                              fontSize: 8,
+                                              fontWeight: FontWeight.w600,
+                                              color: kTextInputPlaceholderColor
+                                                  .withOpacity(0.6)),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(h * 0.01),
+                                    decoration: BoxDecoration(
+                                        color: kLightOrangeBgColor,
+                                        borderRadius:
+                                            BorderRadius.circular(h * 0.01)),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          "₹" +
+                                              plans[index]["typeprice"]
+                                                  .toString(),
+                                          style: GoogleFonts.montserrat(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          "Incl. Taxes",
+                                          style: GoogleFonts.montserrat(
+                                              fontSize: 7,
+                                              fontWeight: FontWeight.w600,
+                                              color: kTextInputPlaceholderColor
+                                                  .withOpacity(0.6)),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
-                          ]),
-                    ),
-                    SizedBox(
-                      height: h * 0.02,
-                    )
-                  ],
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left: w * 0.06, bottom: h * 0.01),
+                              child: Text(
+                                "Takes ${plans[index]["hours"]} Hrs / Every ${plans[index]["month"]} Months",
+                                style: GoogleFonts.montserrat(
+                                    fontSize: 7,
+                                    fontWeight: FontWeight.w600,
+                                    color: kTextInputPlaceholderColor
+                                        .withOpacity(0.6)),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: w * 0.03),
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Expanded(
+                                        flex: 2,
+                                        child: GestureDetector(
+                                          onTap:plans[index]["services_id"].length <=3?(){}: () {
+                                            dropvalue = index+1;
+                                            // showGeneralDialog(context: keys[index].currentContext!, pageBuilder: pageBuilder)
+                                            // showGeneralDialog(
+                                            //   context: keys[index].currentContext!,
+                                            //   pageBuilder: ( context,
+                                            //       Animation<double> animation,
+                                            //       Animation<double>
+                                            //           secondaryAnimation) {
+                                            //     return AlertDialog(
+                                            //       content: Container(
+                                            //         width: 200.0,
+                                            //         height: 200.0,
+                                            //         color: Colors.orange,
+                                            //       ),
+                                            //     );
+                                            //   },
+                                            //   barrierDismissible: true,
+                                            //   barrierLabel:
+                                            //       MaterialLocalizations.of(context)
+                                            //           .modalBarrierDismissLabel,
+                                            //   barrierColor: Colors.black,
+                                            //   transitionDuration:
+                                            //       const Duration(milliseconds: 200),
+                                            // );
+                
+                                            setState(() {});
+                                          },
+                                          child: Container(
+                                            color: kLightOrangeBgColor,
+                                            height: h * 0.055,
+                                            width: w * 0.6,
+                                            margin:
+                                                EdgeInsets.only(right: w * 0.03),
+                                            padding: EdgeInsets.all(h * 0.005),
+                                            child: Row(
+                                              children: [
+                                                SizedBox(
+                                                    key: keys[index],
+                                                    width: w * 0.55,
+                                                    child: Row(
+                                                      children: [
+                                                        Expanded(
+                                                          child: Row(
+                                                            children: [
+                                                              Center(
+                                                                child: ListView
+                                                                    .builder(
+                                                                  itemCount: plans[index]["services_id"]
+                                                                              .length >
+                                                                          3
+                                                                      ? 3
+                                                                      : plans[index]
+                                                                              [
+                                                                              "services_id"]
+                                                                          .length,
+                                                                  scrollDirection:
+                                                                      Axis.horizontal,
+                                                                  shrinkWrap:
+                                                                      true,
+                                                                  physics:
+                                                                      const NeverScrollableScrollPhysics(),
+                                                                  itemBuilder:
+                                                                      (context,
+                                                                          indexx) {
+                                                                    return Padding(
+                                                                      padding: EdgeInsets.symmetric(
+                                                                          horizontal:
+                                                                              w * 0.02),
+                                                                      child:
+                                                                          Column(
+                                                                        children: [
+                                                                          CachedNetworkImage(
+                                                                            fit: BoxFit
+                                                                                .fill,
+                                                                            height:
+                                                                                h * 0.03,
+                                                                            imageUrl:
+                                                                                plans[index]["services_id"][indexx]["image"].toString(),
+                                                                            placeholder: (context, url) =>
+                                                                                Container(),
+                                                                            errorWidget: (context, url, error) =>
+                                                                                Image.network("https://i.gifer.com/DKke.gif"),
+                                                                          ),
+                                                                          // Image.asset(
+                                                                          //   "assets/images/EngineOil.png",
+                                                                          //   height: h * 0.03,
+                                                                          // ),
+                                                                          Text(
+                                                                            plans[index]["services_id"][indexx]["title"] ??
+                                                                                "",
+                                                                            // "Engine Oil ",
+                                                                            // textScaleFactor: 0.7,
+                                                                            style: GoogleFonts.montserrat(
+                                                                                fontSize: 8,
+                                                                                fontWeight: FontWeight.w600,
+                                                                                color: kTextInputPlaceholderColor.withOpacity(0.6)),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    );
+                                                                  },
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                width: w * 0.02,
+                                                              ),
+                                                              Visibility(
+                                                                visible: plans[index][
+                                                                            "services_id"]
+                                                                        .length >
+                                                                    3,
+                                                                child: Text(
+                                                                    "+${plans[index]["services_id"].length - 3} more",
+                                                                    style: GoogleFonts
+                                                                        .montserrat(
+                                                                      fontSize: 7,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                    )),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        const Icon(
+                                                            Icons
+                                                                .arrow_forward_ios,
+                                                            size: 10),
+                                                      ],
+                                                    ))
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                        // DropDown(data: plans[index]["services_id"]),
+                                        ),
+                                    Expanded(
+                                      child: RRecctButton2(
+                                        onTap: () {
+                                          Ids.subcategoryid =
+                                              widget.subcategoryid;
+                                          Ids.planid = plans[index]["_id"];
+                                          print(Ids.categoryid);
+                                          print(Ids.subcategoryid);
+                                          print(Ids.planid);
+                                          // print(plans[index]["_id"]);
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ProductDetails(
+                                                  planDetails: plans[index],
+                                                ),
+                                              ));
+                                        },
+                                        h: h * 0.045,
+                                        w: w * 0.3,
+                                        radius: h * 0.02,
+                                        buttonColor: kGreenColor,
+                                        widget: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text("Book now ".toUpperCase(),
+                                                style: GoogleFonts.montserrat(
+                                                    fontSize: 11,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: kwhitecolor)),
+                                            SizedBox(
+                                              width: w * 0.01,
+                                            ),
+                                            Image.asset(
+                                                "assets/images/doublArrow.png"),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ]),
+                            ),
+                            SizedBox(
+                              height: h * 0.02,
+                            )
+                          ],
+                        ),
+                      ),
+                      Visibility(
+                        visible: dropvalue == index+1,
+                        child: Positioned(
+                          left: w*0.04,
+                          top: h*0.13,
+                          child: Container(
+                            width: w * 0.6,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                      blurRadius: 3,
+                                      color: kblackcolor.withOpacity(0.2))
+                                ]),
+                            child: GridView.count(
+                                crossAxisSpacing: 1,
+                                mainAxisSpacing: 2,
+                                crossAxisCount: 3,
+                                childAspectRatio: 1.6,
+                                shrinkWrap: true,
+                                children: List.generate(
+                                    plans[index]["services_id"].length, (indexx) {
+                                  return Column(
+                                    children: [
+                                      CachedNetworkImage(
+                                        fit: BoxFit.fill,
+                                        height: h * 0.03,
+                                        imageUrl: plans[index]["services_id"][indexx]
+                                                ["image"]
+                                            .toString()  ,
+                                        placeholder: (context, url) => Container(),
+                                        errorWidget: (context, url, error) =>
+                                            Image.network(
+                                                "https://i.gifer.com/DKke.gif"),
+                                      ),
+                                      // Image.asset(
+                                      //   "assets/images/EngineOil.png",
+                                      //   height: h * 0.03,
+                                      // ),
+                                      Text(
+                                        plans[index]["services_id"][indexx]
+                                                ["title"] ??
+                                            "",
+                                        // "Engine Oil ",
+                                        // textScaleFactor: 0.7,
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: 8,
+                                            fontWeight: FontWeight.w600,
+                                            color: kTextInputPlaceholderColor
+                                                .withOpacity(0.6)),
+                                      ),
+                                    ],
+                                  );
+                                })),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               );
             },

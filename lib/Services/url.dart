@@ -19,4 +19,5 @@ const String addcartUrl = baseUrl+"/AddCart";
 const String getcartUrl = baseUrl+"/getcartList";
 const String deletecartUrl = baseUrl+"/DeleteCart";
 const String sosUrl = baseUrl+"/AddSOS";
+const String proceedUrl = baseUrl+"/Proceed";
 String token = "";
