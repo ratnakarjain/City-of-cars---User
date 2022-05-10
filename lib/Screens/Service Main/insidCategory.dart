@@ -102,8 +102,8 @@ class _InsideCategoryState extends State<InsideCategory>
   final itemKey4 = GlobalKey();
   final _scrollkey = GlobalKey();
   List keys = [];
-  Subcategory? subcategory;
-  List<Data> subdata = [];
+  // Subcategory? subcategory;
+  // List<Data> subdata = [];
   ScrollController _scrollController = ScrollController();
   List service = [];
   @override

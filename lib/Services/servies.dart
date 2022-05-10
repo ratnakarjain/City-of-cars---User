@@ -395,7 +395,7 @@ Future addcartitem() async {
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       Ids.cartid = data["data"]["_id"];
-      print(Ids.cartid+"123456789012345678901234567890");
+      print(Ids.cartid + "123456789012345678901234567890");
       print(data);
       return data;
     }
@@ -405,7 +405,7 @@ Future addcartitem() async {
 }
 
 Future getcartitems() async {
-  var url = Uri.parse(getcartUrl+"?cartid="+Ids.cartid);
+  var url = Uri.parse(getcartUrl);
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -468,17 +468,88 @@ Future sos(String number, String problem) async {
   }
 }
 
-Future proceed(String cartid,) async {
+Future proceed() async {
   var url = Uri.parse(proceedUrl);
   try {
-    var response = await http.post(url,
-        body: {"cartid":cartid},
+    var response = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
-      print(data);
-      return data;
+      print(data["data"]);
+      return data["data"];
     }
+  } catch (e) {
+    print("error $e");
+  }
+}
+
+Future addorder() async {
+  var url = Uri.parse(addorderUrl);
+  try {
+    var response = await http.post(url, body: {
+      "category": Ids.categoryid,
+      "subcategory": Ids.subcategoryid,
+      "Plans": Ids.planid,
+      "bookingdata": Ids.slotid
+    }, headers: {
+      "Authorization": prefs!.getString('token').toString()
+    });
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      print(data);
+      return data["data"];
+    }
+     if (response.statusCode == 201) {
+      var data = jsonDecode(response.body);
+      print(data);
+      // return data;
+    }
+  } catch (e) {
+    print("error $e");
+  }
+}
+
+Future ordersuccess(String id) async {
+  var url = Uri.parse(ordersuccessUrl+"?id="+id);
+  try {
+    var response = await http.get(url,  headers: {
+      "Authorization": prefs!.getString('token').toString()
+    });
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      print(data);
+      return data["data"];
+    }
+    //  if (response.statusCode == 201) {
+    //   var data = jsonDecode(response.body);
+    //   print(data);
+    //   // return data;
+    // }
+  } catch (e) {
+    print("error $e");
+  }
+}
+Future rating(String rating) async {
+  var url = Uri.parse(ratingUrl);
+  try {
+    var response = await http.post(url,body: {
+       "user_id":Ids.userid,
+    "order_id":Ids.orderid,
+    "rating":rating,
+    "review":"good"
+    },  headers: {
+      "Authorization": prefs!.getString('token').toString()
+    });
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      print(data);
+      return data["msg"];
+    }
+    //  if (response.statusCode == 201) {
+    //   var data = jsonDecode(response.body);
+    //   print(data);
+    //   // return data;
+    // }
   } catch (e) {
     print("error $e");
   }

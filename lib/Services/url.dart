@@ -20,4 +20,7 @@ const String getcartUrl = baseUrl+"/getcartList";
 const String deletecartUrl = baseUrl+"/DeleteCart";
 const String sosUrl = baseUrl+"/AddSOS";
 const String proceedUrl = baseUrl+"/Proceed";
+const String addorderUrl = baseUrl+"/Addorder";
+const String ordersuccessUrl = baseUrl+"/viewUser";
+const String ratingUrl = baseUrl+"/Rating";
 String token = "";

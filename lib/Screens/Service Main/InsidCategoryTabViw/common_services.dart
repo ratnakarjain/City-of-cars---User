@@ -380,7 +380,7 @@ class _CommonServicesState extends State<CommonServices> {
                         visible: dropvalue == index+1,
                         child: Positioned(
                           left: w*0.04,
-                          top: h*0.13,
+                          top: h*0.11,
                           child: Container(
                             width: w * 0.6,
                             decoration: BoxDecoration(

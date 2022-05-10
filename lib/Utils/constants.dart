@@ -57,5 +57,7 @@ class Ids{
   static String planid="";
   static String slotid="";
   static String fuelid="";
-  static String cartid = "";
+  static String cartid="";
+  static String userid="";
+  static String orderid="";
 }

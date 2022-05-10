@@ -370,7 +370,9 @@ class _SlotState extends State<Slot> {
                             return null;
                           },
                           cursorColor: korangecolor,
+                          maxLength: 10,
                           decoration: InputDecoration(
+                            counterText: "",
                               hintText: "Contact*",
                               hintStyle: GoogleFonts.montserrat(
                                 fontSize: 13,

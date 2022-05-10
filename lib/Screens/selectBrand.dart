@@ -384,15 +384,15 @@ class _SelectBrandState extends State<SelectBrand> {
                     style: GoogleFonts.montserrat(
                         height: 2, fontWeight: FontWeight.w600),
                   ),
-                  Text(
-                    "245 shots",
-                    textScaleFactor: 0.8,
-                    style: GoogleFonts.montserrat(
-                      fontWeight: FontWeight.w600,
-                      height: 1.5,
-                      color: kblackcolor.withOpacity(0.6),
-                    ),
-                  ),
+                  // Text(
+                  //   "245 shots",
+                  //   textScaleFactor: 0.8,
+                  //   style: GoogleFonts.montserrat(
+                  //     fontWeight: FontWeight.w600,
+                  //     height: 1.5,
+                  //     color: kblackcolor.withOpacity(0.6),
+                  //   ),
+                  // ),
                   FutureBuilder(
                     future: getCarData().whenComplete(() {
                       

@@ -641,6 +641,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
         print("success");
         prefs!.setString("token", jsonResponse["token"]);
         token = prefs!.getString("token")!;
+        Ids.userid = jsonResponse["data"]["_id"];
           prefs!.setString("name", jsonResponse["data"]["name"].toString());
           prefs!.setString("email", jsonResponse["data"]["email"].toString());
           prefs!.setString("id", jsonResponse["data"]["_id"].toString());
