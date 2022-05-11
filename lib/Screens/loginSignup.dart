@@ -604,6 +604,8 @@ class _LoginSignUpState extends State<LoginSignUp> {
           prefs!.setString("id", jsonResponse["data"]["_id"].toString());
           prefs!.setString("mobile", jsonResponse["data"]["mobile"].toString());
           token = prefs!.getString("token")!;
+        Ids.userid = jsonResponse["data"]["_id"];
+
           print("$token");
           istaped2=false;
           Navigator.push(
@@ -647,6 +649,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
           prefs!.setString("id", jsonResponse["data"]["_id"].toString());
           prefs!.setString("mobile", jsonResponse["data"]["mobile"].toString());
         print("$token");
+        
         istaped1=false;
         Navigator.push(
             context,

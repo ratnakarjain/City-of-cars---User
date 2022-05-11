@@ -176,6 +176,7 @@ class _SelectCityState extends State<SelectCity> {
                                 onTap: () {
                                   CarsData.city = snapshot.data[index]["city"];
                                   CarsData.cityimage = snapshot.data[index]["image"];
+                                  Ids.cityid = snapshot.data[index]["_id"];
                                   print(CarsData.city);
                                   print(CarsData.cityimage);
                                   Navigator.push(

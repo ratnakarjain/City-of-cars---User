@@ -23,4 +23,5 @@ const String proceedUrl = baseUrl+"/Proceed";
 const String addorderUrl = baseUrl+"/Addorder";
 const String ordersuccessUrl = baseUrl+"/viewUser";
 const String ratingUrl = baseUrl+"/Rating";
+const String usercardataUrl = baseUrl+"/Addviewuser";
 String token = "";

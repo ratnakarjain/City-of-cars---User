@@ -37,7 +37,7 @@ class _PaymentState extends State<Payment> {
         med.price = data[i]["Plans"]["typeprice"].toString();
         med.hour = data[i]["Plans"]["hours"].toString();
         med.month = data[i]["Plans"]["month"].toString();
-        med.plotStreet = data[i]["bookingdata"]["houseNo"].toString() +
+        med.plotStreet = data[i]["bookingdata"]["House"].toString() +
             " " +
             data[i]["bookingdata"]["Street"].toString();
         med.cityCode = data[i]["bookingdata"]["state"].toString() +
@@ -48,10 +48,14 @@ class _PaymentState extends State<Payment> {
         med.name = data[i]["bookingdata"]["name"].toString();
         med.carno = data[i]["bookingdata"]["carno"].toString();
         list.add(med);
+        setState(() {
+          
+        });
         // print(list);
       }
-      setState(() {});
+      
     });
+    setState(() {});
     super.initState();
   }
 
@@ -432,7 +436,9 @@ class _PaymentState extends State<Payment> {
                       
                     });
                     addorder().then((value) {
+                      print(value["_id"]+"1234567890987654321");
                       String _id = value["_id"];
+                      
                       istaped=false;
                       Navigator.push(
                           context,
@@ -457,16 +463,21 @@ class _PaymentState extends State<Payment> {
                 padding: EdgeInsets.symmetric(horizontal: w * 0.04),
                 child: RRecctButton(
                   onTap: () {
-                    Navigator.pushAndRemoveUntil<dynamic>(
-                      context,
-                      MaterialPageRoute<dynamic>(
-                        builder: (BuildContext context) => BottomNavBar(
-                          index: 0,
-                        ),
-                      ),
-                      (route) =>
-                          false, //if you want to disable back feature set to false
-                    );
+                    // Navigator.pushAndRemoveUntil<dynamic>(
+                    //   context,
+                    //   MaterialPageRoute<dynamic>(
+                    //     builder: (BuildContext context) => BottomNavBar(
+                    //       index: 0,
+                    //     ),
+                    //   ),
+                    //   (route) =>
+                    //       false, //if you want to disable back feature set to false
+                    // );
+
+                    istaped=false;
+                    setState(() {
+                      
+                    });
                   },
                   text: "PAY ON DROP-OFF".toUpperCase(),
                   h: h * 0.07,

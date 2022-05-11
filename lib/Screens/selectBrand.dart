@@ -297,6 +297,7 @@ class _SelectBrandState extends State<SelectBrand> {
                                       onTap: () {
                                         CarsData.brand =snapshot.data[index]["brands"];
                                         CarsData.brandimage =snapshot.data[index]["image"];
+                                        Ids.brandid =snapshot.data[index]["_id"];
                                         print(CarsData.brand);
                                         print(CarsData.brandimage);
                                         bottumSheet();
@@ -437,6 +438,7 @@ class _SelectBrandState extends State<SelectBrand> {
                                   onTap: () {
                                         CarsData.name =snapshot.data[index]["cars"];
                                         CarsData.carimage =snapshot.data[index]["image"];
+                                        Ids.carid =snapshot.data[index]["_id"];
                                         print(CarsData.brand);
                                         print(CarsData.brandimage);
                                     Navigator.push(

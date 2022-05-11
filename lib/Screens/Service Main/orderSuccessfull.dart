@@ -62,7 +62,7 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                   Container(
                     height: h * 0.3,
                     width: w,
-                    margin: EdgeInsets.symmetric(horizontal: h * 0.05),
+                    margin: EdgeInsets.symmetric(horizontal: h * 0.055),
                     decoration: const BoxDecoration(
                       color: kwhitecolor,
                       image: DecorationImage(
@@ -74,6 +74,13 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
+                        Image.asset(
+                          "assets/images/right.png",
+                          height: h*0.08,
+                        ),
+                        SizedBox(
+                          height: h*0.02,
+                        ),
                         RichText(
                           textAlign: TextAlign.center,
                           text: TextSpan(

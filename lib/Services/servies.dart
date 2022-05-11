@@ -221,7 +221,7 @@ Future editProfile(
 }
 
 Future searchCity(String city) async {
-  var url = Uri.parse(searchCityUrl + "?city=" + city);
+  var url = Uri.parse(searchCityUrl + "?City=" + city);
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -246,7 +246,7 @@ Future searchCity(String city) async {
 }
 
 Future searchBrand(String brand) async {
-  var url = Uri.parse(searchBrandUrl + "?brand=" + brand);
+  var url = Uri.parse(searchBrandUrl + "?brands=" + brand);
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -490,7 +490,12 @@ Future addorder() async {
       "category": Ids.categoryid,
       "subcategory": Ids.subcategoryid,
       "Plans": Ids.planid,
-      "bookingdata": Ids.slotid
+      "bookingdata": Ids.slotid,
+      "fuel":Ids.fuelid,
+      "car":Ids.carid,
+      "brand":Ids.brandid,
+      "city":Ids.cityid,
+      "user":Ids.userid
     }, headers: {
       "Authorization": prefs!.getString('token').toString()
     });
@@ -544,6 +549,33 @@ Future rating(String rating) async {
       var data = jsonDecode(response.body);
       print(data);
       return data["msg"];
+    }
+    //  if (response.statusCode == 201) {
+    //   var data = jsonDecode(response.body);
+    //   print(data);
+    //   // return data;
+    // }
+  } catch (e) {
+    print("error $e");
+  }
+}
+Future addusercitycardata() async {
+  var url = Uri.parse(usercardataUrl);
+  try {
+    var response = await http.post(url,body: {
+      
+    "user":Ids.userid,
+    "city":Ids.cityid,
+    "brand":Ids.brandid,
+    "car":Ids.carid,
+    "fuel":Ids.fuelid
+    },  headers: {
+      "Authorization": prefs!.getString('token').toString()
+    });
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      print(data);
+      return data["msg"]??"Error";
     }
     //  if (response.statusCode == 201) {
     //   var data = jsonDecode(response.body);

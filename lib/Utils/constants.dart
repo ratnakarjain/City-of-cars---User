@@ -60,4 +60,7 @@ class Ids{
   static String cartid="";
   static String userid="";
   static String orderid="";
+  static String cityid="";
+  static String carid="";
+  static String brandid="";
 }

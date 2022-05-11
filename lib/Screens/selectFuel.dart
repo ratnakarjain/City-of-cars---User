@@ -202,24 +202,36 @@ class _SelectFuelState extends State<SelectFuel> {
                                 controller: _controller,
                                 scrollDirection: Axis.vertical,
                                 crossAxisCount: 3,
-                                children: List.generate(snapshot.data.length, (index) {
+                                children: List.generate(snapshot.data.length,
+                                    (index) {
                                   return Center(
                                     child: GestureDetector(
                                       onTap: () {
-                                        CarsData.fuel = snapshot.data[index]["fuel"];
-                                        CarsData.fuelimage = snapshot.data[index]["image"];
-                                        Ids.fuelid = snapshot.data[index]["_id"];
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => const Glance(),
-                                            ));
+                                        CarsData.fuel =
+                                            snapshot.data[index]["fuel"];
+                                        CarsData.fuelimage =
+                                            snapshot.data[index]["image"];
+                                        Ids.fuelid =
+                                            snapshot.data[index]["_id"];
+                                        addusercitycardata().then((value) {
+                                          value != "Error"
+                                              ? Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const Glance(),
+                                                  ))
+                                              : ScaffoldMessenger.of(context)
+                                                  .showSnackBar(const SnackBar(
+                                                  content: Text("Error"),
+                                                ));
+                                        });
                                       },
                                       child: RRectCard(
                                         h: h * 0.12,
                                         w: h * 0.12,
                                         borderRadius: 30,
-                                        padding: EdgeInsets.all(h*0.01),
+                                        padding: EdgeInsets.all(h * 0.01),
                                         widget: Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
@@ -227,12 +239,14 @@ class _SelectFuelState extends State<SelectFuel> {
                                               Expanded(
                                                 child: CachedNetworkImage(
                                                   fit: BoxFit.fill,
-                                                  imageUrl: snapshot.data[index]["image"] ?? "",
+                                                  imageUrl: snapshot.data[index]
+                                                          ["image"] ??
+                                                      "",
                                                   placeholder: (context, url) =>
                                                       Container(),
-                                                  errorWidget:
-                                                      (context, url, error) =>
-                                                          const Icon(Icons.error),
+                                                  errorWidget: (context, url,
+                                                          error) =>
+                                                      const Icon(Icons.error),
                                                 ),
                                               ),
                                               // Image.asset(
