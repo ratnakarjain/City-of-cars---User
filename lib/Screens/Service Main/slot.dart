@@ -331,12 +331,11 @@ class _SlotState extends State<Slot> {
                         TextFormField(
                           cursorColor: korangecolor,
                           controller: name,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Please enter name";
-                            }
-                            return null;
-                          },
+                          validator: (value) => value!.isEmpty
+                        ? 'Enter Your Name'
+                        : RegExp('[a-zA-Z]').hasMatch(value)
+                            ? 'Enter a Valid Name'
+                            : null,
                           decoration: InputDecoration(
                               hintText: "Name*",
                               hintStyle: GoogleFonts.montserrat(
@@ -399,6 +398,17 @@ class _SlotState extends State<Slot> {
                           keyboardType: TextInputType.emailAddress,
                           controller: mail,
                           cursorColor: korangecolor,
+                          validator: (value) {
+                                if (value!.isEmpty) {
+                                  return null;
+                                } else if (!RegExp(
+                                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                    .hasMatch(value)) {
+                                  return "Enter a valid email";
+                                  
+                                }
+                                return null;
+                              },
                           decoration: InputDecoration(
                               hintText: "E-Mail",
                               hintStyle: GoogleFonts.montserrat(
@@ -503,8 +513,8 @@ class _SlotState extends State<Slot> {
                           buttonColor: korangecolor,
                           onTap: () {
                             if (_formKey.currentState!.validate()) {
-                              istaped=true;
-                              bookSlot();
+                              // istaped=true;
+                              // bookSlot();
                               setState(() {});
                             }
                           },

@@ -463,16 +463,16 @@ class _PaymentState extends State<Payment> {
                 padding: EdgeInsets.symmetric(horizontal: w * 0.04),
                 child: RRecctButton(
                   onTap: () {
-                    // Navigator.pushAndRemoveUntil<dynamic>(
-                    //   context,
-                    //   MaterialPageRoute<dynamic>(
-                    //     builder: (BuildContext context) => BottomNavBar(
-                    //       index: 0,
-                    //     ),
-                    //   ),
-                    //   (route) =>
-                    //       false, //if you want to disable back feature set to false
-                    // );
+                    Navigator.pushAndRemoveUntil<dynamic>(
+                      context,
+                      MaterialPageRoute<dynamic>(
+                        builder: (BuildContext context) => BottomNavBar(
+                          index: 0,
+                        ),
+                      ),
+                      (route) =>
+                          false, //if you want to disable back feature set to false
+                    );
 
                     istaped=false;
                     setState(() {

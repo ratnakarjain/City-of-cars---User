@@ -30,6 +30,7 @@ class _InsideCategoryState extends State<InsideCategory>
   var w;
   var contexte;
   int currentPage = 0;
+  bool isLoading=false;
   String _id = "";
   PageController _pageController = PageController();
   List backimage = [
@@ -202,7 +203,12 @@ class _InsideCategoryState extends State<InsideCategory>
           ),
         ),
       ),
-      body:service.isEmpty?loder: Column(
+      body:isLoading? loder: service.isEmpty?Center(child: Text(
+            "No Data Found",
+            style: GoogleFonts.montserrat(
+                textStyle: const TextStyle(
+                    fontWeight: FontWeight.bold, color: kTextInputPlaceholderColor)),
+          ),): Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -558,7 +564,7 @@ class _InsideCategoryState extends State<InsideCategory>
                   // ),
                   Label(
                     color: korangecolor,
-                    text: "recomend packes",
+                    text: "RECOMMEND packes",
                     textStyle: GoogleFonts.montserrat(
                       textStyle: const TextStyle(
                           fontSize: 11,
@@ -693,6 +699,10 @@ class _InsideCategoryState extends State<InsideCategory>
   }
 
   fecthdata(){
+    isLoading = true;
+    setState(() {
+      
+    });
     getSubcategory(_id).then((value) {
       setState(() {
         print("=============++++++++++++++");
@@ -706,6 +716,10 @@ class _InsideCategoryState extends State<InsideCategory>
         keys.add(i); 
         keys[i]= GlobalKey(); 
        }
+       isLoading =false;
+       setState(() {
+         
+       });
      
     });
   }
