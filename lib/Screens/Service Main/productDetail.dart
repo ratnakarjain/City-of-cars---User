@@ -232,11 +232,17 @@ class _ProductDetailsState extends State<ProductDetails> {
             ),
             RRecctButton2(
               onTap: () {
-                Navigator.push(
+                if(!service && !basic){
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please select price"),));
+                }else{
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const Slot(),
                     ));
+
+                }
+                
               },
               h: h * 0.05,
               w: w * 0.8,

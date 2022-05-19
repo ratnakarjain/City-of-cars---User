@@ -436,6 +436,13 @@ class _PaymentState extends State<Payment> {
                       
                     });
                     addorder().then((value) {
+                      if(value==false){
+                        istaped=false;
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Error"),));
+                        setState(() {
+                          
+                        });
+                      }
                       print(value["_id"]+"1234567890987654321");
                       String _id = value["_id"];
                       
@@ -463,16 +470,16 @@ class _PaymentState extends State<Payment> {
                 padding: EdgeInsets.symmetric(horizontal: w * 0.04),
                 child: RRecctButton(
                   onTap: () {
-                    Navigator.pushAndRemoveUntil<dynamic>(
-                      context,
-                      MaterialPageRoute<dynamic>(
-                        builder: (BuildContext context) => BottomNavBar(
-                          index: 0,
-                        ),
-                      ),
-                      (route) =>
-                          false, //if you want to disable back feature set to false
-                    );
+                    // Navigator.pushAndRemoveUntil<dynamic>(
+                    //   context,
+                    //   MaterialPageRoute<dynamic>(
+                    //     builder: (BuildContext context) => BottomNavBar(
+                    //       index: 0,
+                    //     ),
+                    //   ),
+                    //   (route) =>
+                    //       false, //if you want to disable back feature set to false
+                    // );
 
                     istaped=false;
                     setState(() {

@@ -24,4 +24,10 @@ const String addorderUrl = baseUrl+"/Addorder";
 const String ordersuccessUrl = baseUrl+"/viewUser";
 const String ratingUrl = baseUrl+"/Rating";
 const String usercardataUrl = baseUrl+"/Addviewuser";
+const String getorderhistoryUrl = baseUrl+"/orderHiostory";
+const String getestimatetimeUrl = baseUrl+"/getTimeEstimate";
+const String resentUpdateUrl = baseUrl+"/RecentUpdate";
+const String getApprovalsUrl = baseUrl+"/getApprovel";
+const String postApprovedstatusUrl = baseUrl+"/ApprovelStatus";
+
 String token = "";

@@ -80,14 +80,15 @@ class _SelectBrandState extends State<SelectBrand> {
   bool brandsloading = true;
   int? item;
   String selctedImage = "";
-  int ?shots;
+  int? shots;
   final _brand = TextEditingController();
-@override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
-   // shots= 0;
+    // shots= 0;
   }
+
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
@@ -164,10 +165,9 @@ class _SelectBrandState extends State<SelectBrand> {
                       color: ksearchTextColor.withOpacity(0.57),
                     ),
                     suffixIcon: InkWell(
-                      onTap: (){
-                        setState(() {
-                          
-                        });
+                      onTap: () {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                        setState(() {});
                       },
                       child: const Icon(
                         Icons.search,
@@ -221,10 +221,10 @@ class _SelectBrandState extends State<SelectBrand> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Visibility(
-                visible: _brand.text.isNotEmpty,
-                child: const Center(child: Text("Your search cities"),),
-              ),
+              // Visibility(
+              //   visible: _brand.text.isNotEmpty,
+              //   child: const Center(child: Text("Your search cities"),),
+              // ),
               isSelected
                   ? Padding(
                       padding: EdgeInsets.all(h * 0.03),
@@ -262,13 +262,16 @@ class _SelectBrandState extends State<SelectBrand> {
                       padding: EdgeInsets.symmetric(
                           horizontal: w * 0.05, vertical: 50),
                       child: FutureBuilder(
-                        future: _brand.text.isEmpty? getBrandss().whenComplete(() {
-                          print("=======================get");
-                          brandsloading = false;
-                        }) : searchBrand(_brand.text.toString()).whenComplete(() {
-                          print("=======================search");
-                          brandsloading = false; 
-                        }),
+                        future: _brand.text.isEmpty
+                            ? getBrandss().whenComplete(() {
+                                print("=======================get");
+                                brandsloading = false;
+                              })
+                            : searchBrand(_brand.text.toString())
+                                .whenComplete(() {
+                                print("=======================search");
+                                brandsloading = false;
+                              }),
                         builder: (context, AsyncSnapshot snapshot) {
                           if (brandsloading) {
                             return loder;
@@ -280,10 +283,90 @@ class _SelectBrandState extends State<SelectBrand> {
                             }
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
+                              if (snapshot.hasData) {
+                                if (snapshot.data.length == 0) {
+                                  return Text(
+                                    "Did not match",
+                                    style: GoogleFonts.montserrat(
+                                        textStyle: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: kTextInputPlaceholderColor,
+                                    )),
+                                  );
+                                }
+                                return GridView.count(
+                                  shrinkWrap: true,
+                                  controller: _controller1,
+                                  crossAxisCount: 3,
+                                  crossAxisSpacing: h * 0.01,
+                                  mainAxisSpacing: h * 0.01,
+                                  padding: EdgeInsets.only(bottom: h * 0.02),
+                                  children: List.generate(snapshot.data.length,
+                                      (index) {
+                                    return GestureDetector(
+                                        onTap: () {
+                                          CarsData.brand =
+                                              snapshot.data[index]["brands"];
+                                          CarsData.brandimage =
+                                              snapshot.data[index]["image"];
+                                          Ids.brandid =
+                                              snapshot.data[index]["_id"];
+                                          print(CarsData.brand);
+                                          print(CarsData.brandimage);
+                                          bottumSheet();
+                                          item = index;
+                                          isSelected = true;
+                                          selctedImage =
+                                              snapshot.data[index]["image"];
+                                          print(selctedImage);
+                                          setState(() {});
+                                        },
+                                        child: RRectCard(
+                                          h: h * 0.18,
+                                          w: h * 0.18,
+                                          borderRadius: 30,
+                                          padding: EdgeInsets.all(h * 0.015),
+                                          color: kwhitecolor,
+                                          widget: Container(
+                                            height: h * 0.1,
+                                            width: h * 0.1,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        h * 0.015),
+                                                image: DecorationImage(
+                                                    image: NetworkImage(
+                                                      snapshot.data[index]
+                                                              ["image"]
+                                                          .toString(),
+                                                    ),
+                                                    fit: BoxFit.fill)),
+                                            // child: Image.network(
+                                            //   snapshot.data[index]["image"]
+                                            //       .toString(),
+                                            //   fit: BoxFit.fill,
+                                            // ),
+                                          ),
+                                        ));
+                                  }),
+                                );
+                              }
                               return loder;
                             }
                             if (snapshot.connectionState ==
                                 ConnectionState.done) {
+                              if (snapshot.data.length == 0) {
+                                return Text(
+                                  "Did not match",
+                                  style: GoogleFonts.montserrat(
+                                      textStyle: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: kTextInputPlaceholderColor,
+                                  )),
+                                );
+                              }
                               return GridView.count(
                                 shrinkWrap: true,
                                 controller: _controller1,
@@ -295,9 +378,12 @@ class _SelectBrandState extends State<SelectBrand> {
                                     (index) {
                                   return GestureDetector(
                                       onTap: () {
-                                        CarsData.brand =snapshot.data[index]["brands"];
-                                        CarsData.brandimage =snapshot.data[index]["image"];
-                                        Ids.brandid =snapshot.data[index]["_id"];
+                                        CarsData.brand =
+                                            snapshot.data[index]["brands"];
+                                        CarsData.brandimage =
+                                            snapshot.data[index]["image"];
+                                        Ids.brandid =
+                                            snapshot.data[index]["_id"];
                                         print(CarsData.brand);
                                         print(CarsData.brandimage);
                                         bottumSheet();
@@ -396,9 +482,7 @@ class _SelectBrandState extends State<SelectBrand> {
                   // ),
                   FutureBuilder(
                     future: getCarData().whenComplete(() {
-                      
                       loading = false;
-                      
                     }),
                     initialData: const Center(
                       child: CircularProgressIndicator(),
@@ -418,7 +502,6 @@ class _SelectBrandState extends State<SelectBrand> {
                           return loder;
                         }
                         if (snapshot.connectionState == ConnectionState.done) {
-                          
                           return Container(
                             padding: EdgeInsets.symmetric(
                                 horizontal: w * 0.05, vertical: 10),
@@ -430,26 +513,26 @@ class _SelectBrandState extends State<SelectBrand> {
                               mainAxisSpacing: 10,
                               children:
                                   List.generate(snapshot.data.length, (index) {
-                                    // abc.SetTotalPrice(
-                                    //   snapshot.data.length
-                                    // );
-                                    shots = snapshot.data.length;
+                                // abc.SetTotalPrice(
+                                //   snapshot.data.length
+                                // );
+                                shots = snapshot.data.length;
                                 return GestureDetector(
                                   onTap: () {
-                                        CarsData.name =snapshot.data[index]["cars"];
-                                        CarsData.carimage =snapshot.data[index]["image"];
-                                        Ids.carid =snapshot.data[index]["_id"];
-                                        print(CarsData.brand);
-                                        print(CarsData.brandimage);
+                                    CarsData.name =
+                                        snapshot.data[index]["cars"];
+                                    CarsData.carimage =
+                                        snapshot.data[index]["image"];
+                                    Ids.carid = snapshot.data[index]["_id"];
+                                    print(CarsData.brand);
+                                    print(CarsData.brandimage);
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               const SelectFuel(),
                                         ));
-                                        setState(() {
-                                          
-                                        });
+                                    setState(() {});
                                   },
                                   child: RRectCard(
                                     h: h * 0.18,
@@ -507,6 +590,7 @@ class _SelectBrandState extends State<SelectBrand> {
     });
   }
 }
+
 class Shots extends ChangeNotifier {
   int shots = 0;
 

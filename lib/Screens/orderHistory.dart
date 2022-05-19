@@ -1,5 +1,6 @@
 import 'package:cityofcars/Screens/feedback.dart';
 import 'package:cityofcars/Screens/jobCard.dart';
+import 'package:cityofcars/Screens/tracking.dart';
 import 'package:cityofcars/Utils/Buttons/button.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:card_swiper/card_swiper.dart';
 
+import '../Services/servies.dart';
 import 'bottomnavBar.dart';
 
 class OrderHistory extends StatefulWidget {
@@ -26,6 +28,18 @@ class _OrderHistoryState extends State<OrderHistory> {
     "Primium",
     "Primium",
   ];
+  List datalist = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getOrderhistory().then((value) {
+      datalist.addAll(value);
+      print(datalist);
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
@@ -50,12 +64,20 @@ class _OrderHistoryState extends State<OrderHistory> {
             child: Column(
               children: [
                 SizedBox(
-                  height: h*0.01,
+                  height: h * 0.01,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     RRecctButton(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: ((context) => Tracking(
+                                      orderid: datalist[currentPage]["_id"],
+                                    ))));
+                      },
                       text: "Service Completed",
                       style: GoogleFonts.montserrat(
                           fontSize: 11,
@@ -84,13 +106,14 @@ class _OrderHistoryState extends State<OrderHistory> {
                     ),
                   ],
                 ),
-          
+
                 Swiper(
-                  itemCount: 4,
+                  itemCount: datalist.length,
                   layout: SwiperLayout.TINDER,
                   scrollDirection: Axis.horizontal,
                   axisDirection: AxisDirection.left,
                   itemWidth: w,
+                  loop: false,
                   itemHeight: h * 0.61,
                   onIndexChanged: (value) {
                     setState(() {
@@ -109,7 +132,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                       child: Stack(
                         children: [
                           Container(
-                            margin: EdgeInsets.only(bottom: h*0.01),
+                            margin: EdgeInsets.only(bottom: h * 0.01),
                             padding: EdgeInsets.symmetric(
                                 horizontal: w * 0.03, vertical: h * 0.03),
                             decoration: BoxDecoration(
@@ -128,10 +151,13 @@ class _OrderHistoryState extends State<OrderHistory> {
                             child: Column(
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: w*0.02),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: w * 0.02),
                                   child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       RichText(
                                           text: TextSpan(
@@ -139,35 +165,41 @@ class _OrderHistoryState extends State<OrderHistory> {
                                               style: GoogleFonts.montserrat(
                                                   fontSize: 8,
                                                   fontWeight: FontWeight.w400,
-                                                  color: kTextInputPlaceholderColor),
+                                                  color:
+                                                      kTextInputPlaceholderColor),
                                               children: [
                                             TextSpan(
                                                 text: "27th Oct\n",
                                                 style: GoogleFonts.montserrat(
                                                     fontSize: 8,
                                                     fontWeight: FontWeight.w700,
-                                                    color: kTextInputPlaceholderColor)),
+                                                    color:
+                                                        kTextInputPlaceholderColor)),
                                             TextSpan(
                                                 text: "BOOKING ID: ",
                                                 style: GoogleFonts.montserrat(
                                                     fontSize: 8,
                                                     fontWeight: FontWeight.w400,
-                                                    color: kTextInputPlaceholderColor)),
+                                                    color:
+                                                        kTextInputPlaceholderColor)),
                                             TextSpan(
                                                 text: "271292",
                                                 style: GoogleFonts.montserrat(
                                                     fontSize: 8,
                                                     fontWeight: FontWeight.w700,
-                                                    color: kTextInputPlaceholderColor))
+                                                    color:
+                                                        kTextInputPlaceholderColor))
                                           ])),
                                       Column(
-                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
                                         children: [
                                           Text("₹2700",
                                               style: GoogleFonts.montserrat(
                                                   fontSize: 19,
                                                   fontWeight: FontWeight.w700,
-                                                  color: kTextInputPlaceholderColor)),
+                                                  color:
+                                                      kTextInputPlaceholderColor)),
                                           RRecctButton(
                                             text: "Paid",
                                             style: GoogleFonts.montserrat(
@@ -183,7 +215,8 @@ class _OrderHistoryState extends State<OrderHistory> {
                                               style: GoogleFonts.montserrat(
                                                   fontSize: 9,
                                                   fontWeight: FontWeight.w400,
-                                                  color: kTextInputPlaceholderColor)),
+                                                  color:
+                                                      kTextInputPlaceholderColor)),
                                         ],
                                       )
                                     ],
@@ -207,7 +240,8 @@ class _OrderHistoryState extends State<OrderHistory> {
                                           style: GoogleFonts.montserrat(
                                               fontSize: 12,
                                               fontWeight: FontWeight.w400,
-                                              color: kTextInputPlaceholderColor)),
+                                              color:
+                                                  kTextInputPlaceholderColor)),
                                     ])),
                                 Image.asset(
                                   "assets/images/map.png",
@@ -227,7 +261,8 @@ class _OrderHistoryState extends State<OrderHistory> {
                                               style: GoogleFonts.montserrat(
                                                   fontSize: 11,
                                                   fontWeight: FontWeight.w400,
-                                                  color: kTextInputPlaceholderColor)),
+                                                  color:
+                                                      kTextInputPlaceholderColor)),
                                           TextSpan(
                                               text:
                                                   "The package includes the use of 3M products and services",
@@ -235,8 +270,9 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                   fontSize: 12,
                                                   height: 2,
                                                   fontWeight: FontWeight.w400,
-                                                  color: kTextInputPlaceholderColor
-                                                      .withOpacity(0.49))),
+                                                  color:
+                                                      kTextInputPlaceholderColor
+                                                          .withOpacity(0.49))),
                                         ])),
                               ],
                             ),
@@ -263,7 +299,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                       ),
                     );
                   },
-                  
+
                   // pagination: const SwiperPagination(
                   //     alignment: Alignment.bottomCenter,
                   //     builder: SwiperPagination.dots),
@@ -273,7 +309,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                 ),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(4, (index) {
+                    children: List.generate(datalist.length, (index) {
                       return Container(
                         width: 8.0,
                         height: 8.0,
@@ -281,14 +317,15 @@ class _OrderHistoryState extends State<OrderHistory> {
                             vertical: 10.0, horizontal: 4.0),
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color:
-                                index == currentPage ? kdarkpurple : ksubHading),
+                            color: index == currentPage
+                                ? kdarkpurple
+                                : ksubHading),
                       );
                     })),
                 SizedBox(
                   height: h * 0.01,
                 ),
-          
+
                 // Expanded(
                 //   child: Swiper.children(
                 //     layout: SwiperLayout.STACK,
@@ -418,19 +455,19 @@ class _OrderHistoryState extends State<OrderHistory> {
                 //     ],
                 //   ),
                 // ),
-          
+
                 RRecctButton(
                   onTap: () {
-                    Navigator.pushAndRemoveUntil<dynamic>(
-                      context,
-                      MaterialPageRoute<dynamic>(
-                        builder: (BuildContext context) => BottomNavBar(
-                          index: 0,
-                        ),
-                      ),
-                      (route) =>
-                          false, //if you want to disable back feature set to false
-                    );
+                    // Navigator.pushAndRemoveUntil<dynamic>(
+                    //   context,
+                    //   MaterialPageRoute<dynamic>(
+                    //     builder: (BuildContext context) => BottomNavBar(
+                    //       index: 0,
+                    //     ),
+                    //   ),
+                    //   (route) =>
+                    //       false, //if you want to disable back feature set to false
+                    // );
                   },
                   text: "BOOK AGAIN",
                   style: GoogleFonts.montserrat(
@@ -442,7 +479,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                   h: h * 0.06,
                 ),
                 SizedBox(
-                  height: h*0.1,
+                  height: h * 0.1,
                 )
               ],
             ),

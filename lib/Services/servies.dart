@@ -11,6 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
+import 'models/ApprovalsModel.dart';
+import 'models/recentsModel.dart';
+
 var prefs = Prefernece.pref;
 
 Future getcities() async {
@@ -389,6 +392,7 @@ Future addcartitem() async {
       "subcategory": Ids.subcategoryid,
       "Plans": Ids.planid,
       "bookingdata": Ids.slotid,
+      "user": Ids.userid
     }, headers: {
       "Authorization": prefs!.getString('token').toString()
     });
@@ -487,15 +491,16 @@ Future addorder() async {
   var url = Uri.parse(addorderUrl);
   try {
     var response = await http.post(url, body: {
-      "category": Ids.categoryid,
-      "subcategory": Ids.subcategoryid,
-      "Plans": Ids.planid,
-      "bookingdata": Ids.slotid,
-      "fuel":Ids.fuelid,
-      "car":Ids.carid,
-      "brand":Ids.brandid,
-      "city":Ids.cityid,
-      "user":Ids.userid
+      "category": Ids.categoryid.toString(),
+      "subcategory": Ids.subcategoryid.toString(),
+      "Plans": Ids.planid.toString(),
+      "bookingdata": Ids.slotid.toString(),
+      "fuel": Ids.fuelid.toString(),
+      "car": Ids.carid.toString(),
+      "brand": Ids.brandid.toString(),
+      "city": Ids.cityid.toString(),
+      "user": Ids.userid.toString(),
+      "status": ""
     }, headers: {
       "Authorization": prefs!.getString('token').toString()
     });
@@ -503,11 +508,12 @@ Future addorder() async {
       var data = jsonDecode(response.body);
       print(data);
       return data["data"];
-    }
-     if (response.statusCode == 201) {
+    } else if (response.statusCode == 201) {
       var data = jsonDecode(response.body);
       print(data);
       // return data;
+    } else {
+      return false;
     }
   } catch (e) {
     print("error $e");
@@ -515,11 +521,10 @@ Future addorder() async {
 }
 
 Future ordersuccess(String id) async {
-  var url = Uri.parse(ordersuccessUrl+"?id="+id);
+  var url = Uri.parse(ordersuccessUrl + "?id=" + id);
   try {
-    var response = await http.get(url,  headers: {
-      "Authorization": prefs!.getString('token').toString()
-    });
+    var response = await http.get(url,
+        headers: {"Authorization": prefs!.getString('token').toString()});
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       print(data);
@@ -534,15 +539,16 @@ Future ordersuccess(String id) async {
     print("error $e");
   }
 }
+
 Future rating(String rating) async {
   var url = Uri.parse(ratingUrl);
   try {
-    var response = await http.post(url,body: {
-       "user_id":Ids.userid,
-    "order_id":Ids.orderid,
-    "rating":rating,
-    "review":"good"
-    },  headers: {
+    var response = await http.post(url, body: {
+      "user_id": Ids.userid,
+      "order_id": Ids.orderid,
+      "rating": rating,
+      "review": "good"
+    }, headers: {
       "Authorization": prefs!.getString('token').toString()
     });
     if (response.statusCode == 200) {
@@ -559,23 +565,189 @@ Future rating(String rating) async {
     print("error $e");
   }
 }
+
 Future addusercitycardata() async {
   var url = Uri.parse(usercardataUrl);
   try {
-    var response = await http.post(url,body: {
-      
-    "user":Ids.userid,
-    "city":Ids.cityid,
-    "brand":Ids.brandid,
-    "car":Ids.carid,
-    "fuel":Ids.fuelid
-    },  headers: {
+    var response = await http.post(url, body: {
+      "user": Ids.userid,
+      "city": Ids.cityid,
+      "brand": Ids.brandid,
+      "car": Ids.carid,
+      "fuel": Ids.fuelid
+    }, headers: {
       "Authorization": prefs!.getString('token').toString()
     });
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       print(data);
-      return data["msg"]??"Error";
+      return data["msg"] ?? "Error";
+    }
+    //  if (response.statusCode == 201) {
+    //   var data = jsonDecode(response.body);
+    //   print(data);
+    //   // return data;
+    // }
+  } catch (e) {
+    print("error $e");
+  }
+}
+
+Future getOrderhistory() async {
+  var url = Uri.parse(getorderhistoryUrl + "?userid=" + Ids.userid);
+  try {
+    var respnse = await http.get(url,
+        headers: {"Authorization": prefs!.getString('token').toString()});
+    if (respnse.statusCode == 200) {
+      var data = jsonDecode(respnse.body);
+      if (data["status"]) {
+        // print(data["data"].toString());
+        print(data["data"].length.toString());
+        //  final Subcategory value = subcategoryFromJson(respnse.body);
+        //  print(value.data!.length);
+        // return data["data"];
+        return data["data"];
+      } else {
+        return Future.error(data["msg"]);
+        // print(
+        //   "Error====="
+        // );
+      }
+      // Future city = data["getCities"];
+      // print("success============== ${data["getCities"]}");
+
+    } else {
+      return Future.error("Server Error");
+      print("Error=====");
+    }
+  } catch (e) {
+    print("error $e");
+  }
+}
+
+Future getestimateTime(String id) async {
+  var url = Uri.parse(getorderhistoryUrl + "?orderid=" + id);
+  try {
+    var respnse = await http.get(url,
+        headers: {"Authorization": prefs!.getString('token').toString()});
+    if (respnse.statusCode == 200) {
+      var data = jsonDecode(respnse.body);
+      if (data["status"]) {
+        // print(data["data"].toString());
+        print(data["data"].length.toString());
+        //  final Subcategory value = subcategoryFromJson(respnse.body);
+        //  print(value.data!.length);
+        // return data["data"];
+        return data["data"];
+      } else {
+        return Future.error(data["msg"]);
+        // print(
+        //   "Error====="
+        // );
+      }
+      // Future city = data["getCities"];
+      // print("success============== ${data["getCities"]}");
+
+    } else {
+      return Future.error("Server Error");
+      print("Error=====");
+    }
+  } catch (e) {
+    print("error $e");
+  }
+}
+
+Future getrecentUpdates(String _id) async {
+  var url = Uri.parse(resentUpdateUrl + "?orderid=" + _id);
+  try {
+    var response = await http.get(url,
+        headers: {"Authorization": prefs!.getString('token').toString()});
+    if (response.statusCode == 200) {
+      // orders.clear();
+      var data = jsonDecode(response.body);
+      print(data);
+      List<RecentModel> list = [];
+      for (int i = 0; i < data["data"].length; i++) {
+        RecentModel model = RecentModel();
+        model.heading = data["data"][i]["heading"] ?? "";
+        model.subheading = data["data"][i]["subheading"] ?? "";
+        model.description = data["data"][i]["Description"] ?? "";
+        model.file = data["data"][i]["image"] ?? "";
+        model.time = data["data"][i]["time"] ?? "";
+        list.add(model);
+      }
+      return list;
+    } else {
+      return <RecentModel>[];
+    }
+    //  if (response.statusCode == 201) {
+    //   var data = jsonDecode(response.body);
+    //   print(data);
+    //   // return data;
+    // }
+  } catch (e) {
+    print("error $e");
+  }
+}
+
+Future getapproveddetails(String id) async {
+  var url = Uri.parse(getApprovalsUrl + "?orderid=" + id);
+  try {
+    var response = await http.get(url,
+        headers: {"Authorization": prefs!.getString('token').toString()});
+
+    if (response.statusCode == 200) {
+      List<ApprovalModel1> modellist = [];
+      var data = jsonDecode(response.body);
+      print(data);
+      if (data["status"] == true) {
+        for (int i = 0; i < data["data"].length; i++) {
+          ApprovalModel1 model = ApprovalModel1();
+          model.status = data["data"][i]["status"].toString();
+          model.description = data["data"][i]["description"].toString();
+          model.heading = data["data"][i]["heading"].toString();
+          model.image = data["data"][i]["image"].toString();
+          model.price = data["data"][i]["price"].toString();
+          model.qty = data["data"][i]["qty"].toString();
+          model.subheading = data["data"][i]["subheading"].toString();
+          modellist.add(model);
+        }
+      }
+      print(data);
+      return modellist;
+    } else {
+      List<ApprovalModel1> modellist = [];
+
+      return modellist;
+    }
+    //  if (response.statusCode == 201) {
+    //   var data = jsonDecode(response.body);
+    //   print(data);
+    //   // return data;
+    // }
+  } catch (e) {
+    print("error $e");
+  }
+}
+
+Future setApprooval(String id, String status,BuildContext context) async {
+  var url = Uri.parse(postApprovedstatusUrl);
+  try {
+    var response = await http.post(url,
+        body: {"aprovelid": id, "status": status},
+        headers: {"Authorization": prefs!.getString('token').toString()});
+
+    if (response.statusCode == 200) {
+      List<ApprovalModel1> modellist = [];
+      var data = jsonDecode(response.body);
+      print(data);
+
+      // print(data);
+      // return modellist;
+    } else {
+      List<ApprovalModel1> modellist = [];
+
+      return modellist;
     }
     //  if (response.statusCode == 201) {
     //   var data = jsonDecode(response.body);

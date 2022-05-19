@@ -26,17 +26,18 @@ class _SelectCityState extends State<SelectCity> {
     {"name": "Noida", "images": "3.png"},
     {"name": "Chandigarh", "images": "5.png"}
   ];
-  bool loading =true;
-  
+  bool loading = true;
+
   final _search = TextEditingController();
   @override
   void initState() {
     getcities().then((value) {
-      citydata = value ;
+      citydata = value;
     });
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
@@ -96,11 +97,10 @@ class _SelectCityState extends State<SelectCity> {
               Container(
                 height: size.height * 0.11,
                 color: kwhitecolor,
-                
                 padding: EdgeInsets.only(
                     left: size.width * 0.06,
                     right: size.width * 0.06,
-                    bottom: size.width*0.05,
+                    bottom: size.width * 0.05,
                     top: size.height * 0.02),
                 child: Material(
                   color: kwhitecolor,
@@ -119,11 +119,10 @@ class _SelectCityState extends State<SelectCity> {
                           color: ksearchTextColor.withOpacity(0.57),
                         ),
                         suffixIcon: InkWell(
-                          onTap: (){
-                            searchCity(_search.text.toString());
-                            setState(() {
-                              
-                            });
+                          onTap: () {
+                            // searchCity(_search.text.toString());
+                            FocusManager.instance.primaryFocus?.unfocus();
+                            setState(() {});
                           },
                           child: const Icon(
                             Icons.search,
@@ -142,111 +141,223 @@ class _SelectCityState extends State<SelectCity> {
                   ),
                 ),
               ),
-              Visibility(
-                visible: _search.text.isNotEmpty,
-                child: const Center(child: Text("Your search cities"),),
-              ),
+              // Visibility(
+              //   visible: _search.text.isNotEmpty,
+              //   child: const Center(child: Text("Your search cities"),),
+              // ),
               Container(
                 padding: EdgeInsets.symmetric(
                     horizontal: size.width * 0.07, vertical: 50),
                 color: kLightOrangeBgColor,
                 child: FutureBuilder(
-                    future: _search.text.isEmpty? getcities() : searchCity(_search.text.toString()),
+                    future: _search.text.isEmpty
+                        ? getcities()
+                        : searchCity(_search.text.toString()),
                     builder: (context, AsyncSnapshot snapshot) {
-                      if(snapshot.connectionState == ConnectionState.done){
-                        if(snapshot.hasData){
-                          loading=false;
-                        }
-                      }
-                      // print(snapshot.data.length);
-                      if (loading){
-                        return loder ;
-                      }else{
+                      if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasData) {
-                        return GridView.count(
-                          controller: _controller,
-                          shrinkWrap: true,
-                          mainAxisSpacing: size.height*0.02,
-                          crossAxisSpacing: size.width*0.02,
-                          crossAxisCount: 2,
-                          children:
-                              List.generate(snapshot.data.length, (index) {
-                            return Center(
-                              child: GestureDetector(
-                                onTap: () {
-                                  CarsData.city = snapshot.data[index]["city"];
-                                  CarsData.cityimage = snapshot.data[index]["image"];
-                                  Ids.cityid = snapshot.data[index]["_id"];
-                                  print(CarsData.city);
-                                  print(CarsData.cityimage);
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SelectBrand(),
-                                      ));
-                                },
-                                child: Card(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30)),
-                                  elevation: 8,
-                                  shadowColor: Colors.grey.withOpacity(0.2),
-                                  child: Container(
-                                    height: size.height * 0.17,
-                                    width: size.height * 0.17,
-                                    padding:
-                                        EdgeInsets.all(size.height * 0.008),
-                                    child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SizedBox(
-                                            height: size.height*0.01,
-                                          ),
-                                          Expanded(
-                                            child: 
-                                            ClipRRect(
-                                              borderRadius: BorderRadius.circular(size.height*0.01),
-                                              child: CachedNetworkImage(
-                                                fit: BoxFit.cover,
-                                                imageUrl:
-                                                    snapshot.data[index]["image"].toString(),
-                                                placeholder: (context, url) =>
-                                                  
-                                                  Container(),
-                                                    // loder,
-                                                    
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        const Icon(Icons.error),
-                                              ),
+                          print("===========++++++++++" +
+                              snapshot.hasData.toString());
+                              print(snapshot.data);
+                          if (snapshot.data.length == 0) {
+                            return Text(
+                              "Did not match",
+                              style: GoogleFonts.montserrat(
+                                  textStyle: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: kTextInputPlaceholderColor,
+                              )),
+                            );
+                          }
+                          return GridView.count(
+                            controller: _controller,
+                            shrinkWrap: true,
+                            mainAxisSpacing: size.height * 0.02,
+                            crossAxisSpacing: size.width * 0.02,
+                            crossAxisCount: 2,
+                            children:
+                                List.generate(snapshot.data.length, (index) {
+                              return Center(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    CarsData.city =
+                                        snapshot.data[index]["city"];
+                                    CarsData.cityimage =
+                                        snapshot.data[index]["image"];
+                                    Ids.cityid = snapshot.data[index]["_id"];
+                                    print(CarsData.city);
+                                    print(CarsData.cityimage);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const SelectBrand(),
+                                        ));
+                                  },
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30)),
+                                    elevation: 8,
+                                    shadowColor: Colors.grey.withOpacity(0.2),
+                                    child: Container(
+                                      height: size.height * 0.17,
+                                      width: size.height * 0.17,
+                                      padding:
+                                          EdgeInsets.all(size.height * 0.008),
+                                      child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SizedBox(
+                                              height: size.height * 0.01,
                                             ),
-                                            // Image.network(
-                                            //     snapshot.data[index]["image"].toString()),
-                                          ),
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                            snapshot.data[index]["city"],
-                                            style: GoogleFonts.montserrat(
-                                                textStyle: const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 12,
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                          )
-                                        ]),
+                                            Expanded(
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        size.height * 0.01),
+                                                child: CachedNetworkImage(
+                                                  fit: BoxFit.cover,
+                                                  imageUrl: snapshot.data[index]
+                                                          ["image"]
+                                                      .toString(),
+                                                  placeholder: (context, url) =>
+                                                      Container(),
+                                                  // loder,
+
+                                                  errorWidget: (context, url,
+                                                          error) =>
+                                                      const Icon(Icons.error),
+                                                ),
+                                              ),
+                                              // Image.network(
+                                              //     snapshot.data[index]["image"].toString()),
+                                            ),
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(
+                                              snapshot.data[index]["city"],
+                                              style: GoogleFonts.montserrat(
+                                                  textStyle: const TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                            )
+                                          ]),
+                                    ),
                                   ),
                                 ),
-                              ),
+                              );
+                            }),
+                          );
+                        }
+                      }
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        if (snapshot.hasData) {
+                           if (snapshot.data.length == 0) {
+                            return Text(
+                              "Did not match",
+                              style: GoogleFonts.montserrat(
+                                  textStyle: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: kTextInputPlaceholderColor,
+                              )),
                             );
-                          }),
-                        );
+                          }
+                          return GridView.count(
+                            controller: _controller,
+                            shrinkWrap: true,
+                            mainAxisSpacing: size.height * 0.02,
+                            crossAxisSpacing: size.width * 0.02,
+                            crossAxisCount: 2,
+                            children:
+                                List.generate(snapshot.data.length, (index) {
+                              return Center(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    CarsData.city =
+                                        snapshot.data[index]["city"];
+                                    CarsData.cityimage =
+                                        snapshot.data[index]["image"];
+                                    Ids.cityid = snapshot.data[index]["_id"];
+                                    print(CarsData.city);
+                                    print(CarsData.cityimage);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const SelectBrand(),
+                                        ));
+                                  },
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30)),
+                                    elevation: 8,
+                                    shadowColor: Colors.grey.withOpacity(0.2),
+                                    child: Container(
+                                      height: size.height * 0.17,
+                                      width: size.height * 0.17,
+                                      padding:
+                                          EdgeInsets.all(size.height * 0.008),
+                                      child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SizedBox(
+                                              height: size.height * 0.01,
+                                            ),
+                                            Expanded(
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        size.height * 0.01),
+                                                child: CachedNetworkImage(
+                                                  fit: BoxFit.cover,
+                                                  imageUrl: snapshot.data[index]
+                                                          ["image"]
+                                                      .toString(),
+                                                  placeholder: (context, url) =>
+                                                      Container(),
+                                                  // loder,
+
+                                                  errorWidget: (context, url,
+                                                          error) =>
+                                                      const Icon(Icons.error),
+                                                ),
+                                              ),
+                                              // Image.network(
+                                              //     snapshot.data[index]["image"].toString()),
+                                            ),
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(
+                                              snapshot.data[index]["city"],
+                                              style: GoogleFonts.montserrat(
+                                                  textStyle: const TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                            )
+                                          ]),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }),
+                          );
+                        }
+                        return loder;
                       }
                       return loder;
-                      }
-                      
+                      // print(snapshot.data.length);
                     }),
               ),
             ],

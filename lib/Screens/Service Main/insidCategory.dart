@@ -121,9 +121,9 @@ class _InsideCategoryState extends State<InsideCategory>
   
     fecthdata();
     
-    // _scrollController.addListener(() {
-    //   check();
-    // });
+    _scrollController.addListener(() {
+      check();
+    });
     super.initState();
     // keys.add(itemKey1);
     // keys.add(itemKey2);
@@ -686,7 +686,7 @@ class _InsideCategoryState extends State<InsideCategory>
     print(_scrollController.offset);
     print(_scrollkey.currentContext!.size!.height);
     _tabController.index = (_scrollController.offset) ~/
-        (_scrollkey.currentContext!.size!.height ~/ 4.5);
+        (_scrollkey.currentContext!.size!.height ~/ (keys.length));
     print(_tabController.index);
     setState(() {});
   }

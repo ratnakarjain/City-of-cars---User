@@ -14,7 +14,7 @@ var h;
 var w;
 String date = "";
 String time = "";
-bool istaped=false;
+bool istaped = false;
 
 class Slot extends StatefulWidget {
   const Slot({Key? key}) : super(key: key);
@@ -265,6 +265,9 @@ class _SlotState extends State<Slot> {
                                   if (value!.isEmpty) {
                                     return "Please enter state";
                                   }
+                                  if (!RegExp('[a-zA-Z]').hasMatch(value)) {
+                                    return 'Enter a Valid State';
+                                  }
                                   return null;
                                 },
                                 decoration: InputDecoration(
@@ -300,9 +303,14 @@ class _SlotState extends State<Slot> {
                                   if (value!.isEmpty) {
                                     return "Please enter pin code";
                                   }
+                                  if (value.length != 6) {
+                                    return "Pincode should be enter 6 digit";
+                                  }
                                   return null;
                                 },
+                                maxLength: 6,
                                 decoration: InputDecoration(
+                                  counterText: "",
                                     hintText: "Pin Code*",
                                     hintStyle: GoogleFonts.montserrat(
                                       fontSize: 13,
@@ -331,11 +339,15 @@ class _SlotState extends State<Slot> {
                         TextFormField(
                           cursorColor: korangecolor,
                           controller: name,
-                          validator: (value) => value!.isEmpty
-                        ? 'Enter Your Name'
-                        : RegExp('[a-zA-Z]').hasMatch(value)
-                            ? 'Enter a Valid Name'
-                            : null,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Enter Your Name';
+                            }
+                            if (!RegExp('[a-zA-Z]').hasMatch(value)) {
+                              return 'Enter a Valid Name';
+                            }
+                            return null;
+                          },
                           decoration: InputDecoration(
                               hintText: "Name*",
                               hintStyle: GoogleFonts.montserrat(
@@ -366,12 +378,15 @@ class _SlotState extends State<Slot> {
                             if (value!.isEmpty) {
                               return "Please enter contact number";
                             }
+                            if (value.length < 10) {
+                              return "Mobile no. should be enter 10 digit";
+                            }
                             return null;
                           },
                           cursorColor: korangecolor,
                           maxLength: 10,
                           decoration: InputDecoration(
-                            counterText: "",
+                              counterText: "",
                               hintText: "Contact*",
                               hintStyle: GoogleFonts.montserrat(
                                 fontSize: 13,
@@ -399,16 +414,15 @@ class _SlotState extends State<Slot> {
                           controller: mail,
                           cursorColor: korangecolor,
                           validator: (value) {
-                                if (value!.isEmpty) {
-                                  return null;
-                                } else if (!RegExp(
-                                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                    .hasMatch(value)) {
-                                  return "Enter a valid email";
-                                  
-                                }
-                                return null;
-                              },
+                            if (value!.isEmpty) {
+                              return null;
+                            } else if (!RegExp(
+                                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                .hasMatch(value)) {
+                              return "Enter a valid email";
+                            }
+                            return null;
+                          },
                           decoration: InputDecoration(
                               hintText: "E-Mail",
                               hintStyle: GoogleFonts.montserrat(
@@ -439,10 +453,15 @@ class _SlotState extends State<Slot> {
                             if (value!.isEmpty) {
                               return "Please enter car number";
                             }
+                            if (value.length != 10) {
+                              return "Please enter valid car no.";
+                            }
                             return null;
                           },
+                          maxLength: 10,
                           decoration: InputDecoration(
-                              hintText: "Car Number",
+                            counterText: "",
+                              hintText: "Car Number eg. RJ70ZX0000",
                               hintStyle: GoogleFonts.montserrat(
                                 fontSize: 13,
                                 color: kTextInputPlaceholderColor
@@ -505,20 +524,31 @@ class _SlotState extends State<Slot> {
                         SizedBox(
                           height: h * 0.02,
                         ),
-                       istaped?loder: RRecctButton(
-                          text: "continue".toUpperCase(),
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w700, color: kwhitecolor),
-                          h: h * 0.06,
-                          buttonColor: korangecolor,
-                          onTap: () {
-                            if (_formKey.currentState!.validate()) {
-                              // istaped=true;
-                              // bookSlot();
-                              setState(() {});
-                            }
-                          },
-                        )
+                        istaped
+                            ? loder
+                            : RRecctButton(
+                                text: "continue".toUpperCase(),
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w700,
+                                    color: kwhitecolor),
+                                h: h * 0.06,
+                                buttonColor: korangecolor,
+                                onTap: () {
+                                  if(date.isEmpty||time.isEmpty){
+                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(date.isEmpty?"Pick date please":"Pick time please"),));
+                                  }else{
+                                     if (_formKey.currentState!.validate()) {
+                                    istaped=true;
+                                    bookSlot();
+                                    setState(() {});
+                                  }
+
+                                  }
+
+                                  
+                                 
+                                },
+                              )
                       ]),
                 ),
               ),
@@ -536,7 +566,7 @@ class _SlotState extends State<Slot> {
       print(Ids.subcategoryid);
       print(Ids.planid);
       print(Ids.slotid);
-      istaped=false;
+      istaped = false;
       Navigator.push(
           context,
           MaterialPageRoute(
