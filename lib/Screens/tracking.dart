@@ -345,10 +345,14 @@ bool esti = false;
                                             MainAxisAlignment.spaceAround,
                                         children: [
                                           Expanded(
-                                            child: CircleAvatar(
-                                                backgroundColor: kdarkpurple,
-                                                child: Image.asset(
-                                                    "assets/images/heart.png")),
+                                            child: Column(
+                                              children: [
+                                                CircleAvatar(
+                                                    backgroundColor: kdarkpurple,
+                                                    child: Image.asset(
+                                                        "assets/images/heart.png")),
+                                              ],
+                                            ),
                                           ),
                                           Expanded(
                                             flex: 4,
@@ -369,7 +373,7 @@ bool esti = false;
                                                               kTextInputPlaceholderColor),
                                                       children: [
                                                         TextSpan(
-                                                            text: resmdl.heading,
+                                                            text: resmdl.heading+"\n",
                                                             // "Scout reached your location",
                                                             style: GoogleFonts.montserrat(
                                                                 fontSize: 10,

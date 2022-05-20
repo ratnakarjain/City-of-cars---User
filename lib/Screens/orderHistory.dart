@@ -1,6 +1,7 @@
 import 'package:cityofcars/Screens/feedback.dart';
 import 'package:cityofcars/Screens/jobCard.dart';
 import 'package:cityofcars/Screens/tracking.dart';
+import 'package:cityofcars/Services/models/orderhistoryModel.dart';
 import 'package:cityofcars/Utils/Buttons/button.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class _OrderHistoryState extends State<OrderHistory> {
     "Primium",
     "Primium",
   ];
-  List datalist = [];
+  List<OrderHistoryModel> datalist = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -56,7 +57,7 @@ class _OrderHistoryState extends State<OrderHistory> {
               GoogleFonts.montserrat(fontSize: 21, fontWeight: FontWeight.w700),
         ),
       ),
-      body: Container(
+      body:datalist.isEmpty? loder: Container(
           height: h,
           width: w,
           padding: EdgeInsets.symmetric(horizontal: h * 0.02),
@@ -75,10 +76,11 @@ class _OrderHistoryState extends State<OrderHistory> {
                             context,
                             MaterialPageRoute(
                                 builder: ((context) => Tracking(
-                                      orderid: datalist[currentPage]["_id"],
+                                      orderid: datalist[currentPage].orderid,
                                     ))));
                       },
-                      text: "Service Completed",
+                      text: datalist[currentPage].status!=""&&datalist[currentPage].status!="null"?datalist[currentPage].status:
+                      "Service Completed",
                       style: GoogleFonts.montserrat(
                           fontSize: 11,
                           fontWeight: FontWeight.w700,
@@ -121,6 +123,8 @@ class _OrderHistoryState extends State<OrderHistory> {
                     });
                   },
                   itemBuilder: (context, index) {
+                    OrderHistoryModel model = OrderHistoryModel();
+                    model = datalist[index];
                     return GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -183,7 +187,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                     color:
                                                         kTextInputPlaceholderColor)),
                                             TextSpan(
-                                                text: "271292",
+                                                text: model.orderid,
                                                 style: GoogleFonts.montserrat(
                                                     fontSize: 8,
                                                     fontWeight: FontWeight.w700,
@@ -194,7 +198,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.end,
                                         children: [
-                                          Text("₹2700",
+                                          Text("₹"+model.price,
                                               style: GoogleFonts.montserrat(
                                                   fontSize: 19,
                                                   fontWeight: FontWeight.w700,
@@ -222,13 +226,26 @@ class _OrderHistoryState extends State<OrderHistory> {
                                     ],
                                   ),
                                 ),
-                                Image.asset(
-                                  "assets/images/Uber.png",
-                                  height: h * 0.15,
+                                // Image.asset(
+                                //   "assets/images/Uber.png",
+                                //   height: h * 0.15,
+                                // ),
+                                Container(
+                                  height: h*0.15,
+                                  width: w*0.3,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                        model.carimage
+                                      ),
+                                      fit: BoxFit.fill
+                                    )
+                                  ),
+
                                 ),
                                 RichText(
                                     text: TextSpan(
-                                        text: "I20  ",
+                                        text: model.carname+"  ",
                                         style: GoogleFonts.montserrat(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w700,
@@ -250,14 +267,14 @@ class _OrderHistoryState extends State<OrderHistory> {
                                 RichText(
                                     textAlign: TextAlign.center,
                                     text: TextSpan(
-                                        text: "Premium\n",
+                                        text: model.packname+"\n",
                                         style: GoogleFonts.montserrat(
                                             fontSize: 32,
                                             fontWeight: FontWeight.w700,
                                             color: kTextInputPlaceholderColor),
                                         children: [
                                           TextSpan(
-                                              text: "Service Pack\n",
+                                              text: model.servicename+"\n",
                                               style: GoogleFonts.montserrat(
                                                   fontSize: 11,
                                                   fontWeight: FontWeight.w400,

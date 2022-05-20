@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cityofcars/Services/models/orderhistoryModel.dart';
 import 'package:cityofcars/Services/models/subcategory.dart';
 import 'package:cityofcars/Services/url.dart';
 import 'package:cityofcars/Utils/constants.dart';
@@ -599,16 +600,34 @@ Future getOrderhistory() async {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
     if (respnse.statusCode == 200) {
+      
       var data = jsonDecode(respnse.body);
+      List<OrderHistoryModel> modellist=[];
       if (data["status"]) {
+        for(int i = 0; i<data["data"].length;i++){
+          OrderHistoryModel model = OrderHistoryModel();
+          // model.carbrand=data["data"][i]["_id"] ;
+          model.carimage=data["data"][i]["car"]["image"].toString();
+          model.carname=data["data"][i]["car"]["cars"].toString();
+          // model.deliverydate=data["data"][i]["_id"];
+          // model.details=data["data"][i]["_id"];
+          model.orderid=data["data"][i]["_id"].toString();
+          model.packname=data["data"][i]["Plans"]["planName"].toString();
+          model.paystatus=data["data"][i]["_id"].toString();
+          model.price=data["data"][i]["Plans"]["typeprice"].toString();
+          model.servicename=data["data"][i]["Plans"]["servicepack"].toString();
+          model.status=data["data"][i]["status"].toString();
+          modellist.add(model);
+
+        }
         // print(data["data"].toString());
         print(data["data"].length.toString());
         //  final Subcategory value = subcategoryFromJson(respnse.body);
         //  print(value.data!.length);
         // return data["data"];
-        return data["data"];
+        return modellist;
       } else {
-        return Future.error(data["msg"]);
+        return <OrderHistoryModel>[];
         // print(
         //   "Error====="
         // );
