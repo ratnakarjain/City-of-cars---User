@@ -37,12 +37,14 @@ class _ProductDetailsState extends State<ProductDetails> {
     details = widget.planDetails;
     terms = details["Subcategory"];
     print(terms);
+    print(details);
     // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    print("enter the loop"+ details.toString());
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -124,7 +126,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        details["planName"],
+                        details["planName"].toString(),
                         style: GoogleFonts.montserrat(
                             textStyle: const TextStyle(
                           fontSize: 25,
@@ -132,7 +134,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         )),
                       ),
                       Text(
-                        details["planName"],
+                        details["planName"].toString(),
                         style: GoogleFonts.montserrat(
                             textStyle: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -172,7 +174,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     )),
                               ),
                               Text(
-                                details["typename"],
+                                details["typename"].toString(),
                                 // "multi-brand price",
                                 style: GoogleFonts.montserrat(
                                     fontSize: 6,
@@ -213,7 +215,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             .withOpacity(0.5))),
                               ),
                               Text(
-                                details["servicename"],
+                                details["servicename"].toString(),
                                 // "company authorised",
                                 style: GoogleFonts.montserrat(
                                     fontSize: 6,

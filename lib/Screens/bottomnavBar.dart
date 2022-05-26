@@ -9,6 +9,8 @@ import 'package:circular_bottom_navigation/circular_bottom_navigation.dart';
 import 'package:circular_bottom_navigation/tab_item.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../Utils/functions.dart';
+
 class BottomNavBar extends StatefulWidget {
   int index ;
    BottomNavBar({Key? key,required this.index}) : super(key: key);
@@ -52,23 +54,26 @@ class _BottomNavBarState extends State<BottomNavBar> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      body: widgets[selectedPos],
+    return WillPopScope(
+      onWillPop:(() =>  showExitPopup(context)),
+      child: Scaffold(
+        extendBody: true,
+        body: widgets[selectedPos],
 
-        bottomNavigationBar: CircularBottomNavigation(
-      tabItems,
-      controller: _navigationController,
-      barHeight: bottomNavBarHeight,
-      iconsSize: 20,
-      normalIconColor: kwhitecolor,
-      barBackgroundColor: kbluecolor,
-      animationDuration: Duration(milliseconds: 300),
-      selectedCallback: (selectedPos) {
-        setState(() {
-          this.selectedPos = selectedPos!;
-        });
-      },
-    ));
+          bottomNavigationBar: CircularBottomNavigation(
+        tabItems,
+        controller: _navigationController,
+        barHeight: bottomNavBarHeight,
+        iconsSize: 20,
+        normalIconColor: kwhitecolor,
+        barBackgroundColor: kbluecolor,
+        animationDuration: Duration(milliseconds: 300),
+        selectedCallback: (selectedPos) {
+          setState(() {
+            this.selectedPos = selectedPos!;
+          });
+        },
+      )),
+    );
   }
 }

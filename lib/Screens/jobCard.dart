@@ -1,10 +1,14 @@
+import 'dart:convert';
+
+import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class JobCard extends StatefulWidget {
-  const JobCard({Key? key}) : super(key: key);
+  String orderid;
+  JobCard({Key? key, required this.orderid}) : super(key: key);
 
   @override
   State<JobCard> createState() => _JobCardState();
@@ -69,8 +73,33 @@ class _JobCardState extends State<JobCard> {
     "Cabin Mats",
     "Toolkit / First Aid",
   ];
+  var data;
+  var geninfo;
+  var custCon;
+  var condi;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print(widget.orderid);
+    getjobcard(widget.orderid).then((value) {
+      if (value != null) {
+        data = value;
+        geninfo = jsonDecode(data["genCondition"]);
+        custCon = jsonDecode(data["customerConcerns"]);
+        condi = jsonDecode(data["condition"]);
+        print(condi);
+        print(custCon);
+        print(geninfo);
+        setState(() {});
+      }
+    });
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
+    print(widget.orderid.toString() + "==============");
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -85,511 +114,377 @@ class _JobCardState extends State<JobCard> {
               GoogleFonts.montserrat(fontSize: 21, fontWeight: FontWeight.w700),
         ),
       ),
-      body: Container(
-        height: h,
-        width: w,
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                margin: EdgeInsets.symmetric(
-                    vertical: h * 0.02, horizontal: w * 0.02),
-                child: Row(
+      body: data == null
+          ? Container()
+          : Container(
+              height: h,
+              width: w,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      flex: 2,
-                      child: RRectCard(
-                        // h: h * 0.1,
-                        // w: w * 0.6,
-                        padding: EdgeInsets.symmetric(
-                            horizontal: w * 0.06, vertical: h * 0.02),
-                        widget: RichText(
-                          textAlign: TextAlign.left,
-                          text: TextSpan(
-                              text: "Name:",
-                              style: GoogleFonts.montserrat(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w700,
-                                  height: 1.5,
-                                  color: ksubHading),
-                              children: [
-                                TextSpan(
-                                  text: " Rodriques\n",
-                                  style: GoogleFonts.montserrat(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w400,
-                                      color: ksubHading),
-                                ),
-                                TextSpan(
-                                  text: "Address",
-                                  style: GoogleFonts.montserrat(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w700,
-                                      color: ksubHading),
-                                ),
-                                TextSpan(
-                                  text: " - B-155, Model Town - 3,\n",
-                                  style: GoogleFonts.montserrat(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w400,
-                                      color: ksubHading),
-                                ),
-                                TextSpan(
-                                  text: "Delhi - 110009\n",
-                                  style: GoogleFonts.montserrat(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w400,
-                                      color: ksubHading),
-                                ),
-                                TextSpan(
-                                  text: "GST:",
-                                  style: GoogleFonts.montserrat(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w700,
-                                      color: ksubHading),
-                                ),
-                                TextSpan(
-                                  text: "07ABBCS0227P",
-                                  style: GoogleFonts.montserrat(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w400,
-                                      color: ksubHading),
-                                )
-                              ]),
-                        ),
-                        borderRadius: h * 0.05,
-                      ),
-                    ),
-                    Expanded(
-                      child: Column(
-                        children: [
-                          Image.asset("assets/images/Uber1.png"),
-                          RichText(
-                            text: TextSpan(
-                                text: "I20",
-                                style: GoogleFonts.montserrat(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 9,
-                                  height: 2,
-                                  color: kTextInputPlaceholderColor,
-                                ),
-                                children: [
-                                  TextSpan(
-                                      text: " Hyundai",
-                                      style: GoogleFonts.montserrat(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 9,
-                                          height: 2,
-                                          color: kTextInputPlaceholderColor))
-                                ]),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-
-              Container(
-                height: h * 0.2,
-                child: ListView.builder(
-                  physics: BouncingScrollPhysics(),
-                  controller: _controller1,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 3,
-                  itemBuilder: (context, index) {
-                    return Image.asset("assets/images/${images[index]}");
-                  },
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: w * 0.09),
-                child: Text(
-                  "Customer Concerns",
-                  style: GoogleFonts.montserrat(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
-                    color: kTextInputPlaceholderColor,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(h * 0.015),
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
+                    Container(
+                      margin: EdgeInsets.symmetric(
+                          vertical: h * 0.02, horizontal: w * 0.02),
                       child: Row(
                         children: [
                           Expanded(
                             flex: 2,
-                            child: Container(
-                              padding: EdgeInsets.only(left: w * 0.02),
-                              decoration: BoxDecoration(
-                                  color: kwhitecolor,
-                                  borderRadius:
-                                      BorderRadius.circular(h * 0.03)),
-                              child: ListView.builder(
-                                controller: _controller2,
-                                padding: EdgeInsets.all(h * 0.01),
-                                shrinkWrap: true,
-                                itemCount: heading.length,
-                                itemBuilder: ((context, index) {
-                                  return Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                            child: RRectCard(
+                              // h: h * 0.1,
+                              // w: w * 0.6,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: w * 0.06, vertical: h * 0.02),
+                              widget: RichText(
+                                textAlign: TextAlign.left,
+                                text: TextSpan(
+                                    text: "Name:",
+                                    style: GoogleFonts.montserrat(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w700,
+                                        height: 1.5,
+                                        color: ksubHading),
                                     children: [
-                                      Expanded(
-                                        flex: 2,
-                                        child: Text(
-                                          heading[index],
+                                      TextSpan(
+                                        text:
+                                            " ${data['orderid']["bookingdata"]["name"]}\n",
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w400,
+                                            color: ksubHading),
+                                      ),
+                                      TextSpan(
+                                        text: "Address",
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w700,
+                                            color: ksubHading),
+                                      ),
+                                      TextSpan(
+                                        text:
+                                            " - ${data['orderid']["bookingdata"]["houseNo"]}, ${data['orderid']["bookingdata"]["Street"]},\n",
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w400,
+                                            color: ksubHading),
+                                      ),
+                                      TextSpan(
+                                        text:
+                                            "${data['orderid']["bookingdata"]["state"]} - ${data['orderid']["bookingdata"]["pincode"]}\n",
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w400,
+                                            color: ksubHading),
+                                      ),
+                                      TextSpan(
+                                        text: "GST:",
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w700,
+                                            color: ksubHading),
+                                      ),
+                                      TextSpan(
+                                        text: "07ABBCS0227P",
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w400,
+                                            color: ksubHading),
+                                      )
+                                    ]),
+                              ),
+                              borderRadius: h * 0.05,
+                            ),
+                          ),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: h * 0.08,
+                                  width: w * 0.27,
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.circular(h * 0.02),
+                                      image: DecorationImage(
+                                          image: NetworkImage(
+                                              data["orderid"]["car"]["image"]),
+                                          fit: BoxFit.fill)),
+                                ),
+                                // Image.asset("assets/images/Uber1.png"),
+                                RichText(
+                                  text: TextSpan(
+                                      text: data["orderid"]["car"]["cars"],
+                                      style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 9,
+                                        height: 2,
+                                        color: kTextInputPlaceholderColor,
+                                      ),
+                                      children: [
+                                        TextSpan(
+                                            text:
+                                                " ${data["orderid"]["brand"]["brands"]}",
+                                            style: GoogleFonts.montserrat(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 9,
+                                                height: 2,
+                                                color:
+                                                    kTextInputPlaceholderColor))
+                                      ]),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+
+                    Container(
+                      height: h * 0.2,
+                      child: Center(
+                        child: ListView.builder(
+                          physics: BouncingScrollPhysics(),
+                          controller: _controller1,
+                          shrinkWrap: true,
+                          padding: EdgeInsets.symmetric(vertical: h * 0.015),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 1,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              height: h * 0.1,
+                              width: w * 0.27,
+                              margin:
+                                  EdgeInsets.symmetric(horizontal: w * 0.02),
+                              decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                      begin: Alignment.bottomCenter,
+                                      end: Alignment.center,
+                                      colors: [
+                                        kblackcolor.withOpacity(0.5),
+                                        kTransparent
+                                      ]),
+                                  borderRadius: BorderRadius.circular(h * 0.03),
+                                  image: DecorationImage(
+                                      image: NetworkImage(data["image"]),
+                                      fit: BoxFit.fill)),
+                              // child: Image.asset(
+                              //     "assets/images/${images[index]}")
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: w * 0.09),
+                      child: Text(
+                        "Customer Concerns",
+                        style: GoogleFonts.montserrat(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: kTextInputPlaceholderColor,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(h * 0.015),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 2,
+                                  child: Container(
+                                    height: h * 0.18,
+                                    padding: EdgeInsets.only(left: w * 0.02),
+                                    decoration: BoxDecoration(
+                                        color: kwhitecolor,
+                                        borderRadius:
+                                            BorderRadius.circular(h * 0.03)),
+                                    child: ListView.builder(
+                                      controller: _controller2,
+                                      padding: EdgeInsets.all(h * 0.01),
+                                      shrinkWrap: true,
+                                      itemCount: custCon.length,
+                                      itemBuilder: ((context, index) {
+                                        return Text(
+                                          custCon[index],
                                           style: GoogleFonts.montserrat(
                                               fontSize: 10,
                                               fontWeight: FontWeight.w700,
                                               color: ksubHading,
                                               height: 1.5),
-                                        ),
-                                      ),
-                                      VerticalDivider(
-                                        width: w * 0.05,
-                                        color: kTextInputPlaceholderColor,
-                                      ),
-                                      Expanded(
-                                        flex: 3,
-                                        child: Text(
-                                          subh[index],
-                                          style: GoogleFonts.montserrat(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w400,
-                                              color: ksubHading,
-                                              height: 1.5),
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                }),
-                              ),
+                                        );
+                                        // Row(
+                                        //   crossAxisAlignment:
+                                        //       CrossAxisAlignment.start,
+                                        //   children: [
+                                        //     Expanded(
+                                        //       flex: 2,
+                                        //       child: Text(
+                                        //         heading[index],
+                                        //         style: GoogleFonts.montserrat(
+                                        //             fontSize: 10,
+                                        //             fontWeight: FontWeight.w700,
+                                        //             color: ksubHading,
+                                        //             height: 1.5),
+                                        //       ),
+                                        //     ),
+                                        //     VerticalDivider(
+                                        //       width: w * 0.05,
+                                        //       color: kTextInputPlaceholderColor,
+                                        //     ),
+                                        //     Expanded(
+                                        //       flex: 3,
+                                        //       child: Text(
+                                        //         subh[index],
+                                        //         style: GoogleFonts.montserrat(
+                                        //             fontSize: 10,
+                                        //             fontWeight: FontWeight.w400,
+                                        //             color: ksubHading,
+                                        //             height: 1.5),
+                                        //       ),
+                                        //     ),
+                                        //   ],
+                                        // );
+                                      }),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
+                          SizedBox(
+                            width: w * 0.03,
+                          ),
+                          Expanded(
+                            child: RRectCard(
+                              h: h * 0.18,
+                              shadowColor: kTransparent,
+                              padding:
+                                  EdgeInsets.symmetric(vertical: h * 0.015),
+                              widget: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        Expanded(
+                                          child: Image.asset(
+                                              "assets/images/numP.png",
+                                              height: h * 0.03,
+                                              width: w * 0.08),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            data["orderid"]["bookingdata"]
+                                                    ["carno"]
+                                                .toString()
+                                                .toUpperCase(),
+                                            style: GoogleFonts.montserrat(
+                                                fontSize: 7,
+                                                color:
+                                                    kTextInputPlaceholderColor
+                                                        .withOpacity(0.48),
+                                                height: 1.5),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        Expanded(
+                                          child: Image.asset(
+                                              "assets/images/000.png",
+                                              height: h * 0.03,
+                                              width: w * 0.07),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            data["OdometerKms"].toString(),
+                                            style: GoogleFonts.montserrat(
+                                                fontSize: 7,
+                                                color:
+                                                    kTextInputPlaceholderColor
+                                                        .withOpacity(0.48),
+                                                height: 1.5),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        Expanded(
+                                          child: Image.asset(
+                                            "assets/images/EngineOil.png",
+                                            height: h * 0.03,
+                                            width: w * 0.07,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            "${data["fuel"]} Points",
+                                            style: GoogleFonts.montserrat(
+                                                fontSize: 7,
+                                                color:
+                                                    kTextInputPlaceholderColor
+                                                        .withOpacity(0.48),
+                                                height: 1.5),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                              borderRadius: h * 0.02,
+                            ),
+                          )
                         ],
                       ),
                     ),
-                    SizedBox(
-                      width: w * 0.01,
+                    Padding(
+                      padding: EdgeInsets.only(left: w * 0.09),
+                      child: Text(
+                        "Available",
+                        style: GoogleFonts.montserrat(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: kTextInputPlaceholderColor,
+                        ),
+                      ),
                     ),
-                    Expanded(
+                    Padding(
+                      padding: EdgeInsets.all(h * 0.01),
                       child: RRectCard(
-                        shadowColor: kTransparent,
-                        padding: EdgeInsets.symmetric(vertical: h * 0.015),
-                        widget: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: [
-                                Image.asset("assets/images/numP.png",
-                                    height: h * 0.03),
-                                Text(
-                                  "DL 8CAR 9327",
-                                  style: GoogleFonts.montserrat(
-                                      fontSize: 7,
-                                      color: kTextInputPlaceholderColor
-                                          .withOpacity(0.48),
-                                      height: 1.5),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: h * 0.02,
-                            ),
-                            Column(
-                              children: [
-                                Image.asset("assets/images/000.png",
-                                    height: h * 0.03),
-                                Text(
-                                  "DL 8CAR 9327",
-                                  style: GoogleFonts.montserrat(
-                                      fontSize: 7,
-                                      color: kTextInputPlaceholderColor
-                                          .withOpacity(0.48),
-                                      height: 1.5),
-                                )
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Image.asset("assets/images/EngineOil.png",
-                                    height: h * 0.03),
-                                Text(
-                                  "DL 8CAR 9327",
-                                  style: GoogleFonts.montserrat(
-                                      fontSize: 7,
-                                      color: kTextInputPlaceholderColor
-                                          .withOpacity(0.48),
-                                      height: 1.5),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                        borderRadius: h * 0.02,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: w * 0.09),
-                child: Text(
-                  "Available",
-                  style: GoogleFonts.montserrat(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
-                    color: kTextInputPlaceholderColor,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(h * 0.01),
-                child: RRectCard(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: w * 0.05, vertical: h * 0.02),
-                    widget: GridView.count(
-                      shrinkWrap: true,
-                      controller: _controller3,
-                      mainAxisSpacing: h*0.01,
-                      crossAxisSpacing: w*0.01,
-                      // scrollDirection: Axis.vertical,
-                      crossAxisCount: 3,
-                       childAspectRatio: 1.6,
-                      physics: NeverScrollableScrollPhysics(),
-                      // padding: EdgeInsets.all(10),
-                      children: List.generate(availabel.length, (index) {
-                        return RRectCard(
-                          color: kLightOrangeBgColor,
-                          h: 10,
-                          borderRadius: h * 0.03,
-                          padding: EdgeInsets.all(h * 0.01),
-                          widget: Center(
-                            child: Text(
-                              availabel[index],
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.montserrat(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w700,
-                                color: kTextInputPlaceholderColor,
-                              ),
-                            ),
-                          ),
-                        );
-                      }),
-                    ),
-                    borderRadius: h * 0.02),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: w * 0.09),
-                child: Text(
-                  "Not Available",
-                  style: GoogleFonts.montserrat(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
-                    color: kTextInputPlaceholderColor,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(h * 0.01),
-                child: RRectCard(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: w * 0.05, vertical: h * 0.02),
-                    widget: GridView.count(
-                      shrinkWrap: true,
-                       childAspectRatio: 1.6,
-                      controller: _controller3,
-                      scrollDirection: Axis.vertical,
-                      crossAxisCount: 3,
-                      crossAxisSpacing: w*0.01,
-                      mainAxisSpacing: h*0.01,
-
-                      // padding: EdgeInsets.all(10),
-                      children: List.generate(notAvailabel.length, (index) {
-                        return RRectCard(
-                          padding: EdgeInsets.all(h * 0.01),
-                          color: kredcolor,
-                          h: 10,
-                          borderRadius: h * 0.03,
-                          shadowColor: kTransparent,
-                          widget: Center(
-                            child: Text(
-                              notAvailabel[index],
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.montserrat(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w700,
-                                color: kwhitecolor,
-                              ),
-                            ),
-                          ),
-                        );
-                      }),
-                    ),
-                    borderRadius: h * 0.02),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: w * 0.09),
-                child: Text(
-                  "Missing Parts",
-                  style: GoogleFonts.montserrat(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
-                    color: kTextInputPlaceholderColor,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(h * 0.01),
-                child: RRectCard(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: w * 0.05, vertical: h * 0.02),
-                    widget: GridView.count(
-                       childAspectRatio: 1.6,
-                      crossAxisSpacing: w*0.01,
-                      mainAxisSpacing: h*0.01,
-                      shrinkWrap: true,
-                      controller: _controller3,
-                      scrollDirection: Axis.vertical,
-                      crossAxisCount: 3,
-                      // padding: EdgeInsets.all(10),
-                      children: List.generate(missingParts.length, (index) {
-                        return RRectCard(
-                          padding: EdgeInsets.all(h * 0.01),
-                          color: kLightOrangeBgColor,
-                          h: 10,
-                          borderRadius: h * 0.03,
-                          widget: Center(
-                            child: Text(
-                              missingParts[index],
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.montserrat(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w700,
-                                color: kTextInputPlaceholderColor
-                                    .withOpacity(0.63),
-                              ),
-                            ),
-                          ),
-                        );
-                      }),
-                    ),
-                    borderRadius: h * 0.02),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: w * 0.09),
-                child: Text(
-                  "Tyres",
-                  style: GoogleFonts.montserrat(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
-                    color: kTextInputPlaceholderColor,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(h * 0.01),
-                child: RRectCard(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: w * 0.05, vertical: h * 0.02),
-                    widget: Row(
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: RRectCard(
-                            padding: EdgeInsets.all(h * 0.01),
-                            color: kLightOrangeBgColor,
-                            h: h * 0.15,
-                            borderRadius: h * 0.06,
-                            widget: Center(
-                              child: Text(
-                                "Continental GT (3) MRGF (1)",
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.montserrat(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w700,
-                                  color: kTextInputPlaceholderColor,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: GridView.count(
-                              shrinkWrap: true,
-                              
-                       childAspectRatio: 1.6,
-                      crossAxisSpacing: w*0.01,
-                      mainAxisSpacing: h*0.01,
-                              controller: _controller3,
-                              scrollDirection: Axis.vertical,
-                              crossAxisCount: 2,
-                              // padding: EdgeInsets.all(10),
-                              children: [
-                                RRectCard(
-                                  padding: EdgeInsets.all(h * 0.01),
-                                  color: korangecolor,
-                                  borderRadius: h * 0.025,
-                                  widget: Center(
-                                    child: Text(
-                                      "FRT Left",
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.montserrat(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w700,
-                                        color: kwhitecolor,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                RRectCard(
-                                  padding: EdgeInsets.all(h * 0.01),
-                                  color: korangecolor,
-                                  borderRadius: h * 0.025,
-                                  widget: Center(
-                                    child: Text(
-                                      "FRT Right",
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.montserrat(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w700,
-                                        color: kwhitecolor,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                RRectCard(
-                                  padding: EdgeInsets.all(h * 0.01),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: w * 0.05, vertical: h * 0.02),
+                          widget: GridView.count(
+                            shrinkWrap: true,
+                            controller: _controller3,
+                            mainAxisSpacing: h * 0.01,
+                            crossAxisSpacing: w * 0.01,
+                            // scrollDirection: Axis.vertical,
+                            crossAxisCount: 3,
+                            childAspectRatio: 1.6,
+                            physics: NeverScrollableScrollPhysics(),
+                            // padding: EdgeInsets.all(10),
+                            children: List.generate(geninfo.length, (index) {
+                              return Visibility(
+                                visible: geninfo[index]["x"] == 1,
+                                child: RRectCard(
                                   color: kGreenColor,
-                                  borderRadius: h * 0.025,
-                                  widget: Center(
-                                    child: Text(
-                                      "RR Left",
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.montserrat(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w700,
-                                        color: kwhitecolor,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                RRectCard(
+                                  h: 10,
+                                  borderRadius: h * 0.03,
                                   padding: EdgeInsets.all(h * 0.01),
-                                  color: kredcolor,
-                                  borderRadius: h * 0.025,
                                   widget: Center(
                                     child: Text(
-                                      "RR Right",
+                                      geninfo[index]["heading"],
                                       textAlign: TextAlign.center,
                                       style: GoogleFonts.montserrat(
                                         fontSize: 10,
@@ -599,195 +494,494 @@ class _JobCardState extends State<JobCard> {
                                     ),
                                   ),
                                 ),
-                              ]),
-                        ),
-                      ],
+                              );
+                            }),
+                          ),
+                          borderRadius: h * 0.02),
                     ),
-                    borderRadius: h * 0.02),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: w * 0.09),
-                child: Text(
-                  "Battery",
-                  style: GoogleFonts.montserrat(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
-                    color: kTextInputPlaceholderColor,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: h * 0.01,horizontal: w*0.02),
-                child: RRectCard(
-                  padding: EdgeInsets.all(h * 0.02),
-                  color: korangecolor,
-                  borderRadius: h * 0.02,
-                  
-                  widget: Center(
-                    child: Text(
-                      "Exide",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.montserrat(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w700,
-                        color: kwhitecolor,
+                    Padding(
+                      padding: EdgeInsets.only(left: w * 0.09),
+                      child: Text(
+                        "Not Available",
+                        style: GoogleFonts.montserrat(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: kTextInputPlaceholderColor,
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: w * 0.09),
-                child: Text(
-                  "Remarks",
-                  style: GoogleFonts.montserrat(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
-                    color: kTextInputPlaceholderColor,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: h * 0.01,horizontal: w*0.02),
-                child: RRectCard(
-                  padding: EdgeInsets.all(h * 0.02),
-                  color: kwhitecolor,
-                  borderRadius: h * 0.02,
-                  
-                  widget: RichText(
+                    Padding(
+                      padding: EdgeInsets.all(h * 0.01),
+                      child: RRectCard(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: w * 0.05, vertical: h * 0.02),
+                          widget: GridView.count(
+                            shrinkWrap: true,
+                            childAspectRatio: 1.6,
+                            controller: _controller3,
+                            scrollDirection: Axis.vertical,
+                            crossAxisCount: 3,
+                            crossAxisSpacing: w * 0.01,
+                            mainAxisSpacing: h * 0.01,
+
+                            // padding: EdgeInsets.all(10),
+                            children: List.generate(geninfo.length, (index) {
+                              return Visibility(
+                                visible: geninfo[index]["x"] == 2,
+                                child: RRectCard(
+                                  padding: EdgeInsets.all(h * 0.01),
+                                  color: korangecolor,
+                                  h: 10,
+                                  borderRadius: h * 0.03,
+                                  shadowColor: kTransparent,
+                                  widget: Center(
+                                    child: Text(
+                                      geninfo[index]["heading"].toString(),
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.montserrat(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w700,
+                                        color: kwhitecolor,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }),
+                          ),
+                          borderRadius: h * 0.02),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: w * 0.09),
+                      child: Text(
+                        "Missing Parts",
+                        style: GoogleFonts.montserrat(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: kTextInputPlaceholderColor,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(h * 0.01),
+                      child: RRectCard(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: w * 0.05, vertical: h * 0.02),
+                          widget: GridView.count(
+                            childAspectRatio: 1.6,
+                            crossAxisSpacing: w * 0.01,
+                            mainAxisSpacing: h * 0.01,
+                            shrinkWrap: true,
+                            controller: _controller3,
+                            scrollDirection: Axis.vertical,
+                            crossAxisCount: 3,
+                            // padding: EdgeInsets.all(10),
+                            children: List.generate(geninfo.length, (index) {
+                              // geninfo[index]["x"]!=3 ? break;
+                              if (geninfo[index]["x"] == 3) {
+                                return Visibility(
+                                  visible: geninfo[index]["x"] == 3,
+                                  child: RRectCard(
+                                    padding: EdgeInsets.all(h * 0.01),
+                                    color: kredcolor,
+                                    h: 10,
+                                    borderRadius: h * 0.03,
+                                    widget: Center(
+                                      child: Text(
+                                        geninfo[index]["heading"],
+                                        textAlign: TextAlign.center,
+                                        style: GoogleFonts.montserrat(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w700,
+                                          color: kwhitecolor,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+                              return Container();
+                            }),
+                          ),
+                          borderRadius: h * 0.02),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: w * 0.09),
+                      child: Text(
+                        "Condition",
+                        style: GoogleFonts.montserrat(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: kTextInputPlaceholderColor,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(h * 0.01),
+                      child: RRectCard(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: w * 0.05, vertical: h * 0.02),
+                          widget: GridView.count(
+                            shrinkWrap: true,
+                            childAspectRatio: 1.6,
+                            controller: _controller3,
+                            scrollDirection: Axis.vertical,
+                            crossAxisCount: 3,
+                            crossAxisSpacing: w * 0.01,
+                            mainAxisSpacing: h * 0.01,
+
+                            // padding: EdgeInsets.all(10),
+                            children: List.generate(condi.length, (index) {
+                              return RRectCard(
+                                padding: EdgeInsets.all(h * 0.01),
+                                color: condi[index]["x"] == 1
+                                    ? kGreenColor
+                                    : condi[index]["x"] == 2
+                                        ? korangecolor
+                                        : kredcolor,
+                                h: 10,
+                                borderRadius: h * 0.03,
+                                shadowColor: kTransparent,
+                                widget: Center(
+                                  child: Text(
+                                    condi[index]["heading"],
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.montserrat(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w700,
+                                      color: kwhitecolor,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }),
+                          ),
+                          borderRadius: h * 0.02),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: w * 0.09),
+                      child: Text(
+                        "Tyres",
+                        style: GoogleFonts.montserrat(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: kTextInputPlaceholderColor,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(h * 0.01),
+                      child: RRectCard(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: w * 0.05, vertical: h * 0.02),
+                          widget: Row(
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: RRectCard(
+                                  padding: EdgeInsets.all(h * 0.01),
+                                  color: kLightOrangeBgColor,
+                                  h: h * 0.15,
+                                  borderRadius: h * 0.06,
+                                  widget: Center(
+                                    child: Text(
+                                      "Continental GT (3) MRGF (1)",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.montserrat(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w700,
+                                        color: kTextInputPlaceholderColor,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 3,
+                                child: GridView.count(
+                                    shrinkWrap: true,
+                                    childAspectRatio: 1.6,
+                                    crossAxisSpacing: w * 0.01,
+                                    mainAxisSpacing: h * 0.01,
+                                    controller: _controller3,
+                                    scrollDirection: Axis.vertical,
+                                    crossAxisCount: 2,
+                                    // padding: EdgeInsets.all(10),
+                                    children: [
+                                      RRectCard(
+                                        padding: EdgeInsets.all(h * 0.01),
+                                        color: data["frontL"] == "G"
+                                            ? kGreenColor
+                                            : data["frontL"] == "A"
+                                                ? korangecolor
+                                                : kredcolor,
+                                        borderRadius: h * 0.025,
+                                        widget: Center(
+                                          child: Text(
+                                            "FRT Left",
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.montserrat(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w700,
+                                              color: kwhitecolor,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      RRectCard(
+                                        padding: EdgeInsets.all(h * 0.01),
+                                        color: data["frontR"] == "G"
+                                            ? kGreenColor
+                                            : data["frontR"] == "A"
+                                                ? korangecolor
+                                                : kredcolor,
+                                        borderRadius: h * 0.025,
+                                        widget: Center(
+                                          child: Text(
+                                            "FRT Right",
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.montserrat(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w700,
+                                              color: kwhitecolor,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      RRectCard(
+                                        padding: EdgeInsets.all(h * 0.01),
+                                        color: data["backL"] == "G"
+                                            ? kGreenColor
+                                            : data["backL"] == "A"
+                                                ? korangecolor
+                                                : kredcolor,
+                                        borderRadius: h * 0.025,
+                                        widget: Center(
+                                          child: Text(
+                                            "RR Left",
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.montserrat(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w700,
+                                              color: kwhitecolor,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      RRectCard(
+                                        padding: EdgeInsets.all(h * 0.01),
+                                        color: data["backR"] == "G"
+                                            ? kGreenColor
+                                            : data["backR"] == "A"
+                                                ? korangecolor
+                                                : kredcolor,
+                                        borderRadius: h * 0.025,
+                                        widget: Center(
+                                          child: Text(
+                                            "RR Right",
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.montserrat(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w700,
+                                              color: kwhitecolor,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ]),
+                              ),
+                            ],
+                          ),
+                          borderRadius: h * 0.02),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: w * 0.09),
+                      child: Text(
+                        "Battery",
+                        style: GoogleFonts.montserrat(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: kTextInputPlaceholderColor,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: h * 0.01, horizontal: w * 0.02),
+                      child: RRectCard(
+                        padding: EdgeInsets.all(h * 0.02),
+                        color: data["batterycondition"] == "G"
+                            ? kGreenColor
+                            : data["batterycondition"] == "A"
+                                ? korangecolor
+                                : kredcolor,
+                        borderRadius: h * 0.02,
+                        widget: Center(
+                          child: Text(
+                            data["Battery"],
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.montserrat(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w700,
+                              color: kwhitecolor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: w * 0.09),
+                      child: Text(
+                        "Remarks",
+                        style: GoogleFonts.montserrat(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: kTextInputPlaceholderColor,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: h * 0.01, horizontal: w * 0.02),
+                      child: RRectCard(
+                        padding: EdgeInsets.all(h * 0.02),
+                        color: kwhitecolor,
+                        w: w * 0.6,
+                        borderRadius: h * 0.02,
+                        widget: RichText(
                           textAlign: TextAlign.left,
                           text: TextSpan(
-                              text: "Name:",
+                              text: data["OverallRemarks"],
                               style: GoogleFonts.montserrat(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w700,
                                   height: 1.5,
                                   color: ksubHading),
                               children: [
-                                TextSpan(
-                                  text: " Rodriques\n",
-                                  style: GoogleFonts.montserrat(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w400,
-                                      color: ksubHading),
-                                ),
-                                TextSpan(
-                                  text: "Address",
-                                  style: GoogleFonts.montserrat(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w700,
-                                      color: ksubHading),
-                                ),
-                                TextSpan(
-                                  text: " - B-155, Model Town - 3,\n",
-                                  style: GoogleFonts.montserrat(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w400,
-                                      color: ksubHading),
-                                ),
-                                TextSpan(
-                                  text: "Delhi - 110009\n",
-                                  style: GoogleFonts.montserrat(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w400,
-                                      color: ksubHading),
-                                ),
-                                TextSpan(
-                                  text: "GST:",
-                                  style: GoogleFonts.montserrat(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w700,
-                                      color: ksubHading),
-                                ),
-                                TextSpan(
-                                  text: "07ABBCS0227P",
-                                  style: GoogleFonts.montserrat(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w400,
-                                      color: ksubHading),
-                                )
+                                // TextSpan(
+                                //   text: " Rodriques\n",
+                                //   style: GoogleFonts.montserrat(
+                                //       fontSize: 10,
+                                //       fontWeight: FontWeight.w400,
+                                //       color: ksubHading),
+                                // ),
+                                // TextSpan(
+                                //   text: "Address",
+                                //   style: GoogleFonts.montserrat(
+                                //       fontSize: 10,
+                                //       fontWeight: FontWeight.w700,
+                                //       color: ksubHading),
+                                // ),
+                                // TextSpan(
+                                //   text: " - B-155, Model Town - 3,\n",
+                                //   style: GoogleFonts.montserrat(
+                                //       fontSize: 10,
+                                //       fontWeight: FontWeight.w400,
+                                //       color: ksubHading),
+                                // ),
+                                // TextSpan(
+                                //   text: "Delhi - 110009\n",
+                                //   style: GoogleFonts.montserrat(
+                                //       fontSize: 10,
+                                //       fontWeight: FontWeight.w400,
+                                //       color: ksubHading),
+                                // ),
+                                // TextSpan(
+                                //   text: "GST:",
+                                //   style: GoogleFonts.montserrat(
+                                //       fontSize: 10,
+                                //       fontWeight: FontWeight.w700,
+                                //       color: ksubHading),
+                                // ),
+                                // TextSpan(
+                                //   text: "07ABBCS0227P",
+                                //   style: GoogleFonts.montserrat(
+                                //       fontSize: 10,
+                                //       fontWeight: FontWeight.w400,
+                                //       color: ksubHading),
+                                // )
                               ]),
                         ),
+                      ),
+                    ),
+                    // Row(
+                    //   children: [
+                    //     Expanded(
+                    //       flex: 2,
+                    //       child: Row(
+                    //         children: [
+                    //           Expanded(
+                    //             flex: 2,
+                    //             child: Container(
+                    //               decoration: BoxDecoration(
+                    //                   color: kwhitecolor,
+                    //                   borderRadius: BorderRadius.only(
+                    //                     topLeft: Radius.circular(h * 0.03),
+                    //                     bottomLeft: Radius.circular(h * 0.03),
+                    //                   )),
+                    //               child: ListView.builder(
+                    //                 padding: EdgeInsets.all(h * 0.01),
+                    //                 shrinkWrap: true,
+                    //                 itemCount: heading.length,
+                    //                 itemBuilder: ((context, index) {
+                    //                   return Text(
+                    //                     heading[index],
+                    //                     style: GoogleFonts.montserrat(
+                    //                         fontSize: 10,
+                    //                         fontWeight: FontWeight.w700,
+                    //                         color: ksubHading,
+                    //                         height: 1.5),
+                    //                   );
+                    //                 }),
+                    //               ),
+                    //             ),
+                    //           ),
+                    //           SizedBox(
+                    //             width: w * 0.005,
+                    //           ),
+                    //           Expanded(
+                    //             flex: 3,
+                    //             child: Container(
+                    //               decoration: BoxDecoration(
+                    //                   color: kwhitecolor,
+                    //                   borderRadius: BorderRadius.only(
+                    //                     topRight: Radius.circular(h * 0.03),
+                    //                     bottomRight: Radius.circular(h * 0.03),
+                    //                   )),
+                    //               child: ListView.builder(
+                    //                 padding: EdgeInsets.all(h * 0.01),
+                    //                 shrinkWrap: true,
+                    //                 itemCount: subh.length,
+                    //                 itemBuilder: ((context, index) {
+                    //                   return Text(
+                    //                     subh[index],
+                    //                     style: GoogleFonts.montserrat(
+                    //                         fontSize: 10,
+                    //                         fontWeight: FontWeight.w400,
+                    //                         color: ksubHading,
+                    //                         height: 1.5),
+                    //                   );
+                    //                 }),
+                    //               ),
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //     Expanded(
+                    //       child: RRectCard(
+                    //         h: h * 0.1,
+                    //         w: w * 0.2,
+                    //         widget: Row(),
+                    //         borderRadius: h * 0.02,
+                    //       ),
+                    //     )
+                    //   ],
+                    // )
+                  ],
                 ),
               ),
-              // Row(
-              //   children: [
-              //     Expanded(
-              //       flex: 2,
-              //       child: Row(
-              //         children: [
-              //           Expanded(
-              //             flex: 2,
-              //             child: Container(
-              //               decoration: BoxDecoration(
-              //                   color: kwhitecolor,
-              //                   borderRadius: BorderRadius.only(
-              //                     topLeft: Radius.circular(h * 0.03),
-              //                     bottomLeft: Radius.circular(h * 0.03),
-              //                   )),
-              //               child: ListView.builder(
-              //                 padding: EdgeInsets.all(h * 0.01),
-              //                 shrinkWrap: true,
-              //                 itemCount: heading.length,
-              //                 itemBuilder: ((context, index) {
-              //                   return Text(
-              //                     heading[index],
-              //                     style: GoogleFonts.montserrat(
-              //                         fontSize: 10,
-              //                         fontWeight: FontWeight.w700,
-              //                         color: ksubHading,
-              //                         height: 1.5),
-              //                   );
-              //                 }),
-              //               ),
-              //             ),
-              //           ),
-              //           SizedBox(
-              //             width: w * 0.005,
-              //           ),
-              //           Expanded(
-              //             flex: 3,
-              //             child: Container(
-              //               decoration: BoxDecoration(
-              //                   color: kwhitecolor,
-              //                   borderRadius: BorderRadius.only(
-              //                     topRight: Radius.circular(h * 0.03),
-              //                     bottomRight: Radius.circular(h * 0.03),
-              //                   )),
-              //               child: ListView.builder(
-              //                 padding: EdgeInsets.all(h * 0.01),
-              //                 shrinkWrap: true,
-              //                 itemCount: subh.length,
-              //                 itemBuilder: ((context, index) {
-              //                   return Text(
-              //                     subh[index],
-              //                     style: GoogleFonts.montserrat(
-              //                         fontSize: 10,
-              //                         fontWeight: FontWeight.w400,
-              //                         color: ksubHading,
-              //                         height: 1.5),
-              //                   );
-              //                 }),
-              //               ),
-              //             ),
-              //           ),
-              //         ],
-              //       ),
-              //     ),
-              //     Expanded(
-              //       child: RRectCard(
-              //         h: h * 0.1,
-              //         w: w * 0.2,
-              //         widget: Row(),
-              //         borderRadius: h * 0.02,
-              //       ),
-              //     )
-              //   ],
-              // )
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }

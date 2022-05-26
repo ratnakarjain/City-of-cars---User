@@ -10,6 +10,7 @@ import 'package:cityofcars/Screens/news.dart';
 import 'package:cityofcars/Screens/orderHistory.dart';
 import 'package:cityofcars/Screens/profile.dart';
 import 'package:cityofcars/Screens/selectBrand.dart';
+import 'package:cityofcars/Screens/selectCity.dart';
 import 'package:cityofcars/Screens/sos.dart';
 import 'package:cityofcars/Screens/terms.dart';
 import 'package:cityofcars/Screens/tracking.dart';
@@ -33,12 +34,25 @@ Future<void> main()async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  get korangecolor => null;
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
 
-  // This widget is the root of your application.
+class _MyAppState extends State<MyApp> {
+  var prefs = Prefernece.pref;
+  // get korangecolor => null;
+  String id = "";
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+   id = prefs!.getString("userId").toString();
+  
+   print(id+"=======");
+  }
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -53,7 +67,7 @@ class MyApp extends StatelessWidget {
                 primary: korangecolor,
               ),
         ),
-        home: const MyHomePage(),
+        home: id==""||id=="null" ? const MyHomePage() :const SelectCity(),
       ),
     );
   }

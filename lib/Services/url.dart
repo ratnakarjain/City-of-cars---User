@@ -29,5 +29,9 @@ const String getestimatetimeUrl = baseUrl+"/getTimeEstimate";
 const String resentUpdateUrl = baseUrl+"/RecentUpdate";
 const String getApprovalsUrl = baseUrl+"/getApprovel";
 const String postApprovedstatusUrl = baseUrl+"/ApprovelStatus";
+const String getjobcardUrl = baseUrl+"/jobCard";
+const String getcatBannerUrl = baseUrl+"/getCategoryBanner";
+const String getpoprecUrl = baseUrl+"/getplanApi";
+const String getusercarsUrl = baseUrl+"/viewCarProfile";
 
 String token = "";

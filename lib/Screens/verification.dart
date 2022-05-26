@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 import 'package:cityofcars/Screens/Service%20Main/slot.dart';
+import 'package:cityofcars/Utils/preference.dart';
 import 'package:http/http.dart' as http;
 import 'package:cityofcars/Screens/selectCity.dart';
 import 'package:cityofcars/Services/servies.dart';
@@ -25,6 +26,7 @@ class _VerficationState extends State<Verfication> {
   var h;
   var w;
   bool istaped = false;
+  var pref = Prefernece.pref;
   var _controller = TextEditingController();
   final defaultPinTheme = PinTheme(
     width: 56,
@@ -88,64 +90,67 @@ class _VerficationState extends State<Verfication> {
             SizedBox(
               height: h * 0.05,
             ),
-           istaped ? loder : RRecctButton(
-              text: "CONTINUE",
-              h: h * 0.07,
-              w: w * 0.88,
-              buttonColor: korangecolor,
-              style: GoogleFonts.montserrat(
-                  color: kwhitecolor, fontWeight: FontWeight.w600),
-              onTap: () {
-                istaped=true;
-                
-                verify().whenComplete(() {
-                  istaped=false;
-                  setState(() {
-                    
-                  });
-                });
-                setState(() {
-                  
-                });
-                // Navigator.push(context,
-                //     MaterialPageRoute(builder: ((context) => SelectCity())));
- 
-              },
-            ),
+            istaped
+                ? loder
+                : RRecctButton(
+                    text: "CONTINUE",
+                    h: h * 0.07,
+                    w: w * 0.88,
+                    buttonColor: korangecolor,
+                    style: GoogleFonts.montserrat(
+                        color: kwhitecolor, fontWeight: FontWeight.w600),
+                    onTap: () {
+                      istaped = true;
+
+                      verify().whenComplete(() {
+                        istaped = false;
+                        setState(() {});
+                      });
+                      setState(() {});
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: ((context) => SelectCity())));
+                    },
+                  ),
           ],
         ),
       ),
     );
   }
- Future verify()async{
-    var url = Uri.parse(verification);
-try {
-    var response = await http.post(url, body: {
-      'otp': _controller.text,
-    },
-    headers:{"Authorization": prefs!.getString('token').toString()}
-    );
-    if (response.statusCode == 200) {
-      print("success");
-      var jsonResponse =
-        convert.jsonDecode(response.body);
-      if(jsonResponse["status"]==true){
- Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => SelectCity())));
-      }else{
-ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-  content:  Text(jsonResponse["message"]),
-  
-  ));
-      }
-     
 
-      return response.body;
+  Future verify() async {
+    var url = Uri.parse(verification);
+    try {
+      var response = await http.post(url, body: {
+        'otp': _controller.text,
+      }, headers: {
+        "Authorization": prefs!.getString('token').toString()
+      });
+      if (response.statusCode == 200) {
+        print("success");
+        var jsonResponse = convert.jsonDecode(response.body);
+        if (jsonResponse["status"] == true) {
+//  Navigator.push(context,
+//                     MaterialPageRoute(builder: ((context) => SelectCity())));
+         pref!.setString("userId", Ids.userid);
+         print(pref!.getString("userId").toString()+"===========");
+          Navigator.pushAndRemoveUntil<dynamic>(
+            context,
+            MaterialPageRoute<dynamic>(
+              builder: (BuildContext context) => SelectCity(),
+            ),
+            (route) => false, //if you want to disable back feature set to false
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(jsonResponse["message"]),
+          ));
+        }
+
+        return response.body;
+      }
+    } catch (e) {
+      print("error $e");
     }
-  } catch (e) {
-    print("error $e");
-  }
 //     verifyOtp(_controller.text).then(
 //       (value) {
 // Navigator.push(context,

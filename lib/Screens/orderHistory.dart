@@ -23,6 +23,7 @@ class _OrderHistoryState extends State<OrderHistory> {
   var h;
   var w;
   int currentPage = 0;
+  bool isloading = true;
   List cardDart = [
     "Primium",
     "Primium",
@@ -36,6 +37,7 @@ class _OrderHistoryState extends State<OrderHistory> {
     super.initState();
     getOrderhistory().then((value) {
       datalist.addAll(value);
+      isloading= false;
       print(datalist);
       setState(() {});
     });
@@ -57,7 +59,7 @@ class _OrderHistoryState extends State<OrderHistory> {
               GoogleFonts.montserrat(fontSize: 21, fontWeight: FontWeight.w700),
         ),
       ),
-      body:datalist.isEmpty? loder: Container(
+      body:isloading?loder:  datalist.isEmpty? const Center(child: Text("No Orders yet"),) : Container(
           height: h,
           width: w,
           padding: EdgeInsets.symmetric(horizontal: h * 0.02),
@@ -130,7 +132,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const JobCard(),
+                              builder: (context) =>  JobCard(orderid: datalist[index].orderid,),
                             ));
                       },
                       child: Stack(

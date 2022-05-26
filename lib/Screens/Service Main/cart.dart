@@ -762,38 +762,38 @@ class _CartState extends State<Cart> {
                   vertical: h * 0.02, horizontal: w * 0.06),
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Sub-Total",
-                          style: GoogleFonts.montserrat(
-                            fontSize: 13,
-                            color: ksubHading,
-                            fontWeight: FontWeight.bold,
-                          )),
-                      Text("₹ $subtotal",
-                          style: GoogleFonts.montserrat(
-                            fontSize: 11,
-                            fontWeight: FontWeight.bold,
-                          )),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Taxes",
-                          style: GoogleFonts.montserrat(
-                            fontSize: 13,
-                            color: ksubHading,
-                            fontWeight: FontWeight.bold,
-                          )),
-                      Text("₹ 200",
-                          style: GoogleFonts.montserrat(
-                            fontSize: 11,
-                            fontWeight: FontWeight.bold,
-                          )),
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     Text("Sub-Total",
+                  //         style: GoogleFonts.montserrat(
+                  //           fontSize: 13,
+                  //           color: ksubHading,
+                  //           fontWeight: FontWeight.bold,
+                  //         )),
+                  //     Text("₹ $subtotal",
+                  //         style: GoogleFonts.montserrat(
+                  //           fontSize: 11,
+                  //           fontWeight: FontWeight.bold,
+                  //         )),
+                  //   ],
+                  // ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     Text("Taxes",
+                  //         style: GoogleFonts.montserrat(
+                  //           fontSize: 13,
+                  //           color: ksubHading,
+                  //           fontWeight: FontWeight.bold,
+                  //         )),
+                  //     Text("₹ 200",
+                  //         style: GoogleFonts.montserrat(
+                  //           fontSize: 11,
+                  //           fontWeight: FontWeight.bold,
+                  //         )),
+                  //   ],
+                  // ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -805,7 +805,7 @@ class _CartState extends State<Cart> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text("₹ 2700",
+                          Text("₹ $subtotal",
                               style: GoogleFonts.montserrat(
                                 fontSize: 19,
                                 fontWeight: FontWeight.bold,

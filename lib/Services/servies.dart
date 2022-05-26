@@ -3,8 +3,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cityofcars/Services/models/jobcardModel.dart';
 import 'package:cityofcars/Services/models/orderhistoryModel.dart';
+import 'package:cityofcars/Services/models/plansModel.dart';
 import 'package:cityofcars/Services/models/subcategory.dart';
+import 'package:cityofcars/Services/models/usercardetailsmodel.dart';
 import 'package:cityofcars/Services/url.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Utils/preference.dart';
@@ -410,7 +413,7 @@ Future addcartitem() async {
 }
 
 Future getcartitems() async {
-  var url = Uri.parse(getcartUrl);
+  var url = Uri.parse(getcartUrl+"?user="+Ids.userid);
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -488,7 +491,7 @@ Future proceed() async {
   }
 }
 
-Future addorder() async {
+Future addorder(String paymentid, String paymentstatus) async {
   var url = Uri.parse(addorderUrl);
   try {
     var response = await http.post(url, body: {
@@ -501,7 +504,9 @@ Future addorder() async {
       "brand": Ids.brandid.toString(),
       "city": Ids.cityid.toString(),
       "user": Ids.userid.toString(),
-      "status": ""
+      "status": "",
+      "paymentStatus":paymentstatus,
+      "paymentid":paymentid
     }, headers: {
       "Authorization": prefs!.getString('token').toString()
     });
@@ -773,6 +778,191 @@ Future setApprooval(String id, String status,BuildContext context) async {
     //   print(data);
     //   // return data;
     // }
+  } catch (e) {
+    print("error $e");
+  }
+}
+
+Future getjobcard(String id) async {
+  var url = Uri.parse(getjobcardUrl + "?orderid=" + id);
+  try {
+    var respnse = await http.get(url,
+        headers: {"Authorization": prefs!.getString('token').toString()});
+    if (respnse.statusCode == 200) {
+      
+      var data = jsonDecode(respnse.body);
+      // JobCardModel model = JobCardModel();
+      if (data["status"]) {
+      //   model.username = data["data"]["orderid"]["bookingdata"]["name"];
+      //   model.address = data["data"]["orderid"]["bookingdata"]["houseNo"]+" "+data["data"]["orderid"]["bookingdata"]["Street"];
+      //   model.city = data["data"]["orderid"]["bookingdata"]["houseNo"]+" "+data["data"]["orderid"]["bookingdata"]["Street"];
+      //   model.carNo = data["data"]["orderid"]["bookingdata"]["carno"];
+      //   model.carbrand = data["data"]["orderid"]["brand"]["brands"];
+      //   model.carimage = data["data"]["orderid"]["brand"]["image"];
+      //   model.carname = data["data"]["orderid"]["car"]["city"];
+      //    var gn = jsonDecode(data["data"]["condition"]);
+      //    for(int i = 0; i<gn.length; i++){
+      //      Condtion cond = Condtion();
+      //     //  cond.a = gn[i][];
+      //      cond.g;
+      //      cond.heading;
+      //      cond.p;
+      //      cond.x;
+      //      model.condtion.add(cond);
+      //    }
+        
+      //   model.frontL;
+      //   model.frontR;
+      //   model.backL;
+      //   model.backR;
+      //   model.images;
+      //   model.odometer;
+      //   model.avail;
+      //   model.tyrename;
+      //   model.batterycondtion;
+      //   model.batteryname;
+      //   model.remarks;
+      //   model.gst = "";
+      //   model.customersconcerns.addAll(data["data"]["customerConcerns"]);
+      //   model.fuellevel = data["data"]["fuel"].toString();
+
+        return data["data"];
+      } else {
+        return [];
+        // print(
+        //   "Error====="
+        // );
+      }
+      // Future city = data["getCities"];
+      // print("success============== ${data["getCities"]}");
+
+    } else {
+      return Future.error("Server Error");
+      print("Error=====");
+    }
+  } catch (e) {
+    print("error $e");
+  }
+}
+
+Future getcategoryBanner() async {
+  var url = Uri.parse(getcatBannerUrl);
+  try {
+    var respnse = await http.get(url,
+        headers: {"Authorization": prefs!.getString('token').toString()});
+    if (respnse.statusCode == 200) {
+      
+      var data = jsonDecode(respnse.body);
+      List image = [];
+      if (data["status"]) {
+        for(int i=0; i<data["data"].length; i++){
+          image.add(data["data"][i]["image"].toString());
+        }
+return image;
+      } else {
+        return [];
+        // print(
+        //   "Error====="
+        // );
+      }
+      // Future city = data["getCities"];
+      // print("success============== ${data["getCities"]}");
+
+    } else {
+      return Future.error("Server Error");
+      print("Error=====");
+    }
+  } catch (e) {
+    print("error $e");
+  }
+}
+Future getusercars() async {
+  var url = Uri.parse(getusercarsUrl+"?userid="+Ids.userid);
+  try {
+    var respnse = await http.get(url,
+        headers: {"Authorization": prefs!.getString('token').toString()});
+    if (respnse.statusCode == 200) {
+      
+      var data = jsonDecode(respnse.body);
+      List<CarsModel> model = [];
+      if (data["status"]) {
+        for(int i=0; i<data["data"].length; i++){
+          CarsModel mod = CarsModel();
+          mod.carbrand = data["data"][i]["brand"]["brands"].toString() ;
+          mod.carbrandimage = data["data"][i]["brand"]["image"].toString();
+          mod.carfuel = data["data"][i]["fuel"]["fuel"].toString();
+          mod.carfuelimage = data["data"][i]["fuel"]["image"].toString();
+          mod.carimage = data["data"][i]["car"]["image"].toString();
+          mod.carname = data["data"][i]["car"]["cars"].toString();
+          mod.city = data["data"][i]["city"]["city"].toString();
+          mod.cityimage = data["data"][i]["city"]["image"].toString();
+          mod.cityid=data["data"][i]["city"]["_id"].toString();
+          mod.carfuelid=data["data"][i]["fuel"]["_id"].toString();
+          mod.carbrandid=data["data"][i]["brand"]["_id"].toString();
+          mod.carid = data["data"][i]["car"]["_id"].toString();
+          model.add(mod);
+        }
+return model;
+      } else {
+        return <CarsModel>[];
+        // print(
+        //   "Error====="
+        // );
+      }
+      // Future city = data["getCities"];
+      // print("success============== ${data["getCities"]}");
+
+    } else {
+      return Future.error("Server Error");
+      print("Error=====");
+    }
+  } catch (e) {
+    print("error $e");
+  }
+}
+
+
+Future getrecmostPlans() async {
+  var url = Uri.parse(getpoprecUrl);
+  try {
+    var respnse = await http.get(url,
+        headers: {"Authorization": prefs!.getString('token').toString()});
+    if (respnse.statusCode == 200) {
+      
+      var data = jsonDecode(respnse.body);
+      if (data["state"]) {
+        // List<PlanModel> model = [];
+
+      //  for(int i = 0; i<data["data"].length;i++){
+      //    PlanModel mod = PlanModel();
+      //    mod.description= data["data"][i]["description"];
+      //    mod.hour= data["data"][i]["hours"].toString();
+      //    mod.months=data["data"][i]["month"].toString();
+      //    mod.planname=data["data"][i]["planName"];
+      //    mod.planprice=data["data"][i]["typeprice"].toString();
+      //    mod.servicepackname=data["data"][i]["servicename"];
+      //    mod.serviceprice=data["data"][i]["servicepackprice"].toString();
+      //    mod.termsdetails=data["data"][i]["heading"];
+      //    mod.termsheading=data["data"][i]["textField"];
+      //    mod.isrec = data["data"][i]["status"].toString();
+      //    mod.isMost =data["data"][i]["mostpopularpack"].toString();
+      //   //  for(int j = 0; j<data["data"])
+      //    model.add(mod);
+      //  }
+         return data["data"];
+      } else {
+        return [];
+        // print(
+        //   "Error====="
+        // );
+      }
+      // Future city = data["getCities"];
+      // print("success============== ${data["getCities"]}");
+
+    } else {
+      return Future.error("Server Error");
+      print("Error=====");
+    }
   } catch (e) {
     print("error $e");
   }

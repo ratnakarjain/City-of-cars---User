@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cityofcars/Screens/bottomnavBar.dart';
 import 'package:cityofcars/Screens/carHealth.dart';
 import 'package:cityofcars/Screens/editProfile.dart';
@@ -6,8 +8,11 @@ import 'package:cityofcars/Screens/myhomepage.dart';
 import 'package:cityofcars/Screens/notification.dart';
 import 'package:cityofcars/Screens/selectBrand.dart';
 import 'package:cityofcars/Screens/sos.dart';
+import 'package:cityofcars/Services/models/usercardetailsmodel.dart';
+import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:cityofcars/Utils/constants.dart';
+import 'package:cityofcars/Utils/preference.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -19,6 +24,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  var pref = Prefernece.pref;
   var h;
   var w;
   List cars = [
@@ -69,12 +75,28 @@ class _ProfileState extends State<Profile> {
     },
   ];
   int currentCar = 0;
-  List isSelected = [];
+  int isSelected = 0;
+  List<CarsModel> modellist =[];
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    isSelected = List.generate(cars.length, (index) => false);
+    if(pref?.getInt("CCar") != null){
+      isSelected = pref!.getInt("CCar")!;
+      print(isSelected);
+      setState(() {
+        
+      });
+    }
+    getusercars().then((value) {
+      
+      setState(() {
+      modellist.addAll(value);  
+      print(modellist);
+      });
+    });
+    
   }
 
   @override
@@ -159,93 +181,105 @@ class _ProfileState extends State<Profile> {
                         ),
                       ],
                     ),
-                    Container(
-                      height: h * 0.2,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 2,
-                        shrinkWrap: true,
-                        // padding: EdgeInsets.only(left: w*0.1),
-                        itemBuilder: (context, index) {
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              index == 0
-                                  ? InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          if (currentCar > 0) {
-                                            currentCar--;
-                                            print(currentCar);
-                                          }
-                                        });
-                                      },
-                                      child: Icon(Icons.arrow_back_ios))
-                                  : Container(),
-                              Column(
-                                children: [
-                                  RichText(
-                                      textAlign: TextAlign.center,
-                                      text: TextSpan(
-                                          text: "I20\n",
-                                          style: GoogleFonts.montserrat(
-                                            fontSize: 9,
-                                            color: kTextInputPlaceholderColor,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                          children: [
-                                            TextSpan(
-                                              text: "HYUNDAI",
-                                              style: GoogleFonts.montserrat(
-                                                fontSize: 9,
-                                                color:
-                                                    kTextInputPlaceholderColor,
-                                                fontWeight: FontWeight.w700,
-                                              ),
-                                            ),
-                                          ])),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: CircleAvatar(
-                                      radius: h * 0.07,
-                                      backgroundColor:
-                                          isSelected[index + currentCar]
-                                              ? korangecolor
-                                              : kgrey.withOpacity(0.5),
-                                      child: InkWell(
+                    Visibility(
+                      visible: modellist.isNotEmpty,
+                      child: Container(
+                        height: h * 0.2,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 2,
+                          shrinkWrap: true,
+                          // padding: EdgeInsets.only(left: w*0.1),
+                          itemBuilder: (context, index) {
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                index == 0
+                                    ? InkWell(
                                         onTap: () {
-                                          isSelected[index + currentCar] =
-                                              !isSelected[index + currentCar];
-                                          setState(() {});
+                                          setState(() {
+                                            if (currentCar > 0) {
+                                              currentCar--;
+                                              print(currentCar);
+                                            }
+                                          });
                                         },
-                                        child: CircleAvatar(
-                                          radius: h * 0.06,
-                                          backgroundColor: kwhitecolor,
-                                          child: Center(
-                                            child: Image.asset(
-                                                "assets/images/${cars[index + currentCar]["image"]}"),
+                                        child: Icon(Icons.arrow_back_ios))
+                                    : Container(),
+                                Column(
+                                  children: [
+                                    RichText(
+                                        textAlign: TextAlign.center,
+                                        text: TextSpan(
+                                            text: "${modellist[currentCar+index].carname}\n",
+                                            style: GoogleFonts.montserrat(
+                                              fontSize: 9,
+                                              color: kTextInputPlaceholderColor,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                            children: [
+                                              TextSpan(
+                                                text: "${modellist[currentCar+index].carbrand}",
+                                                style: GoogleFonts.montserrat(
+                                                  fontSize: 9,
+                                                  color:
+                                                      kTextInputPlaceholderColor,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                              ),
+                                            ])),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: CircleAvatar(
+                                        radius: h * 0.07,
+                                        backgroundColor:
+                                            index + currentCar+1 ==isSelected
+                                                ? korangecolor
+                                                : kgrey.withOpacity(0.5),
+                                        child: InkWell(
+                                          onTap: () {
+                                            
+                                                isSelected = index + currentCar+1;
+                                            String js = jsonEncode(modellist[isSelected-1]);
+                                            pref!.setString("usercar",js);
+                                            pref!.setInt("CCar",isSelected-1);
+                                            
+                                            print(pref?.getString("usercar"));
+                                            print(pref?.getInt("CCar"));
+                                            
+                                            // print(js);
+                                            setState(() {});
+                                          },
+                                          child: CircleAvatar(
+                                            radius: h * 0.06,
+                                            backgroundColor: kwhitecolor,
+                                            backgroundImage: NetworkImage(modellist[index + currentCar].carimage),
+                                            child: Center(
+                                              // child: Image.network(
+                                              //     "${modellist[index + currentCar].carimage}"),
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              index == 1
-                                  ? InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          if (currentCar < cars.length - 2) {
-                                            currentCar++;
-                                            print(currentCar);
-                                          }
-                                        });
-                                      },
-                                      child: Icon(Icons.arrow_forward_ios))
-                                  : Container(),
-                            ],
-                          );
-                        },
+                                  ],
+                                ),
+                                index == 1
+                                    ? InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            if (currentCar < modellist.length - 2) {
+                                              currentCar++;
+                                              print(currentCar);
+                                            }
+                                          });
+                                        },
+                                        child: Icon(Icons.arrow_forward_ios))
+                                    : Container(),
+                              ],
+                            );
+                          },
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -635,6 +669,7 @@ class _ProfileState extends State<Profile> {
                   Expanded(
                     child: InkWell(
                       onTap: () {
+                        pref!.remove("userId");
                         Navigator.pushAndRemoveUntil<dynamic>(
                           context,
                           MaterialPageRoute<dynamic>(
