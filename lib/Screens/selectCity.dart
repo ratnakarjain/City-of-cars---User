@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../Utils/functions.dart';
+import 'bottomnavBar.dart';
 import 'selectBrand.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -51,14 +52,39 @@ class _SelectCityState extends State<SelectCity> {
           centerTitle: false,
           title: Padding(
             padding: const EdgeInsets.only(left: 22, top: 20),
-            child: Text(
-              "Select Your City",
-              style: GoogleFonts.montserrat(
-                  textStyle: const TextStyle(
-                fontSize: 21,
-                fontWeight: FontWeight.bold,
-                color: kTextInputPlaceholderColor,
-              )),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Select Your City",
+                  style: GoogleFonts.montserrat(
+                      textStyle: const TextStyle(
+                    fontSize: 21,
+                    fontWeight: FontWeight.bold,
+                    color: kTextInputPlaceholderColor,
+                  )),
+                ),
+                GestureDetector(
+                onTap: () {
+                  Navigator.pushAndRemoveUntil<dynamic>(
+                    context,
+                    MaterialPageRoute<dynamic>(
+                      builder: (BuildContext context) => BottomNavBar(
+                        index: 0,
+                      ),
+                    ),
+                    (route) =>
+                        false, //if you want to disable back feature set to false
+                  );
+                },
+                child: Text(
+                  "Skip & Explore".toUpperCase(),
+                  textScaleFactor: 0.6,
+                  style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.w600, color: kbluecolor),
+                ),
+              ),
+              ],
             ),
           ),
           backgroundColor: kwhitecolor,
@@ -152,216 +178,221 @@ class _SelectCityState extends State<SelectCity> {
                   padding: EdgeInsets.symmetric(
                       horizontal: size.width * 0.07, vertical: 50),
                   color: kLightOrangeBgColor,
-                  child: FutureBuilder(
-                      future: _search.text.isEmpty
-                          ? getcities()
-                          : searchCity(_search.text.toString()),
-                      builder: (context, AsyncSnapshot snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          if (snapshot.hasData) {
-                            print("===========++++++++++" +
-                                snapshot.hasData.toString());
-                                print(snapshot.data);
-                            if (snapshot.data.length == 0) {
-                              return Text(
-                                "Did not match",
-                                style: GoogleFonts.montserrat(
-                                    textStyle: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: kTextInputPlaceholderColor,
-                                )),
-                              );
-                            }
-                            return GridView.count(
-                              controller: _controller,
-                              shrinkWrap: true,
-                              mainAxisSpacing: size.height * 0.02,
-                              crossAxisSpacing: size.width * 0.02,
-                              crossAxisCount: 2,
-                              children:
-                                  List.generate(snapshot.data.length, (index) {
-                                return Center(
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      CarsData.city =
-                                          snapshot.data[index]["city"];
-                                      CarsData.cityimage =
-                                          snapshot.data[index]["image"];
-                                      Ids.cityid = snapshot.data[index]["_id"];
-                                      print(CarsData.city);
-                                      print(CarsData.cityimage);
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const SelectBrand(),
-                                          ));
-                                    },
-                                    child: Card(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(30)),
-                                      elevation: 8,
-                                      shadowColor: Colors.grey.withOpacity(0.2),
-                                      child: Container(
-                                        height: size.height * 0.17,
-                                        width: size.height * 0.17,
-                                        padding:
-                                            EdgeInsets.all(size.height * 0.008),
-                                        child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              SizedBox(
-                                                height: size.height * 0.01,
-                                              ),
-                                              Expanded(
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          size.height * 0.01),
-                                                  child: CachedNetworkImage(
-                                                    fit: BoxFit.cover,
-                                                    imageUrl: snapshot.data[index]
-                                                            ["image"]
-                                                        .toString(),
-                                                    placeholder: (context, url) =>
-                                                        Container(),
-                                                    // loder,
-
-                                                    errorWidget: (context, url,
-                                                            error) =>
-                                                        const Icon(Icons.error),
-                                                  ),
-                                                ),
-                                                // Image.network(
-                                                //     snapshot.data[index]["image"].toString()),
-                                              ),
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              Text(
-                                                snapshot.data[index]["city"],
-                                                style: GoogleFonts.montserrat(
-                                                    textStyle: const TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                              )
-                                            ]),
-                                      ),
-                                    ),
+                  child: Center(
+                    child: FutureBuilder(
+                        future: _search.text.isEmpty
+                            ? getcities()
+                            : searchCity(_search.text.toString()),
+                        builder: (context, AsyncSnapshot snapshot) {
+                          if (snapshot.connectionState == ConnectionState.done) {
+                            if (snapshot.hasData) {
+                              print("===========++++++++++" +
+                                  snapshot.hasData.toString());
+                                  print(snapshot.data);
+                              if (snapshot.data.length == 0) {
+                                return Padding(
+                                  padding:  EdgeInsets.only(top: size.height*0.25),
+                                  child: Text(
+                                    "Did not match",
+                                    style: GoogleFonts.montserrat(
+                                        textStyle: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: kTextInputPlaceholderColor,
+                                    )),
                                   ),
                                 );
-                              }),
-                            );
+                              }
+                              return GridView.count(
+                                controller: _controller,
+                                shrinkWrap: true,
+                                mainAxisSpacing: size.height * 0.02,
+                                crossAxisSpacing: size.width * 0.02,
+                                crossAxisCount: 2,
+                                children:
+                                    List.generate(snapshot.data.length, (index) {
+                                  return Center(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        CarsData.city =
+                                            snapshot.data[index]["city"];
+                                        CarsData.cityimage =
+                                            snapshot.data[index]["image"];
+                                        Ids.cityid = snapshot.data[index]["_id"];
+                                        print(CarsData.city);
+                                        print(CarsData.cityimage);
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const SelectBrand(),
+                                            ));
+                                      },
+                                      child: Card(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30)),
+                                        elevation: 8,
+                                        shadowColor: Colors.grey.withOpacity(0.2),
+                                        child: Container(
+                                          height: size.height * 0.17,
+                                          width: size.height * 0.17,
+                                          padding:
+                                              EdgeInsets.all(size.height * 0.008),
+                                          child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                SizedBox(
+                                                  height: size.height * 0.01,
+                                                ),
+                                                Expanded(
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            size.height * 0.01),
+                                                    child: CachedNetworkImage(
+                                                      fit: BoxFit.cover,
+                                                      imageUrl: snapshot.data[index]
+                                                              ["image"]
+                                                          .toString(),
+                                                      placeholder: (context, url) =>
+                                                          Container(),
+                                                      // loder,
+
+                                                      errorWidget: (context, url,
+                                                              error) =>
+                                                          const Icon(Icons.error),
+                                                    ),
+                                                  ),
+                                                  // Image.network(
+                                                  //     snapshot.data[index]["image"].toString()),
+                                                ),
+                                                const SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Text(
+                                                  snapshot.data[index]["city"],
+                                                  style: GoogleFonts.montserrat(
+                                                      textStyle: const TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                )
+                                              ]),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }),
+                              );
+                            }
                           }
-                        }
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          if (snapshot.hasData) {
-                             if (snapshot.data.length == 0) {
-                              return Text(
-                                "Did not match",
-                                style: GoogleFonts.montserrat(
-                                    textStyle: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: kTextInputPlaceholderColor,
-                                )),
-                              );
-                            }
-                            return GridView.count(
-                              controller: _controller,
-                              shrinkWrap: true,
-                              mainAxisSpacing: size.height * 0.02,
-                              crossAxisSpacing: size.width * 0.02,
-                              crossAxisCount: 2,
-                              children:
-                                  List.generate(snapshot.data.length, (index) {
-                                return Center(
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      CarsData.city =
-                                          snapshot.data[index]["city"];
-                                      CarsData.cityimage =
-                                          snapshot.data[index]["image"];
-                                      Ids.cityid = snapshot.data[index]["_id"];
-                                      print(CarsData.city);
-                                      print(CarsData.cityimage);
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const SelectBrand(),
-                                          ));
-                                    },
-                                    child: Card(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(30)),
-                                      elevation: 8,
-                                      shadowColor: Colors.grey.withOpacity(0.2),
-                                      child: Container(
-                                        height: size.height * 0.17,
-                                        width: size.height * 0.17,
-                                        padding:
-                                            EdgeInsets.all(size.height * 0.008),
-                                        child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              SizedBox(
-                                                height: size.height * 0.01,
-                                              ),
-                                              Expanded(
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          size.height * 0.01),
-                                                  child: CachedNetworkImage(
-                                                    fit: BoxFit.cover,
-                                                    imageUrl: snapshot.data[index]
-                                                            ["image"]
-                                                        .toString(),
-                                                    placeholder: (context, url) =>
-                                                        Container(),
-                                                    // loder,
-
-                                                    errorWidget: (context, url,
-                                                            error) =>
-                                                        const Icon(Icons.error),
-                                                  ),
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            if (snapshot.hasData) {
+                               if (snapshot.data.length == 0) {
+                                return Text(
+                                  "Did not match",
+                                  style: GoogleFonts.montserrat(
+                                      textStyle: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: kTextInputPlaceholderColor,
+                                  )),
+                                );
+                              }
+                              return GridView.count(
+                                controller: _controller,
+                                shrinkWrap: true,
+                                mainAxisSpacing: size.height * 0.02,
+                                crossAxisSpacing: size.width * 0.02,
+                                crossAxisCount: 2,
+                                children:
+                                    List.generate(snapshot.data.length, (index) {
+                                  return Center(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        CarsData.city =
+                                            snapshot.data[index]["city"];
+                                        CarsData.cityimage =
+                                            snapshot.data[index]["image"];
+                                        Ids.cityid = snapshot.data[index]["_id"];
+                                        print(CarsData.city);
+                                        print(CarsData.cityimage);
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const SelectBrand(),
+                                            ));
+                                      },
+                                      child: Card(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30)),
+                                        elevation: 8,
+                                        shadowColor: Colors.grey.withOpacity(0.2),
+                                        child: Container(
+                                          height: size.height * 0.17,
+                                          width: size.height * 0.17,
+                                          padding:
+                                              EdgeInsets.all(size.height * 0.008),
+                                          child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                SizedBox(
+                                                  height: size.height * 0.01,
                                                 ),
-                                                // Image.network(
-                                                //     snapshot.data[index]["image"].toString()),
-                                              ),
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              Text(
-                                                snapshot.data[index]["city"],
-                                                style: GoogleFonts.montserrat(
-                                                    textStyle: const TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                              )
-                                            ]),
+                                                Expanded(
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            size.height * 0.01),
+                                                    child: CachedNetworkImage(
+                                                      fit: BoxFit.cover,
+                                                      imageUrl: snapshot.data[index]
+                                                              ["image"]
+                                                          .toString(),
+                                                      placeholder: (context, url) =>
+                                                          Container(),
+                                                      // loder,
+
+                                                      errorWidget: (context, url,
+                                                              error) =>
+                                                          const Icon(Icons.error),
+                                                    ),
+                                                  ),
+                                                  // Image.network(
+                                                  //     snapshot.data[index]["image"].toString()),
+                                                ),
+                                                const SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Text(
+                                                  snapshot.data[index]["city"],
+                                                  style: GoogleFonts.montserrat(
+                                                      textStyle: const TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                )
+                                              ]),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                );
-                              }),
-                            );
+                                  );
+                                }),
+                              );
+                            }
+                            return loder;
                           }
                           return loder;
-                        }
-                        return loder;
-                        // print(snapshot.data.length);
-                      }),
+                          // print(snapshot.data.length);
+                        }),
+                  ),
                 ),
               ],
             ),

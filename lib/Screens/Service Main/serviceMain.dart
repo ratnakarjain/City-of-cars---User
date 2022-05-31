@@ -438,8 +438,10 @@ class _ServiceMainState extends State<ServiceMain> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                               ProductDetails(planDetails: snapshot.data[index],)));
+                                          builder: (context) => ProductDetails(
+                                                planDetails:
+                                                    snapshot.data[index],
+                                              )));
                                 },
                                 child: RRectCard(
                                   h: h * 0.1,
@@ -583,7 +585,6 @@ class _ServiceMainState extends State<ServiceMain> {
                     if (snapshot.connectionState == ConnectionState.done) {
                       // mostpop.addAll(snapshot.data);
                       if (snapshot.hasData) {
-                        
                         return ListView.builder(
                           controller: _controller2,
                           physics: const BouncingScrollPhysics(),
@@ -600,8 +601,10 @@ class _ServiceMainState extends State<ServiceMain> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                               ProductDetails(planDetails: data.elementAt(index),)));
+                                          builder: (context) => ProductDetails(
+                                                planDetails:
+                                                    data.elementAt(index),
+                                              )));
                                 },
                                 child: RRectCard(
                                   h: h * 0.1,
@@ -721,7 +724,8 @@ class _ServiceMainState extends State<ServiceMain> {
                     }
                     return loder;
                   },
-                )),            SizedBox(
+                )),
+            SizedBox(
               height: h * 0.01,
             ),
             GestureDetector(

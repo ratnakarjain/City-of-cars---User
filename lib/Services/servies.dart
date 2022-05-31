@@ -396,7 +396,7 @@ Future addcartitem() async {
       "subcategory": Ids.subcategoryid,
       "Plans": Ids.planid,
       "bookingdata": Ids.slotid,
-      "user": Ids.userid
+      "user": prefs!.getString("userId").toString()
     }, headers: {
       "Authorization": prefs!.getString('token').toString()
     });
@@ -413,7 +413,7 @@ Future addcartitem() async {
 }
 
 Future getcartitems() async {
-  var url = Uri.parse(getcartUrl+"?user="+Ids.userid);
+  var url = Uri.parse(getcartUrl+"?user="+prefs!.getString("userId").toString());
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -504,7 +504,7 @@ Future addorder(String paymentid, String paymentstatus) async {
       "cart":Ids.cartid.toString(),
       "brand": Ids.brandid.toString(),
       "city": Ids.cityid.toString(),
-      "user": Ids.userid.toString(),
+      "user": prefs!.getString("userId").toString(),
       "status": "",
       "paymentStatus":paymentstatus,
       "paymentid":paymentid
@@ -551,7 +551,7 @@ Future rating(String rating) async {
   var url = Uri.parse(ratingUrl);
   try {
     var response = await http.post(url, body: {
-      "user_id": Ids.userid,
+      "user_id": prefs!.getString("userId").toString(),
       "order_id": Ids.orderid,
       "rating": rating,
       "review": "good"
@@ -577,7 +577,7 @@ Future addusercitycardata() async {
   var url = Uri.parse(usercardataUrl);
   try {
     var response = await http.post(url, body: {
-      "user": Ids.userid,
+      "user": prefs!.getString("userId").toString(),
       "city": Ids.cityid,
       "brand": Ids.brandid,
       "car": Ids.carid,
@@ -601,7 +601,7 @@ Future addusercitycardata() async {
 }
 
 Future getOrderhistory() async {
-  var url = Uri.parse(getorderhistoryUrl + "?userid=" + Ids.userid);
+  var url = Uri.parse(getorderhistoryUrl + "?userid=" + prefs!.getString("userId").toString());
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -878,7 +878,7 @@ return image;
   }
 }
 Future getusercars() async {
-  var url = Uri.parse(getusercarsUrl+"?userid="+Ids.userid);
+  var url = Uri.parse(getusercarsUrl+"?userid="+prefs!.getString("userId").toString());
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});

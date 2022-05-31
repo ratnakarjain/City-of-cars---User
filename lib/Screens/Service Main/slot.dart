@@ -199,7 +199,6 @@ class _SlotState extends State<Slot> {
                             }
                             return null;
                           },
-                          keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                               hintText: "House No.. & Floor*",
                               hintStyle: GoogleFonts.montserrat(

@@ -99,7 +99,7 @@ class _VerficationState extends State<Verfication> {
                     buttonColor: korangecolor,
                     style: GoogleFonts.montserrat(
                         color: kwhitecolor, fontWeight: FontWeight.w600),
-                    onTap: () {
+                    onTap:_controller.text.isEmpty?(){}: () {
                       istaped = true;
 
                       verify().whenComplete(() {

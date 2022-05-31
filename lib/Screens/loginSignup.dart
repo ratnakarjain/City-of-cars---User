@@ -53,9 +53,8 @@ class _LoginSignUpState extends State<LoginSignUp> {
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
-    return LayoutBuilder(
-      builder:(context, constraints){
-        return Scaffold(
+    return LayoutBuilder(builder: (context, constraints) {
+      return Scaffold(
           body: SingleChildScrollView(
         child: Container(
           // height: height,
@@ -95,6 +94,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
                                   ? Colors.white
                                   : kSinginTextColor.withOpacity(0.6),
                               fontWeight: FontWeight.w600,
+                              fontSize: 12
                             ),
                           )),
                     ),
@@ -109,7 +109,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
                       ? () {
                           isSelected = !isSelected;
                           mobile.clear();
-                           
+
                           setState(() {
                             // mobile.clear();
                           });
@@ -172,7 +172,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
                                   return null;
                                 }
                               },
-                          // autovalidateMode: AutovalidateMode.onUserInteraction,
+                              // autovalidateMode: AutovalidateMode.onUserInteraction,
                               controller: name,
                               decoration: InputDecoration(
                                 hintText: "Name*",
@@ -190,9 +190,9 @@ class _LoginSignUpState extends State<LoginSignUp> {
                                 //         ? kbluecolor
                                 //         : kTextInputPlaceholderColor
                                 //             .withOpacity(0.32)),
-    
+
                                 border: InputBorder.none,
-    
+
                                 focusedBorder: InputBorder.none,
                               ),
                               cursorColor: kCursorColor,
@@ -234,12 +234,10 @@ class _LoginSignUpState extends State<LoginSignUp> {
                                 borderRadius:
                                     BorderRadius.circular(height * 0.05)),
                             child: TextFormField(
-                              
-                              
                               controller: mobile,
                               focusNode: myFocusNode1,
                               keyboardType: TextInputType.phone,
-                          // autovalidateMode: AutovalidateMode.onUserInteraction,
+                              // autovalidateMode: AutovalidateMode.onUserInteraction,
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   mobileError = "Enter mobile Number";
@@ -247,7 +245,8 @@ class _LoginSignUpState extends State<LoginSignUp> {
                                   return "";
                                 } else if (value.length != 10) {
                                   setState(() {});
-                                  mobileError = "Mobile no. should be enter 10 digit";
+                                  mobileError =
+                                      "Mobile no. should be enter 10 digit";
                                   return "";
                                 } else {
                                   return null;
@@ -329,8 +328,8 @@ class _LoginSignUpState extends State<LoginSignUp> {
                                 }
                                 return null;
                               },
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
                               decoration: InputDecoration(
                                 hintText: "E-Mail (Optional)",
                                 errorStyle: const TextStyle(
@@ -385,11 +384,11 @@ class _LoginSignUpState extends State<LoginSignUp> {
                   )
                 : Container(
                     width: width,
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: 22, vertical: 22),
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 22, vertical: 22),
                     height: height * 0.15,
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 29, horizontal: 22),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 29, horizontal: 22),
                     child: Center(
                       child: Form(
                         key: _formKey,
@@ -416,14 +415,14 @@ class _LoginSignUpState extends State<LoginSignUp> {
                             counterText: "",
                             hintText: "Mobile No.*",
                             hintStyle: TextStyle(
-                                color:
-                                    kTextInputPlaceholderColor.withOpacity(0.32)),
+                                color: kTextInputPlaceholderColor
+                                    .withOpacity(0.32)),
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
                                   color: kTextInputPlaceholderColor
                                       .withOpacity(0.3)),
                             ),
-    
+
                             // labelText: "Mobile No.",
                             // labelStyle: TextStyle(
                             //     color: myFocusNode3.hasFocus
@@ -445,9 +444,9 @@ class _LoginSignUpState extends State<LoginSignUp> {
                       ),
                     ),
                   ),
-    
-    //sjahjkdshdjkhakjd sjkndkjand
-    
+
+            //sjahjkdshdjkhakjd sjkndkjand
+
             const SizedBox(height: 22),
             !isSelected
                 ? Row(
@@ -484,78 +483,79 @@ class _LoginSignUpState extends State<LoginSignUp> {
             //this is login button
             Visibility(
               visible: isSelected,
-              child:istaped1?loder: RRecctButton(
-                  text: "CONTINUE",
-                  onTap:  () {
-                          if (_formKey.currentState!.validate()) {
-                            istaped1=true;
-                            login();
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //       builder: (context) => const Verfication(),
-                            //     ));
-                
-                            // mobile.clear();
-                            // mail.clear();
-                            // name.clear();
-                            setState(() {
-                              
-                            });
-                          }
-                        },
-                  buttonColor: korangecolor,
-                  style: GoogleFonts.montserrat(
-                      textStyle: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14)),
-                  h: 52,
-                  w: width - 44),
+              child: istaped1
+                  ? loder
+                  : RRecctButton(
+                      text: "CONTINUE",
+                      onTap: () {
+                        FocusManager.instance.primaryFocus?.unfocus();
+
+                        if (_formKey.currentState!.validate()) {
+                          istaped1 = true;
+                          login();
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //       builder: (context) => const Verfication(),
+                          //     ));
+
+                          // mobile.clear();
+                          // mail.clear();
+                          // name.clear();
+                          setState(() {});
+                        }
+                      },
+                      buttonColor: korangecolor,
+                      style: GoogleFonts.montserrat(
+                          textStyle: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14)),
+                      h: 52,
+                      w: width - 44),
             ),
             // this is register button
             Visibility(
-             visible: !isSelected,
-             child:istaped2?loder: RRecctButton(
-                  text: "CONTINUE",
-                  onTap: () {
-                          if (_formKey.currentState!.validate()) {
-                            istaped2=true;nameError="";
-                              emailError="";
-                              mobileError = "";
-                            register().whenComplete((){
-                              nameError="";
-                              emailError="";
-                              mobileError = "";
-                            });
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //       builder: (context) => const Verfication(),
-                            //     ));
-               
-                            // mobile.clear();
-                            // mail.clear();
-                            // name.clear();
-                            setState(() {
-                              
-                            });
-                            
-                          }
-                          setState(() {
-                              
-                            });
-                        },
-                      
-                  buttonColor: korangecolor,
-                  style: GoogleFonts.montserrat(
-                      textStyle: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14)),
-                  h: 52,
-                  w: width - 44),
-           ),
+              visible: !isSelected,
+              child: istaped2
+                  ? loder
+                  : RRecctButton(
+                      text: "CONTINUE",
+                      onTap: () {
+                        FocusManager.instance.primaryFocus?.unfocus();
+
+                        if (_formKey.currentState!.validate()) {
+                          istaped2 = true;
+                          nameError = "";
+                          emailError = "";
+                          mobileError = "";
+                          register().whenComplete(() {
+                            nameError = "";
+                            emailError = "";
+                            mobileError = "";
+                          });
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //       builder: (context) => const Verfication(),
+                          //     ));
+
+                          // mobile.clear();
+                          // mail.clear();
+                          // name.clear();
+                          setState(() {});
+                        }
+                        setState(() {});
+                      },
+                      buttonColor: korangecolor,
+                      style: GoogleFonts.montserrat(
+                          textStyle: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14)),
+                      h: 52,
+                      w: width - 44),
+            ),
             const SizedBox(height: 10),
             Visibility(
               visible: !isSelected,
@@ -570,8 +570,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
           ]),
         ),
       ));
-
-      }     );
+    });
   }
 
   @override
@@ -583,7 +582,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
     name.dispose();
   }
 
- Future register() async {
+  Future register() async {
     var url = Uri.parse(registerUrl);
     try {
       var response = await http.post(url, body: {
@@ -593,9 +592,9 @@ class _LoginSignUpState extends State<LoginSignUp> {
         "type": "customer"
         // "role":"624c7a3c9b4a12e570e35d4f"
       });
-      if (response.statusCode == 200) {
-        var jsonResponse = convert.jsonDecode(response.body);
+      var jsonResponse = convert.jsonDecode(response.body);
 
+      if (response.statusCode == 200) {
         print("success");
         if (jsonResponse["status"]) {
           prefs!.setString("token", jsonResponse["token"].toString());
@@ -604,31 +603,35 @@ class _LoginSignUpState extends State<LoginSignUp> {
           prefs!.setString("id", jsonResponse["data"]["_id"].toString());
           prefs!.setString("mobile", jsonResponse["data"]["mobile"].toString());
           token = prefs!.getString("token")!;
-        Ids.userid = jsonResponse["data"]["_id"];
+          Ids.userid = jsonResponse["data"]["_id"];
 
           print("$token");
           print(Ids.userid);
-          istaped2=false;
+          istaped2 = false;
           Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => const Verfication(),
               ));
 
-
           return response.body;
         } else {
-          istaped2=false;
-          setState(() {
-            
-          });
+          istaped2 = false;
+          setState(() {});
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(jsonResponse["message"]),
           ));
         }
+      } else {
+        istaped2 = false;
+        setState(() {});
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(jsonResponse["msg"]),
+        ));
       }
     } catch (e) {
       print("error $e");
+      istaped2 = false;
     }
   }
 
@@ -645,24 +648,22 @@ class _LoginSignUpState extends State<LoginSignUp> {
         prefs!.setString("token", jsonResponse["token"]);
         token = prefs!.getString("token")!;
         Ids.userid = jsonResponse["data"]["_id"];
-          prefs!.setString("name", jsonResponse["data"]["name"].toString());
-          prefs!.setString("email", jsonResponse["data"]["email"].toString());
-          prefs!.setString("id", jsonResponse["data"]["_id"].toString());
-          prefs!.setString("mobile", jsonResponse["data"]["mobile"].toString());
+        prefs!.setString("name", jsonResponse["data"]["name"].toString());
+        prefs!.setString("email", jsonResponse["data"]["email"].toString());
+        prefs!.setString("id", jsonResponse["data"]["_id"].toString());
+        prefs!.setString("mobile", jsonResponse["data"]["mobile"].toString());
         print("$token");
-          print(Ids.userid);
-        
-        istaped1=false;
+        print(Ids.userid);
+
+        istaped1 = false;
         Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => const Verfication(),
             ));
       } else if (response.statusCode == 201) {
-        istaped1=false;
-        setState(() {
-          
-        });
+        istaped1 = false;
+        setState(() {});
         var jsonResponse = convert.jsonDecode(response.body);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(jsonResponse["message"]),

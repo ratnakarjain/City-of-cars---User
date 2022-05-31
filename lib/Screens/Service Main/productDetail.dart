@@ -22,7 +22,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   var w;
   int currentPage = 0;
   bool des = false;
-  bool basic = false;
+  bool basic = true;
   bool service = false;
   List terms = [];
   List backimage = [
@@ -44,7 +44,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   @override
   Widget build(BuildContext context) {
-    print("enter the loop"+ details.toString());
+    print("enter the loop" + details.toString());
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -234,17 +234,30 @@ class _ProductDetailsState extends State<ProductDetails> {
             ),
             RRecctButton2(
               onTap: () {
-                if(!service && !basic){
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please select price"),));
-                }else{
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const Slot(),
+                if (!service && !basic) {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text("Please select price"),
+                  ));
+                } else {
+                  print(Ids.brandid+"vsdv");
+                  print(Ids.carid+"dvsdvsd");
+                  print(Ids.cityid+"vsv");
+                  print(Ids.fuelid+"dsdvs");
+                  if (Ids.brandid == "" &&
+                      Ids.carid == "" &&
+                      Ids.cityid == "" &&
+                      Ids.fuelid == "") {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("Please select car first"),
                     ));
-
+                  } else {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Slot(),
+                        ));
+                  }
                 }
-                
               },
               h: h * 0.05,
               w: w * 0.8,
@@ -416,25 +429,38 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   childAspectRatio: 1.35,
                                   shrinkWrap: true,
                                   padding: EdgeInsets.only(
-                                      left: w * 0.05, right: w * 0.05, bottom: h*0.01,top:h*0.01),
+                                      left: w * 0.05,
+                                      right: w * 0.05,
+                                      bottom: h * 0.01,
+                                      top: h * 0.01),
                                   children: List.generate(
                                       details["services_id"].length, (index) {
                                     return Container(
-                                      margin: EdgeInsets.only(top: h*0.01,),
-                                      decoration:  BoxDecoration(
-                                        border: index>details["services_id"].length-3 ? const Border(): const Border(bottom: BorderSide(color: Colors.blueGrey,width: .5))
+                                      margin: EdgeInsets.only(
+                                        top: h * 0.01,
                                       ),
+                                      decoration: BoxDecoration(
+                                          border: index >
+                                                  details["services_id"]
+                                                          .length -
+                                                      3
+                                              ? const Border()
+                                              : const Border(
+                                                  bottom: BorderSide(
+                                                      color: Colors.blueGrey,
+                                                      width: .5))),
                                       child: Column(
                                         children: [
                                           CachedNetworkImage(
                                             fit: BoxFit.fill,
                                             height: h * 0.03,
-                                            imageUrl: details["services_id"][index]
-                                                    ["image"]
+                                            imageUrl: details["services_id"]
+                                                    [index]["image"]
                                                 .toString(),
                                             placeholder: (context, url) =>
                                                 Container(),
-                                            errorWidget: (context, url, error) =>
+                                            errorWidget: (context, url,
+                                                    error) =>
                                                 Image.network(
                                                     "https://i.gifer.com/DKke.gif"),
                                           ),
@@ -451,8 +477,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             style: GoogleFonts.montserrat(
                                                 fontSize: 8,
                                                 fontWeight: FontWeight.w600,
-                                                color: kTextInputPlaceholderColor
-                                                    .withOpacity(0.6)),
+                                                color:
+                                                    kTextInputPlaceholderColor
+                                                        .withOpacity(0.6)),
                                           ),
                                         ],
                                       ),

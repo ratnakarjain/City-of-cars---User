@@ -28,6 +28,7 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
   void initState() {
     // TODO: implement initState
     Ids.orderid = widget.id;
+    print(Ids.orderid+" +++++++++++");
     ordersuccess(widget.id).then((value) {
       data = value[0];
       print(data);

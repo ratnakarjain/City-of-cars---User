@@ -45,12 +45,15 @@ class _MyAppState extends State<MyApp> {
   var prefs = Prefernece.pref;
   // get korangecolor => null;
   String id = "";
+  String cardetails = "";
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
    id = prefs!.getString("userId").toString();
-  
+
+   cardetails = prefs!.getString("usercar").toString();
+    
    print(id+"=======");
   }
   @override
@@ -67,7 +70,7 @@ class _MyAppState extends State<MyApp> {
                 primary: korangecolor,
               ),
         ),
-        home: id==""||id=="null" ? const MyHomePage() :const SelectCity(),
+        home: id==""||id=="null" ? const MyHomePage() : cardetails == ""|| cardetails == "null" ? const SelectCity() : BottomNavBar(index: 0),
       ),
     );
   }

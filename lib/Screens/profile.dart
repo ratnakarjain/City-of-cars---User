@@ -3,10 +3,12 @@ import 'dart:convert';
 import 'package:cityofcars/Screens/bottomnavBar.dart';
 import 'package:cityofcars/Screens/carHealth.dart';
 import 'package:cityofcars/Screens/editProfile.dart';
+import 'package:cityofcars/Screens/loginSignup.dart';
 import 'package:cityofcars/Screens/messages.dart';
 import 'package:cityofcars/Screens/myhomepage.dart';
 import 'package:cityofcars/Screens/notification.dart';
 import 'package:cityofcars/Screens/selectBrand.dart';
+import 'package:cityofcars/Screens/selectCity.dart';
 import 'package:cityofcars/Screens/sos.dart';
 import 'package:cityofcars/Services/models/usercardetailsmodel.dart';
 import 'package:cityofcars/Services/servies.dart';
@@ -84,7 +86,8 @@ class _ProfileState extends State<Profile> {
     super.initState();
     if(pref?.getInt("CCar") != null){
       isSelected = pref!.getInt("CCar")!;
-      print(isSelected);
+
+      print(isSelected.toString()+"======");
       setState(() {
         
       });
@@ -144,7 +147,7 @@ class _ProfileState extends State<Profile> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const SelectBrand(),
+                                  builder: (context) => const SelectCity(),
                                 ));
                           },
                           child: const Icon(
@@ -242,8 +245,13 @@ class _ProfileState extends State<Profile> {
                                                 isSelected = index + currentCar+1;
                                             String js = jsonEncode(modellist[isSelected-1]);
                                             pref!.setString("usercar",js);
-                                            pref!.setInt("CCar",isSelected-1);
-                                            
+                                            pref!.setInt("CCar",isSelected);
+                                            Ids.brandid = modellist[isSelected-1].carbrandid.toString();
+                                            Ids.carid = modellist[isSelected-1].carid.toString();
+                                            Ids.cityid = modellist[isSelected-1].cityid.toString();
+                                            Ids.fuelid = modellist[isSelected-1].carfuelid.toString();
+                                            print(Ids.cityid+"  "+ Ids.carid + "  "+ Ids.brandid + "  "+Ids.fuelid);
+
                                             print(pref?.getString("usercar"));
                                             print(pref?.getInt("CCar"));
                                             
@@ -301,7 +309,7 @@ class _ProfileState extends State<Profile> {
                                 ),
                                 children: [
                                   TextSpan(
-                                    text: "Ankit  ",
+                                    text: prefs!.getString("name").toString()+"  ",
                                     style: GoogleFonts.montserrat(
                                       fontSize: 19,
                                       color: kTextInputPlaceholderColor,
@@ -670,11 +678,13 @@ class _ProfileState extends State<Profile> {
                     child: InkWell(
                       onTap: () {
                         pref!.remove("userId");
+                        pref!.remove("usercar");
+                        pref!.remove("CCar");
                         Navigator.pushAndRemoveUntil<dynamic>(
                           context,
                           MaterialPageRoute<dynamic>(
                             builder: (BuildContext context) =>
-                                const MyHomePage(),
+                                LoginSignUp(isSignIn: false),
                           ),
                           (route) =>
                               false, //if you want to disable back feature set to false

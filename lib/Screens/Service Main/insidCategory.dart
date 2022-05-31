@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cityofcars/Screens/Service%20Main/InsidCategoryTabViw/common_services.dart';
+import 'package:cityofcars/Screens/Service%20Main/productDetail.dart';
 import 'package:cityofcars/Services/models/subcategory.dart';
 import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Services/url.dart';
@@ -577,55 +578,202 @@ class _InsideCategoryState extends State<InsideCategory>
                     height: h * 0.005,
                   ),
                   Container(
-                    height: h * 0.18,
-                    child: ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      padding: EdgeInsets.all(h * 0.01),
-                      itemCount: reccomendedPackes.length,
-                      itemBuilder: (context, index) {
-                        return RRectCard(
-                          h: h * 0.1,
-                          w: w * 0.25,
-                          borderRadius: 15,
-                          widget: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                    "assets/images/${reccomendedPackes[index]["image"]}"),
-                                const SizedBox(
-                                  height: 5,
+                height: h * 0.18,
+                child: FutureBuilder(
+                  future: getrecmostPlans(),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      // mostpop.addAll(snapshot.data);
+                      if (snapshot.hasData) {
+                        
+                        return ListView.builder(
+                          controller: _controller2,
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          padding: EdgeInsets.symmetric(
+                              vertical: h * 0.01, horizontal: h * 0.025),
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, index) {
+                            List data = snapshot.data;
+                            return Visibility(
+                              visible: snapshot.data[index]["status"],
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                               ProductDetails(planDetails: data.elementAt(index),)));
+                                },
+                                child: RRectCard(
+                                  h: h * 0.1,
+                                  w: w * 0.25,
+                                  borderRadius: 15,
+                                  widget: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                            "assets/images/${reccomendedPackes[0]["image"]}"),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        FittedBox(
+                                          child: Text(
+                                            snapshot.data[index]["planName"],
+                                            style: GoogleFonts.montserrat(
+                                              fontWeight: FontWeight.w600,
+                                              height: 2,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: h * 0.01),
+                                          child: FittedBox(
+                                            child: Text(
+                                              reccomendedPackes[0]["type"],
+                                              textScaleFactor: 0.6,
+                                              style: GoogleFonts.montserrat(
+                                                fontWeight: FontWeight.w600,
+                                                color:
+                                                    kTextInputPlaceholderColor
+                                                        .withOpacity(0.6),
+                                                height: 2,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ]),
                                 ),
-                                FittedBox(
-                                  child: Text(
-                                    reccomendedPackes[index]["services"],
-                                    style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.w600,
-                                      height: 2,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: h * 0.01),
-                                  child: FittedBox(
-                                    child: Text(
-                                      reccomendedPackes[index]["type"],
-                                      textScaleFactor: 0.6,
-                                      style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.w600,
-                                        color: kTextInputPlaceholderColor
-                                            .withOpacity(0.6),
-                                        height: 2,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ]),
+                              ),
+                            );
+                          },
                         );
-                      },
-                    ),
-                  ),
+                      }
+                      return const Center(child: Text("Empty"));
+                    }
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      if (snapshot.hasData) {
+                        return ListView.builder(
+                          controller: _controller2,
+                          physics: BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          padding: EdgeInsets.symmetric(
+                              vertical: h * 0.01, horizontal: h * 0.025),
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, index) {
+                            return Visibility(
+                              visible: snapshot.data[index]["mostpopularpack"],
+                              child: GestureDetector(
+                                onTap: () {
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) =>
+                                  //             const ProductDetails()));
+                                },
+                                child: RRectCard(
+                                  h: h * 0.1,
+                                  w: w * 0.25,
+                                  borderRadius: 15,
+                                  widget: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                            "assets/images/${reccomendedPackes[0]["image"]}"),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        FittedBox(
+                                          child: Text(
+                                            snapshot.data[index]["planName"],
+                                            style: GoogleFonts.montserrat(
+                                              fontWeight: FontWeight.w600,
+                                              height: 2,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: h * 0.01),
+                                          child: FittedBox(
+                                            child: Text(
+                                              reccomendedPackes[0]["type"],
+                                              textScaleFactor: 0.6,
+                                              style: GoogleFonts.montserrat(
+                                                fontWeight: FontWeight.w600,
+                                                color:
+                                                    kTextInputPlaceholderColor
+                                                        .withOpacity(0.6),
+                                                height: 2,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ]),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      }
+                      return loder;
+                    }
+                    return loder;
+                  },
+                )),
+                  // Container(
+                  //   height: h * 0.18,
+                  //   child: ListView.builder(
+                  //     physics: const BouncingScrollPhysics(),
+                  //     scrollDirection: Axis.horizontal,
+                  //     padding: EdgeInsets.all(h * 0.01),
+                  //     itemCount: reccomendedPackes.length,
+                  //     itemBuilder: (context, index) {
+                  //       return RRectCard(
+                  //         h: h * 0.1,
+                  //         w: w * 0.25,
+                  //         borderRadius: 15,
+                  //         widget: Column(
+                  //             mainAxisAlignment: MainAxisAlignment.center,
+                  //             children: [
+                  //               Image.asset(
+                  //                   "assets/images/${reccomendedPackes[index]["image"]}"),
+                  //               const SizedBox(
+                  //                 height: 5,
+                  //               ),
+                  //               FittedBox(
+                  //                 child: Text(
+                  //                   reccomendedPackes[index]["services"],
+                  //                   style: GoogleFonts.montserrat(
+                  //                     fontWeight: FontWeight.w600,
+                  //                     height: 2,
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //               Padding(
+                  //                 padding: EdgeInsets.symmetric(
+                  //                     horizontal: h * 0.01),
+                  //                 child: FittedBox(
+                  //                   child: Text(
+                  //                     reccomendedPackes[index]["type"],
+                  //                     textScaleFactor: 0.6,
+                  //                     style: GoogleFonts.montserrat(
+                  //                       fontWeight: FontWeight.w600,
+                  //                       color: kTextInputPlaceholderColor
+                  //                           .withOpacity(0.6),
+                  //                       height: 2,
+                  //                     ),
+                  //                   ),
+                  //                 ),
+                  //               )
+                  //             ]),
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
                   SizedBox(
                     height: h * 0.02,
                   ),
