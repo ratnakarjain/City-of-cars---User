@@ -33,5 +33,7 @@ const String getjobcardUrl = baseUrl+"/jobCard";
 const String getcatBannerUrl = baseUrl+"/getCategoryBanner";
 const String getpoprecUrl = baseUrl+"/getplanApi";
 const String getusercarsUrl = baseUrl+"/viewCarProfile";
+const String postmessageUrl = baseUrl+"/userSupport";
+const String getmessageUrl = baseUrl+"/getuserSupport";
 
 String token = "";

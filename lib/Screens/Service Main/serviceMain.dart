@@ -327,8 +327,9 @@ class _ServiceMainState extends State<ServiceMain> {
                                           .toString(),
                                       placeholder: (context, url) => loder,
                                       errorWidget: (context, url, error) =>
-                                          Image.network(
-                                              "https://i.gifer.com/DKke.gif"),
+                                      Container()
+                                          // Image.network(
+                                          //     "https://i.gifer.com/DKke.gif"),
                                     ),
                                   ),
                                   // Image.network(

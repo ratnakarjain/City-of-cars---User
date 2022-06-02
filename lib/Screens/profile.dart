@@ -147,7 +147,7 @@ class _ProfileState extends State<Profile> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const SelectCity(),
+                                  builder: (context) => const SelectBrand(),
                                 ));
                           },
                           child: const Icon(
@@ -190,7 +190,7 @@ class _ProfileState extends State<Profile> {
                         height: h * 0.2,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: 2,
+                          itemCount:modellist.length<=2?modellist.length: 2,
                           shrinkWrap: true,
                           // padding: EdgeInsets.only(left: w*0.1),
                           itemBuilder: (context, index) {
@@ -198,16 +198,19 @@ class _ProfileState extends State<Profile> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 index == 0
-                                    ? InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            if (currentCar > 0) {
-                                              currentCar--;
-                                              print(currentCar);
-                                            }
-                                          });
-                                        },
-                                        child: Icon(Icons.arrow_back_ios))
+                                    ? Visibility(
+                                      visible: modellist.length>2,
+                                      child: InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              if (currentCar > 0) {
+                                                currentCar--;
+                                                print(currentCar);
+                                              }
+                                            });
+                                          },
+                                          child: Icon(Icons.arrow_back_ios)),
+                                    )
                                     : Container(),
                                 Column(
                                   children: [
@@ -273,16 +276,19 @@ class _ProfileState extends State<Profile> {
                                   ],
                                 ),
                                 index == 1
-                                    ? InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            if (currentCar < modellist.length - 2) {
-                                              currentCar++;
-                                              print(currentCar);
-                                            }
-                                          });
-                                        },
-                                        child: Icon(Icons.arrow_forward_ios))
+                                    ? Visibility(
+                                      visible: modellist.length>2,
+                                      child: InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              if (currentCar < modellist.length - 2) {
+                                                currentCar++;
+                                                print(currentCar);
+                                              }
+                                            });
+                                          },
+                                          child: Icon(Icons.arrow_forward_ios)),
+                                    )
                                     : Container(),
                               ],
                             );

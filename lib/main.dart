@@ -53,7 +53,7 @@ class _MyAppState extends State<MyApp> {
    id = prefs!.getString("userId").toString();
 
    cardetails = prefs!.getString("usercar").toString();
-    
+    Ids.userid = id;
    print(id+"=======");
   }
   @override

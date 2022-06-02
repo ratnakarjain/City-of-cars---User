@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,21 @@ class _MessagesState extends State<Messages> {
   ];
   var _controller = TextEditingController();
   ScrollController _scrollController = ScrollController();
+  List msg = [];
+  bool isloading = true;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print(Ids.userid);
+    getMess().then((value) {
+      msg.addAll(value);
+      print(msg);
+      isloading = false;
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
@@ -43,7 +59,17 @@ class _MessagesState extends State<Messages> {
         body: Container(
           height: h,
           width: w,
-          child: Mess(message: message),
+          child: isloading
+              ? Container()
+              : msg.isEmpty
+                  ? Center(
+                      child: Text(
+                        "No chat yet",
+                        style:
+                            GoogleFonts.montserrat(fontWeight: FontWeight.bold),
+                      ),
+                    )
+                  : Mess(message: msg),
         ),
         // Container(
         //   width: w,
@@ -185,18 +211,33 @@ class _MessagesState extends State<Messages> {
                           bottomRight: Radius.elliptical(w * 0.07, h * 0.06))),
                   child: GestureDetector(
                     onTap: () {
-                      if (_controller.text == "") {
-                        _scaffoldKey.currentState!.showSnackBar(
-                            const SnackBar(content: Text("Empty Text")));
-                      } else {
-                        message.add({
-                          "user": "User",
-                          "message": _controller.text,
-                        });
-                        setState(() {
-                          _controller.clear();
+                      if (_controller.text.isNotEmpty) {
+                        postMess(_controller.text).then((value) {
+                          if (value == "success") {
+                            getMess().then((value) {
+                              msg.clear();
+                              msg.addAll(value);
+                              print(msg);
+                              isloading = false;
+                              setState(() {
+                                _controller.clear();
+                              });
+                            });
+                          }
                         });
                       }
+                      // if (_controller.text == "") {
+                      //   _scaffoldKey.currentState!.showSnackBar(
+                      //       const SnackBar(content: Text("Empty Text")));
+                      // } else {
+                      //   message.add({
+                      //     "user": "User",
+                      //     "message": _controller.text,
+                      //   });
+                      //   setState(() {
+                      //     _controller.clear();
+                      //   });
+                      // }
                     },
                     child: const Center(
                       child: Icon(
@@ -361,7 +402,6 @@ class Mess extends StatelessWidget {
   @override
   ScrollController _scrollController = ScrollController();
   Widget build(BuildContext context) {
-    bool isSupport = false;
     return ListView.builder(
       itemCount: message.length,
       padding: EdgeInsets.only(bottom: h * 0.12),
@@ -370,49 +410,45 @@ class Mess extends StatelessWidget {
       physics: const AlwaysScrollableScrollPhysics(),
       controller: _scrollController,
       itemBuilder: (context, index) {
-        if (message[index]["user"] == "Support") {
-          isSupport = true;
-        } else {
-          isSupport = false;
+        int i = message.length-1-index;
+        if(message[i]["type"]=="sender")
+        {
+           return To(msg: message[i]["message"],show:i-1==-1?true:  message[i-1]["type"]!="sender",);
         }
-        index = message.length - index - 1;
-        return Row(
-          mainAxisAlignment: message[index]["user"] != "Support"
-              ? MainAxisAlignment.end
-              : MainAxisAlignment.start,
-          children: [
-            Column(
-              crossAxisAlignment: message[index]["user"] != "Support"
-                  ? CrossAxisAlignment.end
-                  : CrossAxisAlignment.start,
-              children: [
-                Row(
+        if(message[i]["type"]=="reciver")
+        {
+          return From(msg: message[i]["message"],show:i-1==-1?true: message[i-1]["type"]!="reciver",);
+        }
+        return Container();
+      },
+    );
+  }
+}
+
+class From extends StatelessWidget {
+  String msg;
+  bool show;
+  From({Key? key, required this.msg, required this.show}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Container(
+          padding: EdgeInsets.only(top: h * 0.01),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Visibility(
+                visible: show,
+                child: Row(
                   children: [
                     SizedBox(
                       width: w * 0.05,
                     ),
-                    Visibility(
-                      visible: isSupport,
-                      child: Text(
-                        message[index]["user"],
-                        style: GoogleFonts.montserrat(
-                            fontStyle: FontStyle.italic,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w700),
-                      ),
-                    ),
-                    SizedBox(
-                      width: w * 0.02,
-                    ),
-                    Visibility(
-                      visible: isSupport,
-                      child: Image.asset(
-                        "assets/images/ava1.png",
-                        height: h * 0.05,
-                      ),
-                    ),
-                    Visibility(
-                      visible: !isSupport,
+                    CircleAvatar(
+                      radius: h * 0.02,
                       child: Image.asset(
                         "assets/images/ava2.png",
                         height: h * 0.05,
@@ -421,61 +457,127 @@ class Mess extends StatelessWidget {
                     SizedBox(
                       width: w * 0.02,
                     ),
-                    Visibility(
-                      visible: !isSupport,
-                      child: Text(
-                        message[index]["user"],
-                        style: GoogleFonts.montserrat(
-                            fontStyle: FontStyle.italic,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w700),
-                      ),
+                    Text(
+                      "Support",
+                      // message[index]["user"],
+                      style: GoogleFonts.montserrat(
+                          fontStyle: FontStyle.italic,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700),
                     ),
                     SizedBox(
                       width: w * 0.05,
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: h * 0.01,
-                ),
-                Container(
-                  constraints:
-                      BoxConstraints(minWidth: w * 0.1, maxWidth: w * 0.8),
-                  padding: EdgeInsets.only(
-                    left: message[index]["user"] == "Support"
-                        ? w * 0.05
-                        : w * 0.1,
+              ),
+              SizedBox(
+                height: h * 0.01,
+              ),
+              Container(
+                constraints:
+                    BoxConstraints(minWidth: w * 0.1, maxWidth: w * 0.8),
+                padding: EdgeInsets.only(
+                    left: w * 0.05,
                     top: h * 0.015,
                     bottom: h * 0.015,
-                    right: message[index]["user"] == "Support"
-                        ? w * 0.1
-                        : w * 0.03,
+                    right: w * 0.1),
+                decoration: BoxDecoration(
+                  color: kwhitecolor,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(h * 0.1),
+                    bottomRight: Radius.circular(h * 0.1),
                   ),
-                  decoration: BoxDecoration(
-                    color: kwhitecolor,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(
-                          message[index]["user"] != "Support" ? h * 0.1 : 0),
-                      bottomLeft: Radius.circular(
-                          message[index]["user"] != "Support" ? h * 0.1 : 0),
-                      topRight: Radius.circular(
-                          message[index]["user"] == "Support" ? h * 0.1 : 0),
-                      bottomRight: Radius.circular(
-                          message[index]["user"] == "Support" ? h * 0.1 : 0),
+                ),
+                child: Text(
+                  msg,
+                  // message[index]["message"],
+                  // "fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                  style: GoogleFonts.montserrat(),
+                ),
+              )
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class To extends StatelessWidget {
+  bool show;
+   String msg;
+   To({Key? key,required this.msg, required this.show}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Container(
+          padding: EdgeInsets.only(top: h * 0.01),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Visibility(
+                visible: show,
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: w * 0.05,
                     ),
+                    Text(
+                      prefs!.getString("name").toString(),
+                      // message[index]["user"],
+                      style: GoogleFonts.montserrat(
+                          fontStyle: FontStyle.italic,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700),
+                    ),
+                    SizedBox(
+                      width: w * 0.02,
+                    ),
+                    CircleAvatar(
+                      radius: h * 0.02,
+                      backgroundColor: kTransparent,
+                      backgroundImage: NetworkImage(prefs!.getString("image").toString()),
+                    ),
+                    
+                    SizedBox(
+                      width: w * 0.05,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: h * 0.01,
+              ),
+              Container(
+                constraints:
+                    BoxConstraints(minWidth: w * 0.1, maxWidth: w * 0.8),
+                padding: EdgeInsets.only(
+                  left: w * 0.1,
+                  top: h * 0.015,
+                  bottom: h * 0.015,
+                  right: w * 0.03,
+                ),
+                decoration: BoxDecoration(
+                  color: kwhitecolor,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(h * 0.1),
+                    bottomLeft: Radius.circular(h * 0.1),
                   ),
-                  child: Text(
-                    message[index]["message"],
-                    // "fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
-                    style: GoogleFonts.montserrat(),
-                  ),
-                )
-              ],
-            )
-          ],
-        );
-      },
+                ),
+                child: Text(
+                   msg,
+                  // "fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                  style: GoogleFonts.montserrat(),
+                ),
+              )
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

@@ -567,6 +567,9 @@ class _SelectBrandState extends State<SelectBrand> {
                                                 height: 1.5,
                                               ),
                                             ),
+                                          ),
+                                          SizedBox(
+                                            height: h*0.01,
                                           )
                                         ]),
                                   ),

@@ -45,7 +45,7 @@ Future getcities() async {
 }
 
 Future getCarData() async {
-  var url = Uri.parse(getcarData);
+  var url = Uri.parse(getcarData+"?brand_id="+Ids.brandid);
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -317,7 +317,14 @@ Future searchBrand(String brand) async {
 
 Future getSubcategory(String _id) async {
   print("id" + _id.toString() + "========");
-  var url = Uri.parse(getSubcategoryUrl + "?categoryid=" + _id);
+  String car="";
+  if(Ids.carid.isNotEmpty){
+    print(Ids.carid);
+    car= "?carid="+Ids.userid+"&";
+  }else{
+    car="?";
+  }
+  var url = Uri.parse(getSubcategoryUrl+ car + "categoryid=" + _id);
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -325,11 +332,11 @@ Future getSubcategory(String _id) async {
       var data = jsonDecode(respnse.body);
       if (data["status"]) {
         // print(data["data"].toString());
-        print(data["data"].length.toString());
+        print(data["result"].length.toString());
         //  final Subcategory value = subcategoryFromJson(respnse.body);
         //  print(value.data!.length);
         // return data["data"];
-        return data["data"];
+        return data["result"];
       } else {
         return Future.error(data["msg"]);
         // print(
@@ -413,7 +420,8 @@ Future addcartitem() async {
 }
 
 Future getcartitems() async {
-  var url = Uri.parse(getcartUrl+"?user="+prefs!.getString("userId").toString());
+  var url =
+      Uri.parse(getcartUrl + "?user=" + prefs!.getString("userId").toString());
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -501,13 +509,13 @@ Future addorder(String paymentid, String paymentstatus) async {
       "bookingdata": Ids.slotid.toString(),
       "fuel": Ids.fuelid.toString(),
       "car": Ids.carid.toString(),
-      "cart":Ids.cartid.toString(),
+      "cart": Ids.cartid.toString(),
       "brand": Ids.brandid.toString(),
       "city": Ids.cityid.toString(),
       "user": prefs!.getString("userId").toString(),
       "status": "",
-      "paymentStatus":paymentstatus,
-      "paymentid":paymentid
+      "paymentStatus": paymentstatus,
+      "paymentid": paymentid
     }, headers: {
       "Authorization": prefs!.getString('token').toString()
     });
@@ -601,30 +609,30 @@ Future addusercitycardata() async {
 }
 
 Future getOrderhistory() async {
-  var url = Uri.parse(getorderhistoryUrl + "?userid=" + prefs!.getString("userId").toString());
+  var url = Uri.parse(
+      getorderhistoryUrl + "?userid=" + prefs!.getString("userId").toString());
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
     if (respnse.statusCode == 200) {
-      
       var data = jsonDecode(respnse.body);
-      List<OrderHistoryModel> modellist=[];
+      List<OrderHistoryModel> modellist = [];
       if (data["status"]) {
-        for(int i = 0; i<data["data"].length;i++){
+        for (int i = 0; i < data["data"].length; i++) {
           OrderHistoryModel model = OrderHistoryModel();
           // model.carbrand=data["data"][i]["_id"] ;
-          model.carimage=data["data"][i]["car"]["image"].toString();
-          model.carname=data["data"][i]["car"]["cars"].toString();
+          model.carimage = data["data"][i]["car"]["image"].toString();
+          model.carname = data["data"][i]["car"]["cars"].toString();
           // model.deliverydate=data["data"][i]["_id"];
           // model.details=data["data"][i]["_id"];
-          model.orderid=data["data"][i]["_id"].toString();
-          model.packname=data["data"][i]["Plans"]["planName"].toString();
-          model.paystatus=data["data"][i]["_id"].toString();
-          model.price=data["data"][i]["Plans"]["typeprice"].toString();
-          model.servicename=data["data"][i]["Plans"]["servicepack"].toString();
-          model.status=data["data"][i]["status"].toString();
+          model.orderid = data["data"][i]["_id"].toString();
+          model.packname = data["data"][i]["Plans"]["planName"].toString();
+          model.paystatus = data["data"][i]["_id"].toString();
+          model.price = data["data"][i]["Plans"]["typeprice"].toString();
+          model.servicename =
+              data["data"][i]["Plans"]["servicepack"].toString();
+          model.status = data["data"][i]["status"].toString();
           modellist.add(model);
-
         }
         // print(data["data"].toString());
         print(data["data"].length.toString());
@@ -755,7 +763,7 @@ Future getapproveddetails(String id) async {
   }
 }
 
-Future setApprooval(String id, String status,BuildContext context) async {
+Future setApprooval(String id, String status, BuildContext context) async {
   var url = Uri.parse(postApprovedstatusUrl);
   try {
     var response = await http.post(url,
@@ -790,42 +798,41 @@ Future getjobcard(String id) async {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
     if (respnse.statusCode == 200) {
-      
       var data = jsonDecode(respnse.body);
       // JobCardModel model = JobCardModel();
       if (data["status"]) {
-      //   model.username = data["data"]["orderid"]["bookingdata"]["name"];
-      //   model.address = data["data"]["orderid"]["bookingdata"]["houseNo"]+" "+data["data"]["orderid"]["bookingdata"]["Street"];
-      //   model.city = data["data"]["orderid"]["bookingdata"]["houseNo"]+" "+data["data"]["orderid"]["bookingdata"]["Street"];
-      //   model.carNo = data["data"]["orderid"]["bookingdata"]["carno"];
-      //   model.carbrand = data["data"]["orderid"]["brand"]["brands"];
-      //   model.carimage = data["data"]["orderid"]["brand"]["image"];
-      //   model.carname = data["data"]["orderid"]["car"]["city"];
-      //    var gn = jsonDecode(data["data"]["condition"]);
-      //    for(int i = 0; i<gn.length; i++){
-      //      Condtion cond = Condtion();
-      //     //  cond.a = gn[i][];
-      //      cond.g;
-      //      cond.heading;
-      //      cond.p;
-      //      cond.x;
-      //      model.condtion.add(cond);
-      //    }
-        
-      //   model.frontL;
-      //   model.frontR;
-      //   model.backL;
-      //   model.backR;
-      //   model.images;
-      //   model.odometer;
-      //   model.avail;
-      //   model.tyrename;
-      //   model.batterycondtion;
-      //   model.batteryname;
-      //   model.remarks;
-      //   model.gst = "";
-      //   model.customersconcerns.addAll(data["data"]["customerConcerns"]);
-      //   model.fuellevel = data["data"]["fuel"].toString();
+        //   model.username = data["data"]["orderid"]["bookingdata"]["name"];
+        //   model.address = data["data"]["orderid"]["bookingdata"]["houseNo"]+" "+data["data"]["orderid"]["bookingdata"]["Street"];
+        //   model.city = data["data"]["orderid"]["bookingdata"]["houseNo"]+" "+data["data"]["orderid"]["bookingdata"]["Street"];
+        //   model.carNo = data["data"]["orderid"]["bookingdata"]["carno"];
+        //   model.carbrand = data["data"]["orderid"]["brand"]["brands"];
+        //   model.carimage = data["data"]["orderid"]["brand"]["image"];
+        //   model.carname = data["data"]["orderid"]["car"]["city"];
+        //    var gn = jsonDecode(data["data"]["condition"]);
+        //    for(int i = 0; i<gn.length; i++){
+        //      Condtion cond = Condtion();
+        //     //  cond.a = gn[i][];
+        //      cond.g;
+        //      cond.heading;
+        //      cond.p;
+        //      cond.x;
+        //      model.condtion.add(cond);
+        //    }
+
+        //   model.frontL;
+        //   model.frontR;
+        //   model.backL;
+        //   model.backR;
+        //   model.images;
+        //   model.odometer;
+        //   model.avail;
+        //   model.tyrename;
+        //   model.batterycondtion;
+        //   model.batteryname;
+        //   model.remarks;
+        //   model.gst = "";
+        //   model.customersconcerns.addAll(data["data"]["customerConcerns"]);
+        //   model.fuellevel = data["data"]["fuel"].toString();
 
         return data["data"];
       } else {
@@ -852,14 +859,13 @@ Future getcategoryBanner() async {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
     if (respnse.statusCode == 200) {
-      
       var data = jsonDecode(respnse.body);
       List image = [];
       if (data["status"]) {
-        for(int i=0; i<data["data"].length; i++){
+        for (int i = 0; i < data["data"].length; i++) {
           image.add(data["data"][i]["image"].toString());
         }
-return image;
+        return image;
       } else {
         return [];
         // print(
@@ -877,19 +883,20 @@ return image;
     print("error $e");
   }
 }
+
 Future getusercars() async {
-  var url = Uri.parse(getusercarsUrl+"?userid="+prefs!.getString("userId").toString());
+  var url = Uri.parse(
+      getusercarsUrl + "?userid=" + prefs!.getString("userId").toString());
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
     if (respnse.statusCode == 200) {
-      
       var data = jsonDecode(respnse.body);
       List<CarsModel> model = [];
       if (data["status"]) {
-        for(int i=0; i<data["data"].length; i++){
+        for (int i = 0; i < data["data"].length; i++) {
           CarsModel mod = CarsModel();
-          mod.carbrand = data["data"][i]["brand"]["brands"].toString() ;
+          mod.carbrand = data["data"][i]["brand"]["brands"].toString();
           mod.carbrandimage = data["data"][i]["brand"]["image"].toString();
           mod.carfuel = data["data"][i]["fuel"]["fuel"].toString();
           mod.carfuelimage = data["data"][i]["fuel"]["image"].toString();
@@ -897,13 +904,13 @@ Future getusercars() async {
           mod.carname = data["data"][i]["car"]["cars"].toString();
           mod.city = data["data"][i]["city"]["city"].toString();
           mod.cityimage = data["data"][i]["city"]["image"].toString();
-          mod.cityid=data["data"][i]["city"]["_id"].toString();
-          mod.carfuelid=data["data"][i]["fuel"]["_id"].toString();
-          mod.carbrandid=data["data"][i]["brand"]["_id"].toString();
+          mod.cityid = data["data"][i]["city"]["_id"].toString();
+          mod.carfuelid = data["data"][i]["fuel"]["_id"].toString();
+          mod.carbrandid = data["data"][i]["brand"]["_id"].toString();
           mod.carid = data["data"][i]["car"]["_id"].toString();
           model.add(mod);
         }
-return model;
+        return model;
       } else {
         return <CarsModel>[];
         // print(
@@ -922,37 +929,97 @@ return model;
   }
 }
 
-
 Future getrecmostPlans() async {
   var url = Uri.parse(getpoprecUrl);
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
     if (respnse.statusCode == 200) {
-      
       var data = jsonDecode(respnse.body);
       if (data["state"]) {
         // List<PlanModel> model = [];
 
-      //  for(int i = 0; i<data["data"].length;i++){
-      //    PlanModel mod = PlanModel();
-      //    mod.description= data["data"][i]["description"];
-      //    mod.hour= data["data"][i]["hours"].toString();
-      //    mod.months=data["data"][i]["month"].toString();
-      //    mod.planname=data["data"][i]["planName"];
-      //    mod.planprice=data["data"][i]["typeprice"].toString();
-      //    mod.servicepackname=data["data"][i]["servicename"];
-      //    mod.serviceprice=data["data"][i]["servicepackprice"].toString();
-      //    mod.termsdetails=data["data"][i]["heading"];
-      //    mod.termsheading=data["data"][i]["textField"];
-      //    mod.isrec = data["data"][i]["status"].toString();
-      //    mod.isMost =data["data"][i]["mostpopularpack"].toString();
-      //   //  for(int j = 0; j<data["data"])
-      //    model.add(mod);
-      //  }
-         return data["data"];
+        //  for(int i = 0; i<data["data"].length;i++){
+        //    PlanModel mod = PlanModel();
+        //    mod.description= data["data"][i]["description"];
+        //    mod.hour= data["data"][i]["hours"].toString();
+        //    mod.months=data["data"][i]["month"].toString();
+        //    mod.planname=data["data"][i]["planName"];
+        //    mod.planprice=data["data"][i]["typeprice"].toString();
+        //    mod.servicepackname=data["data"][i]["servicename"];
+        //    mod.serviceprice=data["data"][i]["servicepackprice"].toString();
+        //    mod.termsdetails=data["data"][i]["heading"];
+        //    mod.termsheading=data["data"][i]["textField"];
+        //    mod.isrec = data["data"][i]["status"].toString();
+        //    mod.isMost =data["data"][i]["mostpopularpack"].toString();
+        //   //  for(int j = 0; j<data["data"])
+        //    model.add(mod);
+        //  }
+        return data["data"];
       } else {
         return [];
+        // print(
+        //   "Error====="
+        // );
+      }
+      // Future city = data["getCities"];
+      // print("success============== ${data["getCities"]}");
+
+    } else {
+      return Future.error("Server Error");
+      print("Error=====");
+    }
+  } catch (e) {
+    print("error $e");
+  }
+}
+
+Future postMess(String msg) async {
+  var url = Uri.parse(postmessageUrl);
+  try {
+    var respnse = await http.post(url, body: {
+      "sender_id": Ids.userid,
+      "message": msg,
+      "resive_id": "626259f89d1ec3425360af89"
+    }, headers: {
+      "Authorization": prefs!.getString('token').toString()
+    });
+    if (respnse.statusCode == 200) {
+      var data = jsonDecode(respnse.body);
+      if (data["status"]) {
+        return "success";
+      } else {
+        return "error";
+        // print(
+        //   "Error====="
+        // );
+      }
+      // Future city = data["getCities"];
+      // print("success============== ${data["getCities"]}");
+
+    } else {
+      return Future.error("Server Error");
+      print("Error=====");
+    }
+  } catch (e) {
+    print("error $e");
+  }
+}
+
+Future getMess() async {
+  
+  var url = Uri.parse(getmessageUrl+"?Sender_id="+Ids.userid);
+  try {
+    var respnse = await http.get(url, 
+     headers: {
+      "Authorization": prefs!.getString('token').toString()
+    });
+    if (respnse.statusCode == 200) {
+      var data = jsonDecode(respnse.body);
+      if (data["status"]) {
+        return data["data"];
+      } else {
+        return "error";
         // print(
         //   "Error====="
         // );

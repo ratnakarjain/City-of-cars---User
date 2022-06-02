@@ -134,7 +134,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         )),
                       ),
                       Text(
-                        details["planName"].toString(),
+                        details["servicepack"].toString(),
                         style: GoogleFonts.montserrat(
                             textStyle: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -427,6 +427,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 child: GridView.count(
                                   crossAxisCount: 3,
                                   childAspectRatio: 1.35,
+                                  physics: const NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
                                   padding: EdgeInsets.only(
                                       left: w * 0.05,
@@ -451,19 +452,25 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                       width: .5))),
                                       child: Column(
                                         children: [
-                                          CachedNetworkImage(
-                                            fit: BoxFit.fill,
-                                            height: h * 0.03,
-                                            imageUrl: details["services_id"]
+                                          // CachedNetworkImage(
+                                          //   fit: BoxFit.fill,
+                                          //   height: h * 0.03,
+                                          //   imageUrl: details["services_id"]
+                                          //           [index]["image"]
+                                          //       .toString(),
+                                          //   placeholder: (context, url) =>
+                                          //       Container(),
+                                          //   errorWidget: (context, url,
+                                          //           error) =>
+                                          //       Image.network(
+                                          //           "https://i.gifer.com/DKke.gif"),
+                                          // ),
+                                          Image.network(
+                                            // "https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                                            details["services_id"]
                                                     [index]["image"]
                                                 .toString(),
-                                            placeholder: (context, url) =>
-                                                Container(),
-                                            errorWidget: (context, url,
-                                                    error) =>
-                                                Image.network(
-                                                    "https://i.gifer.com/DKke.gif"),
-                                          ),
+                                                height: h*0.03,),
                                           // Image.asset(
                                           //   "assets/images/EngineOil.png",
                                           //   height: h * 0.03,

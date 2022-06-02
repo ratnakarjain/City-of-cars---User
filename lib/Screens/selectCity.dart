@@ -219,6 +219,7 @@ class _SelectCityState extends State<SelectCity> {
                                         CarsData.cityimage =
                                             snapshot.data[index]["image"];
                                         Ids.cityid = snapshot.data[index]["_id"];
+                                        print("======="+Ids.cityid);
                                         print(CarsData.city);
                                         print(CarsData.cityimage);
                                         Navigator.push(
