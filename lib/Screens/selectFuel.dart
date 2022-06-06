@@ -213,6 +213,7 @@ class _SelectFuelState extends State<SelectFuel> {
                                             snapshot.data[index]["image"];
                                         Ids.fuelid =
                                             snapshot.data[index]["_id"];
+                                        prefs!.setString("fuelId", Ids.fuelid);
                                         addusercitycardata().then((value) {
                                           value != "Error"
                                               ? Navigator.push(

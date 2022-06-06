@@ -78,28 +78,24 @@ class _ProfileState extends State<Profile> {
   ];
   int currentCar = 0;
   int isSelected = 0;
-  List<CarsModel> modellist =[];
+  List<CarsModel> modellist = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    if(pref?.getInt("CCar") != null){
+    if (pref?.getInt("CCar") != null) {
       isSelected = pref!.getInt("CCar")!;
 
-      print(isSelected.toString()+"======");
-      setState(() {
-        
-      });
+      print(isSelected.toString() + "======");
+      setState(() {});
     }
     getusercars().then((value) {
-      
       setState(() {
-      modellist.addAll(value);  
-      print(modellist);
+        modellist.addAll(value);
+        print(modellist);
       });
     });
-    
   }
 
   @override
@@ -190,7 +186,8 @@ class _ProfileState extends State<Profile> {
                         height: h * 0.2,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount:modellist.length<=2?modellist.length: 2,
+                          itemCount:
+                              modellist.length <= 2 ? modellist.length : 2,
                           shrinkWrap: true,
                           // padding: EdgeInsets.only(left: w*0.1),
                           itemBuilder: (context, index) {
@@ -199,25 +196,26 @@ class _ProfileState extends State<Profile> {
                               children: [
                                 index == 0
                                     ? Visibility(
-                                      visible: modellist.length>2,
-                                      child: InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              if (currentCar > 0) {
-                                                currentCar--;
-                                                print(currentCar);
-                                              }
-                                            });
-                                          },
-                                          child: Icon(Icons.arrow_back_ios)),
-                                    )
+                                        visible: modellist.length > 2,
+                                        child: InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                if (currentCar > 0) {
+                                                  currentCar--;
+                                                  print(currentCar);
+                                                }
+                                              });
+                                            },
+                                            child: Icon(Icons.arrow_back_ios)),
+                                      )
                                     : Container(),
                                 Column(
                                   children: [
                                     RichText(
                                         textAlign: TextAlign.center,
                                         text: TextSpan(
-                                            text: "${modellist[currentCar+index].carname}\n",
+                                            text:
+                                                "${modellist[currentCar + index].carname}\n",
                                             style: GoogleFonts.montserrat(
                                               fontSize: 9,
                                               color: kTextInputPlaceholderColor,
@@ -225,7 +223,8 @@ class _ProfileState extends State<Profile> {
                                             ),
                                             children: [
                                               TextSpan(
-                                                text: "${modellist[currentCar+index].carbrand}",
+                                                text:
+                                                    "${modellist[currentCar + index].carbrand}",
                                                 style: GoogleFonts.montserrat(
                                                   fontSize: 9,
                                                   color:
@@ -239,36 +238,64 @@ class _ProfileState extends State<Profile> {
                                       child: CircleAvatar(
                                         radius: h * 0.07,
                                         backgroundColor:
-                                            index + currentCar+1 ==isSelected
+                                            index + currentCar + 1 == isSelected
                                                 ? korangecolor
                                                 : kgrey.withOpacity(0.5),
                                         child: InkWell(
                                           onTap: () {
-                                            
-                                                isSelected = index + currentCar+1;
-                                            String js = jsonEncode(modellist[isSelected-1]);
-                                            pref!.setString("usercar",js);
-                                            pref!.setInt("CCar",isSelected);
-                                            Ids.brandid = modellist[isSelected-1].carbrandid.toString();
-                                            Ids.carid = modellist[isSelected-1].carid.toString();
-                                            Ids.cityid = modellist[isSelected-1].cityid.toString();
-                                            Ids.fuelid = modellist[isSelected-1].carfuelid.toString();
-                                            print(Ids.cityid+"  "+ Ids.carid + "  "+ Ids.brandid + "  "+Ids.fuelid);
+                                            isSelected = index + currentCar + 1;
+                                            String js = jsonEncode(
+                                                modellist[isSelected - 1]);
+                                            pref!.setString("usercar", js);
+                                            pref!.setInt("CCar", isSelected);
+                                            Ids.brandid =
+                                                modellist[isSelected - 1]
+                                                    .carbrandid
+                                                    .toString();
+                                            Ids.carid =
+                                                modellist[isSelected - 1]
+                                                    .carid
+                                                    .toString();
+                                            Ids.cityid =
+                                                modellist[isSelected - 1]
+                                                    .cityid
+                                                    .toString();
+                                            Ids.fuelid =
+                                                modellist[isSelected - 1]
+                                                    .carfuelid
+                                                    .toString();
+                                            print(Ids.cityid +
+                                                "  " +
+                                                Ids.carid +
+                                                "  " +
+                                                Ids.brandid +
+                                                "  " +
+                                                Ids.fuelid);
 
+                                            pref!.setString("CarId", Ids.carid);
+                                            pref!
+                                                .setString("cityId", Ids.cityid);
+                                            pref!
+                                                .setString("fuelId", Ids.fuelid);
+                                            pref!.setString(
+                                                "brandId", Ids.brandid);
+  
                                             print(pref?.getString("usercar"));
                                             print(pref?.getInt("CCar"));
-                                            
+
                                             // print(js);
                                             setState(() {});
                                           },
                                           child: CircleAvatar(
                                             radius: h * 0.06,
                                             backgroundColor: kwhitecolor,
-                                            backgroundImage: NetworkImage(modellist[index + currentCar].carimage),
+                                            backgroundImage: NetworkImage(
+                                                modellist[index + currentCar]
+                                                    .carimage),
                                             child: Center(
-                                              // child: Image.network(
-                                              //     "${modellist[index + currentCar].carimage}"),
-                                            ),
+                                                // child: Image.network(
+                                                //     "${modellist[index + currentCar].carimage}"),
+                                                ),
                                           ),
                                         ),
                                       ),
@@ -277,18 +304,20 @@ class _ProfileState extends State<Profile> {
                                 ),
                                 index == 1
                                     ? Visibility(
-                                      visible: modellist.length>2,
-                                      child: InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              if (currentCar < modellist.length - 2) {
-                                                currentCar++;
-                                                print(currentCar);
-                                              }
-                                            });
-                                          },
-                                          child: Icon(Icons.arrow_forward_ios)),
-                                    )
+                                        visible: modellist.length > 2,
+                                        child: InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                if (currentCar <
+                                                    modellist.length - 2) {
+                                                  currentCar++;
+                                                  print(currentCar);
+                                                }
+                                              });
+                                            },
+                                            child:
+                                                Icon(Icons.arrow_forward_ios)),
+                                      )
                                     : Container(),
                               ],
                             );
@@ -315,7 +344,8 @@ class _ProfileState extends State<Profile> {
                                 ),
                                 children: [
                                   TextSpan(
-                                    text: prefs!.getString("name").toString()+"  ",
+                                    text: prefs!.getString("name").toString() +
+                                        "  ",
                                     style: GoogleFonts.montserrat(
                                       fontSize: 19,
                                       color: kTextInputPlaceholderColor,
@@ -686,6 +716,11 @@ class _ProfileState extends State<Profile> {
                         pref!.remove("userId");
                         pref!.remove("usercar");
                         pref!.remove("CCar");
+                        prefs!.remove("CarId");
+
+                        pref!.remove("fuelId",);
+                        pref!.remove("cityId",);
+                        pref!.remove("brandId",);
                         Navigator.pushAndRemoveUntil<dynamic>(
                           context,
                           MaterialPageRoute<dynamic>(

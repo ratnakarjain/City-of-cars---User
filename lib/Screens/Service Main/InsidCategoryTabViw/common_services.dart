@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cityofcars/Services/models/plansModel.dart';
 import 'package:cityofcars/Utils/Buttons/button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,7 +13,7 @@ var w;
 
 class CommonServices extends StatefulWidget {
   String label;
-  List data;
+  List<PlanModel> data;
   String subcategoryid;
   CommonServices(
       {Key? key,
@@ -27,7 +28,7 @@ class CommonServices extends StatefulWidget {
 
 class _CommonServicesState extends State<CommonServices> {
   @override
-  List plans = [];
+  List<PlanModel> plans = [];
   List keys = [];
   List<bool> drop = [];
 
@@ -35,7 +36,7 @@ class _CommonServicesState extends State<CommonServices> {
   ScrollController _scrollController = ScrollController();
   void initState() {
     // TODO: implement initState
-    plans = widget.data;
+    plans.addAll(widget.data);
     print(plans.toString() + "===============");
     drop = List.generate(plans.length, (index) {
       return false;
@@ -76,26 +77,24 @@ class _CommonServicesState extends State<CommonServices> {
             itemBuilder: (context, index) {
               return Container(
                 child: GestureDetector(
-                  onTap: (){
-                    dropvalue=0;
-                    setState(() {
-                      
-                    });
+                  onTap: () {
+                    dropvalue = 0;
+                    setState(() {});
                   },
                   child: Stack(
                     children: [
                       Container(
-                        height:  dropvalue == index+1 ?     h * 0.4 : h * 0.19,
+                        height: dropvalue == index + 1 ? h * 0.4 : h * 0.19,
                         color: kwhitecolor,
                         margin: EdgeInsets.only(
                             top: h * 0.018, left: w * 0.01, right: w * 0.01),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            plans[index]["label"] != null
+                            plans[index].label != ""
                                 ? Label(
                                     color: korangecolor,
-                                    text: plans[index]["label"],
+                                    text: plans[index].label,
                                     textStyle: GoogleFonts.montserrat(
                                       fontSize: 6,
                                       textStyle: const TextStyle(
@@ -112,7 +111,8 @@ class _CommonServicesState extends State<CommonServices> {
                               padding: EdgeInsets.symmetric(
                                   horizontal: w * 0.06, vertical: h * 0.01),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
                                     child: Column(
@@ -120,14 +120,14 @@ class _CommonServicesState extends State<CommonServices> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          plans[index]["planName"],
+                                          plans[index].planname,
                                           style: GoogleFonts.montserrat(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         Text(
-                                          plans[index]["servicepack"],
+                                          plans[index].servicepackname,
                                           style: GoogleFonts.montserrat(
                                               fontSize: 8,
                                               fontWeight: FontWeight.w600,
@@ -144,12 +144,12 @@ class _CommonServicesState extends State<CommonServices> {
                                         borderRadius:
                                             BorderRadius.circular(h * 0.01)),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
                                       children: [
                                         Text(
                                           "₹" +
-                                              plans[index]["typeprice"]
-                                                  .toString(),
+                                              plans[index].planprice.toString(),
                                           style: GoogleFonts.montserrat(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
@@ -173,7 +173,7 @@ class _CommonServicesState extends State<CommonServices> {
                               padding: EdgeInsets.only(
                                   left: w * 0.06, bottom: h * 0.01),
                               child: Text(
-                                "Takes ${plans[index]["hours"]} Hrs / Every ${plans[index]["month"]} Months",
+                                "Takes ${plans[index].hour} Hrs / Every ${plans[index].months} Months",
                                 style: GoogleFonts.montserrat(
                                     fontSize: 7,
                                     fontWeight: FontWeight.w600,
@@ -182,7 +182,8 @@ class _CommonServicesState extends State<CommonServices> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: w * 0.03),
+                              padding:
+                                  EdgeInsets.symmetric(horizontal: w * 0.03),
                               child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
@@ -190,40 +191,43 @@ class _CommonServicesState extends State<CommonServices> {
                                     Expanded(
                                         flex: 2,
                                         child: GestureDetector(
-                                          onTap:plans[index]["services_id"].length <=3?(){}: () {
-                                            dropvalue = index+1;
-                                            // showGeneralDialog(context: keys[index].currentContext!, pageBuilder: pageBuilder)
-                                            // showGeneralDialog(
-                                            //   context: keys[index].currentContext!,
-                                            //   pageBuilder: ( context,
-                                            //       Animation<double> animation,
-                                            //       Animation<double>
-                                            //           secondaryAnimation) {
-                                            //     return AlertDialog(
-                                            //       content: Container(
-                                            //         width: 200.0,
-                                            //         height: 200.0,
-                                            //         color: Colors.orange,
-                                            //       ),
-                                            //     );
-                                            //   },
-                                            //   barrierDismissible: true,
-                                            //   barrierLabel:
-                                            //       MaterialLocalizations.of(context)
-                                            //           .modalBarrierDismissLabel,
-                                            //   barrierColor: Colors.black,
-                                            //   transitionDuration:
-                                            //       const Duration(milliseconds: 200),
-                                            // );
-                
-                                            setState(() {});
-                                          },
+                                          onTap:
+                                              plans[index].includes.length <= 3
+                                                  ? () {}
+                                                  : () {
+                                                      dropvalue = index + 1;
+                                                      // showGeneralDialog(context: keys[index].currentContext!, pageBuilder: pageBuilder)
+                                                      // showGeneralDialog(
+                                                      //   context: keys[index].currentContext!,
+                                                      //   pageBuilder: ( context,
+                                                      //       Animation<double> animation,
+                                                      //       Animation<double>
+                                                      //           secondaryAnimation) {
+                                                      //     return AlertDialog(
+                                                      //       content: Container(
+                                                      //         width: 200.0,
+                                                      //         height: 200.0,
+                                                      //         color: Colors.orange,
+                                                      //       ),
+                                                      //     );
+                                                      //   },
+                                                      //   barrierDismissible: true,
+                                                      //   barrierLabel:
+                                                      //       MaterialLocalizations.of(context)
+                                                      //           .modalBarrierDismissLabel,
+                                                      //   barrierColor: Colors.black,
+                                                      //   transitionDuration:
+                                                      //       const Duration(milliseconds: 200),
+                                                      // );
+
+                                                      setState(() {});
+                                                    },
                                           child: Container(
                                             color: kLightOrangeBgColor,
                                             height: h * 0.055,
                                             width: w * 0.6,
-                                            margin:
-                                                EdgeInsets.only(right: w * 0.03),
+                                            margin: EdgeInsets.only(
+                                                right: w * 0.03),
                                             padding: EdgeInsets.all(h * 0.005),
                                             child: Row(
                                               children: [
@@ -238,13 +242,13 @@ class _CommonServicesState extends State<CommonServices> {
                                                               Center(
                                                                 child: ListView
                                                                     .builder(
-                                                                  itemCount: plans[index]["services_id"]
+                                                                  itemCount: plans[index]
+                                                                              .includes
                                                                               .length >
                                                                           3
                                                                       ? 3
                                                                       : plans[index]
-                                                                              [
-                                                                              "services_id"]
+                                                                          .includes
                                                                           .length,
                                                                   scrollDirection:
                                                                       Axis.horizontal,
@@ -263,12 +267,12 @@ class _CommonServicesState extends State<CommonServices> {
                                                                           Column(
                                                                         children: [
                                                                           CachedNetworkImage(
-                                                                            fit: BoxFit
-                                                                                .fill,
+                                                                            fit:
+                                                                                BoxFit.fill,
                                                                             height:
                                                                                 h * 0.03,
                                                                             imageUrl:
-                                                                                plans[index]["services_id"][indexx]["image"].toString(),
+                                                                                plans[index].includes[indexx].image.toString(),
                                                                             placeholder: (context, url) =>
                                                                                 Container(),
                                                                             errorWidget: (context, url, error) =>
@@ -279,8 +283,7 @@ class _CommonServicesState extends State<CommonServices> {
                                                                           //   height: h * 0.03,
                                                                           // ),
                                                                           Text(
-                                                                            plans[index]["services_id"][indexx]["title"] ??
-                                                                                "",
+                                                                            plans[index].includes[indexx].name,
                                                                             // "Engine Oil ",
                                                                             // textScaleFactor: 0.7,
                                                                             style: GoogleFonts.montserrat(
@@ -298,15 +301,16 @@ class _CommonServicesState extends State<CommonServices> {
                                                                 width: w * 0.02,
                                                               ),
                                                               Visibility(
-                                                                visible: plans[index][
-                                                                            "services_id"]
+                                                                visible: plans[index]
+                                                                            .includes
                                                                         .length >
                                                                     3,
                                                                 child: Text(
-                                                                    "+${plans[index]["services_id"].length - 3} more",
+                                                                    "+${plans[index].includes.length - 3} more",
                                                                     style: GoogleFonts
                                                                         .montserrat(
-                                                                      fontSize: 7,
+                                                                      fontSize:
+                                                                          7,
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .w600,
@@ -332,7 +336,7 @@ class _CommonServicesState extends State<CommonServices> {
                                         onTap: () {
                                           Ids.subcategoryid =
                                               widget.subcategoryid;
-                                          Ids.planid = plans[index]["_id"];
+                                          Ids.planid = plans[index].planid;
                                           print(Ids.categoryid);
                                           print(Ids.subcategoryid);
                                           print(Ids.planid);
@@ -377,10 +381,10 @@ class _CommonServicesState extends State<CommonServices> {
                         ),
                       ),
                       Visibility(
-                        visible: dropvalue == index+1,
+                        visible: dropvalue == index + 1,
                         child: Positioned(
-                          left: w*0.04,
-                          top: h*0.11,
+                          left: w * 0.04,
+                          top: h * 0.11,
                           child: Container(
                             width: w * 0.6,
                             decoration: BoxDecoration(
@@ -396,18 +400,20 @@ class _CommonServicesState extends State<CommonServices> {
                                 crossAxisCount: 3,
                                 childAspectRatio: 1.6,
                                 shrinkWrap: true,
-                                padding: EdgeInsets.only(top: h*0.01),
+                                padding: EdgeInsets.only(top: h * 0.01),
                                 children: List.generate(
-                                    plans[index]["services_id"].length, (indexx) {
+                                    plans[index].includes.length,
+                                    (indexx) {
                                   return Column(
                                     children: [
                                       CachedNetworkImage(
                                         fit: BoxFit.fill,
                                         height: h * 0.03,
-                                        imageUrl: plans[index]["services_id"][indexx]
-                                                ["image"]
-                                            .toString()  ,
-                                        placeholder: (context, url) => Container(),
+                                        imageUrl: plans[index].includes
+                                                [indexx].image
+                                            .toString(),
+                                        placeholder: (context, url) =>
+                                            Container(),
                                         errorWidget: (context, url, error) =>
                                             Image.network(
                                                 "https://i.gifer.com/DKke.gif"),
@@ -417,9 +423,8 @@ class _CommonServicesState extends State<CommonServices> {
                                       //   height: h * 0.03,
                                       // ),
                                       Text(
-                                        plans[index]["services_id"][indexx]
-                                                ["title"] ??
-                                            "",
+                                        plans[index].includes[indexx]
+                                                .name ,
                                         // "Engine Oil ",
                                         // textScaleFactor: 0.7,
                                         style: GoogleFonts.montserrat(

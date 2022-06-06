@@ -384,6 +384,8 @@ class _SelectBrandState extends State<SelectBrand> {
                                             snapshot.data[index]["image"];
                                         Ids.brandid =
                                             snapshot.data[index]["_id"];
+                                        prefs!
+                                            .setString("brandId", Ids.brandid);
                                         print(CarsData.brand);
                                         print(CarsData.brandimage);
                                         bottumSheet();
@@ -524,6 +526,7 @@ class _SelectBrandState extends State<SelectBrand> {
                                     CarsData.carimage =
                                         snapshot.data[index]["image"];
                                     Ids.carid = snapshot.data[index]["_id"];
+                                    prefs!.setString("CarId", Ids.carid);
                                     print(CarsData.brand);
                                     print(CarsData.brandimage);
                                     Navigator.push(
@@ -569,7 +572,7 @@ class _SelectBrandState extends State<SelectBrand> {
                                             ),
                                           ),
                                           SizedBox(
-                                            height: h*0.01,
+                                            height: h * 0.01,
                                           )
                                         ]),
                                   ),

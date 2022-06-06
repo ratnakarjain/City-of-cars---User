@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cityofcars/Screens/Service%20Main/cart.dart';
 import 'package:cityofcars/Screens/Service%20Main/slot.dart';
+import 'package:cityofcars/Services/models/plansModel.dart';
+import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,7 +11,8 @@ import '../../Utils/Buttons/button.dart';
 import '../../Utils/constants.dart';
 
 class ProductDetails extends StatefulWidget {
-  var planDetails;
+  static String selctedprice="";
+  PlanModel planDetails;
   ProductDetails({Key? key, required this.planDetails}) : super(key: key);
 
   @override
@@ -31,13 +34,20 @@ class _ProductDetailsState extends State<ProductDetails> {
     "https://wallpaperaccess.com/full/33116.jpg",
     "https://wallpaperaccess.com/full/33118.jpg"
   ];
-  var details;
+  PlanModel details = PlanModel();
+  List images = [];
   @override
   void initState() {
     details = widget.planDetails;
-    terms = details["Subcategory"];
+    // terms = details["Subcategory"];
     print(terms);
     print(details);
+    getplanbanner().then((value) {
+      images.addAll(value);
+      setState(() {});
+    });
+    ProductDetails.selctedprice=details.planprice.toString();
+    print(ProductDetails.selctedprice);
     // TODO: implement initState
     super.initState();
   }
@@ -73,12 +83,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                         currentPage = value;
                       });
                     },
-                    itemCount: backimage.length,
+                    itemCount: images.length,
                     itemBuilder: (context, index) => Container(
                           decoration: BoxDecoration(
                               image: DecorationImage(
                                   image: NetworkImage(
-                                    backimage[index],
+                                    images[index],
                                   ),
                                   fit: BoxFit.cover)),
                         )),
@@ -88,8 +98,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                   right: 0,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: backimage.map((url) {
-                      int index = backimage.indexOf(url);
+                    children: images.map((url) {
+                      int index = images.indexOf(url);
                       return Container(
                         width: 8.0,
                         height: 8.0,
@@ -126,7 +136,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        details["planName"].toString(),
+                        details.planname.toString(),
                         style: GoogleFonts.montserrat(
                             textStyle: const TextStyle(
                           fontSize: 25,
@@ -134,7 +144,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         )),
                       ),
                       Text(
-                        details["servicepack"].toString(),
+                        details.servicepackname.toString(),
                         style: GoogleFonts.montserrat(
                             textStyle: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -159,6 +169,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               basic = value!;
                               setState(() {
                                 service = false;
+                                ProductDetails.selctedprice=details.planprice.toString();
                               });
                             },
                           ),
@@ -166,7 +177,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                "₹" + details["typeprice"].toString(),
+                                "₹" + details.planprice,
                                 style: GoogleFonts.montserrat(
                                     fontSize: 21,
                                     textStyle: const TextStyle(
@@ -174,7 +185,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     )),
                               ),
                               Text(
-                                details["typename"].toString(),
+                                details.planpricdes,
                                 // "multi-brand price",
                                 style: GoogleFonts.montserrat(
                                     fontSize: 6,
@@ -199,6 +210,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               service = value!;
                               setState(() {
                                 basic = false;
+                                ProductDetails.selctedprice=details.componyprice.toString();
                               });
                             },
                           ),
@@ -206,7 +218,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                "₹" + details["servicepackprice"].toString(),
+                                "₹" + details.componyprice,
                                 style: GoogleFonts.montserrat(
                                     fontSize: 12,
                                     textStyle: TextStyle(
@@ -215,7 +227,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             .withOpacity(0.5))),
                               ),
                               Text(
-                                details["servicename"].toString(),
+                                details.componypricedes,
                                 // "company authorised",
                                 style: GoogleFonts.montserrat(
                                     fontSize: 6,
@@ -239,10 +251,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                     content: Text("Please select price"),
                   ));
                 } else {
-                  print(Ids.brandid+"vsdv");
-                  print(Ids.carid+"dvsdvsd");
-                  print(Ids.cityid+"vsv");
-                  print(Ids.fuelid+"dsdvs");
+                  print(Ids.brandid + "vsdv");
+                  print(Ids.carid + "dvsdvsd");
+                  print(Ids.cityid + "vsv");
+                  print(Ids.fuelid + "dsdvs");
                   if (Ids.brandid == "" &&
                       Ids.carid == "" &&
                       Ids.cityid == "" &&
@@ -345,7 +357,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: w * 0.09),
                                             child: Text(
-                                              details["description"],
+                                              details.description,
                                               style: GoogleFonts.montserrat(
                                                 fontSize: 12,
                                                 height: 1.5,
@@ -435,14 +447,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       bottom: h * 0.01,
                                       top: h * 0.01),
                                   children: List.generate(
-                                      details["services_id"].length, (index) {
+                                      details.includes.length, (index) {
                                     return Container(
                                       margin: EdgeInsets.only(
                                         top: h * 0.01,
                                       ),
                                       decoration: BoxDecoration(
                                           border: index >
-                                                  details["services_id"]
+                                                  details.includes
                                                           .length -
                                                       3
                                               ? const Border()
@@ -467,18 +479,18 @@ class _ProductDetailsState extends State<ProductDetails> {
                                           // ),
                                           Image.network(
                                             // "https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-                                            details["services_id"]
-                                                    [index]["image"]
+                                            details.includes[index]
+                                                    .image
                                                 .toString(),
-                                                height: h*0.03,),
+                                            height: h * 0.03,
+                                          ),
                                           // Image.asset(
                                           //   "assets/images/EngineOil.png",
                                           //   height: h * 0.03,
                                           // ),
                                           Text(
-                                            details["services_id"][index]
-                                                    ["title"] ??
-                                                "",
+                                            details.includes[index]
+                                                    .name ,
                                             // "Engine Oil ",
                                             // textScaleFactor: 0.7,
                                             style: GoogleFonts.montserrat(
@@ -654,7 +666,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               FittedBox(
-                                child: Text("Takes ${details["hours"]} hrs",
+                                child: Text("Takes ${details.hour} hrs",
                                     style: GoogleFonts.montserrat(
                                       fontSize: 11,
                                       fontWeight: FontWeight.w500,
@@ -662,7 +674,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               ),
                               FittedBox(
                                 child: Text(
-                                    "    Every ${details["month"]} months    ",
+                                    "    Every ${details.months} months    ",
                                     style: GoogleFonts.montserrat(
                                       fontSize: 11,
                                       fontWeight: FontWeight.w500,
@@ -725,14 +737,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                   children: [
                     RichText(
                       text: TextSpan(
-                        text: details["heading"], //'Who May Use the Services?',
+                        text: details.termsheading, //'Who May Use the Services?',
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w700,
                             fontSize: 10,
                             color: Colors.black),
                         children: [
                           TextSpan(
-                            text: '\n\n\n${details["textField"]}\n\n\n\n\n',
+                            text: '\n\n\n${details.termsdetails}\n\n\n\n\n',
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 9,

@@ -84,6 +84,14 @@ class _ServiceMainState extends State<ServiceMain> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    Ids.brandid= prefs!.getString("brandId").toString();
+    Ids.carid= prefs!.getString("CarId").toString();
+    Ids.cityid= prefs!.getString("cityId").toString();
+    Ids.fuelid= prefs!.getString("fuelId").toString();
+    print(Ids.fuelid);
+    print(Ids.cityid);
+    print(Ids.carid);
+    print(Ids.brandid);
     getcategoryBanner().then((value) {
       images.addAll(value);
       setState(() {});
@@ -283,95 +291,109 @@ class _ServiceMainState extends State<ServiceMain> {
                 if (loding1) {
                   return loder;
                 } else {
-                  return GridView.count(
-                    // physics:  const ScrollPhysics(),
-                    // physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    controller: _controller2,
-                    padding: EdgeInsets.symmetric(
-                        vertical: h * 0.015, horizontal: h * 0.025),
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    children: List.generate(snapshot.data.length, (index) {
-                      print(snapshot.data.length);
-                      return GestureDetector(
-                        onTap: () {
-                          print(snapshot.data[index]["_id"].toString());
-                          Ids.categoryid =
-                              snapshot.data[index]["_id"].toString();
-                          print(Ids.categoryid + "===============");
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => InsideCategory(
-                                        id: snapshot.data[index]["_id"]
-                                            .toString(),
-                                      )));
-                        },
-                        child: RRectCard(
-                          h: h * 0.18,
-                          w: h * 0.18,
-                          borderRadius: 10,
-                          widget: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: h * 0.02,
-                                        horizontal: w * 0.04),
-                                    child: CachedNetworkImage(
-                                      fit: BoxFit.fill,
-                                      imageUrl: snapshot.data[index]["image"]
-                                          .toString(),
-                                      placeholder: (context, url) => loder,
-                                      errorWidget: (context, url, error) =>
-                                      Container()
-                                          // Image.network(
-                                          //     "https://i.gifer.com/DKke.gif"),
-                                    ),
-                                  ),
-                                  // Image.network(
-                                  //     "${snapshot.data[index]["image"]}",fit: BoxFit.fill,),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                FittedBox(
-                                  child: Text(
-                                    snapshot.data[index]["title"] == null ||
-                                            snapshot.data[index]["title"] == ""
-                                        ? ""
-                                        : "${snapshot.data[index]["title"]}"
-                                            .toUpperCase(),
-                                    style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.w500,
-                                        height: 3,
-                                        fontSize: 11),
-                                  ),
-                                ),
-                                Text(
-                                  snapshot.data[index]["discreption"] == null ||
-                                          snapshot.data[index]["description"] ==
-                                              ""
-                                      ? ""
-                                      : "${snapshot.data[index]["discreption"]}"
-                                          .toUpperCase(),
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.w400,
-                                      height: 1,
-                                      fontSize: 9),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                              ]),
-                        ),
-                      );
-                    }),
-                  );
+                  return snapshot.hasData
+                      ? GridView.count(
+                          // physics:  const ScrollPhysics(),
+                          // physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          controller: _controller2,
+                          padding: EdgeInsets.symmetric(
+                              vertical: h * 0.015, horizontal: h * 0.025),
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                          children:
+                              List.generate(snapshot.data.length, (index) {
+                            print(snapshot.data.length);
+                            return GestureDetector(
+                              onTap: () {
+                                print(snapshot.data[index]["_id"].toString());
+                                Ids.categoryid =
+                                    snapshot.data[index]["_id"].toString();
+                                print(Ids.categoryid + "===============");
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => InsideCategory(
+                                              id: snapshot.data[index]["_id"]
+                                                  .toString(),
+                                            )));
+                              },
+                              child: RRectCard(
+                                h: h * 0.18,
+                                w: h * 0.18,
+                                borderRadius: 10,
+                                widget: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                              // vertical: h * 0.02,
+                                              top: h * 0.04,
+                                              left: w * 0.06,right: w * 0.06),
+                                          child: CachedNetworkImage(
+                                              fit: BoxFit.fill,
+                                              imageUrl: snapshot.data[index]
+                                                      ["image"]
+                                                  .toString(),
+                                              placeholder: (context, url) =>
+                                                  loder,
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Container()
+                                              // Image.network(
+                                              //     "https://i.gifer.com/DKke.gif"),
+                                              ),
+                                        ),
+                                        // Image.network(
+                                        //     "${snapshot.data[index]["image"]}",fit: BoxFit.fill,),
+                                      ),
+                                       SizedBox(
+                                        height: h*0.005,
+                                      ),
+                                      FittedBox(
+                                        child: Text(
+                                          snapshot.data[index]["title"] ==
+                                                      null ||
+                                                  snapshot.data[index]
+                                                          ["title"] ==
+                                                      ""
+                                              ? ""
+                                              : "${snapshot.data[index]["title"]}"
+                                                  .toUpperCase(),
+                                          style: GoogleFonts.montserrat(
+                                              fontWeight: FontWeight.w500,
+                                              height: 3,
+                                              fontSize: 11),
+                                        ),
+                                      ),
+                                      FittedBox(
+                                        child: Text(
+                                          snapshot.data[index]["discreption"] ==
+                                                      null ||
+                                                  snapshot.data[index]
+                                                          ["description"] ==
+                                                      ""
+                                              ? ""
+                                              : "${snapshot.data[index]["discreption"]}"
+                                                  .toUpperCase(),
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.montserrat(
+                                              fontWeight: FontWeight.w400,
+                                              height: 1,
+                                              fontSize: 9),
+                                        ),
+                                      ),
+                                       SizedBox(
+                                        height: h*0.015,
+                                      ),
+                                    ]),
+                              ),
+                            );
+                          }),
+                        )
+                      : Container();
                 }
               },
             ),
@@ -411,7 +433,7 @@ class _ServiceMainState extends State<ServiceMain> {
                 textStyle: const TextStyle(
                     fontWeight: FontWeight.bold, color: kwhitecolor),
               ),
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             ),
             SizedBox(
               height: h * 0.01,
@@ -432,8 +454,10 @@ class _ServiceMainState extends State<ServiceMain> {
                               vertical: h * 0.01, horizontal: h * 0.025),
                           itemCount: snapshot.data.length,
                           itemBuilder: (context, index) {
+                            PlanModel model = PlanModel();
+                            model= snapshot.data[index];
                             return Visibility(
-                              visible: snapshot.data[index]["mostpopularpack"],
+                              visible: model.isMost=="true",
                               child: GestureDetector(
                                 onTap: () {
                                   Navigator.push(
@@ -441,7 +465,7 @@ class _ServiceMainState extends State<ServiceMain> {
                                       MaterialPageRoute(
                                           builder: (context) => ProductDetails(
                                                 planDetails:
-                                                    snapshot.data[index],
+                                                    model
                                               )));
                                 },
                                 child: RRectCard(
@@ -459,7 +483,7 @@ class _ServiceMainState extends State<ServiceMain> {
                                         ),
                                         FittedBox(
                                           child: Text(
-                                            snapshot.data[index]["planName"],
+                                            model.planname,
                                             style: GoogleFonts.montserrat(
                                               fontWeight: FontWeight.w600,
                                               height: 2,
@@ -496,21 +520,25 @@ class _ServiceMainState extends State<ServiceMain> {
                       if (snapshot.hasData) {
                         return ListView.builder(
                           controller: _controller2,
-                          physics: BouncingScrollPhysics(),
+                          physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
                           padding: EdgeInsets.symmetric(
                               vertical: h * 0.01, horizontal: h * 0.025),
                           itemCount: snapshot.data.length,
                           itemBuilder: (context, index) {
+                            PlanModel model = PlanModel();
+                            model= snapshot.data[index];
                             return Visibility(
-                              visible: snapshot.data[index]["mostpopularpack"],
+                              visible: model.isMost=="true",
                               child: GestureDetector(
                                 onTap: () {
-                                  // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //         builder: (context) =>
-                                  //             const ProductDetails()));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ProductDetails(
+                                                planDetails:
+                                                    model,
+                                              )));
                                 },
                                 child: RRectCard(
                                   h: h * 0.1,
@@ -527,7 +555,7 @@ class _ServiceMainState extends State<ServiceMain> {
                                         ),
                                         FittedBox(
                                           child: Text(
-                                            snapshot.data[index]["planName"],
+                                            model.planname,
                                             style: GoogleFonts.montserrat(
                                               fontWeight: FontWeight.w600,
                                               height: 2,
@@ -594,9 +622,10 @@ class _ServiceMainState extends State<ServiceMain> {
                               vertical: h * 0.01, horizontal: h * 0.025),
                           itemCount: snapshot.data.length,
                           itemBuilder: (context, index) {
-                            List data = snapshot.data;
+                            PlanModel model = PlanModel();
+                            model= snapshot.data[index];
                             return Visibility(
-                              visible: snapshot.data[index]["status"],
+                              visible: model.isrec=="true",
                               child: GestureDetector(
                                 onTap: () {
                                   Navigator.push(
@@ -604,7 +633,7 @@ class _ServiceMainState extends State<ServiceMain> {
                                       MaterialPageRoute(
                                           builder: (context) => ProductDetails(
                                                 planDetails:
-                                                    data.elementAt(index),
+                                                    model,
                                               )));
                                 },
                                 child: RRectCard(
@@ -622,7 +651,7 @@ class _ServiceMainState extends State<ServiceMain> {
                                         ),
                                         FittedBox(
                                           child: Text(
-                                            snapshot.data[index]["planName"],
+                                            model.planname,
                                             style: GoogleFonts.montserrat(
                                               fontWeight: FontWeight.w600,
                                               height: 2,
@@ -659,21 +688,25 @@ class _ServiceMainState extends State<ServiceMain> {
                       if (snapshot.hasData) {
                         return ListView.builder(
                           controller: _controller2,
-                          physics: BouncingScrollPhysics(),
+                          physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
                           padding: EdgeInsets.symmetric(
                               vertical: h * 0.01, horizontal: h * 0.025),
                           itemCount: snapshot.data.length,
                           itemBuilder: (context, index) {
+                            PlanModel model = PlanModel();
+                            model= snapshot.data[index];
                             return Visibility(
-                              visible: snapshot.data[index]["mostpopularpack"],
+                              visible: model.isrec=="true",
                               child: GestureDetector(
                                 onTap: () {
-                                  // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //         builder: (context) =>
-                                  //             const ProductDetails()));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ProductDetails(
+                                                planDetails:
+                                                    model,
+                                              )));
                                 },
                                 child: RRectCard(
                                   h: h * 0.1,
@@ -690,7 +723,7 @@ class _ServiceMainState extends State<ServiceMain> {
                                         ),
                                         FittedBox(
                                           child: Text(
-                                            snapshot.data[index]["planName"],
+                                            model.planname,
                                             style: GoogleFonts.montserrat(
                                               fontWeight: FontWeight.w600,
                                               height: 2,

@@ -1,6 +1,7 @@
 import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Services/url.dart';
 import 'package:cityofcars/Utils/constants.dart';
+import 'package:cityofcars/Utils/preference.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -19,6 +20,7 @@ class SelectCity extends StatefulWidget {
 class _SelectCityState extends State<SelectCity> {
   ScrollController _controller = ScrollController();
   var size;
+  var pref = Prefernece.pref;
   var citydata;
   var searchdata;
 
@@ -44,7 +46,7 @@ class _SelectCityState extends State<SelectCity> {
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
     return WillPopScope(
-      onWillPop: ()=> showExitPopup(context),
+      onWillPop: () => showExitPopup(context),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
@@ -65,25 +67,25 @@ class _SelectCityState extends State<SelectCity> {
                   )),
                 ),
                 GestureDetector(
-                onTap: () {
-                  Navigator.pushAndRemoveUntil<dynamic>(
-                    context,
-                    MaterialPageRoute<dynamic>(
-                      builder: (BuildContext context) => BottomNavBar(
-                        index: 0,
+                  onTap: () {
+                    Navigator.pushAndRemoveUntil<dynamic>(
+                      context,
+                      MaterialPageRoute<dynamic>(
+                        builder: (BuildContext context) => BottomNavBar(
+                          index: 0,
+                        ),
                       ),
-                    ),
-                    (route) =>
-                        false, //if you want to disable back feature set to false
-                  );
-                },
-                child: Text(
-                  "Skip & Explore".toUpperCase(),
-                  textScaleFactor: 0.6,
-                  style: GoogleFonts.montserrat(
-                      fontWeight: FontWeight.w600, color: kbluecolor),
+                      (route) =>
+                          false, //if you want to disable back feature set to false
+                    );
+                  },
+                  child: Text(
+                    "Skip & Explore".toUpperCase(),
+                    textScaleFactor: 0.6,
+                    style: GoogleFonts.montserrat(
+                        fontWeight: FontWeight.w600, color: kbluecolor),
+                  ),
                 ),
-              ),
               ],
             ),
           ),
@@ -164,7 +166,8 @@ class _SelectCityState extends State<SelectCity> {
                                   BorderRadius.circular(size.height * 0.02)),
                           border: OutlineInputBorder(
                               borderSide: const BorderSide(
-                                  color: kTextInputPlaceholderColor, width: 1.0),
+                                  color: kTextInputPlaceholderColor,
+                                  width: 1.0),
                               borderRadius:
                                   BorderRadius.circular(size.height * 0.02))),
                     ),
@@ -184,14 +187,16 @@ class _SelectCityState extends State<SelectCity> {
                             ? getcities()
                             : searchCity(_search.text.toString()),
                         builder: (context, AsyncSnapshot snapshot) {
-                          if (snapshot.connectionState == ConnectionState.done) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
                             if (snapshot.hasData) {
                               print("===========++++++++++" +
                                   snapshot.hasData.toString());
-                                  print(snapshot.data);
+                              print(snapshot.data);
                               if (snapshot.data.length == 0) {
                                 return Padding(
-                                  padding:  EdgeInsets.only(top: size.height*0.25),
+                                  padding:
+                                      EdgeInsets.only(top: size.height * 0.25),
                                   child: Text(
                                     "Did not match",
                                     style: GoogleFonts.montserrat(
@@ -209,8 +214,8 @@ class _SelectCityState extends State<SelectCity> {
                                 mainAxisSpacing: size.height * 0.02,
                                 crossAxisSpacing: size.width * 0.02,
                                 crossAxisCount: 2,
-                                children:
-                                    List.generate(snapshot.data.length, (index) {
+                                children: List.generate(snapshot.data.length,
+                                    (index) {
                                   return Center(
                                     child: GestureDetector(
                                       onTap: () {
@@ -218,8 +223,10 @@ class _SelectCityState extends State<SelectCity> {
                                             snapshot.data[index]["city"];
                                         CarsData.cityimage =
                                             snapshot.data[index]["image"];
-                                        Ids.cityid = snapshot.data[index]["_id"];
-                                        print("======="+Ids.cityid);
+                                        Ids.cityid =
+                                            snapshot.data[index]["_id"];
+                                        pref!.setString("cityId", Ids.cityid);
+                                        print("=======" + Ids.cityid);
                                         print(CarsData.city);
                                         print(CarsData.cityimage);
                                         Navigator.push(
@@ -234,12 +241,13 @@ class _SelectCityState extends State<SelectCity> {
                                             borderRadius:
                                                 BorderRadius.circular(30)),
                                         elevation: 8,
-                                        shadowColor: Colors.grey.withOpacity(0.2),
+                                        shadowColor:
+                                            Colors.grey.withOpacity(0.2),
                                         child: Container(
                                           height: size.height * 0.17,
                                           width: size.height * 0.17,
-                                          padding:
-                                              EdgeInsets.all(size.height * 0.008),
+                                          padding: EdgeInsets.all(
+                                              size.height * 0.008),
                                           child: Column(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
@@ -254,16 +262,18 @@ class _SelectCityState extends State<SelectCity> {
                                                             size.height * 0.01),
                                                     child: CachedNetworkImage(
                                                       fit: BoxFit.cover,
-                                                      imageUrl: snapshot.data[index]
-                                                              ["image"]
+                                                      imageUrl: snapshot
+                                                          .data[index]["image"]
                                                           .toString(),
-                                                      placeholder: (context, url) =>
-                                                          Container(),
+                                                      placeholder:
+                                                          (context, url) =>
+                                                              Container(),
                                                       // loder,
 
-                                                      errorWidget: (context, url,
-                                                              error) =>
-                                                          const Icon(Icons.error),
+                                                      errorWidget: (context,
+                                                              url, error) =>
+                                                          const Icon(
+                                                              Icons.error),
                                                     ),
                                                   ),
                                                   // Image.network(
@@ -275,11 +285,14 @@ class _SelectCityState extends State<SelectCity> {
                                                 Text(
                                                   snapshot.data[index]["city"],
                                                   style: GoogleFonts.montserrat(
-                                                      textStyle: const TextStyle(
-                                                          color: Colors.black,
-                                                          fontSize: 12,
-                                                          fontWeight:
-                                                              FontWeight.bold)),
+                                                      textStyle:
+                                                          const TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
                                                 )
                                               ]),
                                         ),
@@ -290,9 +303,10 @@ class _SelectCityState extends State<SelectCity> {
                               );
                             }
                           }
-                          if (snapshot.connectionState == ConnectionState.waiting) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
                             if (snapshot.hasData) {
-                               if (snapshot.data.length == 0) {
+                              if (snapshot.data.length == 0) {
                                 return Text(
                                   "Did not match",
                                   style: GoogleFonts.montserrat(
@@ -309,8 +323,8 @@ class _SelectCityState extends State<SelectCity> {
                                 mainAxisSpacing: size.height * 0.02,
                                 crossAxisSpacing: size.width * 0.02,
                                 crossAxisCount: 2,
-                                children:
-                                    List.generate(snapshot.data.length, (index) {
+                                children: List.generate(snapshot.data.length,
+                                    (index) {
                                   return Center(
                                     child: GestureDetector(
                                       onTap: () {
@@ -318,7 +332,9 @@ class _SelectCityState extends State<SelectCity> {
                                             snapshot.data[index]["city"];
                                         CarsData.cityimage =
                                             snapshot.data[index]["image"];
-                                        Ids.cityid = snapshot.data[index]["_id"];
+                                        Ids.cityid =
+                                            snapshot.data[index]["_id"];
+                                        pref!.setString("CarId", Ids.carid);
                                         print(CarsData.city);
                                         print(CarsData.cityimage);
                                         Navigator.push(
@@ -333,12 +349,13 @@ class _SelectCityState extends State<SelectCity> {
                                             borderRadius:
                                                 BorderRadius.circular(30)),
                                         elevation: 8,
-                                        shadowColor: Colors.grey.withOpacity(0.2),
+                                        shadowColor:
+                                            Colors.grey.withOpacity(0.2),
                                         child: Container(
                                           height: size.height * 0.17,
                                           width: size.height * 0.17,
-                                          padding:
-                                              EdgeInsets.all(size.height * 0.008),
+                                          padding: EdgeInsets.all(
+                                              size.height * 0.008),
                                           child: Column(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
@@ -353,16 +370,18 @@ class _SelectCityState extends State<SelectCity> {
                                                             size.height * 0.01),
                                                     child: CachedNetworkImage(
                                                       fit: BoxFit.cover,
-                                                      imageUrl: snapshot.data[index]
-                                                              ["image"]
+                                                      imageUrl: snapshot
+                                                          .data[index]["image"]
                                                           .toString(),
-                                                      placeholder: (context, url) =>
-                                                          Container(),
+                                                      placeholder:
+                                                          (context, url) =>
+                                                              Container(),
                                                       // loder,
 
-                                                      errorWidget: (context, url,
-                                                              error) =>
-                                                          const Icon(Icons.error),
+                                                      errorWidget: (context,
+                                                              url, error) =>
+                                                          const Icon(
+                                                              Icons.error),
                                                     ),
                                                   ),
                                                   // Image.network(
@@ -374,11 +393,14 @@ class _SelectCityState extends State<SelectCity> {
                                                 Text(
                                                   snapshot.data[index]["city"],
                                                   style: GoogleFonts.montserrat(
-                                                      textStyle: const TextStyle(
-                                                          color: Colors.black,
-                                                          fontSize: 12,
-                                                          fontWeight:
-                                                              FontWeight.bold)),
+                                                      textStyle:
+                                                          const TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
                                                 )
                                               ]),
                                         ),

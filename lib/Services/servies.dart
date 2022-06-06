@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cityofcars/Screens/Service%20Main/productDetail.dart';
 import 'package:cityofcars/Services/models/jobcardModel.dart';
 import 'package:cityofcars/Services/models/orderhistoryModel.dart';
 import 'package:cityofcars/Services/models/plansModel.dart';
@@ -16,6 +17,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
 import 'models/ApprovalsModel.dart';
+import 'models/paymentmodel.dart';
 import 'models/recentsModel.dart';
 
 var prefs = Prefernece.pref;
@@ -129,13 +131,15 @@ Future getcategaries() async {
         print(data["getdata"].length);
         return data["getdata"];
       } else {
-        return Future.error(data["msg"]);
+        print(Future.error(data["msg"]));
+        return [];
       }
       // Future city = data["getCities"];
       // print("success============== ${data["getCities"]}");
 
     } else {
-      return Future.error("Server Error");
+      print(Future.error("Server Error"));
+      return[]; 
     }
   } catch (e) {
     print("error $e");
@@ -318,27 +322,72 @@ Future searchBrand(String brand) async {
 Future getSubcategory(String _id) async {
   print("id" + _id.toString() + "========");
   String car="";
-  if(Ids.carid.isNotEmpty){
-    print(Ids.carid);
-    car= "?carid="+Ids.userid+"&";
+  if(prefs!.getString("CarId").toString()!=""&&prefs!.getString("CarId").toString()!="null"){
+    
+                                            
+    String id = prefs!.getString("CarId").toString();
+    print(id);
+
+    car= "?carid="+id+"&";
   }else{
     car="?";
   }
-  var url = Uri.parse(getSubcategoryUrl+ car + "categoryid=" + _id);
+  var url = Uri.parse(getSubcategoryUrl+ car + "cateory_id=" + _id);
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
     if (respnse.statusCode == 200) {
       var data = jsonDecode(respnse.body);
+      List<PlanModel> plans = [];
+      List<SubcatModel> subcats = [];
       if (data["status"]) {
-        // print(data["data"].toString());
-        print(data["result"].length.toString());
-        //  final Subcategory value = subcategoryFromJson(respnse.body);
-        //  print(value.data!.length);
-        // return data["data"];
-        return data["result"];
+        for(int i = 0 ; i<data["plans"].length;i++){
+          PlanModel pl = PlanModel();
+          pl.planid=data["plans"][i]["_id"].toString();
+          pl.componyprice=data["plans"][i]["servicepackprice"].toString();
+          pl.componypricedes=data["plans"][i]["servicename"].toString();
+          pl.description=data["plans"][i]["description"].toString();
+          pl.hour=data["plans"][i]["hours"].toString();
+          pl.isMost=data["plans"][i]["mostpopularpack"].toString();
+          pl.isrec=data["plans"][i]["status"].toString();
+          pl.label=data["plans"][i]["label"].toString();
+          pl.months=data["plans"][i]["month"].toString();
+          // pl.planimage=data["plans"][i]["image"].toString();
+          pl.planname=data["plans"][i]["planName"].toString();
+          pl.planpricdes=data["plans"][i]["typename"].toString();
+          pl.planprice=data["plans"][i]["typeprice"].toString();
+          pl.servicepackname=data["plans"][i]["servicepack"].toString();
+          pl.subcatid=data["plans"][i]["Subcategory"].toString();
+          pl.subplanname=data["plans"][i]["subPlanName"].toString();
+          pl.termsdetails=data["plans"][i]["textField"].toString();
+          pl.termsheading=data["plans"][i]["heading"].toString();
+          for(int j = 0 ; j<data["plans"][i]["services_id"].length;j++){
+            IncludeMod ink = IncludeMod();
+            ink.image=data["plans"][i]["services_id"][j]["image"];
+            ink.name=data["plans"][i]["services_id"][j]["title"];
+            pl.includes.add(ink);
+          }
+          plans.add(pl);
+
+
+        }
+        for(int i=0;i<data["Subcategory"].length;i++){
+          SubcatModel mod = SubcatModel();
+          mod.id=data["Subcategory"][i]["_id"];
+          mod.name=data["Subcategory"][i]["title"];
+          for(int j = 0;j<plans.length;j++){
+            if(plans[j].subcatid==mod.id){
+              mod.plans.add(plans[j]);
+            }
+          }
+          subcats.add(mod);
+        }
+        print(jsonEncode(plans));
+        print(jsonEncode(subcats));
+        return subcats;
       } else {
-        return Future.error(data["msg"]);
+        print(Future.error(data["msg"]));
+        return <SubcatModel>[];
         // print(
         //   "Error====="
         // );
@@ -347,7 +396,8 @@ Future getSubcategory(String _id) async {
       // print("success============== ${data["getCities"]}");
 
     } else {
-      return Future.error("Server Error");
+      print(Future.error("Server Error"));
+      return <SubcatModel>[]; 
       print("Error=====");
     }
   } catch (e) {
@@ -403,6 +453,7 @@ Future addcartitem() async {
       "subcategory": Ids.subcategoryid,
       "Plans": Ids.planid,
       "bookingdata": Ids.slotid,
+      "selecetedPrice":ProductDetails.selctedprice,
       "user": prefs!.getString("userId").toString()
     }, headers: {
       "Authorization": prefs!.getString('token').toString()
@@ -485,14 +536,36 @@ Future sos(String number, String problem) async {
 }
 
 Future proceed() async {
-  var url = Uri.parse(proceedUrl);
+  var url = Uri.parse(proceedUrl+"?userid="+Ids.userid);
   try {
     var response = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       print(data["data"]);
+      // for (int i = 0; i < data.length; i++) {
+      //   PaymentModel med = PaymentModel();
+      //   med.planname = data["data"][i]["Plans"]["planName"].toString();
+      //   med.price = data["data"][i]["Plans"]["typeprice"].toString();
+      //   med.hour = data["data"][i]["Plans"]["hours"].toString();
+      //   med.month = data["data"][i]["Plans"]["month"].toString();
+      //   med.plotStreet = data["data"][i]["bookingdata"]["House"].toString() +
+      //       " " +
+      //       data["data"][i]["bookingdata"]["Street"].toString();
+      //   med.cityCode = data["data"][i]["bookingdata"]["state"].toString() +
+      //       " - " +
+      //       data["data"][i]["bookingdata"]["pincode"].toString();
+      //   med.option = data["data"][i]["bookingdata"]["optional"].toString();
+      //   med.contect = data["data"][i]["bookingdata"]["contect"].toString();
+      //   med.name = data["data"][i]["bookingdata"]["name"].toString();
+      //   med.carno = data["data"][i]["bookingdata"]["carno"].toString();
+      //   // totalvalue(double.parse(med.price));
+      //   // list.add(med);
+      //   // setState(() {});
+      //   // print(list);
+      // }
       return data["data"];
+
     }
   } catch (e) {
     print("error $e");
@@ -522,7 +595,7 @@ Future addorder(String paymentid, String paymentstatus) async {
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       print(data);
-      return data["data"];
+      return data["order"];
     } else if (response.statusCode == 201) {
       var data = jsonDecode(response.body);
       print(data);
@@ -930,32 +1003,46 @@ Future getusercars() async {
 }
 
 Future getrecmostPlans() async {
-  var url = Uri.parse(getpoprecUrl);
+  var url = Uri.parse(getpoprecUrl+"?carid="+prefs!.getString("CarId").toString());
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
     if (respnse.statusCode == 200) {
       var data = jsonDecode(respnse.body);
+       List<PlanModel> plans = [];
       if (data["state"]) {
-        // List<PlanModel> model = [];
+        for(int i = 0 ; i<data["data"].length;i++){
+          PlanModel pl = PlanModel();
+          pl.planid=data["data"][i]["_id"].toString();
+          pl.componyprice=data["data"][i]["servicepackprice"].toString();
+          pl.componypricedes=data["data"][i]["servicename"].toString();
+          pl.description=data["data"][i]["description"].toString();
+          pl.hour=data["data"][i]["hours"].toString();
+          pl.isMost=data["data"][i]["mostpopularpack"].toString();
+          pl.isrec=data["data"][i]["status"].toString();
+          pl.label=data["data"][i]["label"].toString();
+          pl.months=data["data"][i]["month"].toString();
+          // pl.planimage=data["data"][i]["image"].toString();
+          pl.planname=data["data"][i]["planName"].toString();
+          pl.planpricdes=data["data"][i]["typename"].toString();
+          pl.planprice=data["data"][i]["typeprice"].toString();
+          pl.servicepackname=data["data"][i]["servicepack"].toString();
+          pl.subcatid=data["data"][i]["Subcategory"].toString();
+          pl.subplanname=data["data"][i]["subPlanName"].toString();
+          pl.termsdetails=data["data"][i]["textField"].toString();
+          pl.termsheading=data["data"][i]["heading"].toString();
+          for(int j = 0 ; j<data["data"][i]["services_id"].length;j++){
+            IncludeMod ink = IncludeMod();
+            ink.image=data["data"][i]["services_id"][j]["image"];
+            ink.name=data["data"][i]["services_id"][j]["title"];
+            pl.includes.add(ink);
+          }
+          plans.add(pl);
 
-        //  for(int i = 0; i<data["data"].length;i++){
-        //    PlanModel mod = PlanModel();
-        //    mod.description= data["data"][i]["description"];
-        //    mod.hour= data["data"][i]["hours"].toString();
-        //    mod.months=data["data"][i]["month"].toString();
-        //    mod.planname=data["data"][i]["planName"];
-        //    mod.planprice=data["data"][i]["typeprice"].toString();
-        //    mod.servicepackname=data["data"][i]["servicename"];
-        //    mod.serviceprice=data["data"][i]["servicepackprice"].toString();
-        //    mod.termsdetails=data["data"][i]["heading"];
-        //    mod.termsheading=data["data"][i]["textField"];
-        //    mod.isrec = data["data"][i]["status"].toString();
-        //    mod.isMost =data["data"][i]["mostpopularpack"].toString();
-        //   //  for(int j = 0; j<data["data"])
-        //    model.add(mod);
-        //  }
-        return data["data"];
+
+        }
+        print(jsonEncode(plans));
+        return plans;
       } else {
         return [];
         // print(
@@ -1020,6 +1107,67 @@ Future getMess() async {
         return data["data"];
       } else {
         return "error";
+        // print(
+        //   "Error====="
+        // );
+      }
+      // Future city = data["getCities"];
+      // print("success============== ${data["getCities"]}");
+
+    } else {
+      return Future.error("Server Error");
+      print("Error=====");
+    }
+  } catch (e) {
+    print("error $e");
+  }
+}
+
+Future getsubcatbanner() async {
+  var url = Uri.parse(getsubcatBannerUrl);
+  try {
+    var respnse = await http.get(url,
+        headers: {"Authorization": prefs!.getString('token').toString()});
+    if (respnse.statusCode == 200) {
+      var data = jsonDecode(respnse.body);
+      List image = [];
+      if (data["status"]) {
+        for (int i = 0; i < data["data"].length; i++) {
+          image.add(data["data"][i]["image"].toString());
+        }
+        return image;
+      } else {
+        return [];
+        // print(
+        //   "Error====="
+        // );
+      }
+      // Future city = data["getCities"];
+      // print("success============== ${data["getCities"]}");
+
+    } else {
+      return Future.error("Server Error");
+      print("Error=====");
+    }
+  } catch (e) {
+    print("error $e");
+  }
+}
+Future getplanbanner() async {
+  var url = Uri.parse(getplanBannerUrl);
+  try {
+    var respnse = await http.get(url,
+        headers: {"Authorization": prefs!.getString('token').toString()});
+    if (respnse.statusCode == 200) {
+      var data = jsonDecode(respnse.body);
+      List image = [];
+      if (data["status"]) {
+        for (int i = 0; i < data["data"].length; i++) {
+          image.add(data["data"][i]["image"].toString());
+        }
+        return image;
+      } else {
+        return [];
         // print(
         //   "Error====="
         // );

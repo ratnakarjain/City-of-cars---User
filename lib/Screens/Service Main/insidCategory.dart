@@ -1,4 +1,3 @@
-
 import 'package:cityofcars/Screens/Service%20Main/InsidCategoryTabViw/common_services.dart';
 import 'package:cityofcars/Screens/Service%20Main/productDetail.dart';
 import 'package:cityofcars/Services/models/subcategory.dart';
@@ -9,6 +8,8 @@ import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:scrollable_list_tabview/scrollable_list_tabview.dart';
+
+import '../../Services/models/plansModel.dart';
 
 class InsideCategory extends StatefulWidget {
   String id;
@@ -30,7 +31,7 @@ class _InsideCategoryState extends State<InsideCategory>
   var w;
   var contexte;
   int currentPage = 0;
-  bool isLoading=false;
+  bool isLoading = false;
   String _id = "";
   PageController _pageController = PageController();
   List backimage = [
@@ -106,7 +107,8 @@ class _InsideCategoryState extends State<InsideCategory>
   // Subcategory? subcategory;
   // List<Data> subdata = [];
   ScrollController _scrollController = ScrollController();
-  List service = [];
+  List<SubcatModel> service = [];
+  List images = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -118,11 +120,15 @@ class _InsideCategoryState extends State<InsideCategory>
     //     });
     // });_
     _id = widget.id;
-  
+
     fecthdata();
-    
+
     _scrollController.addListener(() {
       check();
+    });
+    getsubcatbanner().then((value) {
+      images.addAll(value);
+      setState(() {});
     });
     super.initState();
     // keys.add(itemKey1);
@@ -135,11 +141,10 @@ class _InsideCategoryState extends State<InsideCategory>
 
   @override
   Widget build(BuildContext context) {
-    print("service "+ service.length.toString());
+    print("service " + service.length.toString());
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
-    return 
-    Scaffold(
+    return Scaffold(
       // key: _scaffoldkey,
       backgroundColor: kLightOrangeBgColor,
       extendBody: true,
@@ -166,12 +171,12 @@ class _InsideCategoryState extends State<InsideCategory>
                         currentPage = value;
                       });
                     },
-                    itemCount: backimage.length,
+                    itemCount:images.length,// backimage.length,
                     itemBuilder: (context, index) => Container(
                           decoration: BoxDecoration(
                               image: DecorationImage(
                                   image: NetworkImage(
-                                    backimage[index],
+                                    images[index],
                                   ),
                                   fit: BoxFit.cover)),
                         )),
@@ -181,8 +186,8 @@ class _InsideCategoryState extends State<InsideCategory>
                   right: 0,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: backimage.map((url) {
-                      int index = backimage.indexOf(url);
+                    children: images.map((url) {
+                      int index = images.indexOf(url);
                       return Container(
                         width: 8.0,
                         height: 8.0,
@@ -203,389 +208,400 @@ class _InsideCategoryState extends State<InsideCategory>
           ),
         ),
       ),
-      body:isLoading? loder: service.isEmpty?Center(child: Text(
-            "No Data Found",
-            style: GoogleFonts.montserrat(
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.bold, color: kTextInputPlaceholderColor)),
-          ),): Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              height: h * 0.07,
-              padding: EdgeInsets.only(
-                  left: w * 0.06, right: w * 0.06, top: h * 0.02),
-              child: Material(
-                color: kwhitecolor,
-                elevation: 8,
-                shadowColor: kTextInputPlaceholderColor.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(h * 0.05),
-                child: TextField(
-                  decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.only(top: h * 0.01, left: w * 0.05),
-                      hintText: "Search",
-                      hintStyle: GoogleFonts.montserrat(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        color: ksearchTextColor.withOpacity(0.57),
+      body: isLoading
+          ? loder
+          : service.isEmpty
+              ? Center(
+                  child: Text(
+                    "No Data Found",
+                    style: GoogleFonts.montserrat(
+                        textStyle: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: kTextInputPlaceholderColor)),
+                  ),
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                      Container(
+                        height: h * 0.07,
+                        padding: EdgeInsets.only(
+                            left: w * 0.06, right: w * 0.06, top: h * 0.02),
+                        child: Material(
+                          color: kwhitecolor,
+                          elevation: 8,
+                          shadowColor:
+                              kTextInputPlaceholderColor.withOpacity(0.3),
+                          borderRadius: BorderRadius.circular(h * 0.05),
+                          child: TextField(
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(
+                                    top: h * 0.01, left: w * 0.05),
+                                hintText: "Search",
+                                hintStyle: GoogleFonts.montserrat(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                  color: ksearchTextColor.withOpacity(0.57),
+                                ),
+                                suffixIcon: const Icon(
+                                  Icons.search,
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: korangecolor, width: 1.0),
+                                    borderRadius:
+                                        BorderRadius.circular(h * 0.05)),
+                                border: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: kTextInputPlaceholderColor,
+                                        width: 1.0),
+                                    borderRadius:
+                                        BorderRadius.circular(h * 0.05))),
+                          ),
+                        ),
                       ),
-                      suffixIcon: const Icon(
-                        Icons.search,
+                      SizedBox(
+                        height: h * 0.015,
                       ),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: korangecolor, width: 1.0),
-                          borderRadius: BorderRadius.circular(h * 0.05)),
-                      border: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: kTextInputPlaceholderColor, width: 1.0),
-                          borderRadius: BorderRadius.circular(h * 0.05))),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: h * 0.015,
-            ),
-            // Expanded(
-            //   child: ScrollableListTabView(
-            //     tabHeight: 48,
-            //         bodyAnimationDuration: const Duration(milliseconds: 150),
-            //         // tabAnimationCurve: Curves.easeOut,
-            //         tabAnimationDuration: const Duration(milliseconds: 200),
-            //     tabs: List.generate(bodyType.length, (index) {
-            //       return ScrollableListTab(
-            //         tab: ListTab(
-            //           activeBackgroundColor: kwhitecolor,
-            //          inactiveBackgroundColor: kwhitecolor,
-            //          borderRadius: BorderRadius.circular(0),
-            //           label: Text(
-            //                 "${bodyType[index]}".toUpperCase(),
-            //                 style: GoogleFonts.montserrat(
-            //                     fontSize: 9,
-            //                     textStyle: const TextStyle(
-            //                       color: kTextInputPlaceholderColor,
-            //                       height: 2,
-            //                       fontWeight: FontWeight.bold,
-            //                     )),),
-            //           // icon: Text(
-            //           //       "${bodyType[0]}".toUpperCase(),
-            //           //       style: GoogleFonts.montserrat(
-            //           //           fontSize: 9,
-            //           //           textStyle: const TextStyle(
-            //           //             height: 2,
-            //           //             fontWeight: FontWeight.bold,
-            //           //           )),),
-            //         ),
-            //         body: ListView(
-            //           shrinkWrap: true,
-            //           physics: const NeverScrollableScrollPhysics(),
-            //           children: [
-            //             Row(
-            //               children: [
-            //                 Label(
-            //                 color: kbluecolor,
-            //                 text: bodyType[index],
-            //                 textStyle: GoogleFonts.montserrat(
-            //                   textStyle: const TextStyle(
-            //                       fontSize: 11,
-            //                       fontWeight: FontWeight.bold,
-            //                       color: kwhitecolor),
-            //                 ),
-            //                 padding:
-            //                     const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            //           ),
-            //               ],
-            //             ),
-            //           const CommonServices(),
-            //           ],
-            //         )
+                      // Expanded(
+                      //   child: ScrollableListTabView(
+                      //     tabHeight: 48,
+                      //         bodyAnimationDuration: const Duration(milliseconds: 150),
+                      //         // tabAnimationCurve: Curves.easeOut,
+                      //         tabAnimationDuration: const Duration(milliseconds: 200),
+                      //     tabs: List.generate(bodyType.length, (index) {
+                      //       return ScrollableListTab(
+                      //         tab: ListTab(
+                      //           activeBackgroundColor: kwhitecolor,
+                      //          inactiveBackgroundColor: kwhitecolor,
+                      //          borderRadius: BorderRadius.circular(0),
+                      //           label: Text(
+                      //                 "${bodyType[index]}".toUpperCase(),
+                      //                 style: GoogleFonts.montserrat(
+                      //                     fontSize: 9,
+                      //                     textStyle: const TextStyle(
+                      //                       color: kTextInputPlaceholderColor,
+                      //                       height: 2,
+                      //                       fontWeight: FontWeight.bold,
+                      //                     )),),
+                      //           // icon: Text(
+                      //           //       "${bodyType[0]}".toUpperCase(),
+                      //           //       style: GoogleFonts.montserrat(
+                      //           //           fontSize: 9,
+                      //           //           textStyle: const TextStyle(
+                      //           //             height: 2,
+                      //           //             fontWeight: FontWeight.bold,
+                      //           //           )),),
+                      //         ),
+                      //         body: ListView(
+                      //           shrinkWrap: true,
+                      //           physics: const NeverScrollableScrollPhysics(),
+                      //           children: [
+                      //             Row(
+                      //               children: [
+                      //                 Label(
+                      //                 color: kbluecolor,
+                      //                 text: bodyType[index],
+                      //                 textStyle: GoogleFonts.montserrat(
+                      //                   textStyle: const TextStyle(
+                      //                       fontSize: 11,
+                      //                       fontWeight: FontWeight.bold,
+                      //                       color: kwhitecolor),
+                      //                 ),
+                      //                 padding:
+                      //                     const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      //           ),
+                      //               ],
+                      //             ),
+                      //           const CommonServices(),
+                      //           ],
+                      //         )
 
-            //         );
-            //     })
-            //   //   [
-            //   //     ScrollableListTab(
-            //   //       tab: ListTab(
-            //   //         label: Text(
-            //   //               "${bodyType[0]}".toUpperCase(),
-            //   //               style: GoogleFonts.montserrat(
-            //   //                   fontSize: 9,
-            //   //                   textStyle: const TextStyle(
-            //   //                     height: 2,
-            //   //                     fontWeight: FontWeight.bold,
-            //   //                   )),),
-            //   //         // icon: Text(
-            //   //         //       "${bodyType[0]}".toUpperCase(),
-            //   //         //       style: GoogleFonts.montserrat(
-            //   //         //           fontSize: 9,
-            //   //         //           textStyle: const TextStyle(
-            //   //         //             height: 2,
-            //   //         //             fontWeight: FontWeight.bold,
-            //   //         //           )),),
-            //   //       ),
-            //   //       body: ListView(
-            //   //         shrinkWrap: true,
-            //   //         physics: const NeverScrollableScrollPhysics(),
-            //   //         children: [
-            //   //           Row(
-            //   //             children: [
-            //   //               Label(
-            //   //               color: kbluecolor,
-            //   //               text: "common services",
-            //   //               textStyle: GoogleFonts.montserrat(
-            //   //                 textStyle: const TextStyle(
-            //   //                     fontSize: 11,
-            //   //                     fontWeight: FontWeight.bold,
-            //   //                     color: kwhitecolor),
-            //   //               ),
-            //   //               padding:
-            //   //                   const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            //   //         ),
-            //   //             ],
-            //   //           ),
-            //   //         const CommonServices(),
-            //   //         ],
-            //   //       )
+                      //         );
+                      //     })
+                      //   //   [
+                      //   //     ScrollableListTab(
+                      //   //       tab: ListTab(
+                      //   //         label: Text(
+                      //   //               "${bodyType[0]}".toUpperCase(),
+                      //   //               style: GoogleFonts.montserrat(
+                      //   //                   fontSize: 9,
+                      //   //                   textStyle: const TextStyle(
+                      //   //                     height: 2,
+                      //   //                     fontWeight: FontWeight.bold,
+                      //   //                   )),),
+                      //   //         // icon: Text(
+                      //   //         //       "${bodyType[0]}".toUpperCase(),
+                      //   //         //       style: GoogleFonts.montserrat(
+                      //   //         //           fontSize: 9,
+                      //   //         //           textStyle: const TextStyle(
+                      //   //         //             height: 2,
+                      //   //         //             fontWeight: FontWeight.bold,
+                      //   //         //           )),),
+                      //   //       ),
+                      //   //       body: ListView(
+                      //   //         shrinkWrap: true,
+                      //   //         physics: const NeverScrollableScrollPhysics(),
+                      //   //         children: [
+                      //   //           Row(
+                      //   //             children: [
+                      //   //               Label(
+                      //   //               color: kbluecolor,
+                      //   //               text: "common services",
+                      //   //               textStyle: GoogleFonts.montserrat(
+                      //   //                 textStyle: const TextStyle(
+                      //   //                     fontSize: 11,
+                      //   //                     fontWeight: FontWeight.bold,
+                      //   //                     color: kwhitecolor),
+                      //   //               ),
+                      //   //               padding:
+                      //   //                   const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      //   //         ),
+                      //   //             ],
+                      //   //           ),
+                      //   //         const CommonServices(),
+                      //   //         ],
+                      //   //       )
 
-            //   //       ),
-            //   // ScrollableListTab(
-            //   //       tab: ListTab(
-            //   //         label: Text(
-            //   //               "${bodyType[1]}".toUpperCase(),
-            //   //               style: GoogleFonts.montserrat(
-            //   //                   fontSize: 9,
-            //   //                   textStyle: const TextStyle(
-            //   //                     height: 2,
-            //   //                     fontWeight: FontWeight.bold,
-            //   //                   )),),
-            //   //         // icon: Text(
-            //   //         //       "${bodyType[0]}".toUpperCase(),
-            //   //         //       style: GoogleFonts.montserrat(
-            //   //         //           fontSize: 9,
-            //   //         //           textStyle: const TextStyle(
-            //   //         //             height: 2,
-            //   //         //             fontWeight: FontWeight.bold,
-            //   //         //           )),),
-            //   //       ),
-            //   //       body: ListView(
-            //   //         shrinkWrap: true,
-            //   //         physics: const NeverScrollableScrollPhysics(),
-            //   //         children: [
-            //   //           Row(
-            //   //             children: [
-            //   //               Label(
-            //   //               color: kbluecolor,
-            //   //               text: "common services",
-            //   //               textStyle: GoogleFonts.montserrat(
-            //   //                 textStyle: const TextStyle(
-            //   //                     fontSize: 11,
-            //   //                     fontWeight: FontWeight.bold,
-            //   //                     color: kwhitecolor),
-            //   //               ),
-            //   //               padding:
-            //   //                   const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            //   //         ),
-            //   //             ],
-            //   //           ),
-            //   //         const CommonServices(),
-            //   //         ],
-            //   //       )
+                      //   //       ),
+                      //   // ScrollableListTab(
+                      //   //       tab: ListTab(
+                      //   //         label: Text(
+                      //   //               "${bodyType[1]}".toUpperCase(),
+                      //   //               style: GoogleFonts.montserrat(
+                      //   //                   fontSize: 9,
+                      //   //                   textStyle: const TextStyle(
+                      //   //                     height: 2,
+                      //   //                     fontWeight: FontWeight.bold,
+                      //   //                   )),),
+                      //   //         // icon: Text(
+                      //   //         //       "${bodyType[0]}".toUpperCase(),
+                      //   //         //       style: GoogleFonts.montserrat(
+                      //   //         //           fontSize: 9,
+                      //   //         //           textStyle: const TextStyle(
+                      //   //         //             height: 2,
+                      //   //         //             fontWeight: FontWeight.bold,
+                      //   //         //           )),),
+                      //   //       ),
+                      //   //       body: ListView(
+                      //   //         shrinkWrap: true,
+                      //   //         physics: const NeverScrollableScrollPhysics(),
+                      //   //         children: [
+                      //   //           Row(
+                      //   //             children: [
+                      //   //               Label(
+                      //   //               color: kbluecolor,
+                      //   //               text: "common services",
+                      //   //               textStyle: GoogleFonts.montserrat(
+                      //   //                 textStyle: const TextStyle(
+                      //   //                     fontSize: 11,
+                      //   //                     fontWeight: FontWeight.bold,
+                      //   //                     color: kwhitecolor),
+                      //   //               ),
+                      //   //               padding:
+                      //   //                   const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      //   //         ),
+                      //   //             ],
+                      //   //           ),
+                      //   //         const CommonServices(),
+                      //   //         ],
+                      //   //       )
 
-            //   //       ),
-            //   //       ScrollableListTab(
-            //   //       tab: ListTab(
-            //   //         label: Text(
-            //   //              "${bodyType[2]}".toUpperCase(),
-            //   //               style: GoogleFonts.montserrat(
-            //   //                   fontSize: 9,
-            //   //                   textStyle: const TextStyle(
-            //   //                     height: 2,
-            //   //                     fontWeight: FontWeight.bold,
-            //   //                   )),),
-            //   //         // icon: Text(
-            //   //         //       "${bodyType[0]}".toUpperCase(),
-            //   //         //       style: GoogleFonts.montserrat(
-            //   //         //           fontSize: 9,
-            //   //         //           textStyle: const TextStyle(
-            //   //         //             height: 2,
-            //   //         //             fontWeight: FontWeight.bold,
-            //   //         //           )),),
-            //   //       ),
-            //   //       body: ListView(
-            //   //         shrinkWrap: true,
-            //   //         physics: const NeverScrollableScrollPhysics(),
-            //   //         children: [
-            //   //           Row(
-            //   //             children: [
-            //   //               Label(
-            //   //               color: kbluecolor,
-            //   //               text: "breaks",
-            //   //               textStyle: GoogleFonts.montserrat(
-            //   //                 textStyle: const TextStyle(
-            //   //                     fontSize: 11,
-            //   //                     fontWeight: FontWeight.bold,
-            //   //                     color: kwhitecolor),
-            //   //               ),
-            //   //               padding:
-            //   //                   const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            //   //         ),
-            //   //             ],
-            //   //           ),
-            //   //         const CommonServices(),
-            //   //         ],
-            //   //       )
+                      //   //       ),
+                      //   //       ScrollableListTab(
+                      //   //       tab: ListTab(
+                      //   //         label: Text(
+                      //   //              "${bodyType[2]}".toUpperCase(),
+                      //   //               style: GoogleFonts.montserrat(
+                      //   //                   fontSize: 9,
+                      //   //                   textStyle: const TextStyle(
+                      //   //                     height: 2,
+                      //   //                     fontWeight: FontWeight.bold,
+                      //   //                   )),),
+                      //   //         // icon: Text(
+                      //   //         //       "${bodyType[0]}".toUpperCase(),
+                      //   //         //       style: GoogleFonts.montserrat(
+                      //   //         //           fontSize: 9,
+                      //   //         //           textStyle: const TextStyle(
+                      //   //         //             height: 2,
+                      //   //         //             fontWeight: FontWeight.bold,
+                      //   //         //           )),),
+                      //   //       ),
+                      //   //       body: ListView(
+                      //   //         shrinkWrap: true,
+                      //   //         physics: const NeverScrollableScrollPhysics(),
+                      //   //         children: [
+                      //   //           Row(
+                      //   //             children: [
+                      //   //               Label(
+                      //   //               color: kbluecolor,
+                      //   //               text: "breaks",
+                      //   //               textStyle: GoogleFonts.montserrat(
+                      //   //                 textStyle: const TextStyle(
+                      //   //                     fontSize: 11,
+                      //   //                     fontWeight: FontWeight.bold,
+                      //   //                     color: kwhitecolor),
+                      //   //               ),
+                      //   //               padding:
+                      //   //                   const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      //   //         ),
+                      //   //             ],
+                      //   //           ),
+                      //   //         const CommonServices(),
+                      //   //         ],
+                      //   //       )
 
-            //   //       ),
-            //   //       ScrollableListTab(
-            //   //       tab: ListTab(
-            //   //         label: Text(
-            //   //               "${bodyType[3]}".toUpperCase(),
-            //   //               style: GoogleFonts.montserrat(
-            //   //                   fontSize: 9,
-            //   //                   textStyle: const TextStyle(
-            //   //                     height: 2,
-            //   //                     fontWeight: FontWeight.bold,
-            //   //                   )),),
-            //   //         // icon: Text(
-            //   //         //       "${bodyType[0]}".toUpperCase(),
-            //   //         //       style: GoogleFonts.montserrat(
-            //   //         //           fontSize: 9,
-            //   //         //           textStyle: const TextStyle(
-            //   //         //             height: 2,
-            //   //         //             fontWeight: FontWeight.bold,
-            //   //         //           )),),
-            //   //       ),
-            //   //       body: ListView(
-            //   //         shrinkWrap: true,
-            //   //         physics: const NeverScrollableScrollPhysics(),
-            //   //         children: [
-            //   //           Row(
-            //   //             children: [
-            //   //               Label(
-            //   //               color: kbluecolor,
-            //   //               text: "common services",
-            //   //               textStyle: GoogleFonts.montserrat(
-            //   //                 textStyle: const TextStyle(
-            //   //                     fontSize: 11,
-            //   //                     fontWeight: FontWeight.bold,
-            //   //                     color: kwhitecolor),
-            //   //               ),
-            //   //               padding:
-            //   //                   const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            //   //         ),
-            //   //             ],
-            //   //           ),
-            //   //         const CommonServices(),
-            //   //         ],
-            //   //       )
+                      //   //       ),
+                      //   //       ScrollableListTab(
+                      //   //       tab: ListTab(
+                      //   //         label: Text(
+                      //   //               "${bodyType[3]}".toUpperCase(),
+                      //   //               style: GoogleFonts.montserrat(
+                      //   //                   fontSize: 9,
+                      //   //                   textStyle: const TextStyle(
+                      //   //                     height: 2,
+                      //   //                     fontWeight: FontWeight.bold,
+                      //   //                   )),),
+                      //   //         // icon: Text(
+                      //   //         //       "${bodyType[0]}".toUpperCase(),
+                      //   //         //       style: GoogleFonts.montserrat(
+                      //   //         //           fontSize: 9,
+                      //   //         //           textStyle: const TextStyle(
+                      //   //         //             height: 2,
+                      //   //         //             fontWeight: FontWeight.bold,
+                      //   //         //           )),),
+                      //   //       ),
+                      //   //       body: ListView(
+                      //   //         shrinkWrap: true,
+                      //   //         physics: const NeverScrollableScrollPhysics(),
+                      //   //         children: [
+                      //   //           Row(
+                      //   //             children: [
+                      //   //               Label(
+                      //   //               color: kbluecolor,
+                      //   //               text: "common services",
+                      //   //               textStyle: GoogleFonts.montserrat(
+                      //   //                 textStyle: const TextStyle(
+                      //   //                     fontSize: 11,
+                      //   //                     fontWeight: FontWeight.bold,
+                      //   //                     color: kwhitecolor),
+                      //   //               ),
+                      //   //               padding:
+                      //   //                   const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      //   //         ),
+                      //   //             ],
+                      //   //           ),
+                      //   //         const CommonServices(),
+                      //   //         ],
+                      //   //       )
 
-            //   //       ),
+                      //   //       ),
 
-            //   //   ],
-            
-            //   ),
-            // ),
-            TabBar(
-                  isScrollable: true,
-                  onTap: (value) {
-                    _tabController.index = value;
-                    scollToItem(_tabController.index);
-                    setState(() {});
-                  },
-                  unselectedLabelColor: kSelectedColor.withOpacity(0.56),
-                  indicatorColor: kTextInputPlaceholderColor.withOpacity(0.5),
-                  labelColor: kSelectedColor,
-                  tabs: List.generate(service.length, (index) {
-                     print(service.length.toString()+"+++++++++++");
-                  
-                    return SizedBox(
-                      height: h * 0.03,
-                      child: Text(
-                        "${service[index]["title"]}".toUpperCase(),
-                        style: GoogleFonts.montserrat(
-                            fontSize: 9,
-                            textStyle: const TextStyle(
-                              height: 2,
-                              fontWeight: FontWeight.bold,
-                            )),
+                      //   //   ],
+
+                      //   ),
+                      // ),
+                      TabBar(
+                        isScrollable: true,
+                        onTap: (value) {
+                          _tabController.index = value;
+                          scollToItem(_tabController.index);
+                          setState(() {});
+                        },
+                        unselectedLabelColor: kSelectedColor.withOpacity(0.56),
+                        indicatorColor:
+                            kTextInputPlaceholderColor.withOpacity(0.5),
+                        labelColor: kSelectedColor,
+                        tabs: List.generate(service.length, (index) {
+                          print(service.length.toString() + "+++++++++++");
+
+                          return SizedBox(
+                            height: h * 0.03,
+                            child: Text(
+                              service[index].name.toUpperCase(),
+                              style: GoogleFonts.montserrat(
+                                  fontSize: 9,
+                                  textStyle: const TextStyle(
+                                    height: 2,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                            ),
+                          );
+                        }),
+                        controller: _tabController,
+                        indicatorSize: TabBarIndicatorSize.tab,
                       ),
-                    );
-                  }),
-                  controller: _tabController,
-                  indicatorSize: TabBarIndicatorSize.tab,
-                ),
-          
-            
 
-            Expanded(
-                child: SingleChildScrollView(
-              controller: _scrollController,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: h * 0.02,
-                  ),
-                  ListView.builder(
-                    key: _scrollkey,
-                    shrinkWrap: true,
-                    controller: _controller1,
-                    itemCount: service.length,
-                    itemBuilder: (context, index) {
-                      return CommonServices(
-                        subcategoryid: service[index]["_id"],
-                        data: service[index]["plan_id"],
-                        key: keys[index],
-                        label: service[index]["title"],
-                      );
-                    },
-                  ),
-                  // Container(
-                  //     key: itemKey1,
-                  //     child: CommonServices(
-                  //       label: bodyType[0],
-                  //     )),
-                  // Container(
-                  //     key: itemKey2,
-                  //     child: CommonServices(
-                  //       label: bodyType[1],
-                  //     )),
-                  // Container(
-                  //     key: itemKey3,
-                  //     child: CommonServices(
-                  //       label: bodyType[2],
-                  //     )),
-                  // Container(
-                  //   key: itemKey4,
-                  //   child: CommonServices(
-                  //     label: bodyType[3],
-                  //   ),
-                  // ),
-                  Label(
-                    color: korangecolor,
-                    text: "RECOMMEND packes",
-                    textStyle: GoogleFonts.montserrat(
-                      textStyle: const TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.bold,
-                          color: kwhitecolor),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  ),
-                  SizedBox(
-                    height: h * 0.005,
-                  ),
-                  Container(
-                height: h * 0.18,
-                child: FutureBuilder(
-                  future: getrecmostPlans(),
-                  builder: (context, AsyncSnapshot snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      // mostpop.addAll(snapshot.data);
-                      if (snapshot.hasData) {
-                        
-                        return ListView.builder(
+                      Expanded(
+                          child: SingleChildScrollView(
+                        controller: _scrollController,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: h * 0.02,
+                            ),
+                            ListView.builder(
+                              key: _scrollkey,
+                              shrinkWrap: true,
+                              controller: _controller1,
+                              itemCount: service.length,
+                              itemBuilder: (context, index) {
+                                return CommonServices(
+                                  subcategoryid: service[index].id,
+                                  data: service[index].plans,
+                                  key: keys[index],
+                                  label: service[index].name,
+                                );
+                              },
+                            ),
+                            // Container(
+                            //     key: itemKey1,
+                            //     child: CommonServices(
+                            //       label: bodyType[0],
+                            //     )),
+                            // Container(
+                            //     key: itemKey2,
+                            //     child: CommonServices(
+                            //       label: bodyType[1],
+                            //     )),
+                            // Container(
+                            //     key: itemKey3,
+                            //     child: CommonServices(
+                            //       label: bodyType[2],
+                            //     )),
+                            // Container(
+                            //   key: itemKey4,
+                            //   child: CommonServices(
+                            //     label: bodyType[3],
+                            //   ),
+                            // ),
+                            Label(
+                              color: korangecolor,
+                              text: "RECOMMEND packes",
+                              textStyle: GoogleFonts.montserrat(
+                                textStyle: const TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.bold,
+                                    color: kwhitecolor),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 5),
+                            ),
+                            SizedBox(
+                              height: h * 0.005,
+                            ),
+                            Container(
+                                height: h * 0.18,
+                                child: FutureBuilder(
+                                  future: getrecmostPlans(),
+                                  builder: (context, AsyncSnapshot snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      // mostpop.addAll(snapshot.data);
+                                      if (snapshot.hasData) {
+                                        return ListView.builder(
                           controller: _controller2,
                           physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
@@ -593,16 +609,19 @@ class _InsideCategoryState extends State<InsideCategory>
                               vertical: h * 0.01, horizontal: h * 0.025),
                           itemCount: snapshot.data.length,
                           itemBuilder: (context, index) {
-                            List data = snapshot.data;
+                            PlanModel model = PlanModel();
+                            model= snapshot.data[index];
                             return Visibility(
-                              visible: snapshot.data[index]["status"],
+                              visible: model.isrec=="true",
                               child: GestureDetector(
                                 onTap: () {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                               ProductDetails(planDetails: data.elementAt(index),)));
+                                          builder: (context) => ProductDetails(
+                                                planDetails:
+                                                    model,
+                                              )));
                                 },
                                 child: RRectCard(
                                   h: h * 0.1,
@@ -619,7 +638,7 @@ class _InsideCategoryState extends State<InsideCategory>
                                         ),
                                         FittedBox(
                                           child: Text(
-                                            snapshot.data[index]["planName"],
+                                            model.planname,
                                             style: GoogleFonts.montserrat(
                                               fontWeight: FontWeight.w600,
                                               height: 2,
@@ -649,28 +668,33 @@ class _InsideCategoryState extends State<InsideCategory>
                             );
                           },
                         );
-                      }
-                      return const Center(child: Text("Empty"));
-                    }
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      if (snapshot.hasData) {
-                        return ListView.builder(
+                                      }
+                                      return const Center(child: Text("Empty"));
+                                    }
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      if (snapshot.hasData) {
+                                        return ListView.builder(
                           controller: _controller2,
-                          physics: BouncingScrollPhysics(),
+                          physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
                           padding: EdgeInsets.symmetric(
                               vertical: h * 0.01, horizontal: h * 0.025),
                           itemCount: snapshot.data.length,
                           itemBuilder: (context, index) {
+                            PlanModel model = PlanModel();
+                            model= snapshot.data[index];
                             return Visibility(
-                              visible: snapshot.data[index]["mostpopularpack"],
+                              visible: model.isrec=="true",
                               child: GestureDetector(
                                 onTap: () {
-                                  // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //         builder: (context) =>
-                                  //             const ProductDetails()));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ProductDetails(
+                                                planDetails:
+                                                    model,
+                                              )));
                                 },
                                 child: RRectCard(
                                   h: h * 0.1,
@@ -687,7 +711,7 @@ class _InsideCategoryState extends State<InsideCategory>
                                         ),
                                         FittedBox(
                                           child: Text(
-                                            snapshot.data[index]["planName"],
+                                            model.planname,
                                             style: GoogleFonts.montserrat(
                                               fontWeight: FontWeight.w600,
                                               height: 2,
@@ -717,115 +741,115 @@ class _InsideCategoryState extends State<InsideCategory>
                             );
                           },
                         );
-                      }
-                      return loder;
-                    }
-                    return loder;
-                  },
-                )),
-                  // Container(
-                  //   height: h * 0.18,
-                  //   child: ListView.builder(
-                  //     physics: const BouncingScrollPhysics(),
-                  //     scrollDirection: Axis.horizontal,
-                  //     padding: EdgeInsets.all(h * 0.01),
-                  //     itemCount: reccomendedPackes.length,
-                  //     itemBuilder: (context, index) {
-                  //       return RRectCard(
-                  //         h: h * 0.1,
-                  //         w: w * 0.25,
-                  //         borderRadius: 15,
-                  //         widget: Column(
-                  //             mainAxisAlignment: MainAxisAlignment.center,
-                  //             children: [
-                  //               Image.asset(
-                  //                   "assets/images/${reccomendedPackes[index]["image"]}"),
-                  //               const SizedBox(
-                  //                 height: 5,
-                  //               ),
-                  //               FittedBox(
-                  //                 child: Text(
-                  //                   reccomendedPackes[index]["services"],
-                  //                   style: GoogleFonts.montserrat(
-                  //                     fontWeight: FontWeight.w600,
-                  //                     height: 2,
-                  //                   ),
-                  //                 ),
-                  //               ),
-                  //               Padding(
-                  //                 padding: EdgeInsets.symmetric(
-                  //                     horizontal: h * 0.01),
-                  //                 child: FittedBox(
-                  //                   child: Text(
-                  //                     reccomendedPackes[index]["type"],
-                  //                     textScaleFactor: 0.6,
-                  //                     style: GoogleFonts.montserrat(
-                  //                       fontWeight: FontWeight.w600,
-                  //                       color: kTextInputPlaceholderColor
-                  //                           .withOpacity(0.6),
-                  //                       height: 2,
-                  //                     ),
-                  //                   ),
-                  //                 ),
-                  //               )
-                  //             ]),
-                  //       );
-                  //     },
-                  //   ),
-                  // ),
-                  SizedBox(
-                    height: h * 0.02,
-                  ),
-                ],
-              ),
-            )
-                // TabBarView(
+                                      }
+                                      return loder;
+                                    }
+                                    return loder;
+                                  },
+                                )),
+                            // Container(
+                            //   height: h * 0.18,
+                            //   child: ListView.builder(
+                            //     physics: const BouncingScrollPhysics(),
+                            //     scrollDirection: Axis.horizontal,
+                            //     padding: EdgeInsets.all(h * 0.01),
+                            //     itemCount: reccomendedPackes.length,
+                            //     itemBuilder: (context, index) {
+                            //       return RRectCard(
+                            //         h: h * 0.1,
+                            //         w: w * 0.25,
+                            //         borderRadius: 15,
+                            //         widget: Column(
+                            //             mainAxisAlignment: MainAxisAlignment.center,
+                            //             children: [
+                            //               Image.asset(
+                            //                   "assets/images/${reccomendedPackes[index]["image"]}"),
+                            //               const SizedBox(
+                            //                 height: 5,
+                            //               ),
+                            //               FittedBox(
+                            //                 child: Text(
+                            //                   reccomendedPackes[index]["services"],
+                            //                   style: GoogleFonts.montserrat(
+                            //                     fontWeight: FontWeight.w600,
+                            //                     height: 2,
+                            //                   ),
+                            //                 ),
+                            //               ),
+                            //               Padding(
+                            //                 padding: EdgeInsets.symmetric(
+                            //                     horizontal: h * 0.01),
+                            //                 child: FittedBox(
+                            //                   child: Text(
+                            //                     reccomendedPackes[index]["type"],
+                            //                     textScaleFactor: 0.6,
+                            //                     style: GoogleFonts.montserrat(
+                            //                       fontWeight: FontWeight.w600,
+                            //                       color: kTextInputPlaceholderColor
+                            //                           .withOpacity(0.6),
+                            //                       height: 2,
+                            //                     ),
+                            //                   ),
+                            //                 ),
+                            //               )
+                            //             ]),
+                            //       );
+                            //     },
+                            //   ),
+                            // ),
+                            SizedBox(
+                              height: h * 0.02,
+                            ),
+                          ],
+                        ),
+                      )
+                          // TabBarView(
 
-                //   children: const [
-                //     CommonServices(),
-                //     CommonServices(),
-                //     CommonServices(),
-                //     CommonServices(),
-                //   ],
-                //   controller: _tabController,
-                // ),
-                // ),
-                // SingleChildScrollView(
-                //   scrollDirection: Axis.horizontal,
-                //   child:
-                // Row(
-                //     children: List.generate(
-                //         bodyType.length,
-                //         (index) => InkWell(
-                //           onTap: (){},
-                //           child: Container(
-                //                 padding: EdgeInsets.symmetric(horizontal: w * 0.04),
-                //                 height: h * 0.02,
-                //                 child: Column(
-                //                   mainAxisSize: MainAxisSize.min,
-                //                   children: [
-                //                     Text(
-                //                       "${bodyType[index]}".toUpperCase(),
-                //                       textScaleFactor: 0.7,
-                //                       style: GoogleFonts.montserrat(
-                //                           textStyle: const TextStyle(
-                //                               fontWeight: FontWeight.w400,
-                //                               )),
-                //                     ),
-                //                     Container(
-                //                       height: 3,
-                //                       width: 100,
-                //                       color: Colors.black,
-                //                     )
-                //                   ],
-                //                 ),
-                //               ),
-                //         )),
-                //   ),
-                // ),
-                // ],
-                ),
-          ]),
+                          //   children: const [
+                          //     CommonServices(),
+                          //     CommonServices(),
+                          //     CommonServices(),
+                          //     CommonServices(),
+                          //   ],
+                          //   controller: _tabController,
+                          // ),
+                          // ),
+                          // SingleChildScrollView(
+                          //   scrollDirection: Axis.horizontal,
+                          //   child:
+                          // Row(
+                          //     children: List.generate(
+                          //         bodyType.length,
+                          //         (index) => InkWell(
+                          //           onTap: (){},
+                          //           child: Container(
+                          //                 padding: EdgeInsets.symmetric(horizontal: w * 0.04),
+                          //                 height: h * 0.02,
+                          //                 child: Column(
+                          //                   mainAxisSize: MainAxisSize.min,
+                          //                   children: [
+                          //                     Text(
+                          //                       "${bodyType[index]}".toUpperCase(),
+                          //                       textScaleFactor: 0.7,
+                          //                       style: GoogleFonts.montserrat(
+                          //                           textStyle: const TextStyle(
+                          //                               fontWeight: FontWeight.w400,
+                          //                               )),
+                          //                     ),
+                          //                     Container(
+                          //                       height: 3,
+                          //                       width: 100,
+                          //                       color: Colors.black,
+                          //                     )
+                          //                   ],
+                          //                 ),
+                          //               ),
+                          //         )),
+                          //   ),
+                          // ),
+                          // ],
+                          ),
+                    ]),
     );
   }
 
@@ -845,29 +869,24 @@ class _InsideCategoryState extends State<InsideCategory>
         duration: const Duration(milliseconds: 1000));
   }
 
-  fecthdata(){
+  fecthdata() {
     isLoading = true;
-    setState(() {
-      
-    });
+    setState(() {});
     getSubcategory(_id).then((value) {
       setState(() {
         print("=============++++++++++++++");
-            service.addAll(value);
-                 print("================="+service.toString());
-      print("================="+service[0]["title"].toString());
+        service.addAll(value);
+        print("=================" + service.toString());
+        print("=================" + service[0].name.toString());
       });
-    }).whenComplete((){
-    _tabController = TabController(length: service.length, vsync: this);
-     for(int i=0;i< service.length; i++){
-        keys.add(i); 
-        keys[i]= GlobalKey(); 
-       }
-       isLoading =false;
-       setState(() {
-         
-       });
-     
+    }).whenComplete(() {
+      _tabController = TabController(length: service.length, vsync: this);
+      for (int i = 0; i < service.length; i++) {
+        keys.add(i);
+        keys[i] = GlobalKey();
+      }
+      isLoading = false;
+      setState(() {});
     });
   }
 }
