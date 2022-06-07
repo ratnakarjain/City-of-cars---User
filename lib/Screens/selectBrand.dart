@@ -216,225 +216,241 @@ class _SelectBrandState extends State<SelectBrand> {
           //   ),
         ),
       ),
-      body: Container(
-        height: h,
-        width: w,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              // Visibility(
-              //   visible: _brand.text.isNotEmpty,
-              //   child: const Center(child: Text("Your search cities"),),
-              // ),
-              isSelected
-                  ? Padding(
-                      padding: EdgeInsets.all(h * 0.03),
-                      child: RRectCard(
-                        h: h * 0.12,
-                        w: h * 0.12,
-                        borderRadius: 25,
-                        color: kbluecolor,
-                        widget: RRectCard(
-                          h: h * 0.12,
-                          w: h * 0.12,
-                          borderRadius: 25,
-                          color: kwhitecolor,
-                          padding: EdgeInsets.all(h * 0.01),
-                          widget: Container(
-                            height: h * 0.1,
-                            width: h * 0.1,
+      body: Stack(
+        children: [
+          Container(
+            height: h,
+            width: w,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  // Visibility(
+                  //   visible: _brand.text.isNotEmpty,
+                  //   child: const Center(child: Text("Your search cities"),),
+                  // ),
+                  isSelected
+                      ? Padding(
+                          padding: EdgeInsets.all(h * 0.03),
+                          child: RRectCard(
+                            h: h * 0.12,
+                            w: h * 0.12,
+                            borderRadius: 25,
+                            color: kbluecolor,
+                            widget: RRectCard(
+                              h: h * 0.12,
+                              w: h * 0.12,
+                              borderRadius: 25,
+                              color: kwhitecolor,
+                              padding: EdgeInsets.all(h * 0.01),
+                              widget: Container(
+                                height: h * 0.1,
+                                width: h * 0.1,
 
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(h * 0.015),
-                                image: DecorationImage(
-                                    image: NetworkImage(
-                                      selctedImage.toString(),
-                                    ),
-                                    fit: BoxFit.fill)),
-                            // child: Image.network(
-                            //   snapshot.data[index]["image"]
-                            //       .toString(),
-                            //   fit: BoxFit.fill,
-                            // ),
-                          ),
-                        ),
-                      ))
-                  : Container(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: w * 0.05, vertical: 50),
-                      child: FutureBuilder(
-                        future: _brand.text.isEmpty
-                            ? getBrandss().whenComplete(() {
-                                print("=======================get");
-                                brandsloading = false;
-                              })
-                            : searchBrand(_brand.text.toString())
-                                .whenComplete(() {
-                                print("=======================search");
-                                brandsloading = false;
-                              }),
-                        builder: (context, AsyncSnapshot snapshot) {
-                          if (brandsloading) {
-                            return loder;
-                          } else {
-                            if (snapshot.hasError) {
-                              return const Center(
-                                child: Icon(Icons.error),
-                              );
-                            }
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              if (snapshot.hasData) {
-                                if (snapshot.data.length == 0) {
-                                  return Text(
-                                    "Did not match",
-                                    style: GoogleFonts.montserrat(
-                                        textStyle: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: kTextInputPlaceholderColor,
-                                    )),
-                                  );
-                                }
-                                return GridView.count(
-                                  shrinkWrap: true,
-                                  controller: _controller1,
-                                  crossAxisCount: 3,
-                                  crossAxisSpacing: h * 0.01,
-                                  mainAxisSpacing: h * 0.01,
-                                  padding: EdgeInsets.only(bottom: h * 0.02),
-                                  children: List.generate(snapshot.data.length,
-                                      (index) {
-                                    return GestureDetector(
-                                        onTap: () {
-                                          CarsData.brand =
-                                              snapshot.data[index]["brands"];
-                                          CarsData.brandimage =
-                                              snapshot.data[index]["image"];
-                                          Ids.brandid =
-                                              snapshot.data[index]["_id"];
-                                          print(CarsData.brand);
-                                          print(CarsData.brandimage);
-                                          bottumSheet();
-                                          item = index;
-                                          isSelected = true;
-                                          selctedImage =
-                                              snapshot.data[index]["image"];
-                                          print(selctedImage);
-                                          setState(() {});
-                                        },
-                                        child: RRectCard(
-                                          h: h * 0.18,
-                                          w: h * 0.18,
-                                          borderRadius: 30,
-                                          padding: EdgeInsets.all(h * 0.015),
-                                          color: kwhitecolor,
-                                          widget: Container(
-                                            height: h * 0.1,
-                                            width: h * 0.1,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        h * 0.015),
-                                                image: DecorationImage(
-                                                    image: NetworkImage(
-                                                      snapshot.data[index]
-                                                              ["image"]
-                                                          .toString(),
-                                                    ),
-                                                    fit: BoxFit.fill)),
-                                            // child: Image.network(
-                                            //   snapshot.data[index]["image"]
-                                            //       .toString(),
-                                            //   fit: BoxFit.fill,
-                                            // ),
-                                          ),
-                                        ));
-                                  }),
-                                );
-                              }
-                              return loder;
-                            }
-                            if (snapshot.connectionState ==
-                                ConnectionState.done) {
-                              if (snapshot.data.length == 0) {
-                                return Text(
-                                  "Did not match",
-                                  style: GoogleFonts.montserrat(
-                                      textStyle: const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: kTextInputPlaceholderColor,
-                                  )),
-                                );
-                              }
-                              return GridView.count(
-                                shrinkWrap: true,
-                                controller: _controller1,
-                                crossAxisCount: 3,
-                                crossAxisSpacing: h * 0.01,
-                                mainAxisSpacing: h * 0.01,
-                                padding: EdgeInsets.only(bottom: h * 0.02),
-                                children: List.generate(snapshot.data.length,
-                                    (index) {
-                                  return GestureDetector(
-                                      onTap: () {
-                                        CarsData.brand =
-                                            snapshot.data[index]["brands"];
-                                        CarsData.brandimage =
-                                            snapshot.data[index]["image"];
-                                        Ids.brandid =
-                                            snapshot.data[index]["_id"];
-                                        prefs!
-                                            .setString("brandId", Ids.brandid);
-                                        print(CarsData.brand);
-                                        print(CarsData.brandimage);
-                                        bottumSheet();
-                                        item = index;
-                                        isSelected = true;
-                                        selctedImage =
-                                            snapshot.data[index]["image"];
-                                        print(selctedImage);
-                                        setState(() {});
-                                      },
-                                      child: RRectCard(
-                                        h: h * 0.18,
-                                        w: h * 0.18,
-                                        borderRadius: 30,
-                                        padding: EdgeInsets.all(h * 0.015),
-                                        color: kwhitecolor,
-                                        widget: Container(
-                                          height: h * 0.1,
-                                          width: h * 0.1,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      h * 0.015),
-                                              image: DecorationImage(
-                                                  image: NetworkImage(
-                                                    snapshot.data[index]
-                                                            ["image"]
-                                                        .toString(),
-                                                  ),
-                                                  fit: BoxFit.fill)),
-                                          // child: Image.network(
-                                          //   snapshot.data[index]["image"]
-                                          //       .toString(),
-                                          //   fit: BoxFit.fill,
-                                          // ),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(h * 0.015),
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                          selctedImage.toString(),
                                         ),
-                                      ));
-                                }),
-                              );
-                            } else {
-                              return loder;
-                            }
-                          }
-                        },
-                      )),
-            ],
+                                        fit: BoxFit.fill)),
+                                // child: Image.network(
+                                //   snapshot.data[index]["image"]
+                                //       .toString(),
+                                //   fit: BoxFit.fill,
+                                // ),
+                              ),
+                            ),
+                          ))
+                      : Container(
+                        
+                          padding: EdgeInsets.symmetric(
+                              horizontal: w * 0.05, vertical: 50),
+                          child: Center(
+                            child: FutureBuilder(
+                              future: _brand.text.isEmpty
+                                  ? getBrandss().whenComplete(() {
+                                      print("=======================get");
+                                      brandsloading = false;
+                                    })
+                                  : searchBrand(_brand.text.toString())
+                                      .whenComplete(() {
+                                      print("=======================search");
+                                      brandsloading = false;
+                                    }),
+                              builder: (context, AsyncSnapshot snapshot) {
+                                if (brandsloading) {
+                                  return Expanded(child: Container(
+                                    height: h*0.7,
+                                    child: const Center(child: loder)));
+                                } else {
+                                  if (snapshot.hasError) {
+                                    return const Center(
+                                      child: Icon(Icons.error),
+                                    );
+                                  }
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    if (snapshot.hasData) {
+                                      if (snapshot.data.length == 0) {
+                                        return Text(
+                                          "Did not match",
+                                          style: GoogleFonts.montserrat(
+                                              textStyle: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                            color: kTextInputPlaceholderColor,
+                                          )),
+                                        );
+                                      }
+                                      return GridView.count(
+                                        shrinkWrap: true,
+                                        controller: _controller1,
+                                        crossAxisCount: 3,
+                                        crossAxisSpacing: h * 0.01,
+                                        mainAxisSpacing: h * 0.01,
+                                        padding: EdgeInsets.only(bottom: h * 0.02),
+                                        children: List.generate(snapshot.data.length,
+                                            (index) {
+                                          return GestureDetector(
+                                              onTap: () {
+                                                CarsData.brand =
+                                                    snapshot.data[index]["brands"];
+                                                CarsData.brandimage =
+                                                    snapshot.data[index]["image"];
+                                                Ids.brandid =
+                                                    snapshot.data[index]["_id"];
+                                                print(CarsData.brand);
+                                                print(CarsData.brandimage);
+                                                bottumSheet();
+                                                item = index;
+                                                isSelected = true;
+                                                selctedImage =
+                                                    snapshot.data[index]["image"];
+                                                print(selctedImage);
+                                                setState(() {});
+                                              },
+                                              child: RRectCard(
+                                                h: h * 0.18,
+                                                w: h * 0.18,
+                                                borderRadius: 30,
+                                                padding: EdgeInsets.all(h * 0.015),
+                                                color: kwhitecolor,
+                                                widget: Container(
+                                                  height: h * 0.1,
+                                                  width: h * 0.1,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              h * 0.015),
+                                                      image: DecorationImage(
+                                                          image: NetworkImage(
+                                                            snapshot.data[index]
+                                                                    ["image"]
+                                                                .toString(),
+                                                          ),
+                                                          fit: BoxFit.fill)),
+                                                  // child: Image.network(
+                                                  //   snapshot.data[index]["image"]
+                                                  //       .toString(),
+                                                  //   fit: BoxFit.fill,
+                                                  // ),
+                                                ),
+                                              ));
+                                        }),
+                                      );
+                                    }
+                                    return Expanded(child: Container(
+                                    height: h*0.7,
+                                    child: const Center(child: loder)));;
+                                  }
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.done) {
+                                    if (snapshot.data.length == 0) {
+                                      return Text(
+                                        "Did not match",
+                                        style: GoogleFonts.montserrat(
+                                            textStyle: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: kTextInputPlaceholderColor,
+                                        )),
+                                      );
+                                    }
+                                    return GridView.count(
+                                      shrinkWrap: true,
+                                      controller: _controller1,
+                                      crossAxisCount: 3,
+                                      crossAxisSpacing: h * 0.01,
+                                      mainAxisSpacing: h * 0.01,
+                                      padding: EdgeInsets.only(bottom: h * 0.02),
+                                      children: List.generate(snapshot.data.length,
+                                          (index) {
+                                        return GestureDetector(
+                                            onTap: () {
+                                              CarsData.brand =
+                                                  snapshot.data[index]["brands"];
+                                              CarsData.brandimage =
+                                                  snapshot.data[index]["image"];
+                                              Ids.brandid =
+                                                  snapshot.data[index]["_id"];
+                                              prefs!
+                                                  .setString("brandId", Ids.brandid);
+                                              print(CarsData.brand);
+                                              print(CarsData.brandimage);
+                                              bottumSheet();
+                                              item = index;
+                                              isSelected = true;
+                                              selctedImage =
+                                                  snapshot.data[index]["image"];
+                                              print(selctedImage);
+                                              setState(() {});
+                                            },
+                                            child: RRectCard(
+                                              h: h * 0.18,
+                                              w: h * 0.18,
+                                              borderRadius: 30,
+                                              padding: EdgeInsets.all(h * 0.015),
+                                              color: kwhitecolor,
+                                              widget: Container(
+                                                height: h * 0.1,
+                                                width: h * 0.1,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            h * 0.015),
+                                                    image: DecorationImage(
+                                                        image: NetworkImage(
+                                                          snapshot.data[index]
+                                                                  ["image"]
+                                                              .toString(),
+                                                        ),
+                                                        fit: BoxFit.fill)),
+                                                // child: Image.network(
+                                                //   snapshot.data[index]["image"]
+                                                //       .toString(),
+                                                //   fit: BoxFit.fill,
+                                                // ),
+                                              ),
+                                            ));
+                                      }),
+                                    );
+                                  } else {
+                                    return Expanded(child: Container(
+                                    height: h*0.7,
+                                    child: const Center(child: loder)));
+                                  }
+                                }
+                              },
+                            ),
+                          )),
+                ],
+              ),
+            ),
           ),
-        ),
+          // Visibility( 
+          //   visible: brandsloading,
+          //   child: loder)
+        ],
       ),
     );
   }
@@ -442,8 +458,10 @@ class _SelectBrandState extends State<SelectBrand> {
   bottumSheet() {
     // var abc = Provider.of<Shots>(context, listen: true);
     showModalBottomSheet(
+      
         context: context,
         elevation: 8,
+        
         barrierColor: kblackcolor.withOpacity(0.1),
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
@@ -452,6 +470,7 @@ class _SelectBrandState extends State<SelectBrand> {
         )),
         builder: (context) {
           return Container(
+            
             width: w,
             decoration: BoxDecoration(
                 color: kwhitecolor,
@@ -493,7 +512,10 @@ class _SelectBrandState extends State<SelectBrand> {
                     builder: (context, AsyncSnapshot snapshot) {
                       // print(snapshot.data.length);
                       if (loading) {
-                        return loder;
+                        return const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: loder,
+                        );
                       } else {
                         if (snapshot.hasError) {
                           return const Center(

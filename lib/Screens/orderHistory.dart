@@ -10,6 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:card_swiper/card_swiper.dart';
 
 import '../Services/servies.dart';
+import 'Service Main/cart.dart';
 import 'bottomnavBar.dart';
 
 class OrderHistory extends StatefulWidget {
@@ -58,6 +59,21 @@ class _OrderHistoryState extends State<OrderHistory> {
           style:
               GoogleFonts.montserrat(fontSize: 21, fontWeight: FontWeight.w700),
         ),
+        // actions: [
+        //   Padding(
+        //     padding:  EdgeInsets.only(right: w*0.03),
+        //     child: GestureDetector(
+        //       onTap: (){
+        //         Navigator.push(
+        //                     context,
+        //                     MaterialPageRoute(
+        //                         builder: ((context) => const Cart(
+        //                             ))));
+        //       },
+        //       child: const Icon(Icons.shopping_cart)
+        //     ),
+        //   )
+        // ],
       ),
       body:isloading?loder:  datalist.isEmpty? const Center(child: Text("No Orders yet"),) : Container(
           height: h,
@@ -116,7 +132,9 @@ class _OrderHistoryState extends State<OrderHistory> {
                   layout: SwiperLayout.TINDER,
                   scrollDirection: Axis.horizontal,
                   axisDirection: AxisDirection.left,
+                  allowImplicitScrolling:true,
                   itemWidth: w,
+                  physics: const NeverScrollableScrollPhysics(),
                   loop: false,
                   itemHeight: h * 0.61,
                   onIndexChanged: (value) {
@@ -477,16 +495,16 @@ class _OrderHistoryState extends State<OrderHistory> {
 
                 RRecctButton(
                   onTap: () {
-                    // Navigator.pushAndRemoveUntil<dynamic>(
-                    //   context,
-                    //   MaterialPageRoute<dynamic>(
-                    //     builder: (BuildContext context) => BottomNavBar(
-                    //       index: 0,
-                    //     ),
-                    //   ),
-                    //   (route) =>
-                    //       false, //if you want to disable back feature set to false
-                    // );
+                    Navigator.pushAndRemoveUntil<dynamic>(
+                      context,
+                      MaterialPageRoute<dynamic>(
+                        builder: (BuildContext context) => BottomNavBar(
+                          index: 0,
+                        ),
+                      ),
+                      (route) =>
+                          false, //if you want to disable back feature set to false
+                    );
                   },
                   text: "BOOK AGAIN",
                   style: GoogleFonts.montserrat(
