@@ -102,6 +102,10 @@ class _VerficationState extends State<Verfication> {
                     onTap:_controller.text.isEmpty?(){}: () {
                       istaped = true;
 
+                      if(_controller.text.toString().isEmpty){
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please enter otp first")));
+                        return ;
+                      }
                       verify().whenComplete(() {
                         istaped = false;
                         setState(() {});

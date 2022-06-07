@@ -46,7 +46,7 @@ class _PaymentState extends State<Payment> {
         med.price = data[i]["Plans"]["typeprice"].toString();
         med.hour = data[i]["Plans"]["hours"].toString();
         med.month = data[i]["Plans"]["month"].toString();
-        med.plotStreet = data[i]["bookingdata"]["House"].toString() +
+        med.plotStreet = data[i]["bookingdata"]["houseNo"].toString() +
             " " +
             data[i]["bookingdata"]["Street"].toString();
         med.cityCode = data[i]["bookingdata"]["state"].toString() +
@@ -56,6 +56,7 @@ class _PaymentState extends State<Payment> {
         med.contect = data[i]["bookingdata"]["contect"].toString();
         med.name = data[i]["bookingdata"]["name"].toString();
         med.carno = data[i]["bookingdata"]["carno"].toString();
+        med.carname = data[i]["cars"]["cars"].toString();
         totalvalue(double.parse(med.price));
         list.add(med);
         setState(() {});
@@ -166,6 +167,7 @@ totalvalue(double value) {
     price = price + value;
     print(price.toString()+"=============================");
 }
+
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
@@ -356,7 +358,7 @@ totalvalue(double value) {
                                                       color: ksubHading),
                                                   children: [
                                                     TextSpan(
-                                                        text: " - Hyundai i20",
+                                                        text: " - "+list[index].carname.toString(),
                                                         style: GoogleFonts
                                                             .montserrat(
                                                                 height: 2,
@@ -373,7 +375,7 @@ totalvalue(double value) {
                                         borderRadius: h * 0.02,
                                       ),
                                     ),
-                                    Expanded(
+                                  /*  Expanded(
                                       flex: 5,
                                       child: RRectCard(
                                         h: h * 0.12,
@@ -459,7 +461,7 @@ totalvalue(double value) {
                                         ),
                                         borderRadius: h * 0.02,
                                       ),
-                                    )
+                                    )*/
                                   ],
                                 ),
                               ),

@@ -166,6 +166,7 @@ class _SelectBrandState extends State<SelectBrand> {
                     ),
                     suffixIcon: InkWell(
                       onTap: () {
+                        brandsloading = true;
                         FocusManager.instance.primaryFocus?.unfocus();
                         setState(() {});
                       },

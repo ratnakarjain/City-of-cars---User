@@ -84,7 +84,7 @@ class _CommonServicesState extends State<CommonServices> {
                   child: Stack(
                     children: [
                       Container(
-                        height: dropvalue == index + 1 ? h * 0.4 : h * 0.19,
+                        height: dropvalue == index + 1 ? h * 0.4 : h * 0.20,
                         color: kwhitecolor,
                         margin: EdgeInsets.only(
                             top: h * 0.018, left: w * 0.01, right: w * 0.01),

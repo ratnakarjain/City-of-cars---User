@@ -255,6 +255,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                   print(Ids.carid + "dvsdvsd");
                   print(Ids.cityid + "vsv");
                   print(Ids.fuelid + "dsdvs");
+                  print(Ids.categoryid + "dsdvs");
+                  print(Ids.subcategoryid + "dsdvs");
+                  print(Ids.planid + "dsdvs");
                   if (Ids.brandid == "" &&
                       Ids.carid == "" &&
                       Ids.cityid == "" &&

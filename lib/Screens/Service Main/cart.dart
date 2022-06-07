@@ -859,6 +859,7 @@ class _CartState extends State<Cart> {
 
   Future fecthdata() async {
     await addcartitem().then((value) {
+      print("Response "+value.toString()+"^");
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(value["msg"]),
       ));

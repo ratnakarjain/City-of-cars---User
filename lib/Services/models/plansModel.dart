@@ -17,6 +17,8 @@ class PlanModel {
   String termsdetails = "";
   String isMost = "";
   String isrec = "";
+  String categoryId = "";
+  String cars = "";
   List<IncludeMod> includes = [];
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -39,6 +41,7 @@ class PlanModel {
     map['isMost']=isMost;
     map['isrec']=isrec;
     map['includes']=includes;
+    map['categoryId']=categoryId;
     return map;
   }
 }

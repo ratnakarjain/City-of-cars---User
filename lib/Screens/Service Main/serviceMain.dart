@@ -460,6 +460,10 @@ class _ServiceMainState extends State<ServiceMain> {
                               visible: model.isMost=="true",
                               child: GestureDetector(
                                 onTap: () {
+                                  print("Cat "+model.categoryId.toString()+"^^");
+                                  Ids.categoryid = model.categoryId.toString();
+                                  Ids.subcategoryid = model.subcatid.toString();
+                                  Ids.planid = model.planid.toString();
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(

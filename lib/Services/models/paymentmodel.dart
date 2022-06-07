@@ -9,4 +9,5 @@ class PaymentModel{
   String plotStreet = "";
   String cityCode = "";
   String option = "";
+  String carname = "";
 }

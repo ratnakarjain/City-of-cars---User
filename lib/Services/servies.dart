@@ -446,6 +446,14 @@ Future slot(
 }
 
 Future addcartitem() async {
+  print("Category "+Ids.categoryid.toString()+"^^");
+  print("subcategory "+Ids.subcategoryid.toString()+"^^");
+  print("Plans "+Ids.planid.toString()+"^^");
+  print("bookingdata "+Ids.slotid.toString()+"^^");
+  print("selecetedPrice "+ProductDetails.selctedprice+"^^");
+  print("user "+prefs!.getString("userId").toString()+"^^");
+  print("CarId "+prefs!.getString("CarId").toString()+"^^");
+  print("token "+prefs!.getString('token').toString()+"^^");
   var url = Uri.parse(addcartUrl);
   try {
     var response = await http.post(url, body: {
@@ -454,7 +462,8 @@ Future addcartitem() async {
       "Plans": Ids.planid,
       "bookingdata": Ids.slotid,
       "selecetedPrice":ProductDetails.selctedprice,
-      "user": prefs!.getString("userId").toString()
+      "user": prefs!.getString("userId").toString(),
+      "cars": prefs!.getString("CarId").toString()
     }, headers: {
       "Authorization": prefs!.getString('token').toString()
     });
@@ -473,6 +482,8 @@ Future addcartitem() async {
 Future getcartitems() async {
   var url =
       Uri.parse(getcartUrl + "?user=" + prefs!.getString("userId").toString());
+  print("UserId "+prefs!.getString("userId").toString()+"^^");
+  print("token "+prefs!.getString('token').toString()+"^^");
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -1003,6 +1014,7 @@ Future getusercars() async {
 }
 
 Future getrecmostPlans() async {
+  print("CAr Id "+prefs!.getString("CarId").toString()+"^");
   var url = Uri.parse(getpoprecUrl+"?carid="+prefs!.getString("CarId").toString());
   try {
     var respnse = await http.get(url,
@@ -1031,6 +1043,13 @@ Future getrecmostPlans() async {
           pl.subplanname=data["data"][i]["subPlanName"].toString();
           pl.termsdetails=data["data"][i]["textField"].toString();
           pl.termsheading=data["data"][i]["heading"].toString();
+          print("ASA"+data["data"][i]["services_id"][0]["category"][0].toString()+"^^");
+          if(data["data"][i]["services_id"].length>0) {
+            if (data["data"][i]["services_id"][0]["category"].length > 0) {
+              pl.categoryId =
+                  data["data"][i]["services_id"][0]["category"][0].toString();
+            }
+          }
           for(int j = 0 ; j<data["data"][i]["services_id"].length;j++){
             IncludeMod ink = IncludeMod();
             ink.image=data["data"][i]["services_id"][j]["image"];

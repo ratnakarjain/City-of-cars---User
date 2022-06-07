@@ -6,6 +6,7 @@ import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Utils/preference.dart';
 import 'package:country_codes/country_codes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../Services/url.dart';
@@ -317,6 +318,8 @@ class _LoginSignUpState extends State<LoginSignUp> {
                               },
                               focusNode: myFocusNode2,
                               controller: mail,
+                              keyboardType: TextInputType.emailAddress,
+                              inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r"\s")), FilteringTextInputFormatter.deny(RegExp('[ ]')),],
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return null;
