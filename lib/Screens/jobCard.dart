@@ -40,41 +40,44 @@ class _JobCardState extends State<JobCard> {
     "NW",
   ];
   List images = ["girl.png", "man.png", "view.png"];
-  List availabel = [
-    "Warranty booklet",
-    "Stereo",
-    "ORVM",
-    "Power Windows",
-    "AC Operation",
-    "Carpet Mats",
-    "Antenna",
-    "Interior Illumination",
-    "Horn",
-    "Seat Belt",
-    "Warning Lights",
-    "Handbrake",
-  ];
-  List notAvailabel = [
-    "Clutch",
-    "Power Steering",
-    "Defrost / Heater",
-    "Central locking",
-    "Spare Wheel",
-    "Headlight Bulbs",
-    "Tail Light Bulbs",
-    "Fog Light",
-    "Windscreen Wipers",
-  ];
-  List missingParts = [
-    "Windscreen Water",
-    "Wheel Caps",
-    "Toolkit / First Aid",
-    "Trunk Mat",
-    "Cabin Mats",
-    "Toolkit / First Aid",
-  ];
+  // List availabel = [
+  //   "Warranty booklet",
+  //   "Stereo",
+  //   "ORVM",
+  //   "Power Windows",
+  //   "AC Operation",
+  //   "Carpet Mats",
+  //   "Antenna",
+  //   "Interior Illumination",
+  //   "Horn",
+  //   "Seat Belt",
+  //   "Warning Lights",
+  //   "Handbrake",
+  // ];
+  // List notAvailabel = [
+  //   "Clutch",
+  //   "Power Steering",
+  //   "Defrost / Heater",
+  //   "Central locking",
+  //   "Spare Wheel",
+  //   "Headlight Bulbs",
+  //   "Tail Light Bulbs",
+  //   "Fog Light",
+  //   "Windscreen Wipers",
+  // ];
+  // List missingParts = [
+  //   "Windscreen Water",
+  //   "Wheel Caps",
+  //   "Toolkit / First Aid",
+  //   "Trunk Mat",
+  //   "Cabin Mats",
+  //   "Toolkit / First Aid",
+  // ];
   var data;
   var geninfo;
+  List availeble = [];
+  List notavaileble = [];
+  List missing = [];
   var custCon;
   var condi;
   @override
@@ -88,6 +91,21 @@ class _JobCardState extends State<JobCard> {
         geninfo = jsonDecode(data["genCondition"]);
         custCon = jsonDecode(data["customerConcerns"]);
         condi = jsonDecode(data["condition"]);
+        for (int i = 0; i < geninfo.length; i++) {
+          if (geninfo[i]["x"] == 1) {
+            availeble.add(geninfo[i]);
+          }
+          if (geninfo[i]["x"] == 2) {
+            notavaileble.add(geninfo[i]);
+          }
+          if (geninfo[i]["x"] == 3) {
+            missing.add(geninfo[i]);
+          }
+
+          print(availeble.toString()+"============");
+          print(notavaileble.toString()+"============");
+          print(missing.toString()+"============");
+        }
         print(condi);
         print(custCon);
         print(geninfo);
@@ -448,162 +466,187 @@ class _JobCardState extends State<JobCard> {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(left: w * 0.09),
-                      child: Text(
-                        "Available",
-                        style: GoogleFonts.montserrat(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w700,
-                          color: kTextInputPlaceholderColor,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(h * 0.01),
-                      child: RRectCard(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: w * 0.05, vertical: h * 0.02),
-                          widget: GridView.count(
-                            shrinkWrap: true,
-                            controller: _controller3,
-                            mainAxisSpacing: h * 0.01,
-                            crossAxisSpacing: w * 0.01,
-                            // scrollDirection: Axis.vertical,
-                            crossAxisCount: 3,
-                            childAspectRatio: 1.6,
-                            physics: NeverScrollableScrollPhysics(),
-                            // padding: EdgeInsets.all(10),
-                            children: List.generate(geninfo.length, (index) {
-                              return Visibility(
-                                visible: geninfo[index]["x"] == 1,
-                                child: RRectCard(
-                                  color: kGreenColor,
-                                  h: 10,
-                                  borderRadius: h * 0.03,
-                                  padding: EdgeInsets.all(h * 0.01),
-                                  widget: Center(
-                                    child: Text(
-                                      geninfo[index]["heading"],
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.montserrat(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w700,
-                                        color: kwhitecolor,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }),
+                    Visibility(
+                      visible: availeble.isNotEmpty,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: w * 0.09),
+                            child: Text(
+                              "Available",
+                              style: GoogleFonts.montserrat(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
+                                color: kTextInputPlaceholderColor,
+                              ),
+                            ),
                           ),
-                          borderRadius: h * 0.02),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: w * 0.09),
-                      child: Text(
-                        "Not Available",
-                        style: GoogleFonts.montserrat(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w700,
-                          color: kTextInputPlaceholderColor,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(h * 0.01),
-                      child: RRectCard(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: w * 0.05, vertical: h * 0.02),
-                          widget: GridView.count(
-                            shrinkWrap: true,
-                            childAspectRatio: 1.6,
-                            controller: _controller3,
-                            scrollDirection: Axis.vertical,
-                            crossAxisCount: 3,
-                            crossAxisSpacing: w * 0.01,
-                            mainAxisSpacing: h * 0.01,
-
-                            // padding: EdgeInsets.all(10),
-                            children: List.generate(geninfo.length, (index) {
-                              return Visibility(
-                                visible: geninfo[index]["x"] == 2,
-                                child: RRectCard(
-                                  padding: EdgeInsets.all(h * 0.01),
-                                  color: korangecolor,
-                                  h: 10,
-                                  borderRadius: h * 0.03,
-                                  shadowColor: kTransparent,
-                                  widget: Center(
-                                    child: Text(
-                                      geninfo[index]["heading"].toString(),
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.montserrat(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w700,
-                                        color: kwhitecolor,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }),
-                          ),
-                          borderRadius: h * 0.02),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: w * 0.09),
-                      child: Text(
-                        "Missing Parts",
-                        style: GoogleFonts.montserrat(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w700,
-                          color: kTextInputPlaceholderColor,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(h * 0.01),
-                      child: RRectCard(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: w * 0.05, vertical: h * 0.02),
-                          widget: GridView.count(
-                            childAspectRatio: 1.6,
-                            crossAxisSpacing: w * 0.01,
-                            mainAxisSpacing: h * 0.01,
-                            shrinkWrap: true,
-                            controller: _controller3,
-                            scrollDirection: Axis.vertical,
-                            crossAxisCount: 3,
-                            // padding: EdgeInsets.all(10),
-                            children: List.generate(geninfo.length, (index) {
-                              // geninfo[index]["x"]!=3 ? break;
-                              if (geninfo[index]["x"] == 3) {
-                                return Visibility(
-                                  visible: geninfo[index]["x"] == 3,
-                                  child: RRectCard(
-                                    padding: EdgeInsets.all(h * 0.01),
-                                    color: kredcolor,
-                                    h: 10,
-                                    borderRadius: h * 0.03,
-                                    widget: Center(
-                                      child: Text(
-                                        geninfo[index]["heading"],
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.montserrat(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w700,
-                                          color: kwhitecolor,
+                          Padding(
+                            padding: EdgeInsets.all(h * 0.01),
+                            child: RRectCard(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: w * 0.05, vertical: h * 0.02),
+                                widget: GridView.count(
+                                  shrinkWrap: true,
+                                  controller: _controller3,
+                                  mainAxisSpacing: h * 0.01,
+                                  crossAxisSpacing: w * 0.01,
+                                  // scrollDirection: Axis.vertical,
+                                  crossAxisCount: 3,
+                                  childAspectRatio: 1.6,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  // padding: EdgeInsets.all(10),
+                                  children: List.generate(availeble.length, (index) {
+                                    return Visibility(
+                                      visible: true, //availabel[index]["x"] == 1,
+                                      child: RRectCard(
+                                        color: kGreenColor,
+                                        h: 10,
+                                        borderRadius: h * 0.03,
+                                        padding: EdgeInsets.all(h * 0.01),
+                                        widget: Center(
+                                          child: Text(
+                                            availeble[index]["heading"],
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.montserrat(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w700,
+                                              color: kwhitecolor,
+                                            ),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                );
-                              }
-                              return Container();
-                            }),
+                                    );
+                                  }),
+                                ),
+                                borderRadius: h * 0.02),
                           ),
-                          borderRadius: h * 0.02),
+                        ],
+                      ),
+                    ),
+                    Visibility(
+                      visible: notavaileble.isNotEmpty,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: w * 0.09),
+                            child: Text(
+                              "Not Available",
+                              style: GoogleFonts.montserrat(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
+                                color: kTextInputPlaceholderColor,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(h * 0.01),
+                            child: RRectCard(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: w * 0.05, vertical: h * 0.02),
+                                widget: GridView.count(
+                                  shrinkWrap: true,
+                                  childAspectRatio: 1.6,
+                                  controller: _controller3,
+                                  scrollDirection: Axis.vertical,
+                                  crossAxisCount: 3,
+                                  crossAxisSpacing: w * 0.01,
+                                  mainAxisSpacing: h * 0.01,
+
+                                  // padding: EdgeInsets.all(10),
+                                  children:
+                                      List.generate(notavaileble.length, (index) {
+                                    return Visibility(
+                                      // visible: geninfo[index]["x"] == 2,
+                                      child: RRectCard(
+                                        padding: EdgeInsets.all(h * 0.01),
+                                        color: korangecolor,
+                                        h: 10,
+                                        borderRadius: h * 0.03,
+                                        shadowColor: kTransparent,
+                                        widget: Center(
+                                          child: Text(
+                                            notavaileble[index]["heading"].toString(),
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.montserrat(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w700,
+                                              color: kwhitecolor,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                                ),
+                                borderRadius: h * 0.02),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Visibility(
+                      visible: missing.isNotEmpty,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: w * 0.09),
+                            child: Text(
+                              "Missing Parts",
+                              style: GoogleFonts.montserrat(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
+                                color: kTextInputPlaceholderColor,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(h * 0.01),
+                            child: RRectCard(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: w * 0.05, vertical: h * 0.02),
+                                widget: GridView.count(
+                                  childAspectRatio: 1.6,
+                                  crossAxisSpacing: w * 0.01,
+                                  mainAxisSpacing: h * 0.01,
+                                  shrinkWrap: true,
+                                  controller: _controller3,
+                                  scrollDirection: Axis.vertical,
+                                  crossAxisCount: 3,
+                                  // padding: EdgeInsets.all(10),
+                                  children: List.generate(missing.length, (index) {
+                                    // geninfo[index]["x"]!=3 ? break;
+                                    if (geninfo[index]["x"] == 3) {
+                                      return Visibility(
+                                        visible: missing[index]["x"] == 3,
+                                        child: RRectCard(
+                                          padding: EdgeInsets.all(h * 0.01),
+                                          color: kredcolor,
+                                          h: 10,
+                                          borderRadius: h * 0.03,
+                                          widget: Center(
+                                            child: Text(
+                                              missing[index]["heading"],
+                                              textAlign: TextAlign.center,
+                                              style: GoogleFonts.montserrat(
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.w700,
+                                                color: kwhitecolor,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    return Container();
+                                  }),
+                                ),
+                                borderRadius: h * 0.02),
+                          ),
+                        ],
+                      ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: w * 0.09),
