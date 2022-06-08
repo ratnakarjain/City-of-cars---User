@@ -119,6 +119,8 @@ Future getfuel() async {
 }
 
 Future getcategaries() async {
+  print("token "+prefs!.getString('token').toString()+"^^");
+  print("userId "+prefs!.getString("userId").toString()+"^^");
   var url = Uri.parse(getcategryUrl);
   try {
     var respnse = await http.get(url,
@@ -585,6 +587,7 @@ Future proceed() async {
 
 Future addorder(String paymentid, String paymentstatus) async {
   var url = Uri.parse(addorderUrl);
+  print("cartID "+Ids.cartid.toString()+"^^");
   try {
     var response = await http.post(url, body: {
       "category": Ids.categoryid.toString(),
@@ -709,12 +712,16 @@ Future getOrderhistory() async {
           model.carname = data["data"][i]["car"]["cars"].toString();
           // model.deliverydate=data["data"][i]["_id"];
           // model.details=data["data"][i]["_id"];
-          model.orderid = data["data"][i]["_id"].toString();
-          model.packname = data["data"][i]["Plans"]["planName"].toString();
-          model.paystatus = data["data"][i]["_id"].toString();
-          model.price = data["data"][i]["Plans"]["typeprice"].toString();
-          model.servicename =
-              data["data"][i]["Plans"]["servicepack"].toString();
+          model.orderid = data["data"][i]["orderid"].toString();
+          model.id = data["data"][i]["_id"].toString();
+         if(data["data"][i]["Plans"].toString()!="null") {
+           model.packname = data["data"][i]["Plans"]["planName"].toString();
+           model.price = data["data"][i]["Plans"]["typeprice"].toString();
+           model.servicename =
+               data["data"][i]["Plans"]["servicepack"].toString();
+         }
+          model.paystatus = data["data"][i]["paymentStatus"].toString();
+
           model.status = data["data"][i]["status"].toString();
           modellist.add(model);
         }
@@ -882,7 +889,9 @@ Future getjobcard(String id) async {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
     if (respnse.statusCode == 200) {
+
       var data = jsonDecode(respnse.body);
+      print("Response "+data.toString()+"&");
       // JobCardModel model = JobCardModel();
       if (data["status"]) {
         //   model.username = data["data"]["orderid"]["bookingdata"]["name"];

@@ -34,13 +34,17 @@ class _OrderHistoryState extends State<OrderHistory> {
   List<OrderHistoryModel> datalist = [];
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getOrderhistory().then((value) {
       datalist.addAll(value);
       isloading= false;
       print(datalist);
-      setState(() {});
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        setState(() {
+
+        });
+      });
+
     });
   }
 
@@ -94,7 +98,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                             context,
                             MaterialPageRoute(
                                 builder: ((context) => Tracking(
-                                      orderid: datalist[currentPage].orderid,
+                                      orderid: datalist[currentPage].id,
                                     ))));
                       },
                       text: datalist[currentPage].status!=""&&datalist[currentPage].status!="null"?datalist[currentPage].status:
@@ -150,7 +154,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>  JobCard(orderid: datalist[index].orderid,),
+                              builder: (context) =>  JobCard(orderid: datalist[index].id,),
                             ));
                       },
                       child: Stack(
@@ -287,7 +291,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                 RichText(
                                     textAlign: TextAlign.center,
                                     text: TextSpan(
-                                        text: model.packname+"\n",
+                                        text: model.packname.toString(),
                                         style: GoogleFonts.montserrat(
                                             fontSize: 32,
                                             fontWeight: FontWeight.w700,

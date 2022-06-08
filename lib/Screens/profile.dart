@@ -657,6 +657,44 @@ class _ProfileState extends State<Profile> {
               ),
               GestureDetector(
                 onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SelectCity(),
+                      ));
+                },
+                child: RRectCard(
+                  h: h * 0.08,
+                  w: w * 0.9,
+                  widget: Row(
+                    children: [
+                      Expanded(
+                        child: CircleAvatar(
+                          backgroundColor: kbluecolor,
+                          foregroundColor: kwhitecolor,
+                          child: Image.asset("assets/images/sunrise.png"),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          "Add City",
+                          style: GoogleFonts.montserrat(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  borderRadius: h * 0.04,
+                ),
+              ),
+              SizedBox(
+                height: h * 0.005,
+              ),
+              GestureDetector(
+                onTap: () {
                   confirm();
                   setState(() {});
                 },
@@ -696,8 +734,101 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
-
   confirm() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Center(
+              child: Text(
+                "Do you want to logout?",
+                style: GoogleFonts.montserrat(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+            actions: [
+              Padding(
+                padding:  EdgeInsets.symmetric(horizontal: w*0.02,vertical: h*0.02),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+
+                        decoration: BoxDecoration(
+                            color: kbluecolor,
+                            borderRadius: BorderRadius.circular(h * 0.02)),
+                        height: h * 0.04,
+                        child: InkWell(
+                          onTap: () {
+                            pref!.remove("userId");
+                            pref!.remove("usercar");
+                            pref!.remove("CCar");
+                            prefs!.remove("CarId");
+
+                            pref!.remove("fuelId",);
+                            pref!.remove("cityId",);
+                            pref!.remove("brandId",);
+                            Navigator.pushAndRemoveUntil<dynamic>(
+                              context,
+                              MaterialPageRoute<dynamic>(
+                                builder: (BuildContext context) =>
+                                    LoginSignUp(isSignIn: false),
+                              ),
+                                  (route) =>
+                              false, //if you want to disable back feature set to false
+                            );
+                          },
+                          child: Center(
+                            child: Text(
+                              "Yes",
+                              style: GoogleFonts.montserrat(
+                                fontSize: 13,
+                                color: kwhitecolor,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: w * 0.05,
+                    ),
+                    Expanded(
+
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: kbluecolor,
+                            borderRadius: BorderRadius.circular(h * 0.02)),
+                        height: h * 0.04,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Center(
+                            child: Text(
+                              "No",
+                              style: GoogleFonts.montserrat(
+                                fontSize: 13,
+                                color: kwhitecolor,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        });
+  }
+
+  logout() {
     showDialog(
         context: context,
         builder: (context) {

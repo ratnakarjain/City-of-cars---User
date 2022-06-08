@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cityofcars/Screens/Service%20Main/InsidCategoryTabViw/common_services.dart';
 import 'package:cityofcars/Screens/Service%20Main/productDetail.dart';
 import 'package:cityofcars/Services/models/subcategory.dart';
@@ -209,7 +211,10 @@ class _InsideCategoryState extends State<InsideCategory>
         ),
       ),
       body: isLoading
-          ? loder
+          ? Padding(
+            padding: Platform.isIOS? EdgeInsets.only(bottom:  100.0):EdgeInsets.only(bottom:  150.0),
+            child: loder,
+          )
           : service.isEmpty
               ? Center(
                   child: Text(

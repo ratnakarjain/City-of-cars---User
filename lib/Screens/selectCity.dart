@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Services/url.dart';
 import 'package:cityofcars/Utils/constants.dart';
@@ -31,20 +33,21 @@ class _SelectCityState extends State<SelectCity> {
     {"name": "Chandigarh", "images": "5.png"}
   ];
   bool loading = true;
-
+  var h;
   final _search = TextEditingController();
   @override
   void initState() {
+
     getcities().then((value) {
       citydata = value;
     });
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
+    h = size.height;
     return WillPopScope(
       onWillPop: () => showExitPopup(context),
       child: Scaffold(
@@ -410,9 +413,19 @@ class _SelectCityState extends State<SelectCity> {
                                 }),
                               );
                             }
-                            return loder;
+                            return Expanded(child: Container(
+                                height: h*0.7,
+                                child:Padding(
+                                  padding: Platform.isIOS? EdgeInsets.only(bottom:  100.0):EdgeInsets.only(bottom:  150.0),
+                                  child: loder,
+                                )));
                           }
-                          return loder;
+                          return Expanded(child: Container(
+                              height: h*0.7,
+                              child:Padding(
+                                padding: Platform.isIOS? EdgeInsets.only(bottom:  100.0):EdgeInsets.only(bottom:  150.0),
+                                child: loder,
+                              )));;
                           // print(snapshot.data.length);
                         }),
                   ),
@@ -424,4 +437,6 @@ class _SelectCityState extends State<SelectCity> {
       ),
     );
   }
+
+
 }

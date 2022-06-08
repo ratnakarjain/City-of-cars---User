@@ -82,7 +82,6 @@ class _JobCardState extends State<JobCard> {
   var condi;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     print(widget.orderid);
     getjobcard(widget.orderid).then((value) {

@@ -1,4 +1,5 @@
 class OrderHistoryModel{
+  String id = "";
   String orderid = "";
   String deliverydate = "";
   String price = "";

@@ -70,7 +70,7 @@ class _MyAppState extends State<MyApp> {
                 primary: korangecolor,
               ),
         ),
-        home: id==""||id=="null" ? const MyHomePage() : cardetails == ""|| cardetails == "null" ? const SelectCity() : BottomNavBar(index: 0),
+        home: id==""||id=="null" ? const MyHomePage() : BottomNavBar(index: 0),
       ),
     );
   }

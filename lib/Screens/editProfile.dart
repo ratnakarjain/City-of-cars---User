@@ -6,6 +6,7 @@ import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Utils/functions.dart';
 import 'package:cityofcars/Utils/preference.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -205,6 +206,7 @@ class _EditProfileState extends State<EditProfile> {
                   children: [
                     TextFormField(
                       controller: name,
+                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Z]+|\s"))],
                       decoration: InputDecoration(
                           hintText: "Name*",
                           hintStyle: GoogleFonts.montserrat(
@@ -230,6 +232,7 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     TextFormField(
                       controller: mobile,
+                      enabled: false,
                       decoration: InputDecoration(
                           hintText: "Mobile No.*",
                           hintStyle: GoogleFonts.montserrat(
@@ -255,6 +258,8 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     TextFormField(
                       controller: email,
+                      keyboardType: TextInputType.emailAddress,
+                      inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r"\s")), FilteringTextInputFormatter.deny(RegExp('[ ]')),],
                       decoration: InputDecoration(
                           hintText: "Email",
                           hintStyle: GoogleFonts.montserrat(
@@ -362,6 +367,7 @@ class _EditProfileState extends State<EditProfile> {
                           child: TextFormField(
                             controller: pinCode,
                             keyboardType: TextInputType.number,
+                            maxLength: 6,
                             decoration: InputDecoration(
                                 hintText: "Pin Code*",
                                 hintStyle: GoogleFonts.montserrat(
@@ -398,7 +404,8 @@ class _EditProfileState extends State<EditProfile> {
               Center(
                 child: RRecctButton(
                   onTap: () {
-                    
+                    bool validate = isValidation();
+                  if(validate) {
                     editProfile(
                       id,
                       name.text,
@@ -409,16 +416,19 @@ class _EditProfileState extends State<EditProfile> {
                       pinCode.text,
                       file == null ? null : File(file),
                       context,
-                    ).whenComplete(() => Navigator.pushAndRemoveUntil<dynamic>(
+                    ).whenComplete(() =>
+                        Navigator.pushAndRemoveUntil<dynamic>(
                           context,
                           MaterialPageRoute<dynamic>(
-                            builder: (BuildContext context) => BottomNavBar(
-                              index: 0,
-                            ),
+                            builder: (BuildContext context) =>
+                                BottomNavBar(
+                                  index: 0,
+                                ),
                           ),
-                          (route) =>
-                              false, //if you want to disable back feature set to false
+                              (route) =>
+                          false, //if you want to disable back feature set to false
                         ));
+                  }
                   },
                   h: h * 0.06,
                   w: w * 0.9,
@@ -434,7 +444,14 @@ class _EditProfileState extends State<EditProfile> {
       ),
     );
   }
-
+bool isValidation(){
+  if(name.text.toString().isEmpty) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please enter your name")));
+  return false;
+  }else{
+    return true;
+  }
+}
   editPic() {
     showDialog(
         context: context,
@@ -485,7 +502,7 @@ class _EditProfileState extends State<EditProfile> {
     final ImagePicker _picker = ImagePicker();
     XFile? image;
     image = await _picker.pickImage(source: ImageSource.gallery);
-    print("=======================================dvsdv${image!.path}");
-    return image.path;
+
+    return image?.path;
   }
 }

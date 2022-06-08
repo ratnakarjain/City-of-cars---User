@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cityofcars/Screens/Service%20Main/serviceMain.dart';
 import 'package:cityofcars/Services/url.dart';
@@ -84,7 +86,6 @@ class _SelectBrandState extends State<SelectBrand> {
   final _brand = TextEditingController();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     // shots= 0;
   }
@@ -281,7 +282,10 @@ class _SelectBrandState extends State<SelectBrand> {
                                 if (brandsloading) {
                                   return Expanded(child: Container(
                                     height: h*0.7,
-                                    child: const Center(child: loder)));
+                                    child:Padding(
+                                      padding: Platform.isIOS? EdgeInsets.only(bottom:  100.0):EdgeInsets.only(bottom:  150.0),
+                                      child: loder,
+                                    )));
                                 } else {
                                   if (snapshot.hasError) {
                                     return const Center(
@@ -360,8 +364,11 @@ class _SelectBrandState extends State<SelectBrand> {
                                       );
                                     }
                                     return Expanded(child: Container(
-                                    height: h*0.7,
-                                    child: const Center(child: loder)));;
+                                    height: h,
+                                    child:Padding(
+                                      padding: Platform.isIOS? EdgeInsets.only(bottom:  100.0):EdgeInsets.only(bottom:  150.0),
+                                      child: loder,
+                                    )));;
                                   }
                                   if (snapshot.connectionState ==
                                       ConnectionState.done) {
@@ -437,7 +444,10 @@ class _SelectBrandState extends State<SelectBrand> {
                                   } else {
                                     return Expanded(child: Container(
                                     height: h*0.7,
-                                    child: const Center(child: loder)));
+                                    child:Padding(
+                                      padding: Platform.isIOS? EdgeInsets.only(bottom:  100.0):EdgeInsets.only(bottom:  150.0),
+                                      child: loder,
+                                    )));
                                   }
                                 }
                               },
@@ -527,82 +537,86 @@ class _SelectBrandState extends State<SelectBrand> {
                           return loder;
                         }
                         if (snapshot.connectionState == ConnectionState.done) {
-                          return Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: w * 0.05, vertical: 10),
-                            child: GridView.count(
-                              shrinkWrap: true,
-                              controller: _controller2,
-                              crossAxisCount: 3,
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10,
-                              children:
-                                  List.generate(snapshot.data.length, (index) {
-                                // abc.SetTotalPrice(
-                                //   snapshot.data.length
-                                // );
-                                shots = snapshot.data.length;
-                                return GestureDetector(
-                                  onTap: () {
-                                    CarsData.name =
-                                        snapshot.data[index]["cars"];
-                                    CarsData.carimage =
-                                        snapshot.data[index]["image"];
-                                    Ids.carid = snapshot.data[index]["_id"];
-                                    prefs!.setString("CarId", Ids.carid);
-                                    print(CarsData.brand);
-                                    print(CarsData.brandimage);
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const SelectFuel(),
-                                        ));
-                                    setState(() {});
-                                  },
-                                  child: RRectCard(
-                                    h: h * 0.18,
-                                    w: h * 0.18,
-                                    borderRadius: 30,
-                                    widget: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Expanded(
-                                            child: CachedNetworkImage(
-                                              imageUrl: snapshot.data[index]
-                                                  ["image"],
-                                              placeholder: (context, url) =>
-                                                  // loder,
-                                                  Container(),
-                                              errorWidget:
-                                                  (context, url, error) =>
-                                                      const Icon(Icons.error),
+                          if (snapshot.data != null) {
+                            return Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: w * 0.05, vertical: 10),
+                              child: GridView.count(
+                                shrinkWrap: true,
+                                controller: _controller2,
+                                crossAxisCount: 3,
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                                children:
+                                List.generate(snapshot.data.length, (index) {
+                                  // abc.SetTotalPrice(
+                                  //   snapshot.data.length
+                                  // );
+                                  shots = snapshot.data.length;
+                                  return GestureDetector(
+                                    onTap: () {
+                                      CarsData.name =
+                                      snapshot.data[index]["cars"];
+                                      CarsData.carimage =
+                                      snapshot.data[index]["image"];
+                                      Ids.carid = snapshot.data[index]["_id"];
+                                      prefs!.setString("CarId", Ids.carid);
+                                      print(CarsData.brand);
+                                      print(CarsData.brandimage);
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                            const SelectFuel(),
+                                          ));
+                                      setState(() {});
+                                    },
+                                    child: RRectCard(
+                                      h: h * 0.18,
+                                      w: h * 0.18,
+                                      borderRadius: 30,
+                                      widget: Column(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                          children: [
+                                            Expanded(
+                                              child: CachedNetworkImage(
+                                                imageUrl: snapshot.data[index]
+                                                ["image"],
+                                                placeholder: (context, url) =>
+                                                // loder,
+                                                Container(),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                const Icon(Icons.error),
+                                              ),
+                                              // Image.network(
+                                              //     "${snapshot.data[index]["image"]}"),
                                             ),
-                                            // Image.network(
-                                            //     "${snapshot.data[index]["image"]}"),
-                                          ),
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
-                                          FittedBox(
-                                            child: Text(
-                                              snapshot.data[index]["cars"],
-                                              style: GoogleFonts.montserrat(
-                                                fontWeight: FontWeight.w600,
-                                                height: 1.5,
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            FittedBox(
+                                              child: Text(
+                                                snapshot.data[index]["cars"],
+                                                style: GoogleFonts.montserrat(
+                                                  fontWeight: FontWeight.w600,
+                                                  height: 1.5,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          SizedBox(
-                                            height: h * 0.01,
-                                          )
-                                        ]),
-                                  ),
-                                );
-                              }),
-                            ),
-                          );
+                                            SizedBox(
+                                              height: h * 0.01,
+                                            )
+                                          ]),
+                                    ),
+                                  );
+                                }),
+                              ),
+                            );
+                          }else{
+                            return loder;
+                          }
                         }
                         return loder;
                       }

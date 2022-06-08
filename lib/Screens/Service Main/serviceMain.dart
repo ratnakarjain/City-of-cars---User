@@ -310,7 +310,6 @@ class _ServiceMainState extends State<ServiceMain> {
                                 print(snapshot.data[index]["_id"].toString());
                                 Ids.categoryid =
                                     snapshot.data[index]["_id"].toString();
-                                print(Ids.categoryid + "===============");
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -320,7 +319,7 @@ class _ServiceMainState extends State<ServiceMain> {
                                             )));
                               },
                               child: RRectCard(
-                                h: h * 0.18,
+                                h: h * 0.20,
                                 w: h * 0.18,
                                 borderRadius: 10,
                                 widget: Column(
@@ -346,8 +345,6 @@ class _ServiceMainState extends State<ServiceMain> {
                                               //     "https://i.gifer.com/DKke.gif"),
                                               ),
                                         ),
-                                        // Image.network(
-                                        //     "${snapshot.data[index]["image"]}",fit: BoxFit.fill,),
                                       ),
                                        SizedBox(
                                         height: h*0.005,
@@ -373,7 +370,7 @@ class _ServiceMainState extends State<ServiceMain> {
                                           snapshot.data[index]["discreption"] ==
                                                       null ||
                                                   snapshot.data[index]
-                                                          ["description"] ==
+                                                          ["discreption"] ==
                                                       ""
                                               ? ""
                                               : "${snapshot.data[index]["discreption"]}"
@@ -518,7 +515,7 @@ class _ServiceMainState extends State<ServiceMain> {
                           },
                         );
                       }
-                      return const Center(child: Text("Empty"));
+                      return const Center(child: Text("No Data Found"));
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       if (snapshot.hasData) {
@@ -686,7 +683,7 @@ class _ServiceMainState extends State<ServiceMain> {
                           },
                         );
                       }
-                      return const Center(child: Text("Empty"));
+                      return const Center(child: Text("No Data Found"));
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       if (snapshot.hasData) {

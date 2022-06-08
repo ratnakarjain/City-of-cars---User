@@ -60,7 +60,8 @@ Future<bool> showExitPopup(context) async{
           ),
         );
       });
-} 
+}
+
 Future<void> makePhoneCall(String phoneNumber) async {
     // Use `Uri` to ensure that `phoneNumber` is properly URL-encoded.
     // Just using 'tel:$phoneNumber' would create invalid URLs in some cases,
