@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "517522386835",
+    "project_id": "city-of-cars-6b50c",
+    "storage_bucket": "city-of-cars-6b50c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:517522386835:android:20ec01e1f68ca5172d8266",
+        "android_client_info": {
+          "package_name": "com.cityofcars.cityofcars"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "517522386835-tlt6spq4fled0odga7n7b6p56i788v2n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaBXrQFj0RBPnVTrXSTI6gYL7aN_MN3Uk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "517522386835-tlt6spq4fled0odga7n7b6p56i788v2n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:517522386835:android:ef7c969f2acf1b1a2d8266",
+        "android_client_info": {
+          "package_name": "com.cityofcars.scout.cityofcars_scout"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "517522386835-t38hcboauo33sdq4tdmtti0s57qgg15n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cityofcars.scout.cityofcars_scout",
+            "certificate_hash": "9ad5c92b9965a79ebf91a46a411ebfbdcfdb8049"
+          }
+        },
+        {
+          "client_id": "517522386835-tlt6spq4fled0odga7n7b6p56i788v2n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaBXrQFj0RBPnVTrXSTI6gYL7aN_MN3Uk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "517522386835-tlt6spq4fled0odga7n7b6p56i788v2n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
