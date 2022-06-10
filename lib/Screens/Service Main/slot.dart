@@ -569,7 +569,7 @@ class _SlotState extends State<Slot> {
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const Cart(),
+            builder: (context) =>  Cart(),
           ));
     });
   }

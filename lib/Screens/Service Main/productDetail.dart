@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cityofcars/Screens/Service%20Main/cart.dart';
 import 'package:cityofcars/Screens/Service%20Main/slot.dart';
@@ -11,7 +13,7 @@ import '../../Utils/Buttons/button.dart';
 import '../../Utils/constants.dart';
 
 class ProductDetails extends StatefulWidget {
-  static String selctedprice="";
+  static String selctedprice = "";
   PlanModel planDetails;
   ProductDetails({Key? key, required this.planDetails}) : super(key: key);
 
@@ -27,6 +29,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   bool des = false;
   bool basic = true;
   bool service = false;
+  int selceted = 0;
   List terms = [];
   List backimage = [
     "https://wallpaperaccess.com/full/33110.jpg",
@@ -46,7 +49,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       images.addAll(value);
       setState(() {});
     });
-    ProductDetails.selctedprice=details.planprice.toString();
+    ProductDetails.selctedprice = details.planprice.toString();
     print(ProductDetails.selctedprice);
     // TODO: implement initState
     super.initState();
@@ -126,124 +129,203 @@ class _ProductDetailsState extends State<ProductDetails> {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: w * 0.06, vertical: h * 0.03),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        details.planname.toString(),
-                        style: GoogleFonts.montserrat(
-                            textStyle: const TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                        )),
-                      ),
-                      Text(
-                        details.servicepackname.toString(),
-                        style: GoogleFonts.montserrat(
-                            textStyle: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: kblackcolor.withOpacity(0.50))),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Checkbox(
-                            value: basic,
-                            side:
-                                const BorderSide(color: kGreenColor, width: 2),
-                            activeColor: kGreenColor,
-                            onChanged: (value) {
-                              basic = value!;
-                              setState(() {
-                                service = false;
-                                ProductDetails.selctedprice=details.planprice.toString();
-                              });
-                            },
+                padding: EdgeInsets.symmetric(
+                    horizontal: w * 0.06, vertical: h * 0.03),
+                child: ListView.builder(
+                  itemCount: details.packs.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 3,
+                          child: Text(
+                            details.packs[index].planName.toString(),
+                            style: GoogleFonts.montserrat(
+                                textStyle:  TextStyle(
+                              fontSize:index==selceted? 25:16,
+                              fontWeight: FontWeight.bold,
+                              color: index==selceted? kTextInputPlaceholderColor:kTextInputPlaceholderColor.withOpacity(0.7)
+                            )),
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                "₹" + details.planprice,
-                                style: GoogleFonts.montserrat(
-                                    fontSize: 21,
-                                    textStyle: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    )),
+                              Expanded(
+                                child: SizedBox(
+                                  height: h*0.01,
+                                  child: Checkbox(
+                                    value: index==selceted,
+                                    side: const BorderSide(
+                                        color: kGreenColor, width: 2),
+                                    activeColor: kGreenColor,
+                                    onChanged: (value) {
+                                      selceted = index;
+                                      setState(() {
+                                        service = false;
+                                        ProductDetails.selctedprice =
+                                            details.planprice.toString();
+                                      });
+                                    },
+                                  ),
+                                ),
                               ),
-                              Text(
-                                details.planpricdes,
-                                // "multi-brand price",
-                                style: GoogleFonts.montserrat(
-                                    fontSize: 6,
-                                    textStyle: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        color: kblackcolor.withOpacity(0.50))),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "₹" + details.packs[index].planPrice,
+                                      style: GoogleFonts.montserrat(
+                                          fontSize: index==selceted? 21:12,
+                                          textStyle:  TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: index==selceted? kTextInputPlaceholderColor : kTextInputPlaceholderColor.withOpacity(0.5)
+                                          )),
+                                    ),
+                                    Text(
+                                      details.packs[index].pricedes,
+                                      // "multi-brand price",
+                                      style: GoogleFonts.montserrat(
+                                          fontSize: 6,
+                                          textStyle: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              color: kblackcolor
+                                                  .withOpacity(0.50))),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Checkbox(
-                            side:
-                                const BorderSide(color: kGreenColor, width: 2),
-                            activeColor: kGreenColor,
-                            value: service,
-                            onChanged: (value) {
-                              service = value!;
-                              setState(() {
-                                basic = false;
-                                ProductDetails.selctedprice=details.componyprice.toString();
-                              });
-                            },
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                "₹" + details.componyprice,
-                                style: GoogleFonts.montserrat(
-                                    fontSize: 12,
-                                    textStyle: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: kTextInputPlaceholderColor
-                                            .withOpacity(0.5))),
-                              ),
-                              Text(
-                                details.componypricedes,
-                                // "company authorised",
-                                style: GoogleFonts.montserrat(
-                                    fontSize: 6,
-                                    textStyle: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        color: kblackcolor.withOpacity(0.50))),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
+                        )
+                      ],
+                    );
+                  },
+                )
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   crossAxisAlignment: CrossAxisAlignment.start,
+                //   children: [
+                //     Column(
+                //       crossAxisAlignment: CrossAxisAlignment.start,
+                //       children: [
+                //         Text(
+                //           details.planname.toString(),
+                //           style: GoogleFonts.montserrat(
+                //               textStyle: const TextStyle(
+                //             fontSize: 25,
+                //             fontWeight: FontWeight.bold,
+                //           )),
+                //         ),
+                //         Text(
+                //           details.servicepackname.toString(),
+                //           style: GoogleFonts.montserrat(
+                //               textStyle: TextStyle(
+                //                   fontWeight: FontWeight.bold,
+                //                   fontSize: 16,
+                //                   color: kblackcolor.withOpacity(0.50))),
+                //         ),
+                //       ],
+                //     ),
+                //     Column(
+                //       crossAxisAlignment: CrossAxisAlignment.start,
+                //       children: [
+                //         Row(
+                //           crossAxisAlignment: CrossAxisAlignment.center,
+                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //           children: [
+                //             Checkbox(
+                //               value: basic,
+                //               side:
+                //                   const BorderSide(color: kGreenColor, width: 2),
+                //               activeColor: kGreenColor,
+                //               onChanged: (value) {
+                //                 basic = value!;
+                //                 setState(() {
+                //                   service = false;
+                //                   ProductDetails.selctedprice=details.planprice.toString();
+                //                 });
+                //               },
+                //             ),
+                //             Column(
+                //               crossAxisAlignment: CrossAxisAlignment.end,
+                //               children: [
+                //                 Text(
+                //                   "₹" + details.planprice,
+                //                   style: GoogleFonts.montserrat(
+                //                       fontSize: 21,
+                //                       textStyle: const TextStyle(
+                //                         fontWeight: FontWeight.bold,
+                //                       )),
+                //                 ),
+                //                 Text(
+                //                   details.planpricdes,
+                //                   // "multi-brand price",
+                //                   style: GoogleFonts.montserrat(
+                //                       fontSize: 6,
+                //                       textStyle: TextStyle(
+                //                           fontWeight: FontWeight.w400,
+                //                           color: kblackcolor.withOpacity(0.50))),
+                //                 ),
+                //               ],
+                //             ),
+                //           ],
+                //         ),
+                //         Row(
+                //           crossAxisAlignment: CrossAxisAlignment.center,
+                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //           children: [
+                //             Checkbox(
+                //               side:
+                //                   const BorderSide(color: kGreenColor, width: 2),
+                //               activeColor: kGreenColor,
+                //               value: service,
+                //               onChanged: (value) {
+                //                 service = value!;
+                //                 setState(() {
+                //                   basic = false;
+                //                   ProductDetails.selctedprice=details.componyprice.toString();
+                //                 });
+                //               },
+                //             ),
+                //             Column(
+                //               crossAxisAlignment: CrossAxisAlignment.end,
+                //               children: [
+                //                 Text(
+                //                   "₹" + details.componyprice,
+                //                   style: GoogleFonts.montserrat(
+                //                       fontSize: 12,
+                //                       textStyle: TextStyle(
+                //                           fontWeight: FontWeight.bold,
+                //                           color: kTextInputPlaceholderColor
+                //                               .withOpacity(0.5))),
+                //                 ),
+                //                 Text(
+                //                   details.componypricedes,
+                //                   // "company authorised",
+                //                   style: GoogleFonts.montserrat(
+                //                       fontSize: 6,
+                //                       textStyle: TextStyle(
+                //                           fontWeight: FontWeight.w400,
+                //                           color: kblackcolor.withOpacity(0.50))),
+                //                 ),
+                //               ],
+                //             ),
+                //           ],
+                //         ),
+                //       ],
+                //     )
+                //   ],
+                // ),
+                ),
             RRecctButton2(
               onTap: () {
                 if (!service && !basic) {
@@ -266,10 +348,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                       content: Text("Please select car first"),
                     ));
                   } else {
+                    Cart.packe = details.packs[selceted];
+                    print(jsonEncode(Cart.packe)+"1235432");
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const Slot(),
+                          builder: (context) =>  const Slot(),
                         ));
                   }
                 }
@@ -457,9 +541,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       ),
                                       decoration: BoxDecoration(
                                           border: index >
-                                                  details.includes
-                                                          .length -
-                                                      3
+                                                  details.includes.length - 3
                                               ? const Border()
                                               : const Border(
                                                   bottom: BorderSide(
@@ -482,8 +564,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                           // ),
                                           Image.network(
                                             // "https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-                                            details.includes[index]
-                                                    .image
+                                            details.includes[index].image
                                                 .toString(),
                                             height: h * 0.03,
                                           ),
@@ -492,8 +573,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                           //   height: h * 0.03,
                                           // ),
                                           Text(
-                                            details.includes[index]
-                                                    .name ,
+                                            details.includes[index].name,
                                             // "Engine Oil ",
                                             // textScaleFactor: 0.7,
                                             style: GoogleFonts.montserrat(
@@ -740,7 +820,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                   children: [
                     RichText(
                       text: TextSpan(
-                        text: details.termsheading, //'Who May Use the Services?',
+                        text:
+                            details.termsheading, //'Who May Use the Services?',
                         style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w700,
                             fontSize: 10,

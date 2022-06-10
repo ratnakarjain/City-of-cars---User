@@ -347,20 +347,20 @@ Future getSubcategory(String _id) async {
           PlanModel pl = PlanModel();
           pl.planid=data["plans"][i]["_id"].toString();
           pl.componyprice=data["plans"][i]["servicepackprice"].toString();
-          pl.componypricedes=data["plans"][i]["servicename"].toString();
+          // pl.componypricedes=data["plans"][i]["servicename"].toString();
           pl.description=data["plans"][i]["description"].toString();
           pl.hour=data["plans"][i]["hours"].toString();
           pl.isMost=data["plans"][i]["mostpopularpack"].toString();
           pl.isrec=data["plans"][i]["status"].toString();
           pl.label=data["plans"][i]["label"].toString();
           pl.months=data["plans"][i]["month"].toString();
-          // pl.planimage=data["plans"][i]["image"].toString();
-          pl.planname=data["plans"][i]["planName"].toString();
-          pl.planpricdes=data["plans"][i]["typename"].toString();
-          pl.planprice=data["plans"][i]["typeprice"].toString();
+          pl.planimage=data["plans"][i]["image"].toString();
+          // pl.planname=data["plans"][i]["planName"].toString();
+          // pl.planpricdes=data["plans"][i]["typename"].toString();
+          // pl.planprice=data["plans"][i]["typeprice"].toString();
           pl.servicepackname=data["plans"][i]["servicepack"].toString();
           pl.subcatid=data["plans"][i]["Subcategory"].toString();
-          pl.subplanname=data["plans"][i]["subPlanName"].toString();
+          // pl.subplanname=data["plans"][i]["subPlanName"].toString();
           pl.termsdetails=data["plans"][i]["textField"].toString();
           pl.termsheading=data["plans"][i]["heading"].toString();
           for(int j = 0 ; j<data["plans"][i]["services_id"].length;j++){
@@ -368,6 +368,15 @@ Future getSubcategory(String _id) async {
             ink.image=data["plans"][i]["services_id"][j]["image"];
             ink.name=data["plans"][i]["services_id"][j]["title"];
             pl.includes.add(ink);
+          }
+          for(int j = 0 ; j<data["plans"][i]["plan"].length;j++){
+            Packes ink = Packes();
+            ink.planName=data["plans"][i]["plan"][j]["planName"];
+            ink.subPlanName=data["plans"][i]["plan"][j]["subPlanName"];
+            ink.planPrice=data["plans"][i]["plan"][j]["typeprice"];
+            ink.pricedes=data["plans"][i]["plan"][j]["typename"];
+            ink.packId=data["plans"][i]["plan"][j]["_id"];
+            pl.packs.add(ink);
           }
           plans.add(pl);
 
@@ -447,7 +456,7 @@ Future slot(
   }
 }
 
-Future addcartitem() async {
+Future addcartitem(Packes packes) async {
   print("Category "+Ids.categoryid.toString()+"^^");
   print("subcategory "+Ids.subcategoryid.toString()+"^^");
   print("Plans "+Ids.planid.toString()+"^^");
@@ -465,7 +474,11 @@ Future addcartitem() async {
       "bookingdata": Ids.slotid,
       "selecetedPrice":ProductDetails.selctedprice,
       "user": prefs!.getString("userId").toString(),
-      "cars": prefs!.getString("CarId").toString()
+      "cars": prefs!.getString("CarId").toString(),
+      "planName":packes.planName,
+      "subPlanName":packes.subPlanName,
+      "typeprice":packes.planPrice
+      
     }, headers: {
       "Authorization": prefs!.getString('token').toString()
     });
@@ -1036,34 +1049,45 @@ Future getrecmostPlans() async {
           PlanModel pl = PlanModel();
           pl.planid=data["data"][i]["_id"].toString();
           pl.componyprice=data["data"][i]["servicepackprice"].toString();
-          pl.componypricedes=data["data"][i]["servicename"].toString();
+          // pl.componypricedes=data["data"][i]["servicename"].toString();
           pl.description=data["data"][i]["description"].toString();
           pl.hour=data["data"][i]["hours"].toString();
           pl.isMost=data["data"][i]["mostpopularpack"].toString();
           pl.isrec=data["data"][i]["status"].toString();
           pl.label=data["data"][i]["label"].toString();
           pl.months=data["data"][i]["month"].toString();
-          // pl.planimage=data["data"][i]["image"].toString();
-          pl.planname=data["data"][i]["planName"].toString();
-          pl.planpricdes=data["data"][i]["typename"].toString();
-          pl.planprice=data["data"][i]["typeprice"].toString();
-          pl.servicepackname=data["data"][i]["servicepack"].toString();
+          pl.planimage=data["data"][i]["image"].toString();
+          // pl.planname=data["data"][i]["planName"].toString();
+          // pl.planpricdes=data["data"][i]["typename"].toString();
+          // pl.planprice=data["data"][i]["typeprice"].toString();
+          // pl.servicepackname=data["data"][i]["servicepack"].toString();
           pl.subcatid=data["data"][i]["Subcategory"].toString();
           pl.subplanname=data["data"][i]["subPlanName"].toString();
           pl.termsdetails=data["data"][i]["textField"].toString();
           pl.termsheading=data["data"][i]["heading"].toString();
           print("ASA"+data["data"][i]["services_id"][0]["category"][0].toString()+"^^");
-          if(data["data"][i]["services_id"].length>0) {
-            if (data["data"][i]["services_id"][0]["category"].length > 0) {
-              pl.categoryId =
-                  data["data"][i]["services_id"][0]["category"][0].toString();
-            }
-          }
+          // if(data["data"][i]["services_id"].length>0) {
+          //   if (data["data"][i]["services_id"][0]["category"].length > 0) {
+          //     pl.categoryId =
+          //         data["data"][i]["services_id"][0]["category"][0].toString();
+          //   }
+          // }
+          pl.categoryId =
+                  data["data"][i]["Category"].toString();
           for(int j = 0 ; j<data["data"][i]["services_id"].length;j++){
             IncludeMod ink = IncludeMod();
             ink.image=data["data"][i]["services_id"][j]["image"];
             ink.name=data["data"][i]["services_id"][j]["title"];
             pl.includes.add(ink);
+          }
+          for(int j = 0 ; j<data["data"][i]["plan"].length;j++){
+            Packes ink = Packes();
+            ink.planName=data["data"][i]["plan"][j]["planName"];
+            ink.subPlanName=data["data"][i]["plan"][j]["subPlanName"];
+            ink.planPrice=data["data"][i]["plan"][j]["typeprice"];
+            ink.pricedes=data["data"][i]["plan"][j]["typename"];
+            ink.packId=data["data"][i]["plan"][j]["_id"];
+            pl.packs.add(ink);
           }
           plans.add(pl);
 

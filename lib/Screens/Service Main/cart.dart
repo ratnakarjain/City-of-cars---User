@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cityofcars/Screens/Service%20Main/payment.dart';
 import 'package:cityofcars/Screens/Service%20Main/slot.dart';
 import 'package:cityofcars/Screens/bottomnavBar.dart';
+import 'package:cityofcars/Services/models/plansModel.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,7 +11,8 @@ import '../../Services/servies.dart';
 import '../../Utils/Buttons/button.dart';
 
 class Cart extends StatefulWidget {
-  const Cart({Key? key}) : super(key: key);
+  static Packes packe =Packes();
+   Cart({Key? key, }) : super(key: key);
 
   @override
   State<Cart> createState() => _CartState();
@@ -40,7 +42,7 @@ class _CartState extends State<Cart> {
     fecthdata().whenComplete(() {
       if (data.isNotEmpty) {
         for (int i = 0; i < data.length; i++) {
-          totalvalue(double.parse(data[i]["Plans"]["typeprice"].toString()));
+          totalvalue(double.parse(data[i]["selectplan"][0]["typeprice"].toString()));
         }
         setState(() {});
       }
@@ -129,7 +131,7 @@ class _CartState extends State<Cart> {
                                                             .start,
                                                     children: [
                                                       Text(
-                                                        data[index]["Plans"]
+                                                        data[index]["selectplan"][0]
                                                             ["planName"],
                                                         style: GoogleFonts
                                                             .montserrat(
@@ -139,8 +141,7 @@ class _CartState extends State<Cart> {
                                                         ),
                                                       ),
                                                       Text(
-                                                        data[index]["Plans"]
-                                                            ["servicepack"],
+                                                        "Service Pack",
                                                         style: GoogleFonts.montserrat(
                                                             fontSize: 12,
                                                             fontWeight:
@@ -158,7 +159,7 @@ class _CartState extends State<Cart> {
                                                     children: [
                                                       Text(
                                                         "₹" +
-                                                            data[index]["Plans"]
+                                                            data[index]["selectplan"][0]
                                                                     [
                                                                     "typeprice"]
                                                                 .toString(),
@@ -170,8 +171,7 @@ class _CartState extends State<Cart> {
                                                         ),
                                                       ),
                                                       Text(
-                                                        data[index]["Plans"]
-                                                            ["typename"],
+                                                        "Incl. Taxes",
                                                         style: GoogleFonts.montserrat(
                                                             fontSize: 7,
                                                             fontWeight:
@@ -858,7 +858,7 @@ class _CartState extends State<Cart> {
   }
 
   Future fecthdata() async {
-    await addcartitem().then((value) {
+    await addcartitem(Cart.packe).then((value) {
       print("Response "+value.toString()+"^");
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(value["msg"]),

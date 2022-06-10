@@ -43,7 +43,7 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
     w = MediaQuery.of(context).size.width;
     return WillPopScope(
       onWillPop: ()async{
-        await Navigator.pushAndRemoveUntil(context, new MaterialPageRoute(builder: (builder)=> BottomAppBar()), (route) => false);
+        await Navigator.pushAndRemoveUntil(context,  MaterialPageRoute(builder: (builder)=>  BottomNavBar(index: 0,)), (route) => false);
         return true;
       },
       child: Scaffold(
@@ -101,7 +101,7 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                                     fontSize: 8),
                                 children: [
                                   TextSpan(
-                                    text: " ${data["_id"]}\n",
+                                    text: " ${data["orderid"]}\n",
                                     style: GoogleFonts.montserrat(
                                         color: kTextInputPlaceholderColor,
                                         fontSize: 8,
@@ -245,14 +245,14 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                                                 BorderRadius.circular(h * 0.05),
                                             child: Padding(
                                               padding: EdgeInsets.all(h * 0.01),
-                                              child: Image.asset(
-                                                "assets/images/Uber1.png",
+                                              child: Image.network(
+                                                data["car"]["image"],
                                               ),
                                             )))),
                                 RichText(
                                   textAlign: TextAlign.center,
                                   text: TextSpan(
-                                      text: "Polo",
+                                      text: data["car"]["cars"],
                                       style: GoogleFonts.montserrat(
                                           color: kTextInputPlaceholderColor,
                                           fontWeight: FontWeight.w700,
@@ -260,7 +260,7 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                                           fontSize: 8),
                                       children: [
                                         TextSpan(
-                                          text: " Volkswagon\n",
+                                          text: " ${data["brand"]["brands"]}\n",
                                           style: GoogleFonts.montserrat(
                                               color: kTextInputPlaceholderColor,
                                               fontWeight: FontWeight.w400,
@@ -268,21 +268,21 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                                               fontSize: 8),
                                         ),
                                         TextSpan(
-                                          text: " dl9car".toUpperCase(),
+                                          text: data["bookingdata"]["carno"].toUpperCase(),
                                           style: GoogleFonts.montserrat(
                                               color: kTextInputPlaceholderColor,
                                               fontWeight: FontWeight.w400,
                                               height: 1.5,
                                               fontSize: 6),
                                         ),
-                                        TextSpan(
-                                          text: " 9733",
-                                          style: GoogleFonts.montserrat(
-                                              color: kTextInputPlaceholderColor,
-                                              fontWeight: FontWeight.w700,
-                                              height: 1.5,
-                                              fontSize: 6),
-                                        )
+                                        // TextSpan(
+                                        //   text: " 9733",
+                                        //   style: GoogleFonts.montserrat(
+                                        //       color: kTextInputPlaceholderColor,
+                                        //       fontWeight: FontWeight.w700,
+                                        //       height: 1.5,
+                                        //       fontSize: 6),
+                                        // )
                                       ]),
                                 )
                               ],
@@ -297,29 +297,30 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   children: [
-                                    RichText(
-                                      textAlign: TextAlign.center,
-                                      text: TextSpan(
-                                          text: "Delivery Date",
-                                          style: GoogleFonts.montserrat(
-                                              color: kTextInputPlaceholderColor
-                                                  .withOpacity(0.5),
-                                              fontWeight: FontWeight.w700,
-                                              height: 1.5,
-                                              fontSize: 9),
-                                          children: [
-                                            TextSpan(
-                                              text: "  - 27th Oct",
-                                              style: GoogleFonts.montserrat(
-                                                  color:
-                                                      kTextInputPlaceholderColor
-                                                          .withOpacity(0.5),
-                                                  fontWeight: FontWeight.w400,
-                                                  height: 1.5,
-                                                  fontSize: 9),
-                                            ),
-                                          ]),
-                                    ),
+                                    // RichText(
+                                    //   textAlign: TextAlign.center,
+                                    //   text: TextSpan(
+                                    //       text: "Delivery Date",
+                                    //       style: GoogleFonts.montserrat(
+                                    //           color: kTextInputPlaceholderColor
+                                    //               .withOpacity(0.5),
+                                    //           fontWeight: FontWeight.w700,
+                                    //           height: 1.5,
+                                    //           fontSize: 9),
+                                    //       children: [
+                                    //         TextSpan(
+                                    //           text: "  - 27th Oct",
+                                    //           style: GoogleFonts.montserrat(
+                                    //               color:
+                                    //                   kTextInputPlaceholderColor
+                                    //                       .withOpacity(0.5),
+                                    //               fontWeight: FontWeight.w400,
+                                    //               height: 1.5,
+                                    //               fontSize: 9),
+                                    //         ),
+                                    //       ]),
+                                    // ),
+                                    SizedBox(),
                                     RRecctButton(
                                       text: "In-Progress",
                                       h: h * 0.03,
@@ -343,7 +344,7 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                                     RichText(
                                       textAlign: TextAlign.center,
                                       text: TextSpan(
-                                          text: "Standard\n",
+                                          text: data["category"]["title"]+ "\n",
                                           style: GoogleFonts.montserrat(
                                               color: kTextInputPlaceholderColor
                                                   .withOpacity(0.5),
@@ -352,7 +353,7 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                                               fontSize: 7),
                                           children: [
                                             TextSpan(
-                                              text: "Service Pack",
+                                              text: data["category"]["discreption"],
                                               style: GoogleFonts.montserrat(
                                                   color:
                                                       kTextInputPlaceholderColor
@@ -366,7 +367,7 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                                     RichText(
                                       textAlign: TextAlign.center,
                                       text: TextSpan(
-                                          text: "Clutch Overhaul\n",
+                                          text: "${data["subcategory"]["title"] }\n",
                                           style: GoogleFonts.montserrat(
                                               color: kTextInputPlaceholderColor
                                                   .withOpacity(0.5),
@@ -375,7 +376,7 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                                               fontSize: 7),
                                           children: [
                                             TextSpan(
-                                              text: "Service Pack",
+                                              text: data["subcategory"]["discreption"],
                                               style: GoogleFonts.montserrat(
                                                   color:
                                                       kTextInputPlaceholderColor
@@ -389,7 +390,7 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                                     RichText(
                                       textAlign: TextAlign.center,
                                       text: TextSpan(
-                                          text: "Custom Service\n",
+                                          text: "${data["Plans"]["plan"][0]["planName"]}\n",
                                           style: GoogleFonts.montserrat(
                                               color: kTextInputPlaceholderColor
                                                   .withOpacity(0.5),
@@ -398,7 +399,7 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                                               fontSize: 7),
                                           children: [
                                             TextSpan(
-                                              text: "Bumper Repair",
+                                              text: data["Plans"]["plan"][0]["subPlanName"],
                                               style: GoogleFonts.montserrat(
                                                   color:
                                                       kTextInputPlaceholderColor

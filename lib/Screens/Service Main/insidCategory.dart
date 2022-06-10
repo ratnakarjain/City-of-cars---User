@@ -607,72 +607,80 @@ class _InsideCategoryState extends State<InsideCategory>
                                       // mostpop.addAll(snapshot.data);
                                       if (snapshot.hasData) {
                                         return ListView.builder(
-                          controller: _controller2,
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          padding: EdgeInsets.symmetric(
-                              vertical: h * 0.01, horizontal: h * 0.025),
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (context, index) {
-                            PlanModel model = PlanModel();
-                            model= snapshot.data[index];
-                            return Visibility(
-                              visible: model.isrec=="true",
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ProductDetails(
-                                                planDetails:
-                                                    model,
-                                              )));
-                                },
-                                child: RRectCard(
-                                  h: h * 0.1,
-                                  w: w * 0.25,
-                                  borderRadius: 15,
-                                  widget: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Image.asset(
-                                            "assets/images/${reccomendedPackes[0]["image"]}"),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        FittedBox(
-                                          child: Text(
-                                            model.planname,
-                                            style: GoogleFonts.montserrat(
-                                              fontWeight: FontWeight.w600,
-                                              height: 2,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: h * 0.01),
-                                          child: FittedBox(
-                                            child: Text(
-                                              reccomendedPackes[0]["type"],
-                                              textScaleFactor: 0.6,
-                                              style: GoogleFonts.montserrat(
-                                                fontWeight: FontWeight.w600,
-                                                color:
-                                                    kTextInputPlaceholderColor
-                                                        .withOpacity(0.6),
-                                                height: 2,
+                                controller: _controller2,
+                                physics: const BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: h * 0.01, horizontal: h * 0.025),
+                                itemCount: snapshot.data.length,
+                                itemBuilder: (context, index) {
+                                  PlanModel model = PlanModel();
+                                  model= snapshot.data[index];
+                                  return Visibility(
+                                    visible: model.isrec=="true",
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        print("Cat "+model.categoryId.toString()+"^^");
+                                        Ids.categoryid = model.categoryId.toString();
+                                        Ids.subcategoryid = model.subcatid.toString();
+                                        Ids.planid = model.planid.toString();
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => ProductDetails(
+                                                      planDetails:
+                                                          model
+                                                    )));
+                                      },
+                                      child: RRectCard(
+                                        h: h * 0.1,
+                                        w: w * 0.25,
+                                        borderRadius: 15,
+                                        widget: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Image.network(
+                                                model.planimage,
+                                                height: h*0.04,
                                               ),
-                                            ),
-                                          ),
-                                        )
-                                      ]),
-                                ),
-                              ),
-                            );
-                          },
-                        );
+                                              // Image.asset(
+                                              //     "assets/images/${reccomendedPackes[0]["image"]}"),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              FittedBox(
+                                                child: Text(
+                                                  model.packs.first.planName,
+                                                  style: GoogleFonts.montserrat(
+                                                    fontWeight: FontWeight.w600,
+                                                    height: 2,
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: h * 0.01),
+                                                child: FittedBox(
+                                                  child: Text(
+                                                    model.packs.first.subPlanName,
+                                                    textScaleFactor: 0.6,
+                                                    style: GoogleFonts.montserrat(
+                                                      fontWeight: FontWeight.w600,
+                                                      color:
+                                                          kTextInputPlaceholderColor
+                                                              .withOpacity(0.6),
+                                                      height: 2,
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            ]),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
                                       }
                                       return const Center(child: Text("Empty"));
                                     }
@@ -680,72 +688,80 @@ class _InsideCategoryState extends State<InsideCategory>
                                         ConnectionState.waiting) {
                                       if (snapshot.hasData) {
                                         return ListView.builder(
-                          controller: _controller2,
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          padding: EdgeInsets.symmetric(
-                              vertical: h * 0.01, horizontal: h * 0.025),
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (context, index) {
-                            PlanModel model = PlanModel();
-                            model= snapshot.data[index];
-                            return Visibility(
-                              visible: model.isrec=="true",
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ProductDetails(
-                                                planDetails:
-                                                    model,
-                                              )));
-                                },
-                                child: RRectCard(
-                                  h: h * 0.1,
-                                  w: w * 0.25,
-                                  borderRadius: 15,
-                                  widget: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Image.asset(
-                                            "assets/images/${reccomendedPackes[0]["image"]}"),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        FittedBox(
-                                          child: Text(
-                                            model.planname,
-                                            style: GoogleFonts.montserrat(
-                                              fontWeight: FontWeight.w600,
-                                              height: 2,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: h * 0.01),
-                                          child: FittedBox(
-                                            child: Text(
-                                              reccomendedPackes[0]["type"],
-                                              textScaleFactor: 0.6,
-                                              style: GoogleFonts.montserrat(
-                                                fontWeight: FontWeight.w600,
-                                                color:
-                                                    kTextInputPlaceholderColor
-                                                        .withOpacity(0.6),
-                                                height: 2,
+                                controller: _controller2,
+                                physics: const BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: h * 0.01, horizontal: h * 0.025),
+                                itemCount: snapshot.data.length,
+                                itemBuilder: (context, index) {
+                                  PlanModel model = PlanModel();
+                                  model= snapshot.data[index];
+                                  return Visibility(
+                                    visible: model.isrec=="true",
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        print("Cat "+model.categoryId.toString()+"^^");
+                                        Ids.categoryid = model.categoryId.toString();
+                                        Ids.subcategoryid = model.subcatid.toString();
+                                        Ids.planid = model.planid.toString();
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => ProductDetails(
+                                                      planDetails:
+                                                          model
+                                                    )));
+                                      },
+                                      child: RRectCard(
+                                        h: h * 0.1,
+                                        w: w * 0.25,
+                                        borderRadius: 15,
+                                        widget: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Image.network(
+                                                model.planimage,
+                                                height: h*0.04,
                                               ),
-                                            ),
-                                          ),
-                                        )
-                                      ]),
-                                ),
-                              ),
-                            );
-                          },
-                        );
+                                              // Image.asset(
+                                              //     "assets/images/${reccomendedPackes[0]["image"]}"),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              FittedBox(
+                                                child: Text(
+                                                  model.packs.first.planName,
+                                                  style: GoogleFonts.montserrat(
+                                                    fontWeight: FontWeight.w600,
+                                                    height: 2,
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: h * 0.01),
+                                                child: FittedBox(
+                                                  child: Text(
+                                                    model.packs.first.subPlanName,
+                                                    textScaleFactor: 0.6,
+                                                    style: GoogleFonts.montserrat(
+                                                      fontWeight: FontWeight.w600,
+                                                      color:
+                                                          kTextInputPlaceholderColor
+                                                              .withOpacity(0.6),
+                                                      height: 2,
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            ]),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
                                       }
                                       return loder;
                                     }
@@ -879,10 +895,8 @@ class _InsideCategoryState extends State<InsideCategory>
     setState(() {});
     getSubcategory(_id).then((value) {
       setState(() {
-        print("=============++++++++++++++");
+
         service.addAll(value);
-        print("=================" + service.toString());
-        print("=================" + service[0].name.toString());
       });
     }).whenComplete(() {
       _tabController = TabController(length: service.length, vsync: this);

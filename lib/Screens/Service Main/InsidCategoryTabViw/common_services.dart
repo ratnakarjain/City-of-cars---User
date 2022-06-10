@@ -120,14 +120,14 @@ class _CommonServicesState extends State<CommonServices> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          plans[index].planname,
+                                          plans[index].packs.first.planName,
                                           style: GoogleFonts.montserrat(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         Text(
-                                          plans[index].servicepackname,
+                                          "Services Pack",
                                           style: GoogleFonts.montserrat(
                                               fontSize: 8,
                                               fontWeight: FontWeight.w600,
@@ -149,7 +149,7 @@ class _CommonServicesState extends State<CommonServices> {
                                       children: [
                                         Text(
                                           "₹" +
-                                              plans[index].planprice.toString(),
+                                              plans[index].packs.first.planPrice.toString(),
                                           style: GoogleFonts.montserrat(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,

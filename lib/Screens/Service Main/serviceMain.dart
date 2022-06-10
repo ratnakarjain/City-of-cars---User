@@ -24,6 +24,7 @@ class _ServiceMainState extends State<ServiceMain> {
   var h;
   var w;
   List<PlanModel> mostpop = [];
+  
   List<PlanModel> recom = [];
   int currentPage = 0;
   List backimage = [
@@ -32,6 +33,8 @@ class _ServiceMainState extends State<ServiceMain> {
     "https://wallpaperaccess.com/full/33116.jpg",
     "https://wallpaperaccess.com/full/33118.jpg"
   ];
+  bool showmost = false;
+  bool showrec = false;
 
   List carServices = [
     {
@@ -423,177 +426,200 @@ class _ServiceMainState extends State<ServiceMain> {
             SizedBox(
               height: h * 0.02,
             ),
-            Label(
-              color: kbluecolor,
-              text: "most populer packs",
-              textStyle: GoogleFonts.montserrat(
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.bold, color: kwhitecolor),
+            Visibility(
+              // visible: showmost,
+
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Label(
+                    color: kbluecolor,
+                    text: "most populer packs",
+                    textStyle: GoogleFonts.montserrat(
+                      textStyle: const TextStyle(
+                          fontWeight: FontWeight.bold, color: kwhitecolor),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  ),
+                  SizedBox(
+                    height: h * 0.01,
+                  ),
+                  Container(
+                      height: h * 0.18,
+                      child: FutureBuilder(
+                        future: getrecmostPlans().whenComplete(() {
+                          showmost=true;
+                        }),
+                        builder: (context, AsyncSnapshot snapshot) {
+                          if (snapshot.connectionState == ConnectionState.done) {
+                            // mostpop.addAll(snapshot.data);
+                            if (snapshot.hasData) {
+                              return ListView.builder(
+                                controller: _controller2,
+                                physics: const BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: h * 0.01, horizontal: h * 0.025),
+                                itemCount: snapshot.data.length,
+                                itemBuilder: (context, index) {
+                                  PlanModel model = PlanModel();
+                                  model= snapshot.data[index];
+                                  return Visibility(
+                                    visible: model.isMost=="true",
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        print("Cat "+model.categoryId.toString()+"^^");
+                                        Ids.categoryid = model.categoryId.toString();
+                                        Ids.subcategoryid = model.subcatid.toString();
+                                        Ids.planid = model.planid.toString();
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => ProductDetails(
+                                                      planDetails:
+                                                          model
+                                                    )));
+                                      },
+                                      child: RRectCard(
+                                        h: h * 0.1,
+                                        w: w * 0.25,
+                                        borderRadius: 15,
+                                        widget: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Image.network(
+                                                model.planimage,
+                                                height: h*0.04,
+                                              ),
+                                              // Image.asset(
+                                              //     "assets/images/${reccomendedPackes[0]["image"]}"),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              FittedBox(
+                                                child: Text(
+                                                  model.packs.first.planName,
+                                                  style: GoogleFonts.montserrat(
+                                                    fontWeight: FontWeight.w600,
+                                                    height: 2,
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: h * 0.01),
+                                                child: FittedBox(
+                                                  child: Text(
+                                                    model.packs.first.subPlanName,
+                                                    textScaleFactor: 0.6,
+                                                    style: GoogleFonts.montserrat(
+                                                      fontWeight: FontWeight.w600,
+                                                      color:
+                                                          kTextInputPlaceholderColor
+                                                              .withOpacity(0.6),
+                                                      height: 2,
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            ]),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            }
+                            return const Center(child: Text("No Data Found"));
+                          }
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            if (snapshot.hasData) {
+                              return ListView.builder(
+                                controller: _controller2,
+                                physics: const BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: h * 0.01, horizontal: h * 0.025),
+                                itemCount: snapshot.data.length,
+                                itemBuilder: (context, index) {
+                                  PlanModel model = PlanModel();
+                                  model= snapshot.data[index];
+                                  return Visibility(
+                                    visible: model.isMost=="true",
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        print("Cat "+model.categoryId.toString()+"^^");
+                                        Ids.categoryid = model.categoryId.toString();
+                                        Ids.subcategoryid = model.subcatid.toString();
+                                        Ids.planid = model.planid.toString();
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => ProductDetails(
+                                                      planDetails:
+                                                          model
+                                                    )));
+                                      },
+                                      child: RRectCard(
+                                        h: h * 0.1,
+                                        w: w * 0.25,
+                                        borderRadius: 15,
+                                        widget: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Image.network(
+                                                model.planimage,
+                                                height: h*0.04,
+                                              ),
+                                              // Image.asset(
+                                              //     "assets/images/${reccomendedPackes[0]["image"]}"),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              FittedBox(
+                                                child: Text(
+                                                  model.packs.first.planName,
+                                                  style: GoogleFonts.montserrat(
+                                                    fontWeight: FontWeight.w600,
+                                                    height: 2,
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: h * 0.01),
+                                                child: FittedBox(
+                                                  child: Text(
+                                                    model.packs.first.subPlanName,
+                                                    textScaleFactor: 0.6,
+                                                    style: GoogleFonts.montserrat(
+                                                      fontWeight: FontWeight.w600,
+                                                      color:
+                                                          kTextInputPlaceholderColor
+                                                              .withOpacity(0.6),
+                                                      height: 2,
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            ]),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            }
+                            return loder;
+                          }
+                          return loder;
+                        },
+                      )),
+                  SizedBox(
+                    height: h * 0.01,
+                  ),
+                ],
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            ),
-            SizedBox(
-              height: h * 0.01,
-            ),
-            Container(
-                height: h * 0.18,
-                child: FutureBuilder(
-                  future: getrecmostPlans(),
-                  builder: (context, AsyncSnapshot snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      // mostpop.addAll(snapshot.data);
-                      if (snapshot.hasData) {
-                        return ListView.builder(
-                          controller: _controller2,
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          padding: EdgeInsets.symmetric(
-                              vertical: h * 0.01, horizontal: h * 0.025),
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (context, index) {
-                            PlanModel model = PlanModel();
-                            model= snapshot.data[index];
-                            return Visibility(
-                              visible: model.isMost=="true",
-                              child: GestureDetector(
-                                onTap: () {
-                                  print("Cat "+model.categoryId.toString()+"^^");
-                                  Ids.categoryid = model.categoryId.toString();
-                                  Ids.subcategoryid = model.subcatid.toString();
-                                  Ids.planid = model.planid.toString();
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ProductDetails(
-                                                planDetails:
-                                                    model
-                                              )));
-                                },
-                                child: RRectCard(
-                                  h: h * 0.1,
-                                  w: w * 0.25,
-                                  borderRadius: 15,
-                                  widget: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Image.asset(
-                                            "assets/images/${reccomendedPackes[0]["image"]}"),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        FittedBox(
-                                          child: Text(
-                                            model.planname,
-                                            style: GoogleFonts.montserrat(
-                                              fontWeight: FontWeight.w600,
-                                              height: 2,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: h * 0.01),
-                                          child: FittedBox(
-                                            child: Text(
-                                              reccomendedPackes[0]["type"],
-                                              textScaleFactor: 0.6,
-                                              style: GoogleFonts.montserrat(
-                                                fontWeight: FontWeight.w600,
-                                                color:
-                                                    kTextInputPlaceholderColor
-                                                        .withOpacity(0.6),
-                                                height: 2,
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      ]),
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      }
-                      return const Center(child: Text("No Data Found"));
-                    }
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      if (snapshot.hasData) {
-                        return ListView.builder(
-                          controller: _controller2,
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          padding: EdgeInsets.symmetric(
-                              vertical: h * 0.01, horizontal: h * 0.025),
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (context, index) {
-                            PlanModel model = PlanModel();
-                            model= snapshot.data[index];
-                            return Visibility(
-                              visible: model.isMost=="true",
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ProductDetails(
-                                                planDetails:
-                                                    model,
-                                              )));
-                                },
-                                child: RRectCard(
-                                  h: h * 0.1,
-                                  w: w * 0.25,
-                                  borderRadius: 15,
-                                  widget: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Image.asset(
-                                            "assets/images/${reccomendedPackes[0]["image"]}"),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        FittedBox(
-                                          child: Text(
-                                            model.planname,
-                                            style: GoogleFonts.montserrat(
-                                              fontWeight: FontWeight.w600,
-                                              height: 2,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: h * 0.01),
-                                          child: FittedBox(
-                                            child: Text(
-                                              reccomendedPackes[0]["type"],
-                                              textScaleFactor: 0.6,
-                                              style: GoogleFonts.montserrat(
-                                                fontWeight: FontWeight.w600,
-                                                color:
-                                                    kTextInputPlaceholderColor
-                                                        .withOpacity(0.6),
-                                                height: 2,
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      ]),
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      }
-                      return loder;
-                    }
-                    return loder;
-                  },
-                )),
-            SizedBox(
-              height: h * 0.01,
             ),
             Label(
               color: korangecolor,
@@ -616,144 +642,160 @@ class _ServiceMainState extends State<ServiceMain> {
                       // mostpop.addAll(snapshot.data);
                       if (snapshot.hasData) {
                         return ListView.builder(
-                          controller: _controller2,
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          padding: EdgeInsets.symmetric(
-                              vertical: h * 0.01, horizontal: h * 0.025),
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (context, index) {
-                            PlanModel model = PlanModel();
-                            model= snapshot.data[index];
-                            return Visibility(
-                              visible: model.isrec=="true",
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ProductDetails(
-                                                planDetails:
-                                                    model,
-                                              )));
-                                },
-                                child: RRectCard(
-                                  h: h * 0.1,
-                                  w: w * 0.25,
-                                  borderRadius: 15,
-                                  widget: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Image.asset(
-                                            "assets/images/${reccomendedPackes[0]["image"]}"),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        FittedBox(
-                                          child: Text(
-                                            model.planname,
-                                            style: GoogleFonts.montserrat(
-                                              fontWeight: FontWeight.w600,
-                                              height: 2,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: h * 0.01),
-                                          child: FittedBox(
-                                            child: Text(
-                                              reccomendedPackes[0]["type"],
-                                              textScaleFactor: 0.6,
-                                              style: GoogleFonts.montserrat(
-                                                fontWeight: FontWeight.w600,
-                                                color:
-                                                    kTextInputPlaceholderColor
-                                                        .withOpacity(0.6),
-                                                height: 2,
+                                controller: _controller2,
+                                physics: const BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: h * 0.01, horizontal: h * 0.025),
+                                itemCount: snapshot.data.length,
+                                itemBuilder: (context, index) {
+                                  PlanModel model = PlanModel();
+                                  model= snapshot.data[index];
+                                  return Visibility(
+                                    visible: model.isrec=="true",
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        print("Cat "+model.categoryId.toString()+"^^");
+                                        Ids.categoryid = model.categoryId.toString();
+                                        Ids.subcategoryid = model.subcatid.toString();
+                                        Ids.planid = model.planid.toString();
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => ProductDetails(
+                                                      planDetails:
+                                                          model
+                                                    )));
+                                      },
+                                      child: RRectCard(
+                                        h: h * 0.1,
+                                        w: w * 0.25,
+                                        borderRadius: 15,
+                                        widget: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Image.network(
+                                                model.planimage,
+                                                height: h*0.04,
                                               ),
-                                            ),
-                                          ),
-                                        )
-                                      ]),
-                                ),
-                              ),
-                            );
-                          },
-                        );
+                                              // Image.asset(
+                                              //     "assets/images/${reccomendedPackes[0]["image"]}"),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              FittedBox(
+                                                child: Text(
+                                                  model.packs.first.planName,
+                                                  style: GoogleFonts.montserrat(
+                                                    fontWeight: FontWeight.w600,
+                                                    height: 2,
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: h * 0.01),
+                                                child: FittedBox(
+                                                  child: Text(
+                                                    model.packs.first.subPlanName,
+                                                    textScaleFactor: 0.6,
+                                                    style: GoogleFonts.montserrat(
+                                                      fontWeight: FontWeight.w600,
+                                                      color:
+                                                          kTextInputPlaceholderColor
+                                                              .withOpacity(0.6),
+                                                      height: 2,
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            ]),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
                       }
                       return const Center(child: Text("No Data Found"));
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       if (snapshot.hasData) {
                         return ListView.builder(
-                          controller: _controller2,
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          padding: EdgeInsets.symmetric(
-                              vertical: h * 0.01, horizontal: h * 0.025),
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (context, index) {
-                            PlanModel model = PlanModel();
-                            model= snapshot.data[index];
-                            return Visibility(
-                              visible: model.isrec=="true",
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ProductDetails(
-                                                planDetails:
-                                                    model,
-                                              )));
-                                },
-                                child: RRectCard(
-                                  h: h * 0.1,
-                                  w: w * 0.25,
-                                  borderRadius: 15,
-                                  widget: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Image.asset(
-                                            "assets/images/${reccomendedPackes[0]["image"]}"),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        FittedBox(
-                                          child: Text(
-                                            model.planname,
-                                            style: GoogleFonts.montserrat(
-                                              fontWeight: FontWeight.w600,
-                                              height: 2,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: h * 0.01),
-                                          child: FittedBox(
-                                            child: Text(
-                                              reccomendedPackes[0]["type"],
-                                              textScaleFactor: 0.6,
-                                              style: GoogleFonts.montserrat(
-                                                fontWeight: FontWeight.w600,
-                                                color:
-                                                    kTextInputPlaceholderColor
-                                                        .withOpacity(0.6),
-                                                height: 2,
+                                controller: _controller2,
+                                physics: const BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: h * 0.01, horizontal: h * 0.025),
+                                itemCount: snapshot.data.length,
+                                itemBuilder: (context, index) {
+                                  PlanModel model = PlanModel();
+                                  model= snapshot.data[index];
+                                  return Visibility(
+                                    visible: model.isrec=="true",
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        print("Cat "+model.categoryId.toString()+"^^");
+                                        Ids.categoryid = model.categoryId.toString();
+                                        Ids.subcategoryid = model.subcatid.toString();
+                                        Ids.planid = model.planid.toString();
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => ProductDetails(
+                                                      planDetails:
+                                                          model
+                                                    )));
+                                      },
+                                      child: RRectCard(
+                                        h: h * 0.1,
+                                        w: w * 0.25,
+                                        borderRadius: 15,
+                                        widget: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Image.network(
+                                                model.planimage,
+                                                height: h*0.04,
                                               ),
-                                            ),
-                                          ),
-                                        )
-                                      ]),
-                                ),
-                              ),
-                            );
-                          },
-                        );
+                                              // Image.asset(
+                                              //     "assets/images/${reccomendedPackes[0]["image"]}"),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              FittedBox(
+                                                child: Text(
+                                                  model.packs.first.planName,
+                                                  style: GoogleFonts.montserrat(
+                                                    fontWeight: FontWeight.w600,
+                                                    height: 2,
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: h * 0.01),
+                                                child: FittedBox(
+                                                  child: Text(
+                                                    model.packs.first.subPlanName,
+                                                    textScaleFactor: 0.6,
+                                                    style: GoogleFonts.montserrat(
+                                                      fontWeight: FontWeight.w600,
+                                                      color:
+                                                          kTextInputPlaceholderColor
+                                                              .withOpacity(0.6),
+                                                      height: 2,
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            ]),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
                       }
                       return loder;
                     }
