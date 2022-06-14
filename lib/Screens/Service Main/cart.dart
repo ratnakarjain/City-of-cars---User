@@ -42,6 +42,7 @@ class _CartState extends State<Cart> {
     fecthdata().whenComplete(() {
       if (data.isNotEmpty) {
         for (int i = 0; i < data.length; i++) {
+          print("typeprice "+data[i]["selectplan"][0]["typeprice"].toString()+"^^");
           totalvalue(double.parse(data[i]["selectplan"][0]["typeprice"].toString()));
         }
         setState(() {});
@@ -610,15 +611,8 @@ class _CartState extends State<Cart> {
                                                           isloading = false;
                                                           if (data.isNotEmpty) {
                                                             subtotal = 0;
-                                                            for (int i = 0;
-                                                                i < data.length;
-                                                                i++) {
-                                                              totalvalue(double
-                                                                  .parse(data[i]
-                                                                          [
-                                                                          "Plans"]
-                                                                      [
-                                                                      "typeprice"].toString()));
+                                                            for (int i = 0; i < data.length; i++) {
+                                                              totalvalue(double.parse(data[i]["selectplan"][0]["typeprice"].toString()));
                                                             }
                                                           }
                                                         });
@@ -869,7 +863,9 @@ class _CartState extends State<Cart> {
           data.addAll(value);
           if (value == null) {
             _null = "You have nothing in Cart. Please add...";
-            setState(() {});
+            setState(() {
+
+            });
           } else {
             _null = "";
             setState(() {});

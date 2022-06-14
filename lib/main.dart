@@ -70,7 +70,6 @@ class _MyAppState extends State<MyApp> {
 
    cardetails = prefs!.getString("usercar").toString();
     Ids.userid = id;
-   print(id+"=======");
   }
   @override
   Widget build(BuildContext context) {

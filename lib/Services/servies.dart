@@ -600,26 +600,32 @@ Future proceed() async {
 
 Future addorder(String paymentid, String paymentstatus) async {
   var url = Uri.parse(addorderUrl);
-  print("cartID "+Ids.cartid.toString()+"^^");
+  print("category "+Ids.categoryid.toString()+"^^");
+  print("subcategory "+Ids.subcategoryid.toString()+"^^");
+  print("Plans "+Ids.planid.toString()+"^^");
+  print("bookingdata "+Ids.slotid.toString()+"^^");
+  print("fuel "+Ids.fuelid.toString()+"^^");
+  print("car "+Ids.carid.toString()+"^^");
+  print("cart "+Ids.cartid.toString()+"^^");
+  print("brand "+Ids.brandid.toString()+"^^");
+  print("city "+Ids.cityid.toString()+"^^");
+  print("user "+prefs!.getString("userId").toString()+"^^");
+  print("status "+"^^");
+  print("paymentStatus "+paymentstatus.toString()+"^^");
+  print("paymentid "+paymentid.toString()+"^^");
+  print("Authorization "+prefs!.getString('token').toString()+"^^");
+
   try {
     var response = await http.post(url, body: {
-      "category": Ids.categoryid.toString(),
-      "subcategory": Ids.subcategoryid.toString(),
-      "Plans": Ids.planid.toString(),
-      "bookingdata": Ids.slotid.toString(),
-      "fuel": Ids.fuelid.toString(),
-      "car": Ids.carid.toString(),
-      "cart": Ids.cartid.toString(),
-      "brand": Ids.brandid.toString(),
-      "city": Ids.cityid.toString(),
-      "user": prefs!.getString("userId").toString(),
-      "status": "",
+
+      "userid": prefs!.getString("userId").toString(),
       "paymentStatus": paymentstatus,
       "paymentid": paymentid
     }, headers: {
       "Authorization": prefs!.getString('token').toString()
     });
     if (response.statusCode == 200) {
+      print("Response "+response.body.toString()+"");
       var data = jsonDecode(response.body);
       print(data);
       return data["order"];
