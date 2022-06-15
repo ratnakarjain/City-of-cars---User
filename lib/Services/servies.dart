@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:cityofcars/Screens/Service%20Main/productDetail.dart';
 import 'package:cityofcars/Services/models/jobcardModel.dart';
+import 'package:cityofcars/Services/models/offersModel.dart';
 import 'package:cityofcars/Services/models/orderhistoryModel.dart';
 import 'package:cityofcars/Services/models/plansModel.dart';
 import 'package:cityofcars/Services/models/subcategory.dart';
@@ -47,7 +48,7 @@ Future getcities() async {
 }
 
 Future getCarData() async {
-  var url = Uri.parse(getcarData+"?brand_id="+Ids.brandid);
+  var url = Uri.parse(getcarData + "?brand_id=" + Ids.brandid);
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -119,8 +120,8 @@ Future getfuel() async {
 }
 
 Future getcategaries() async {
-  print("token "+prefs!.getString('token').toString()+"^^");
-  print("userId "+prefs!.getString("userId").toString()+"^^");
+  print("token " + prefs!.getString('token').toString() + "^^");
+  print("userId " + prefs!.getString("userId").toString() + "^^");
   var url = Uri.parse(getcategryUrl);
   try {
     var respnse = await http.get(url,
@@ -141,7 +142,7 @@ Future getcategaries() async {
 
     } else {
       print(Future.error("Server Error"));
-      return[]; 
+      return [];
     }
   } catch (e) {
     print("error $e");
@@ -323,18 +324,17 @@ Future searchBrand(String brand) async {
 
 Future getSubcategory(String _id) async {
   print("id" + _id.toString() + "========");
-  String car="";
-  if(prefs!.getString("CarId").toString()!=""&&prefs!.getString("CarId").toString()!="null"){
-    
-                                            
+  String car = "";
+  if (prefs!.getString("CarId").toString() != "" &&
+      prefs!.getString("CarId").toString() != "null") {
     String id = prefs!.getString("CarId").toString();
     print(id);
 
-    car= "?carid="+id+"&";
-  }else{
-    car="?";
+    car = "?carid=" + id + "&";
+  } else {
+    car = "?";
   }
-  var url = Uri.parse(getSubcategoryUrl+ car + "cateory_id=" + _id);
+  var url = Uri.parse(getSubcategoryUrl + car + "cateory_id=" + _id);
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -343,51 +343,49 @@ Future getSubcategory(String _id) async {
       List<PlanModel> plans = [];
       List<SubcatModel> subcats = [];
       if (data["status"]) {
-        for(int i = 0 ; i<data["plans"].length;i++){
+        for (int i = 0; i < data["plans"].length; i++) {
           PlanModel pl = PlanModel();
-          pl.planid=data["plans"][i]["_id"].toString();
-          pl.componyprice=data["plans"][i]["servicepackprice"].toString();
+          pl.planid = data["plans"][i]["_id"].toString();
+          pl.componyprice = data["plans"][i]["servicepackprice"].toString();
           // pl.componypricedes=data["plans"][i]["servicename"].toString();
-          pl.description=data["plans"][i]["description"].toString();
-          pl.hour=data["plans"][i]["hours"].toString();
-          pl.isMost=data["plans"][i]["mostpopularpack"].toString();
-          pl.isrec=data["plans"][i]["status"].toString();
-          pl.label=data["plans"][i]["label"].toString();
-          pl.months=data["plans"][i]["month"].toString();
-          pl.planimage=data["plans"][i]["image"].toString();
+          pl.description = data["plans"][i]["description"].toString();
+          pl.hour = data["plans"][i]["hours"].toString();
+          pl.isMost = data["plans"][i]["mostpopularpack"].toString();
+          pl.isrec = data["plans"][i]["status"].toString();
+          pl.label = data["plans"][i]["label"].toString();
+          pl.months = data["plans"][i]["month"].toString();
+          pl.planimage = data["plans"][i]["image"].toString();
           // pl.planname=data["plans"][i]["planName"].toString();
           // pl.planpricdes=data["plans"][i]["typename"].toString();
           // pl.planprice=data["plans"][i]["typeprice"].toString();
-          pl.servicepackname=data["plans"][i]["servicepack"].toString();
-          pl.subcatid=data["plans"][i]["Subcategory"].toString();
+          pl.servicepackname = data["plans"][i]["servicepack"].toString();
+          pl.subcatid = data["plans"][i]["Subcategory"].toString();
           // pl.subplanname=data["plans"][i]["subPlanName"].toString();
-          pl.termsdetails=data["plans"][i]["textField"].toString();
-          pl.termsheading=data["plans"][i]["heading"].toString();
-          for(int j = 0 ; j<data["plans"][i]["services_id"].length;j++){
+          pl.termsdetails = data["plans"][i]["textField"].toString();
+          pl.termsheading = data["plans"][i]["heading"].toString();
+          for (int j = 0; j < data["plans"][i]["services_id"].length; j++) {
             IncludeMod ink = IncludeMod();
-            ink.image=data["plans"][i]["services_id"][j]["image"];
-            ink.name=data["plans"][i]["services_id"][j]["title"];
+            ink.image = data["plans"][i]["services_id"][j]["image"];
+            ink.name = data["plans"][i]["services_id"][j]["title"];
             pl.includes.add(ink);
           }
-          for(int j = 0 ; j<data["plans"][i]["plan"].length;j++){
+          for (int j = 0; j < data["plans"][i]["plan"].length; j++) {
             Packes ink = Packes();
-            ink.planName=data["plans"][i]["plan"][j]["planName"];
-            ink.subPlanName=data["plans"][i]["plan"][j]["subPlanName"];
-            ink.planPrice=data["plans"][i]["plan"][j]["typeprice"];
-            ink.pricedes=data["plans"][i]["plan"][j]["typename"];
-            ink.packId=data["plans"][i]["plan"][j]["_id"];
+            ink.planName = data["plans"][i]["plan"][j]["planName"];
+            ink.subPlanName = data["plans"][i]["plan"][j]["subPlanName"];
+            ink.planPrice = data["plans"][i]["plan"][j]["typeprice"];
+            ink.pricedes = data["plans"][i]["plan"][j]["typename"];
+            ink.packId = data["plans"][i]["plan"][j]["_id"];
             pl.packs.add(ink);
           }
           plans.add(pl);
-
-
         }
-        for(int i=0;i<data["Subcategory"].length;i++){
+        for (int i = 0; i < data["Subcategory"].length; i++) {
           SubcatModel mod = SubcatModel();
-          mod.id=data["Subcategory"][i]["_id"];
-          mod.name=data["Subcategory"][i]["title"];
-          for(int j = 0;j<plans.length;j++){
-            if(plans[j].subcatid==mod.id){
+          mod.id = data["Subcategory"][i]["_id"];
+          mod.name = data["Subcategory"][i]["title"];
+          for (int j = 0; j < plans.length; j++) {
+            if (plans[j].subcatid == mod.id) {
               mod.plans.add(plans[j]);
             }
           }
@@ -408,7 +406,7 @@ Future getSubcategory(String _id) async {
 
     } else {
       print(Future.error("Server Error"));
-      return <SubcatModel>[]; 
+      return <SubcatModel>[];
       print("Error=====");
     }
   } catch (e) {
@@ -457,14 +455,14 @@ Future slot(
 }
 
 Future addcartitem(Packes packes) async {
-  print("Category "+Ids.categoryid.toString()+"^^");
-  print("subcategory "+Ids.subcategoryid.toString()+"^^");
-  print("Plans "+Ids.planid.toString()+"^^");
-  print("bookingdata "+Ids.slotid.toString()+"^^");
-  print("selecetedPrice "+ProductDetails.selctedprice+"^^");
-  print("user "+prefs!.getString("userId").toString()+"^^");
-  print("CarId "+prefs!.getString("CarId").toString()+"^^");
-  print("token "+prefs!.getString('token').toString()+"^^");
+  print("Category " + Ids.categoryid.toString() + "^^");
+  print("subcategory " + Ids.subcategoryid.toString() + "^^");
+  print("Plans " + Ids.planid.toString() + "^^");
+  print("bookingdata " + Ids.slotid.toString() + "^^");
+  print("selecetedPrice " + ProductDetails.selctedprice + "^^");
+  print("user " + prefs!.getString("userId").toString() + "^^");
+  print("CarId " + prefs!.getString("CarId").toString() + "^^");
+  print("token " + prefs!.getString('token').toString() + "^^");
   var url = Uri.parse(addcartUrl);
   try {
     var response = await http.post(url, body: {
@@ -472,13 +470,13 @@ Future addcartitem(Packes packes) async {
       "subcategory": Ids.subcategoryid,
       "Plans": Ids.planid,
       "bookingdata": Ids.slotid,
-      "selecetedPrice":ProductDetails.selctedprice,
+      "selecetedPrice": ProductDetails.selctedprice,
       "user": prefs!.getString("userId").toString(),
       "cars": prefs!.getString("CarId").toString(),
-      "planName":packes.planName,
-      "subPlanName":packes.subPlanName,
-      "typeprice":packes.planPrice
-      
+      "brand": prefs!.getString("brandId").toString(),
+      "planName": packes.planName,
+      "subPlanName": packes.subPlanName,
+      "typeprice": packes.planPrice
     }, headers: {
       "Authorization": prefs!.getString('token').toString()
     });
@@ -497,8 +495,8 @@ Future addcartitem(Packes packes) async {
 Future getcartitems() async {
   var url =
       Uri.parse(getcartUrl + "?user=" + prefs!.getString("userId").toString());
-  print("UserId "+prefs!.getString("userId").toString()+"^^");
-  print("token "+prefs!.getString('token').toString()+"^^");
+  print("UserId " + prefs!.getString("userId").toString() + "^^");
+  print("token " + prefs!.getString('token').toString() + "^^");
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -562,7 +560,7 @@ Future sos(String number, String problem) async {
 }
 
 Future proceed() async {
-  var url = Uri.parse(proceedUrl+"?userid="+Ids.userid);
+  var url = Uri.parse(proceedUrl + "?userid=" + Ids.userid);
   try {
     var response = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -591,7 +589,6 @@ Future proceed() async {
       //   // print(list);
       // }
       return data["data"];
-
     }
   } catch (e) {
     print("error $e");
@@ -600,24 +597,23 @@ Future proceed() async {
 
 Future addorder(String paymentid, String paymentstatus) async {
   var url = Uri.parse(addorderUrl);
-  print("category "+Ids.categoryid.toString()+"^^");
-  print("subcategory "+Ids.subcategoryid.toString()+"^^");
-  print("Plans "+Ids.planid.toString()+"^^");
-  print("bookingdata "+Ids.slotid.toString()+"^^");
-  print("fuel "+Ids.fuelid.toString()+"^^");
-  print("car "+Ids.carid.toString()+"^^");
-  print("cart "+Ids.cartid.toString()+"^^");
-  print("brand "+Ids.brandid.toString()+"^^");
-  print("city "+Ids.cityid.toString()+"^^");
-  print("user "+prefs!.getString("userId").toString()+"^^");
-  print("status "+"^^");
-  print("paymentStatus "+paymentstatus.toString()+"^^");
-  print("paymentid "+paymentid.toString()+"^^");
-  print("Authorization "+prefs!.getString('token').toString()+"^^");
+  print("category " + Ids.categoryid.toString() + "^^");
+  print("subcategory " + Ids.subcategoryid.toString() + "^^");
+  print("Plans " + Ids.planid.toString() + "^^");
+  print("bookingdata " + Ids.slotid.toString() + "^^");
+  print("fuel " + Ids.fuelid.toString() + "^^");
+  print("car " + Ids.carid.toString() + "^^");
+  print("cart " + Ids.cartid.toString() + "^^");
+  print("brand " + Ids.brandid.toString() + "^^");
+  print("city " + Ids.cityid.toString() + "^^");
+  print("user " + prefs!.getString("userId").toString() + "^^");
+  print("status " + "^^");
+  print("paymentStatus " + paymentstatus.toString() + "^^");
+  print("paymentid " + paymentid.toString() + "^^");
+  print("Authorization " + prefs!.getString('token').toString() + "^^");
 
   try {
     var response = await http.post(url, body: {
-
       "userid": prefs!.getString("userId").toString(),
       "paymentStatus": paymentstatus,
       "paymentid": paymentid
@@ -625,7 +621,7 @@ Future addorder(String paymentid, String paymentstatus) async {
       "Authorization": prefs!.getString('token').toString()
     });
     if (response.statusCode == 200) {
-      print("Response "+response.body.toString()+"");
+      print("Response " + response.body.toString() + "");
       var data = jsonDecode(response.body);
       print(data);
       return data["order"];
@@ -715,6 +711,7 @@ Future addusercitycardata() async {
 }
 
 Future getOrderhistory() async {
+  print(prefs!.getString("userId").toString());
   var url = Uri.parse(
       getorderhistoryUrl + "?userid=" + prefs!.getString("userId").toString());
   try {
@@ -726,22 +723,24 @@ Future getOrderhistory() async {
       if (data["status"]) {
         for (int i = 0; i < data["data"].length; i++) {
           OrderHistoryModel model = OrderHistoryModel();
-          // model.carbrand=data["data"][i]["_id"] ;
-          model.carimage = data["data"][i]["car"]["image"].toString();
-          model.carname = data["data"][i]["car"]["cars"].toString();
-          // model.deliverydate=data["data"][i]["_id"];
-          // model.details=data["data"][i]["_id"];
-          model.orderid = data["data"][i]["orderid"].toString();
-          model.id = data["data"][i]["_id"].toString();
-         if(data["data"][i]["Plans"].toString()!="null") {
-           model.packname = data["data"][i]["Plans"]["planName"].toString();
-           model.price = data["data"][i]["Plans"]["typeprice"].toString();
-           model.servicename =
-               data["data"][i]["Plans"]["servicepack"].toString();
-         }
-          model.paystatus = data["data"][i]["paymentStatus"].toString();
+          var list =data["data"][i];
+          // model.carbrand=list["_id"] ;
+          model.carimage = list["orderData"][0]["cars"]["image"].toString();
+          model.carname = list["orderData"][0]["cars"]["cars"].toString();
+          model.deliverydate=list["date"].toString();
+          model.deliverytime=list["time"].toString();
+          // model.details=list["_id"];
+          model.orderid = list["orderid"].toString();
+          model.id = list["_id"].toString();
+          if (list["orderData"][0]["selectplan"][0].toString() != "null") {
+            model.packname = list["orderData"][0]["selectplan"][0]["planName"].toString();
+            model.price = list["orderData"][0]["selectplan"][0]["typeprice"].toString();
+            model.servicename =
+                list["orderData"][0]["selectplan"][0]["subPlanName"].toString();
+          }
+          model.paystatus = list["paymentStatus"].toString();
 
-          model.status = data["data"][i]["status"].toString();
+          model.status = list["status"].toString();
           modellist.add(model);
         }
         // print(data["data"].toString());
@@ -846,6 +845,7 @@ Future getapproveddetails(String id) async {
       if (data["status"] == true) {
         for (int i = 0; i < data["data"].length; i++) {
           ApprovalModel1 model = ApprovalModel1();
+          model.id=data["data"][i]["_id"].toString();
           model.status = data["data"][i]["status"].toString();
           model.description = data["data"][i]["description"].toString();
           model.heading = data["data"][i]["heading"].toString();
@@ -881,22 +881,14 @@ Future setApprooval(String id, String status, BuildContext context) async {
         headers: {"Authorization": prefs!.getString('token').toString()});
 
     if (response.statusCode == 200) {
-      List<ApprovalModel1> modellist = [];
       var data = jsonDecode(response.body);
       print(data);
+      ScaffoldMessenger.of(context)
+            .showSnackBar( SnackBar(content: Text(data["msg"])));
 
-      // print(data);
-      // return modellist;
     } else {
-      List<ApprovalModel1> modellist = [];
 
-      return modellist;
     }
-    //  if (response.statusCode == 201) {
-    //   var data = jsonDecode(response.body);
-    //   print(data);
-    //   // return data;
-    // }
   } catch (e) {
     print("error $e");
   }
@@ -908,9 +900,8 @@ Future getjobcard(String id) async {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
     if (respnse.statusCode == 200) {
-
       var data = jsonDecode(respnse.body);
-      print("Response "+data.toString()+"&");
+      print("Response " + data.toString() + "&");
       // JobCardModel model = JobCardModel();
       if (data["status"]) {
         //   model.username = data["data"]["orderid"]["bookingdata"]["name"];
@@ -1042,62 +1033,62 @@ Future getusercars() async {
 }
 
 Future getrecmostPlans() async {
-  print("CAr Id "+prefs!.getString("CarId").toString()+"^");
-  var url = Uri.parse(getpoprecUrl+"?carid="+prefs!.getString("CarId").toString());
+  print("CAr Id " + prefs!.getString("CarId").toString() + "^");
+  var url = Uri.parse(
+      getpoprecUrl + "?carid=" + prefs!.getString("CarId").toString());
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
     if (respnse.statusCode == 200) {
       var data = jsonDecode(respnse.body);
-       List<PlanModel> plans = [];
+      List<PlanModel> plans = [];
       if (data["state"]) {
-        for(int i = 0 ; i<data["data"].length;i++){
+        for (int i = 0; i < data["data"].length; i++) {
           PlanModel pl = PlanModel();
-          pl.planid=data["data"][i]["_id"].toString();
-          pl.componyprice=data["data"][i]["servicepackprice"].toString();
+          pl.planid = data["data"][i]["_id"].toString();
+          pl.componyprice = data["data"][i]["servicepackprice"].toString();
           // pl.componypricedes=data["data"][i]["servicename"].toString();
-          pl.description=data["data"][i]["description"].toString();
-          pl.hour=data["data"][i]["hours"].toString();
-          pl.isMost=data["data"][i]["mostpopularpack"].toString();
-          pl.isrec=data["data"][i]["status"].toString();
-          pl.label=data["data"][i]["label"].toString();
-          pl.months=data["data"][i]["month"].toString();
-          pl.planimage=data["data"][i]["image"].toString();
+          pl.description = data["data"][i]["description"].toString();
+          pl.hour = data["data"][i]["hours"].toString();
+          pl.isMost = data["data"][i]["mostpopularpack"].toString();
+          pl.isrec = data["data"][i]["status"].toString();
+          pl.label = data["data"][i]["label"].toString();
+          pl.months = data["data"][i]["month"].toString();
+          pl.planimage = data["data"][i]["image"].toString();
           // pl.planname=data["data"][i]["planName"].toString();
           // pl.planpricdes=data["data"][i]["typename"].toString();
           // pl.planprice=data["data"][i]["typeprice"].toString();
           // pl.servicepackname=data["data"][i]["servicepack"].toString();
-          pl.subcatid=data["data"][i]["Subcategory"].toString();
-          pl.subplanname=data["data"][i]["subPlanName"].toString();
-          pl.termsdetails=data["data"][i]["textField"].toString();
-          pl.termsheading=data["data"][i]["heading"].toString();
-          print("ASA"+data["data"][i]["services_id"][0]["category"][0].toString()+"^^");
+          pl.subcatid = data["data"][i]["Subcategory"].toString();
+          pl.subplanname = data["data"][i]["subPlanName"].toString();
+          pl.termsdetails = data["data"][i]["textField"].toString();
+          pl.termsheading = data["data"][i]["heading"].toString();
+          print("ASA" +
+              data["data"][i]["services_id"][0]["category"][0].toString() +
+              "^^");
           // if(data["data"][i]["services_id"].length>0) {
           //   if (data["data"][i]["services_id"][0]["category"].length > 0) {
           //     pl.categoryId =
           //         data["data"][i]["services_id"][0]["category"][0].toString();
           //   }
           // }
-          pl.categoryId =
-                  data["data"][i]["Category"].toString();
-          for(int j = 0 ; j<data["data"][i]["services_id"].length;j++){
+          pl.categoryId = data["data"][i]["Category"].toString();
+          for (int j = 0; j < data["data"][i]["services_id"].length; j++) {
             IncludeMod ink = IncludeMod();
-            ink.image=data["data"][i]["services_id"][j]["image"];
-            ink.name=data["data"][i]["services_id"][j]["title"];
+            ink.image = data["data"][i]["services_id"][j]["image"];
+            ink.name = data["data"][i]["services_id"][j]["title"];
             pl.includes.add(ink);
           }
-          for(int j = 0 ; j<data["data"][i]["plan"].length;j++){
+          for (int j = 0; j < data["data"][i]["plan"].length; j++) {
             Packes ink = Packes();
-            ink.planName=data["data"][i]["plan"][j]["planName"];
-            ink.subPlanName=data["data"][i]["plan"][j]["subPlanName"];
-            ink.planPrice=data["data"][i]["plan"][j]["typeprice"];
-            ink.pricedes=data["data"][i]["plan"][j]["typename"];
-            ink.packId=data["data"][i]["plan"][j]["_id"];
+            ink.planName = data["data"][i]["plan"][j]["planName"];
+            ink.subPlanName = data["data"][i]["plan"][j]["subPlanName"];
+            ink.planPrice = data["data"][i]["plan"][j]["typeprice"];
+            ink.pricedes = data["data"][i]["plan"][j]["typename"];
+            ink.packId = data["data"][i]["plan"][j]["_id"];
             pl.packs.add(ink);
           }
           plans.add(pl);
-
-
         }
         print(jsonEncode(plans));
         return plans;
@@ -1152,13 +1143,10 @@ Future postMess(String msg) async {
 }
 
 Future getMess() async {
-  
-  var url = Uri.parse(getmessageUrl+"?Sender_id="+Ids.userid);
+  var url = Uri.parse(getmessageUrl + "?Sender_id=" + Ids.userid);
   try {
-    var respnse = await http.get(url, 
-     headers: {
-      "Authorization": prefs!.getString('token').toString()
-    });
+    var respnse = await http.get(url,
+        headers: {"Authorization": prefs!.getString('token').toString()});
     if (respnse.statusCode == 200) {
       var data = jsonDecode(respnse.body);
       if (data["status"]) {
@@ -1211,6 +1199,7 @@ Future getsubcatbanner() async {
     print("error $e");
   }
 }
+
 Future getplanbanner() async {
   var url = Uri.parse(getplanBannerUrl);
   try {
@@ -1236,6 +1225,74 @@ Future getplanbanner() async {
     } else {
       return Future.error("Server Error");
       print("Error=====");
+    }
+  } catch (e) {
+    print("error $e");
+  }
+}
+
+Future getoffers() async {
+  var url = Uri.parse(getofferUrl);
+  try {
+    var respnse = await http.get(url,
+        headers: {"Authorization": prefs!.getString('token').toString()});
+    if (respnse.statusCode == 200) {
+      var data = jsonDecode(respnse.body);
+      List<OffersModel> offers = [];
+      if (data["status"]) {
+        for (int i = 0; i < data["data"].length; i++) {
+          var list = data["data"];
+          OffersModel offersModel = OffersModel();
+          offersModel.id = list[i]["_id"];
+          offersModel.heading = list[i]["heading"];
+          offersModel.des = list[i]["offerdiscreption"];
+          offersModel.discount = list[i]["Discount"];
+          offersModel.image = list[i]["image"];
+          offersModel.status = list[i]["status"] ?? false;
+          offers.add(offersModel);
+        }
+        return offers;
+      } else {
+        return <OffersModel>[];
+        // print(
+        //   "Error====="
+        // );
+      }
+      // Future city = data["getCities"];
+      // print("success============== ${data["getCities"]}");
+
+    } else {
+      return Future.error("Server Error");
+      print("Error=====");
+    }
+  } catch (e) {
+    print("error $e");
+  }
+}
+
+Future feedback(
+  String rating,
+  String optional,
+  String id,
+  String review
+) async {
+  var url = Uri.parse(feedbackUrl);
+  try {
+    var respnse = await http.post(url, headers: {
+      "Authorization": prefs!.getString('token').toString()
+    }, body: {
+      "Rating": rating,
+      "ServiceQuality": "as",
+      "ExpertBehaviour": "asdas",
+      "OnTime": "asda",
+      "QualitySpares": "ada",
+      "Optional": optional,
+      "orderid": id
+    });
+    if (respnse.statusCode == 200) {
+      var data = jsonDecode(respnse.body);
+    } else {
+      return Future.error("Server Error");
     }
   } catch (e) {
     print("error $e");

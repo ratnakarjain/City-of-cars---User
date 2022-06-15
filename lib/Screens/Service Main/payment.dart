@@ -581,16 +581,37 @@ totalvalue(double value) {
                 padding: EdgeInsets.symmetric(horizontal: w * 0.04),
                 child: RRecctButton(
                   onTap: () {
-                    Navigator.pushAndRemoveUntil<dynamic>(
-                      context,
-                      MaterialPageRoute<dynamic>(
-                        builder: (BuildContext context) => BottomNavBar(
-                          index: 0,
-                        ),
-                      ),
-                      (route) =>
-                          false, //if you want to disable back feature set to false
-                    );
+                    addorder("", "Pay on dropoff").then((value) {
+                            if (value == false) {
+                              istaped = false;
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text("Error"),
+                              ));
+                              setState(() {});
+                            }
+
+                            print(value["_id"] + "1234567890987654321");
+                            String _id = value["_id"];
+
+                            istaped = false;
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => OrderSuccessful(id: _id),
+                                ));
+                                setState(() {});
+                          });
+                    // Navigator.pushAndRemoveUntil<dynamic>(
+                    //   context,
+                    //   MaterialPageRoute<dynamic>(
+                    //     builder: (BuildContext context) => BottomNavBar(
+                    //       index: 0,
+                    //     ),
+                    //   ),
+                    //   (route) =>
+                    //       false, //if you want to disable back feature set to false
+                    // );
 
                     istaped = false;
                     setState(() {});

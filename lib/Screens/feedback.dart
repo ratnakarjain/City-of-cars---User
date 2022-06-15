@@ -1,3 +1,4 @@
+import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,7 +7,8 @@ import '../Utils/Buttons/button.dart';
 import '../Utils/constants.dart';
 
 class FeedBack extends StatefulWidget {
-  const FeedBack({Key? key}) : super(key: key);
+  String id;
+   FeedBack({Key? key,required this.id} ) : super(key: key);
 
   @override
   State<FeedBack> createState() => _FeedBackState();
@@ -33,13 +35,15 @@ class _FeedBackState extends State<FeedBack> {
       "subtype": "pick-up and drop off",
     },
   ];
-  List isSelected = [];
+  int isSelected=0;
+  int rating = 0;
+  TextEditingController optional = TextEditingController();
   var _controller = ScrollController();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    generate();
+
   }
 
   @override
@@ -131,10 +135,18 @@ class _FeedBackState extends State<FeedBack> {
                         scrollDirection: Axis.horizontal,
                         itemCount: 5,
                         itemBuilder: (context, index) {
-                          return Icon(
-                            Icons.star,
-                            color: ksubHading,
-                            size: h * 0.04,
+                          return GestureDetector(
+                            onTap: (){
+                              rating=index+1;
+                              setState(() {
+                                
+                              });
+                            },
+                            child: Icon(
+                              Icons.star,
+                              color:rating>index?korangecolor: ksubHading,
+                              size: h * 0.04,
+                            ),
                           );
                         },
                       ),
@@ -165,14 +177,13 @@ class _FeedBackState extends State<FeedBack> {
                           topServices.length,
                           (index) => InkWell(
                                 onTap: () {
-                                  generate();
-                                  isSelected[index] = !isSelected[index];
+                                  isSelected=index+1;
                                   setState(() {});
                                 },
                                 child: RRectCard(
                                   h: h * 0.06,
                                   w: w * 0.45,
-                                  color: isSelected[index]
+                                  color: isSelected==index+1
                                       ? kGreenColor
                                       : kLightOrangeBgColor,
                                   widget: Center(
@@ -183,7 +194,7 @@ class _FeedBackState extends State<FeedBack> {
                                                 "${topServices[index]["type"]}\n",
                                             style: GoogleFonts.montserrat(
                                               fontSize: 12,
-                                              color: isSelected[index]
+                                              color: isSelected==index+1
                                                   ? kwhitecolor
                                                   : kTextInputPlaceholderColor
                                                       .withOpacity(0.9),
@@ -196,7 +207,7 @@ class _FeedBackState extends State<FeedBack> {
                                                 style: GoogleFonts.montserrat(
                                                     fontSize: 8,
                                                     fontWeight: FontWeight.w400,
-                                                    color: isSelected[index]
+                                                    color: isSelected==index+1
                                                         ? kwhitecolor
                                                         : kTextInputPlaceholderColor
                                                             .withOpacity(0.32)),
@@ -233,6 +244,7 @@ class _FeedBackState extends State<FeedBack> {
                           color: kTextInputPlaceholderColor.withOpacity(0.1))
                     ]),
                 child: TextFormField(
+                  controller: optional,
                   minLines: 1,
                   maxLines: 5,
                   decoration: InputDecoration(
@@ -250,6 +262,7 @@ class _FeedBackState extends State<FeedBack> {
                   h: h * 0.06,
                   w: w * 0.9,
                   onTap: () {
+                    feedback(rating.toString(), optional.text, widget.id, topServices[isSelected-1]["type"]);
                     Navigator.pop(context);
                   },
                   buttonColor: kbluecolor,
@@ -268,7 +281,5 @@ class _FeedBackState extends State<FeedBack> {
     );
   }
 
-  generate() {
-    isSelected = List.generate(topServices.length, (index) => false);
-  }
+  
 }

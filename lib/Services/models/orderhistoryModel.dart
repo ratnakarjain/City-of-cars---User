@@ -2,6 +2,7 @@ class OrderHistoryModel{
   String id = "";
   String orderid = "";
   String deliverydate = "";
+  String deliverytime = "";
   String price = "";
   String paystatus = "";
   String carimage = "";

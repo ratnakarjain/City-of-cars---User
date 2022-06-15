@@ -1,4 +1,3 @@
-
 import 'package:cityofcars/Screens/bottomnavBar.dart';
 
 import 'package:cityofcars/Utils/constants.dart';
@@ -14,6 +13,7 @@ import 'Utils/preference.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
     'high_importance_channel', // id
     'High Importance Notifications', // name
@@ -28,13 +28,14 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print('A bg message just showed up :  ${message.messageId}');
 }
 
-Future<void> main()async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
 
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
@@ -43,7 +44,7 @@ Future<void> main()async {
     sound: true,
   );
   await CountryCodes.init();
-   Prefernece.pref = await SharedPreferences.getInstance();
+  Prefernece.pref = await SharedPreferences.getInstance();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
@@ -66,16 +67,30 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     // TODO: implement initState
     super.initState();
-   id = prefs!.getString("userId").toString();
+    FirebaseMessaging.instance.getInitialMessage();
+    ////Forground notification
+    FirebaseMessaging.onMessage.listen((message) {
+      if (message.notification != null) {
+        print(message.notification!.body);
+      }
+    });
+    //Routing on tap notification 
+    // when app is in background 
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+     final routeFrommessage = message.data["route"];
+     print(routeFrommessage);
+     });
+    id = prefs!.getString("userId").toString();
 
-   cardetails = prefs!.getString("usercar").toString();
+    cardetails = prefs!.getString("usercar").toString();
     Ids.userid = id;
   }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) =>  Shots()),
+        ChangeNotifierProvider(create: (_) => Shots()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -85,7 +100,9 @@ class _MyAppState extends State<MyApp> {
                 primary: korangecolor,
               ),
         ),
-        home: id==""||id=="null" ? const MyHomePage() : BottomNavBar(index: 0),
+        home: id == "" || id == "null"
+            ? const MyHomePage()
+            : BottomNavBar(index: 0),
       ),
     );
   }

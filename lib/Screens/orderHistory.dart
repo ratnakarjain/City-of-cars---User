@@ -52,6 +52,17 @@ class _OrderHistoryState extends State<OrderHistory> {
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
+    // getOrderhistory().then((value) {
+    //   datalist.addAll(value);
+    //   isloading= false;
+    //   print(datalist);
+    //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //     setState(() {
+
+    //     });
+    //   });
+
+    // });
     return Scaffold(
       backgroundColor: kbg2,
       appBar: AppBar(
@@ -99,6 +110,8 @@ class _OrderHistoryState extends State<OrderHistory> {
                             MaterialPageRoute(
                                 builder: ((context) => Tracking(
                                       orderid: datalist[currentPage].id,
+                                      date: datalist[currentPage].deliverydate,
+                                      time: datalist[currentPage].deliverytime
                                     ))));
                       },
                       text: datalist[currentPage].status!=""&&datalist[currentPage].status!="null"?datalist[currentPage].status:
@@ -116,7 +129,9 @@ class _OrderHistoryState extends State<OrderHistory> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const FeedBack(),
+                              builder: (context) =>  FeedBack(
+                                id: datalist[currentPage].id,
+                              ),
                             ));
                       },
                       text: "Send Feedback",
@@ -197,7 +212,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                       kTextInputPlaceholderColor),
                                               children: [
                                             TextSpan(
-                                                text: "27th Oct\n",
+                                                text: model.deliverydate.toString()=="null"?"\n":model.deliverydate.toString()+"\n",
                                                 style: GoogleFonts.montserrat(
                                                     fontSize: 8,
                                                     fontWeight: FontWeight.w700,
@@ -229,7 +244,8 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                   color:
                                                       kTextInputPlaceholderColor)),
                                           RRecctButton(
-                                            text: "Paid",
+                                            text: 
+                                            model.paystatus=="Success"?"Paid":"Pay Later",
                                             style: GoogleFonts.montserrat(
                                                 fontSize: 9,
                                                 fontWeight: FontWeight.w700,
@@ -255,8 +271,9 @@ class _OrderHistoryState extends State<OrderHistory> {
                                 //   height: h * 0.15,
                                 // ),
                                 Container(
-                                  height: h*0.15,
+                                  height: h*0.13,
                                   width: w*0.3,
+                                  margin: EdgeInsets.only(bottom: h*0.02),
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                       image: NetworkImage(
@@ -291,7 +308,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                 RichText(
                                     textAlign: TextAlign.center,
                                     text: TextSpan(
-                                        text: model.packname.toString(),
+                                        text: model.packname.toString()+"\n",
                                         style: GoogleFonts.montserrat(
                                             fontSize: 32,
                                             fontWeight: FontWeight.w700,

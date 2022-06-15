@@ -11,7 +11,9 @@ import 'bottomnavBar.dart';
 
 class Tracking extends StatefulWidget {
   String? orderid;
-  Tracking({Key? key, this.orderid}) : super(key: key);
+  String? time;
+  String? date;
+  Tracking({Key? key, this.orderid,this.date,  this.time  }) : super(key: key);
 
   @override
   State<Tracking> createState() => _TrackingState();
@@ -29,12 +31,12 @@ bool esti = false;
   void initState() {
     super.initState();
     print(widget.orderid);
-    getestimateTime(widget.orderid.toString()).then((value) {}).whenComplete(() {
-      esti = true;
-      setState(() {
+    // getestimateTime(widget.orderid.toString()).then((value) {}).whenComplete(() {
+    //   esti = true;
+    //   setState(() {
         
-      });
-    });
+    //   });
+    // });
 
     getapproveddetails(widget.orderid.toString()).then((value) {
       apprvallist.addAll(value);
@@ -54,7 +56,7 @@ bool esti = false;
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return Scaffold(
-      extendBodyBehindAppBar: true,
+      // extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: kTransparent,
         foregroundColor: kTextInputPlaceholderColor,
@@ -91,16 +93,16 @@ bool esti = false;
                     //   ),
                     // ),
                     SizedBox(
-                      height: h * 0.15,
+                      height: h * 0.1,
                     ),
                     Visibility(
-                      visible: esti,
+                      visible: widget.time!="null"||widget.date!="null",
                       child: Container(
                         decoration: BoxDecoration(color: kwhitecolor, boxShadow: [
                           BoxShadow(
                               blurRadius: 3,
                               color: kshadowColor.withOpacity(0.2),
-                              offset: Offset(0, 3))
+                              offset: const Offset(0, 3))
                         ]),
                         child: Padding(
                           padding: EdgeInsets.symmetric(
@@ -121,7 +123,7 @@ bool esti = false;
                                               color: kTextInputPlaceholderColor),
                                           children: [
                                         TextSpan(
-                                            text: " 2:47 Hrs",
+                                            text: widget.date.toString() + "  " + widget.time.toString(),
                                             style: GoogleFonts.montserrat(
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w400,
@@ -239,7 +241,6 @@ bool esti = false;
                                   width: w * 0.2,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(h * 0.01),
-                                      color: Colors.black12,
                                       image: DecorationImage(
                                           image: NetworkImage(mod.image),
                                           fit: BoxFit.fill)),

@@ -37,5 +37,7 @@ const String getpoprecUrl = baseUrl+"/getplanApi";
 const String getusercarsUrl = baseUrl+"/viewCarProfile";
 const String postmessageUrl = baseUrl+"/userSupport";
 const String getmessageUrl = baseUrl+"/getuserSupport";
+const String getofferUrl = baseUrl+"/getoffer";
+const String feedbackUrl = baseUrl+"/carfeedbackModel";
 
 String token = "";

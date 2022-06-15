@@ -164,7 +164,7 @@ class _JobCardState extends State<JobCard> {
                                     children: [
                                       TextSpan(
                                         text:
-                                            " ${data['orderid']["bookingdata"]["name"]}\n",
+                                            " ${data['orderid']["orderData"][0]["bookingdata"]["name"]}\n",
                                         style: GoogleFonts.montserrat(
                                             fontSize: 10,
                                             fontWeight: FontWeight.w400,
@@ -179,7 +179,7 @@ class _JobCardState extends State<JobCard> {
                                       ),
                                       TextSpan(
                                         text:
-                                            " - ${data['orderid']["bookingdata"]["houseNo"]}, ${data['orderid']["bookingdata"]["Street"]},\n",
+                                            " - ${data['orderid']["orderData"][0]["bookingdata"]["houseNo"]}, ${data['orderid']["orderData"][0]["bookingdata"]["Street"]},\n",
                                         style: GoogleFonts.montserrat(
                                             fontSize: 10,
                                             fontWeight: FontWeight.w400,
@@ -187,7 +187,7 @@ class _JobCardState extends State<JobCard> {
                                       ),
                                       TextSpan(
                                         text:
-                                            "${data['orderid']["bookingdata"]["state"]} - ${data['orderid']["bookingdata"]["pincode"]}\n",
+                                            "${data['orderid']["orderData"][0]["bookingdata"]["state"]} - ${data['orderid']["orderData"][0]["bookingdata"]["pincode"]}\n",
                                         style: GoogleFonts.montserrat(
                                             fontSize: 10,
                                             fontWeight: FontWeight.w400,
@@ -223,13 +223,13 @@ class _JobCardState extends State<JobCard> {
                                           BorderRadius.circular(h * 0.02),
                                       image: DecorationImage(
                                           image: NetworkImage(
-                                              data["orderid"]["car"]["image"]),
+                                              data["orderid"]["orderData"][0]["car"]["image"]),
                                           fit: BoxFit.fill)),
                                 ),
                                 // Image.asset("assets/images/Uber1.png"),
                                 RichText(
                                   text: TextSpan(
-                                      text: data["orderid"]["car"]["cars"],
+                                      text: data["orderid"]["orderData"][0]["car"]["cars"],
                                       style: GoogleFonts.montserrat(
                                         fontWeight: FontWeight.w700,
                                         fontSize: 9,
@@ -239,7 +239,7 @@ class _JobCardState extends State<JobCard> {
                                       children: [
                                         TextSpan(
                                             text:
-                                                " ${data["orderid"]["brand"]["brands"]}",
+                                                " ${data["orderid"]["orderData"][0]["brand"]["brands"]}",
                                             style: GoogleFonts.montserrat(
                                                 fontWeight: FontWeight.w400,
                                                 fontSize: 9,
@@ -395,7 +395,7 @@ class _JobCardState extends State<JobCard> {
                                         ),
                                         Expanded(
                                           child: Text(
-                                            data["orderid"]["bookingdata"]
+                                            data["orderid"]["orderData"][0]["bookingdata"]
                                                     ["carno"]
                                                 .toString()
                                                 .toUpperCase(),
@@ -500,7 +500,7 @@ class _JobCardState extends State<JobCard> {
                                     return Visibility(
                                       visible: true, //availabel[index]["x"] == 1,
                                       child: RRectCard(
-                                        color: kGreenColor,
+                                        // color: kGreenColor,
                                         h: 10,
                                         borderRadius: h * 0.03,
                                         padding: EdgeInsets.all(h * 0.01),
@@ -561,7 +561,7 @@ class _JobCardState extends State<JobCard> {
                                       // visible: geninfo[index]["x"] == 2,
                                       child: RRectCard(
                                         padding: EdgeInsets.all(h * 0.01),
-                                        color: korangecolor,
+                                        color: kredcolor,
                                         h: 10,
                                         borderRadius: h * 0.03,
                                         shadowColor: kTransparent,
@@ -622,7 +622,7 @@ class _JobCardState extends State<JobCard> {
                                         visible: missing[index]["x"] == 3,
                                         child: RRectCard(
                                           padding: EdgeInsets.all(h * 0.01),
-                                          color: kredcolor,
+                                          // color: kredcolor,
                                           h: 10,
                                           borderRadius: h * 0.03,
                                           widget: Center(
