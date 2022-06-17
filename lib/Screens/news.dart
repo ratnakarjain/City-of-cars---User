@@ -1,3 +1,5 @@
+import 'package:cityofcars/Services/models/blogModel.dart';
+import 'package:cityofcars/Services/servies.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -11,28 +13,32 @@ class News extends StatefulWidget {
 }
 
 class _NewsState extends State<News> {
-  List textExtended = [];
-  List isSelected = [];
+  List<BlogsModel> blogs = [];
+  int length1 = 0;
+  int length2 = 0;
   var h;
   var w;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    generate1();
-    generate2();
+    getblog().then((value) {
+      blogs.addAll(value);
+      setState(() {
+        length1 = blogs.length + 1;
+        length2 = blogs.length + 1;
+      });
+    });
     // _modalBottomSheetMenu();
     // bottemSheet();
-    
   }
 
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
-   
-    return Scaffold(
 
+    return Scaffold(
       backgroundColor: kwhitecolor,
       appBar: AppBar(
         elevation: 0,
@@ -44,14 +50,16 @@ class _NewsState extends State<News> {
               GoogleFonts.montserrat(fontSize: 21, fontWeight: FontWeight.w700),
         ),
       ),
-      body: Container(
+      body:
+      blogs.length==0?loder:
+       Container(
         height: h,
         width: w,
-        padding: EdgeInsets.only(bottom: h*0.07),
+        padding: EdgeInsets.only(bottom: h * 0.07),
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Column(
-              children: List.generate(4, (index) {
+              children: List.generate(blogs.length, (index) {
             return Container(
               decoration: BoxDecoration(
                   color: kwhitecolor,
@@ -67,23 +75,20 @@ class _NewsState extends State<News> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      if (isSelected[index]) {
-                        isSelected[index] = !isSelected[index];
+                      if (length1 == index + 1) {
+                        length1 = 0;
                       } else {
-                        if (textExtended[index]) {
-                          generate1();
-                          isSelected[index] = !isSelected[index];
+                        if (length2 == index + 1) {
+                          length1 = index + 1;
                         } else {
-                          generate1();
-                          generate2();
-                          isSelected[index] = !isSelected[index];
+                          length1 = index + 1;
                         }
                       }
                       setState(() {});
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: isSelected[index] ? kbluecolor : kTransparent,
+                        color: length1 == index + 1 ? kbluecolor : kTransparent,
                         borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(h * 0.05)),
                       ),
@@ -92,27 +97,31 @@ class _NewsState extends State<News> {
                       child: Column(
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Best and he bestest cars in India",
+                                    // "Best and he bestest cars in India",
+                                    blogs[index].blogsheading.toString(),
                                     style: GoogleFonts.montserrat(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w700,
-                                      color: isSelected[index]
+                                      color: length1 == index + 1
                                           ? kwhitecolor
                                           : kTextInputPlaceholderColor,
                                     ),
-                                  ), 
+                                  ),
                                   Text(
-                                    "8 hrs",
+                                    // "8 hrs",
+                                    DateTime.parse(blogs[index].createDate.toString()).hour.toString()+" Hrs"
+                                    // DateTime(blogs[index].createDate).hour.toString()
+                                    ,
                                     style: GoogleFonts.montserrat(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w400,
-                                      color: isSelected[index]
+                                      color: length1 == index + 1
                                           ? kwhitecolor
                                           : kTextInputPlaceholderColor,
                                     ),
@@ -120,10 +129,10 @@ class _NewsState extends State<News> {
                                 ],
                               ),
                               Icon(
-                                isSelected[index]
+                                length1 == index + 1
                                     ? Icons.keyboard_arrow_up
                                     : Icons.keyboard_arrow_down,
-                                color: isSelected[index]
+                                color: length1 == index + 1
                                     ? kwhitecolor
                                     : kTextInputPlaceholderColor,
                               )
@@ -131,30 +140,29 @@ class _NewsState extends State<News> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              if (textExtended[index]) {
-                                textExtended[index] = !textExtended[index];
+                              if (length2 == index + 1) {
+                                length2 = 0;
                               } else {
-                                if (isSelected[index]) {
-                                  generate2();
-                                  textExtended[index] = !textExtended[index];
+                                if (length1 == index + 1) {
+                                  length2 = index + 1;
                                 } else {
-                                  generate1();
-                                  generate2();
-                                  textExtended[index] = !textExtended[index];
+                                  length2 = index + 1;
                                 }
                               }
 
                               setState(() {});
                             },
-                            child: textExtended[index]
+                            child: length2 == index + 1
                                 ? Container(
+                                  width: w,
                                     margin: EdgeInsets.only(top: h * 0.03),
                                     child: Text(
-                                      "When I was 5 years old, my mother always told me that happiness was the key to life. When I went to school, they asked me what I wanted to be when I grew up.",
+                                      blogs[index].discreption.toString(),
+                                      // "When I was 5 years old, my mother always told me that happiness was the key to life. When I went to school, they asked me what I wanted to be when I grew up.",
                                       style: GoogleFonts.montserrat(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w400,
-                                        color: isSelected[index]
+                                        color: length1 == index + 1
                                             ? kwhitecolor
                                             : kTextInputPlaceholderColor,
                                       ),
@@ -162,13 +170,16 @@ class _NewsState extends State<News> {
                                   )
                                 : Container(
                                     height: h * 0.02,
+                                    width: w,
+                                    
                                     margin: EdgeInsets.only(top: h * 0.03),
                                     child: Text(
-                                      "When I was 5 years old, my mother always told me that happiness was the key to life. When I went to school, they asked me what I wanted to be when I grew up.",
+                                      // "When I was 5 years old, my mother always told me that happiness was the key to life. When I went to school, they asked me what I wanted to be when I grew up.",
+                                      blogs[index].discreption.toString(),
                                       style: GoogleFonts.montserrat(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w400,
-                                        color: isSelected[index]
+                                        color: length1 == index + 1
                                             ? kwhitecolor
                                             : kTextInputPlaceholderColor,
                                       ),
@@ -177,6 +188,7 @@ class _NewsState extends State<News> {
                           ),
                           Container(
                             decoration: BoxDecoration(
+                              color: kwhitecolor,
                                 borderRadius: BorderRadius.only(
                                     topRight: Radius.circular(
                                       h * 0.06,
@@ -185,8 +197,9 @@ class _NewsState extends State<News> {
                                     bottomRight: Radius.circular(h * 0.015),
                                     bottomLeft: Radius.circular(h * 0.06)),
                                 image: DecorationImage(
-                                    image:
-                                        AssetImage("assets/images/news1.png"),
+                                    image: NetworkImage(
+                                      blogs[index].image.toString(),
+                                    ),
                                     fit: BoxFit.fill)),
                             margin: EdgeInsets.symmetric(vertical: h * 0.03),
                             height: h * 0.14,
@@ -196,15 +209,18 @@ class _NewsState extends State<News> {
                       ),
                     ),
                   ),
-                  isSelected[index]
+                  length1 == index + 1
                       ? Container(
+                          width: w,
                           padding: EdgeInsets.symmetric(
                             horizontal: w * 0.1,
                           ),
                           margin:
                               EdgeInsets.only(top: h * 0.01, bottom: h * 0.07),
                           child: Text(
-                            "Believe in yourself, take on your challenges, dig deep within yourself to conquer fears. Never let anyone bring you down. You got to keep going.",
+                            blogs[index].subDiscreption.toString(),
+                            textAlign: TextAlign.start,
+                            // "Believe in yourself, take on your challenges, dig deep within yourself to conquer fears. Never let anyone bring you down. You got to keep going.",
                             style: GoogleFonts.montserrat(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w400,
@@ -245,11 +261,4 @@ class _NewsState extends State<News> {
   //   });
   // }
 
-  generate1() {
-    isSelected = List.generate(10, (index) => false);
-  }
-
-  generate2() {
-    textExtended = List.generate(10, (index) => false);
-  }
 }

@@ -138,14 +138,11 @@ class _ServiceMainState extends State<ServiceMain> {
                         currentPage = value;
                       });
                     },
-                    itemCount:
-                         images.length,
+                    itemCount: images.length,
                     itemBuilder: (context, index) => Container(
                           decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image: NetworkImage(
-                                    images[index]
-                                  ),
+                                  image: NetworkImage(images[index]),
                                   fit: BoxFit.cover)),
                         )),
                 Positioned(
@@ -346,7 +343,7 @@ class _ServiceMainState extends State<ServiceMain> {
                                                       ["image"]
                                                   .toString(),
                                               placeholder: (context, url) =>
-                                                  loder,
+                                                  Container(),
                                               errorWidget:
                                                   (context, url, error) =>
                                                       Container()
@@ -919,7 +916,7 @@ class _ServiceMainState extends State<ServiceMain> {
                         //     context,
                         //     MaterialPageRoute(
                         //         builder: (context) => const Offers()));
-                        show_offer_des(offerslist[index].des.toString());
+                        show_offer_des(offerslist[index].des.toString(),offerslist[index].discount.toString(),offerslist[index].heading.toString());
                       },
                       child: RRectCard(
                         h: h * 0.1,
@@ -929,7 +926,9 @@ class _ServiceMainState extends State<ServiceMain> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Image.network(
-                                  offerslist[index].image.toString(),height: h*0.03,),
+                                offerslist[index].image.toString(),
+                                height: h * 0.03,
+                              ),
                               const SizedBox(
                                 height: 5,
                               ),
@@ -974,15 +973,59 @@ class _ServiceMainState extends State<ServiceMain> {
     );
   }
 
-  show_offer_des(String des) {
+  show_offer_des(String des,String offer, String heading) {
     showModalBottomSheet(
         useRootNavigator: true,
+        // backgroundColor: kTransparent,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(h*0.03),topRight: Radius.circular(h*0.03))),
         context: context,
         builder: (context) {
           return Container(
-            padding: EdgeInsets.symmetric(vertical: h * 0.01,horizontal: w*0.05),
-            child: Text(des),
-          );
+              // height: h * 0.4,
+              color: kwhitecolor,
+              // constraints: BoxConstraints(
+              //   minHeight: h*0.3
+              // ),
+              padding:EdgeInsets.symmetric(
+                  horizontal: w * 0.05,vertical: h * 0.01) ,
+              margin: EdgeInsets.symmetric(
+                   horizontal: w * 0.05),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(height: h*0.01,),
+                    Text(
+                      offer,
+                        style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w600,
+                          height: 1,
+                          fontSize: 12
+                        ),
+                    ),
+                    Text(
+                      heading,
+                        style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w500,
+                          height: 2,
+                          fontSize: 12
+                        ),
+                    ),
+                    const Divider(
+                      color: Colors.blueGrey,
+                    ),
+                    Text(
+                      des,
+                        style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w400,
+                          height: 1,
+                          fontSize: 12
+                        ),
+                    ),
+                    SizedBox(height: h*0.03,)
+                  ],
+                ),
+              ));
         });
   }
 }

@@ -217,7 +217,13 @@ class _SelectBrandState extends State<SelectBrand> {
           //   ),
         ),
       ),
-      body: Stack(
+      body:
+          //  isLoading
+          //     ? const Align(
+          //         alignment: Alignment.center,
+          //         child: loder)
+          //     :
+          Stack(
         children: [
           Container(
             height: h,
@@ -248,7 +254,8 @@ class _SelectBrandState extends State<SelectBrand> {
                                 width: h * 0.1,
 
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(h * 0.015),
+                                    borderRadius:
+                                        BorderRadius.circular(h * 0.015),
                                     image: DecorationImage(
                                         image: NetworkImage(
                                           selctedImage.toString(),
@@ -263,7 +270,6 @@ class _SelectBrandState extends State<SelectBrand> {
                             ),
                           ))
                       : Container(
-                        
                           padding: EdgeInsets.symmetric(
                               horizontal: w * 0.05, vertical: 50),
                           child: Center(
@@ -280,12 +286,16 @@ class _SelectBrandState extends State<SelectBrand> {
                                     }),
                               builder: (context, AsyncSnapshot snapshot) {
                                 if (brandsloading) {
-                                  return Expanded(child: Container(
-                                    height: h*0.7,
-                                    child:Padding(
-                                      padding: Platform.isIOS? EdgeInsets.only(bottom:  100.0):EdgeInsets.only(bottom:  150.0),
-                                      child: loder,
-                                    )));
+                                  return Padding(
+                                    padding: EdgeInsets.only(top: h * 0.25),
+                                    child: loder,
+                                  );
+                                  // Expanded(child: Container(
+                                  //   height: h*0.7,
+                                  //   child:Padding(
+                                  //     padding: Platform.isIOS? EdgeInsets.only(bottom:  100.0):EdgeInsets.only(bottom:  150.0),
+                                  //     child: loder,
+                                  //   )));
                                 } else {
                                   if (snapshot.hasError) {
                                     return const Center(
@@ -312,15 +322,16 @@ class _SelectBrandState extends State<SelectBrand> {
                                         crossAxisCount: 3,
                                         crossAxisSpacing: h * 0.01,
                                         mainAxisSpacing: h * 0.01,
-                                        padding: EdgeInsets.only(bottom: h * 0.02),
-                                        children: List.generate(snapshot.data.length,
-                                            (index) {
+                                        padding:
+                                            EdgeInsets.only(bottom: h * 0.02),
+                                        children: List.generate(
+                                            snapshot.data.length, (index) {
                                           return GestureDetector(
                                               onTap: () {
-                                                CarsData.brand =
-                                                    snapshot.data[index]["brands"];
-                                                CarsData.brandimage =
-                                                    snapshot.data[index]["image"];
+                                                CarsData.brand = snapshot
+                                                    .data[index]["brands"];
+                                                CarsData.brandimage = snapshot
+                                                    .data[index]["image"];
                                                 Ids.brandid =
                                                     snapshot.data[index]["_id"];
                                                 print(CarsData.brand);
@@ -328,8 +339,8 @@ class _SelectBrandState extends State<SelectBrand> {
                                                 bottumSheet();
                                                 item = index;
                                                 isSelected = true;
-                                                selctedImage =
-                                                    snapshot.data[index]["image"];
+                                                selctedImage = snapshot
+                                                    .data[index]["image"];
                                                 print(selctedImage);
                                                 setState(() {});
                                               },
@@ -337,7 +348,8 @@ class _SelectBrandState extends State<SelectBrand> {
                                                 h: h * 0.18,
                                                 w: h * 0.18,
                                                 borderRadius: 30,
-                                                padding: EdgeInsets.all(h * 0.015),
+                                                padding:
+                                                    EdgeInsets.all(h * 0.015),
                                                 color: kwhitecolor,
                                                 widget: Container(
                                                   height: h * 0.1,
@@ -363,12 +375,17 @@ class _SelectBrandState extends State<SelectBrand> {
                                         }),
                                       );
                                     }
-                                    return Expanded(child: Container(
-                                    height: h,
-                                    child:Padding(
-                                      padding: Platform.isIOS? EdgeInsets.only(bottom:  100.0):EdgeInsets.only(bottom:  150.0),
+                                    return Padding(
+                                      padding: EdgeInsets.only(top: h * 0.25),
                                       child: loder,
-                                    )));;
+                                    );
+                                    ;
+                                    // Expanded(child: Container(
+                                    // height: h,
+                                    // child:Padding(
+                                    //   padding: Platform.isIOS? EdgeInsets.only(bottom:  100.0):EdgeInsets.only(bottom:  150.0),
+                                    //   child: loder,
+                                    // )));
                                   }
                                   if (snapshot.connectionState ==
                                       ConnectionState.done) {
@@ -389,19 +406,20 @@ class _SelectBrandState extends State<SelectBrand> {
                                       crossAxisCount: 3,
                                       crossAxisSpacing: h * 0.01,
                                       mainAxisSpacing: h * 0.01,
-                                      padding: EdgeInsets.only(bottom: h * 0.02),
-                                      children: List.generate(snapshot.data.length,
-                                          (index) {
+                                      padding:
+                                          EdgeInsets.only(bottom: h * 0.02),
+                                      children: List.generate(
+                                          snapshot.data.length, (index) {
                                         return GestureDetector(
                                             onTap: () {
-                                              CarsData.brand =
-                                                  snapshot.data[index]["brands"];
+                                              CarsData.brand = snapshot
+                                                  .data[index]["brands"];
                                               CarsData.brandimage =
                                                   snapshot.data[index]["image"];
                                               Ids.brandid =
                                                   snapshot.data[index]["_id"];
-                                              prefs!
-                                                  .setString("brandId", Ids.brandid);
+                                              prefs!.setString(
+                                                  "brandId", Ids.brandid);
                                               print(CarsData.brand);
                                               print(CarsData.brandimage);
                                               bottumSheet();
@@ -416,7 +434,8 @@ class _SelectBrandState extends State<SelectBrand> {
                                               h: h * 0.18,
                                               w: h * 0.18,
                                               borderRadius: 30,
-                                              padding: EdgeInsets.all(h * 0.015),
+                                              padding:
+                                                  EdgeInsets.all(h * 0.015),
                                               color: kwhitecolor,
                                               widget: Container(
                                                 height: h * 0.1,
@@ -442,12 +461,17 @@ class _SelectBrandState extends State<SelectBrand> {
                                       }),
                                     );
                                   } else {
-                                    return Expanded(child: Container(
-                                    height: h*0.7,
-                                    child:Padding(
-                                      padding: Platform.isIOS? EdgeInsets.only(bottom:  100.0):EdgeInsets.only(bottom:  150.0),
+                                    return Padding(
+                                      padding: EdgeInsets.only(top: h * 0.25),
                                       child: loder,
-                                    )));
+                                    );
+                                    ;
+                                    //  Expanded(child: Container(
+                                    // height: h*0.7,
+                                    // child:Padding(
+                                    //   padding: Platform.isIOS? EdgeInsets.only(bottom:  100.0):EdgeInsets.only(bottom:  150.0),
+                                    //   child: loder,
+                                    // )));
                                   }
                                 }
                               },
@@ -457,7 +481,7 @@ class _SelectBrandState extends State<SelectBrand> {
               ),
             ),
           ),
-          // Visibility( 
+          // Visibility(
           //   visible: brandsloading,
           //   child: loder)
         ],
@@ -468,10 +492,8 @@ class _SelectBrandState extends State<SelectBrand> {
   bottumSheet() {
     // var abc = Provider.of<Shots>(context, listen: true);
     showModalBottomSheet(
-      
         context: context,
         elevation: 8,
-        
         barrierColor: kblackcolor.withOpacity(0.1),
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
@@ -480,7 +502,6 @@ class _SelectBrandState extends State<SelectBrand> {
         )),
         builder: (context) {
           return Container(
-            
             width: w,
             decoration: BoxDecoration(
                 color: kwhitecolor,
@@ -547,8 +568,8 @@ class _SelectBrandState extends State<SelectBrand> {
                                 crossAxisCount: 3,
                                 crossAxisSpacing: 10,
                                 mainAxisSpacing: 10,
-                                children:
-                                List.generate(snapshot.data.length, (index) {
+                                children: List.generate(snapshot.data.length,
+                                    (index) {
                                   // abc.SetTotalPrice(
                                   //   snapshot.data.length
                                   // );
@@ -556,9 +577,9 @@ class _SelectBrandState extends State<SelectBrand> {
                                   return GestureDetector(
                                     onTap: () {
                                       CarsData.name =
-                                      snapshot.data[index]["cars"];
+                                          snapshot.data[index]["cars"];
                                       CarsData.carimage =
-                                      snapshot.data[index]["image"];
+                                          snapshot.data[index]["image"];
                                       Ids.carid = snapshot.data[index]["_id"];
                                       prefs!.setString("CarId", Ids.carid);
                                       print(CarsData.brand);
@@ -567,7 +588,7 @@ class _SelectBrandState extends State<SelectBrand> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                            const SelectFuel(),
+                                                const SelectFuel(),
                                           ));
                                       setState(() {});
                                     },
@@ -577,18 +598,18 @@ class _SelectBrandState extends State<SelectBrand> {
                                       borderRadius: 30,
                                       widget: Column(
                                           mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                              MainAxisAlignment.center,
                                           children: [
                                             Expanded(
                                               child: CachedNetworkImage(
                                                 imageUrl: snapshot.data[index]
-                                                ["image"],
+                                                    ["image"],
                                                 placeholder: (context, url) =>
-                                                // loder,
-                                                Container(),
+                                                    // loder,
+                                                    Container(),
                                                 errorWidget:
                                                     (context, url, error) =>
-                                                const Icon(Icons.error),
+                                                        const Icon(Icons.error),
                                               ),
                                               // Image.network(
                                               //     "${snapshot.data[index]["image"]}"),
@@ -614,7 +635,7 @@ class _SelectBrandState extends State<SelectBrand> {
                                 }),
                               ),
                             );
-                          }else{
+                          } else {
                             return loder;
                           }
                         }

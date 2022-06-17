@@ -39,5 +39,6 @@ const String postmessageUrl = baseUrl+"/userSupport";
 const String getmessageUrl = baseUrl+"/getuserSupport";
 const String getofferUrl = baseUrl+"/getoffer";
 const String feedbackUrl = baseUrl+"/carfeedbackModel";
+const String blogUrl = baseUrl+"/getBlogs";
 
 String token = "";

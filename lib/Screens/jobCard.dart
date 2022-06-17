@@ -101,9 +101,9 @@ class _JobCardState extends State<JobCard> {
             missing.add(geninfo[i]);
           }
 
-          print(availeble.toString()+"============");
-          print(notavaileble.toString()+"============");
-          print(missing.toString()+"============");
+          // print(availeble.toString()+"avaible");
+          // print(notavaileble.toString()+"not availble");
+          print(missing.toString()+"missing");
         }
         print(condi);
         print(custCon);
@@ -223,13 +223,13 @@ class _JobCardState extends State<JobCard> {
                                           BorderRadius.circular(h * 0.02),
                                       image: DecorationImage(
                                           image: NetworkImage(
-                                              data["orderid"]["orderData"][0]["car"]["image"]),
+                                              data["orderid"]["orderData"][0]["cars"]["image"]),
                                           fit: BoxFit.fill)),
                                 ),
                                 // Image.asset("assets/images/Uber1.png"),
                                 RichText(
                                   text: TextSpan(
-                                      text: data["orderid"]["orderData"][0]["car"]["cars"],
+                                      text: data["orderid"]["orderData"][0]["cars"]["cars"],
                                       style: GoogleFonts.montserrat(
                                         fontWeight: FontWeight.w700,
                                         fontSize: 9,
@@ -239,7 +239,7 @@ class _JobCardState extends State<JobCard> {
                                       children: [
                                         TextSpan(
                                             text:
-                                                " ${data["orderid"]["orderData"][0]["brand"]["brands"]}",
+                                                " ${data["orderid"]["orderData"][0]["brands"]["brands"]}",
                                             style: GoogleFonts.montserrat(
                                                 fontWeight: FontWeight.w400,
                                                 fontSize: 9,
@@ -272,13 +272,13 @@ class _JobCardState extends State<JobCard> {
                               margin:
                                   EdgeInsets.symmetric(horizontal: w * 0.02),
                               decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                      begin: Alignment.bottomCenter,
-                                      end: Alignment.center,
-                                      colors: [
-                                        kblackcolor.withOpacity(0.5),
-                                        kTransparent
-                                      ]),
+                                  // gradient: LinearGradient(
+                                  //     begin: Alignment.bottomCenter,
+                                  //     end: Alignment.center,
+                                  //     colors: [
+                                  //       kblackcolor.withOpacity(0.5),
+                                  //       kTransparent
+                                  //     ]),
                                   borderRadius: BorderRadius.circular(h * 0.03),
                                   image: DecorationImage(
                                       image: NetworkImage(data["image"]),
@@ -493,26 +493,24 @@ class _JobCardState extends State<JobCard> {
                                   crossAxisSpacing: w * 0.01,
                                   // scrollDirection: Axis.vertical,
                                   crossAxisCount: 3,
+                                  padding: EdgeInsets.only(bottom: h*0.01),
                                   childAspectRatio: 1.6,
-                                  physics: NeverScrollableScrollPhysics(),
+                                  physics: const NeverScrollableScrollPhysics(),
                                   // padding: EdgeInsets.all(10),
                                   children: List.generate(availeble.length, (index) {
-                                    return Visibility(
-                                      visible: true, //availabel[index]["x"] == 1,
-                                      child: RRectCard(
-                                        // color: kGreenColor,
-                                        h: 10,
-                                        borderRadius: h * 0.03,
-                                        padding: EdgeInsets.all(h * 0.01),
-                                        widget: Center(
-                                          child: Text(
-                                            availeble[index]["heading"],
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.montserrat(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w700,
-                                              color: kwhitecolor,
-                                            ),
+                                    return RRectCard(
+                                      // color: kGreenColor,
+                                      h: 10,
+                                      borderRadius: h * 0.03,
+                                      padding: EdgeInsets.all(h * 0.01),
+                                      widget: Center(
+                                        child: Text(
+                                          availeble[index]["heading"],
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.montserrat(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w700,
+                                            color: kTextInputPlaceholderColor,
                                           ),
                                         ),
                                       ),
@@ -553,27 +551,26 @@ class _JobCardState extends State<JobCard> {
                                   crossAxisCount: 3,
                                   crossAxisSpacing: w * 0.01,
                                   mainAxisSpacing: h * 0.01,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  padding: EdgeInsets.only(bottom: h*0.01),
 
                                   // padding: EdgeInsets.all(10),
                                   children:
                                       List.generate(notavaileble.length, (index) {
-                                    return Visibility(
-                                      // visible: geninfo[index]["x"] == 2,
-                                      child: RRectCard(
-                                        padding: EdgeInsets.all(h * 0.01),
-                                        color: kredcolor,
-                                        h: 10,
-                                        borderRadius: h * 0.03,
-                                        shadowColor: kTransparent,
-                                        widget: Center(
-                                          child: Text(
-                                            notavaileble[index]["heading"].toString(),
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.montserrat(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w700,
-                                              color: kwhitecolor,
-                                            ),
+                                    return RRectCard(
+                                      padding: EdgeInsets.all(h * 0.01),
+                                      color: kredcolor,
+                                      h: 10,
+                                      borderRadius: h * 0.03,
+                                      shadowColor: kTransparent,
+                                      widget: Center(
+                                        child: Text(
+                                          notavaileble[index]["heading"].toString(),
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.montserrat(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w700,
+                                            color: kTextInputPlaceholderColor,
                                           ),
                                         ),
                                       ),
@@ -613,33 +610,29 @@ class _JobCardState extends State<JobCard> {
                                   shrinkWrap: true,
                                   controller: _controller3,
                                   scrollDirection: Axis.vertical,
+                                  physics: const NeverScrollableScrollPhysics(),
                                   crossAxisCount: 3,
-                                  // padding: EdgeInsets.all(10),
+                                  padding: EdgeInsets.only(bottom: h*0.01),
                                   children: List.generate(missing.length, (index) {
                                     // geninfo[index]["x"]!=3 ? break;
-                                    if (geninfo[index]["x"] == 3) {
-                                      return Visibility(
-                                        visible: missing[index]["x"] == 3,
-                                        child: RRectCard(
-                                          padding: EdgeInsets.all(h * 0.01),
-                                          // color: kredcolor,
-                                          h: 10,
-                                          borderRadius: h * 0.03,
-                                          widget: Center(
-                                            child: Text(
-                                              missing[index]["heading"],
-                                              textAlign: TextAlign.center,
-                                              style: GoogleFonts.montserrat(
-                                                fontSize: 10,
-                                                fontWeight: FontWeight.w700,
-                                                color: kwhitecolor,
-                                              ),
+                                    return RRectCard(
+                                        padding: EdgeInsets.all(h * 0.01),
+                                        // color: kredcolor,
+                                        h: 10,
+                                        borderRadius: h * 0.03,
+                                        widget: Center(
+                                          child: Text(
+                                            missing[index]["heading"],
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.montserrat(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w700,
+                                              color: kTextInputPlaceholderColor,
                                             ),
                                           ),
                                         ),
                                       );
-                                    }
-                                    return Container();
+                                    
                                   }),
                                 ),
                                 borderRadius: h * 0.02),

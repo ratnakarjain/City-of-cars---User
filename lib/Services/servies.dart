@@ -2,7 +2,7 @@
 
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:flutter/material.dart';
 import 'package:cityofcars/Screens/Service%20Main/productDetail.dart';
 import 'package:cityofcars/Services/models/jobcardModel.dart';
 import 'package:cityofcars/Services/models/offersModel.dart';
@@ -18,9 +18,10 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
 import 'models/ApprovalsModel.dart';
+import 'models/blogModel.dart';
 import 'models/paymentmodel.dart';
 import 'models/recentsModel.dart';
-
+bool isLoading =false;
 var prefs = Prefernece.pref;
 
 Future getcities() async {
@@ -73,6 +74,7 @@ Future getCarData() async {
 
 Future getBrandss() async {
   var url = Uri.parse(getBrands);
+  isLoading= true;
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -80,14 +82,18 @@ Future getBrandss() async {
       var data = jsonDecode(respnse.body);
       if (data["status"]) {
         print(data["data"]);
+        isLoading=false;
         return data["data"];
+
       } else {
+        isLoading=false;
         return Future.error(data["msg"]);
       }
       // Future city = data["getCities"];
       // print("success============== ${data["getCities"]}");
 
     } else {
+        isLoading=false;
       return Future.error("Server Error");
     }
   } catch (e) {
@@ -1293,6 +1299,30 @@ Future feedback(
       var data = jsonDecode(respnse.body);
     } else {
       return Future.error("Server Error");
+    }
+  } catch (e) {
+    print("error $e");
+  }
+}
+
+
+Future getblog(
+) async {
+  var url = Uri.parse(blogUrl);
+  try {
+    var respnse = await http.get(url, headers: {
+      "Authorization": prefs!.getString('token').toString()
+    });
+    if (respnse.statusCode == 200) {
+      List<BlogsModel> blogs=[];
+      var data = jsonDecode(respnse.body);
+      if(data["status"]){
+        blogs = blogsModelFromJson(jsonEncode(data["data"]));
+        return blogs;
+      }
+      return <BlogsModel>[];
+    } else {
+      return <BlogsModel>[];
     }
   } catch (e) {
     print("error $e");

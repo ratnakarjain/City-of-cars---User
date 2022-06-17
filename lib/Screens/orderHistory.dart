@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:card_swiper/card_swiper.dart';
+import 'package:intl/intl.dart';
 
 import '../Services/servies.dart';
 import 'Service Main/cart.dart';
@@ -212,7 +213,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                       kTextInputPlaceholderColor),
                                               children: [
                                             TextSpan(
-                                                text: model.deliverydate.toString()=="null"?"\n":model.deliverydate.toString()+"\n",
+                                                text: model.deliverydate.toString()=="null"?"\n":DateFormat.MMMMd().format(DateTime.parse(model.deliverydate.toString()) ) +"\n",
                                                 style: GoogleFonts.montserrat(
                                                     fontSize: 8,
                                                     fontWeight: FontWeight.w700,

@@ -5,6 +5,7 @@ import 'package:cityofcars/Utils/Buttons/button.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 import '../Services/servies.dart';
 import 'bottomnavBar.dart';
@@ -123,7 +124,11 @@ bool esti = false;
                                               color: kTextInputPlaceholderColor),
                                           children: [
                                         TextSpan(
-                                            text: widget.date.toString() + "  " + widget.time.toString(),
+                                            text: 
+                                            DateFormat.MMMMd().format(DateTime.parse(widget.date.toString()))+" - "+
+                                             DateTime.parse(widget.time.toString()).hour.toString()+":"+DateTime.parse(widget.time.toString()).minute.toString()+" Hrs",
+                                             
+                                            // widget.date.toString() + "  " + widget.time.toString(),
                                             style: GoogleFonts.montserrat(
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w400,

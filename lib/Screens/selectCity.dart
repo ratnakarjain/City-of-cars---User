@@ -413,19 +413,15 @@ class _SelectCityState extends State<SelectCity> {
                                 }),
                               );
                             }
-                            return Expanded(child: Container(
-                                height: h*0.7,
-                                child:Padding(
-                                  padding: Platform.isIOS? EdgeInsets.only(bottom:  100.0):EdgeInsets.only(bottom:  150.0),
-                                  child: loder,
-                                )));
+                            return Padding(
+                                    padding:  EdgeInsets.only(top: h*0.25),
+                                    child: loder,
+                                  );
                           }
-                          return Expanded(child: Container(
-                              height: h*0.7,
-                              child:Padding(
-                                padding: Platform.isIOS? EdgeInsets.only(bottom:  100.0):EdgeInsets.only(bottom:  150.0),
-                                child: loder,
-                              )));;
+                          return Padding(
+                                    padding:  EdgeInsets.only(top: h*0.25),
+                                    child: loder,
+                                  );
                           // print(snapshot.data.length);
                         }),
                   ),

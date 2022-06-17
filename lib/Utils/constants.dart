@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 const korangecolor = Color(0XFFF48100);
@@ -38,6 +40,12 @@ const knewstextbrif = Color(0xff817889);
 const Widget loder = Center(child: CircularProgressIndicator.adaptive(),);
 
 
+ Widget loder2 = Expanded(child: Container(
+                                    color: kTransparent,
+                                    child:Padding(
+                                      padding: Platform.isIOS? const EdgeInsets.only(bottom:  100.0):const EdgeInsets.only(bottom:  150.0),
+                                      child: loder,
+                                    )));
 
 class CarsData{
   static String city = "";

@@ -15,7 +15,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
-    'high_importance_channel', // id
+    'cityofcars', // id
     'High Importance Notifications', // name
     importance: Importance.high,
     playSound: true);
@@ -25,6 +25,25 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
+  RemoteNotification? notification = message.notification;
+  AndroidNotification? android = message.notification?.android;
+
+  // If `onMessage` is triggered with a notification, construct our own
+  // local notification to show to users using the created channel.
+  if (notification != null && android != null) {
+    flutterLocalNotificationsPlugin.show(
+        notification.hashCode,
+        notification.title,
+        notification.body,
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            channel.id,
+            channel.name,
+            icon: android.smallIcon,
+            // other properties...
+          ),
+        ));
+  }
   print('A bg message just showed up :  ${message.messageId}');
 }
 
@@ -67,9 +86,50 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    FirebaseMessaging.instance.getInitialMessage();
+    FirebaseMessaging.instance.getInitialMessage().then((message) {
+      RemoteNotification? notification = message?.notification;
+  AndroidNotification? android = message?.notification?.android;
+
+  // If `onMessage` is triggered with a notification, construct our own
+  // local notification to show to users using the created channel.
+  if (notification != null && android != null) {
+    flutterLocalNotificationsPlugin.show(
+        notification.hashCode,
+        notification.title,
+        notification.body,
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            channel.id,
+            channel.name,
+            icon: android.smallIcon,
+            // other properties...
+          ),
+        ));
+  }
+      final routeFrommessage = message!.data["route"];
+     print(routeFrommessage);
+    });
     ////Forground notification
     FirebaseMessaging.onMessage.listen((message) {
+      RemoteNotification? notification = message.notification;
+  AndroidNotification? android = message.notification?.android;
+
+  // If `onMessage` is triggered with a notification, construct our own
+  // local notification to show to users using the created channel.
+  if (notification != null && android != null) {
+    flutterLocalNotificationsPlugin.show(
+        notification.hashCode,
+        notification.title,
+        notification.body,
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            channel.id,
+            channel.name,
+            icon: android.smallIcon,
+            // other properties...
+          ),
+        ));
+  }
       if (message.notification != null) {
         print(message.notification!.body);
       }
@@ -77,6 +137,25 @@ class _MyAppState extends State<MyApp> {
     //Routing on tap notification 
     // when app is in background 
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      RemoteNotification? notification = message.notification;
+  AndroidNotification? android = message.notification?.android;
+
+  // If `onMessage` is triggered with a notification, construct our own
+  // local notification to show to users using the created channel.
+  if (notification != null && android != null) {
+    flutterLocalNotificationsPlugin.show(
+        notification.hashCode,
+        notification.title,
+        notification.body,
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            channel.id,
+            channel.name,
+            icon: android.smallIcon,
+            // other properties...
+          ),
+        ));
+  }
      final routeFrommessage = message.data["route"];
      print(routeFrommessage);
      });
