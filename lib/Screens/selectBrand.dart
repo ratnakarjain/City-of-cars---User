@@ -465,7 +465,7 @@ class _SelectBrandState extends State<SelectBrand> {
                                       padding: EdgeInsets.only(top: h * 0.25),
                                       child: loder,
                                     );
-                                    ;
+                                    
                                     //  Expanded(child: Container(
                                     // height: h*0.7,
                                     // child:Padding(
