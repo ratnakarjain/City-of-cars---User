@@ -1,9 +1,11 @@
+import 'package:cityofcars/Screens/carHealth.dart';
 import 'package:cityofcars/Screens/feedback.dart';
 import 'package:cityofcars/Screens/jobCard.dart';
 import 'package:cityofcars/Screens/tracking.dart';
 import 'package:cityofcars/Services/models/orderhistoryModel.dart';
 import 'package:cityofcars/Utils/Buttons/button.dart';
 import 'package:cityofcars/Utils/constants.dart';
+import 'package:cityofcars/Utils/preference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,6 +13,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:intl/intl.dart';
 
 import '../Services/servies.dart';
+import '../Utils/Shapes/widgets.dart';
 import 'Service Main/cart.dart';
 import 'bottomnavBar.dart';
 
@@ -26,6 +29,7 @@ class _OrderHistoryState extends State<OrderHistory> {
   var w;
   int currentPage = 0;
   bool isloading = true;
+  var pref = Prefernece.pref;
   List cardDart = [
     "Primium",
     "Primium",
@@ -39,6 +43,7 @@ class _OrderHistoryState extends State<OrderHistory> {
     getOrderhistory().then((value) {
       datalist.addAll(value);
       isloading= false;
+      pref!.setInt("totalServices",datalist.length);
       print(datalist);
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         setState(() {
@@ -83,7 +88,7 @@ class _OrderHistoryState extends State<OrderHistory> {
         //         Navigator.push(
         //                     context,
         //                     MaterialPageRoute(
-        //                         builder: ((context) => const Cart(
+        //                         builder: ((context) =>  Cart(
         //                             ))));
         //       },
         //       child: const Icon(Icons.shopping_cart)
@@ -131,7 +136,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>  FeedBack(
-                                id: datalist[currentPage].id,
+                                order: datalist[currentPage],
                               ),
                             ));
                       },
@@ -146,13 +151,260 @@ class _OrderHistoryState extends State<OrderHistory> {
                     ),
                   ],
                 ),
+datalist.length==1?GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>  JobCard(orderid: datalist.first.id,),
+                            ));
+                      },
+                      child: Stack(
+                        children: [
+                          Container(
+                            height: h*0.6,
+                            margin: EdgeInsets.only(bottom: h * 0.01,top: h*0.04,left: w*0.09,right: w*0.09),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: w * 0.03, vertical: h * 0.03,),
+                            decoration: BoxDecoration(
+                                color: kwhitecolor,
+                                boxShadow: [
+                                  BoxShadow(
+                                      blurRadius: 2,
+                                      spreadRadius: 1,
+                                      offset: const Offset(0, 3),
+                                      color: kshadowColor.withOpacity(0.3))
+                                ],
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(h * 0.06),
+                                  bottomLeft: Radius.circular(h * 0.06),
+                                )),
+                          ),
+                          Container(
+                            height: h*0.6,
+                            margin: EdgeInsets.only(bottom: h * 0.01,top: h*0.035,left: w*0.07,right: w*0.07),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: w * 0.03, vertical: h * 0.03,),
+                            decoration: BoxDecoration(
+                                color: kwhitecolor,
+                                boxShadow: [
+                                  BoxShadow(
+                                      blurRadius: 2,
+                                      spreadRadius: 1,
+                                      offset: const Offset(0, 3),
+                                      color: kshadowColor.withOpacity(0.3))
+                                ],
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(h * 0.06),
+                                  bottomLeft: Radius.circular(h * 0.06),
+                                )),
+                          ),
+                          Container(
+                            height: h*0.6,
+                            margin: EdgeInsets.only(bottom: h * 0.01,top: h*0.03,left: w*0.05,right: w*0.05),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: w * 0.03, vertical: h * 0.03,),
+                            decoration: BoxDecoration(
+                                color: kwhitecolor,
+                                boxShadow: [
+                                  BoxShadow(
+                                      blurRadius: 2,
+                                      spreadRadius: 1,
+                                      offset: const Offset(0, 3),
+                                      color: kshadowColor.withOpacity(0.3))
+                                ],
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(h * 0.06),
+                                  bottomLeft: Radius.circular(h * 0.06),
+                                )),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: w * 0.02),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        children: [
+                                          RichText(
+                                              text: TextSpan(
+                                                  text: "DELIVERY DATE: ",
+                                                  style: GoogleFonts.montserrat(
+                                                      fontSize: 8,
+                                                      fontWeight: FontWeight.w400,
+                                                      color:
+                                                          kTextInputPlaceholderColor),
+                                                  children: [
+                                                TextSpan(
+                                                    text: datalist.first.deliverydate.toString()=="null"?"\n":DateFormat.MMMMd().format(DateTime.parse(datalist.first.deliverydate.toString()) ) +"\n",
+                                                    style: GoogleFonts.montserrat(
+                                                        fontSize: 8,
+                                                        fontWeight: FontWeight.w700,
+                                                        color:
+                                                            kTextInputPlaceholderColor)),
+                                                TextSpan(
+                                                    text: "BOOKING ID: ",
+                                                    style: GoogleFonts.montserrat(
+                                                        fontSize: 8,
+                                                        fontWeight: FontWeight.w400,
+                                                        color:
+                                                            kTextInputPlaceholderColor)),
+                                                TextSpan(
+                                                    text: datalist.first.orderid,
+                                                    style: GoogleFonts.montserrat(
+                                                        fontSize: 8,
+                                                        fontWeight: FontWeight.w700,
+                                                        color:
+                                                            kTextInputPlaceholderColor))
+                                              ])),
+                                              SizedBox(
+                height: h * 0.005,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>  CarHealth(id:datalist.first.id),
+                          ));
+                },
+                child: RRectCard(
+                  h: h * 0.04,
+                  w: w * 0.24,
+                  color: kGreenColor,
+                  padding: EdgeInsets.symmetric(horizontal: w*0.01),
+                  widget: Center(
+                    child: Text(
+                          "Car Health ",//Analysis",
+                          style: GoogleFonts.montserrat(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w700,
+                            color: kwhitecolor
+                          ),
+                    ),
+                  ),
+                  borderRadius: h * 0.04,
+                ),
+              ),
+              
+                                        ],
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Text("₹"+datalist.first.price,
+                                              style: GoogleFonts.montserrat(
+                                                  fontSize: 19,
+                                                  fontWeight: FontWeight.w700,
+                                                  color:
+                                                      kTextInputPlaceholderColor)),
+                                          RRecctButton(
+                                            text: 
+                                            datalist.first.paystatus=="Success"?"Paid":"Pay Later",
+                                            style: GoogleFonts.montserrat(
+                                                fontSize: 9,
+                                                fontWeight: FontWeight.w700,
+                                                color: kwhitecolor),
+                                            buttonColor: kGreenColor,
+                                            w: w * 0.17,
+                                            h: h * 0.03,
+                                          ),
+                                          Text("view invoice     ",
+                                              textAlign: TextAlign.center,
+                                              style: GoogleFonts.montserrat(
+                                                  fontSize: 9,
+                                                  fontWeight: FontWeight.w400,
+                                                  color:
+                                                      kTextInputPlaceholderColor)),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                // Image.asset(
+                                //   "assets/images/Uber.png",
+                                //   height: h * 0.15,
+                                // ),
+                                Container(
+                                  height: h*0.13,
+                                  width: w*0.3,
+                                  margin: EdgeInsets.only(bottom: h*0.02),
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                        datalist.first.carimage
+                                      ),
+                                      fit: BoxFit.fill
+                                    )
+                                  ),
 
+                                ),
+                                RichText(
+                                    text: TextSpan(
+                                        text: datalist.first.carname+"  ",
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w700,
+                                            height: 2,
+                                            color: kTextInputPlaceholderColor),
+                                        children: [
+                                      TextSpan(
+                                          text: "Hyundai",
+                                          style: GoogleFonts.montserrat(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w400,
+                                              color:
+                                                  kTextInputPlaceholderColor)),
+                                    ])),
+                                Image.asset(
+                                  "assets/images/map.png",
+                                  height: h * 0.15,
+                                ),
+                                RichText(
+                                    textAlign: TextAlign.center,
+                                    text: TextSpan(
+                                        text: datalist.first.packname.toString()+"\n",
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: 32,
+                                            fontWeight: FontWeight.w700,
+                                            color: kTextInputPlaceholderColor),
+                                        children: [
+                                          TextSpan(
+                                              text: datalist.first.servicename+"\n",
+                                              style: GoogleFonts.montserrat(
+                                                  fontSize: 11,
+                                                  fontWeight: FontWeight.w400,
+                                                  color:
+                                                      kTextInputPlaceholderColor)),
+                                          TextSpan(
+                                              text:
+                                                  "The package includes the use of 3M products and services",
+                                              style: GoogleFonts.montserrat(
+                                                  fontSize: 12,
+                                                  height: 2,
+                                                  fontWeight: FontWeight.w400,
+                                                  color:
+                                                      kTextInputPlaceholderColor
+                                                          .withOpacity(0.49))),
+                                        ])),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+:
                 Swiper(
                   itemCount: datalist.length,
                   layout: SwiperLayout.TINDER,
                   scrollDirection: Axis.horizontal,
                   axisDirection: AxisDirection.left,
-                  allowImplicitScrolling:true,
+                  allowImplicitScrolling:false,
                   itemWidth: w,
                   physics: const NeverScrollableScrollPhysics(),
                   loop: false,
@@ -203,37 +455,71 @@ class _OrderHistoryState extends State<OrderHistory> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      RichText(
-                                          text: TextSpan(
-                                              text: "DELIVERY DATE: ",
-                                              style: GoogleFonts.montserrat(
-                                                  fontSize: 8,
-                                                  fontWeight: FontWeight.w400,
-                                                  color:
-                                                      kTextInputPlaceholderColor),
-                                              children: [
-                                            TextSpan(
-                                                text: model.deliverydate.toString()=="null"?"\n":DateFormat.MMMMd().format(DateTime.parse(model.deliverydate.toString()) ) +"\n",
-                                                style: GoogleFonts.montserrat(
-                                                    fontSize: 8,
-                                                    fontWeight: FontWeight.w700,
-                                                    color:
-                                                        kTextInputPlaceholderColor)),
-                                            TextSpan(
-                                                text: "BOOKING ID: ",
-                                                style: GoogleFonts.montserrat(
-                                                    fontSize: 8,
-                                                    fontWeight: FontWeight.w400,
-                                                    color:
-                                                        kTextInputPlaceholderColor)),
-                                            TextSpan(
-                                                text: model.orderid,
-                                                style: GoogleFonts.montserrat(
-                                                    fontSize: 8,
-                                                    fontWeight: FontWeight.w700,
-                                                    color:
-                                                        kTextInputPlaceholderColor))
-                                          ])),
+                                      Column(
+                                        children: [
+                                          RichText(
+                                              text: TextSpan(
+                                                  text: "DELIVERY DATE: ",
+                                                  style: GoogleFonts.montserrat(
+                                                      fontSize: 8,
+                                                      fontWeight: FontWeight.w400,
+                                                      color:
+                                                          kTextInputPlaceholderColor),
+                                                  children: [
+                                                TextSpan(
+                                                    text: model.deliverydate.toString()=="null"?"\n":DateFormat.MMMMd().format(DateTime.parse(model.deliverydate.toString()) ) +"\n",
+                                                    style: GoogleFonts.montserrat(
+                                                        fontSize: 8,
+                                                        fontWeight: FontWeight.w700,
+                                                        color:
+                                                            kTextInputPlaceholderColor)),
+                                                TextSpan(
+                                                    text: "BOOKING ID: ",
+                                                    style: GoogleFonts.montserrat(
+                                                        fontSize: 8,
+                                                        fontWeight: FontWeight.w400,
+                                                        color:
+                                                            kTextInputPlaceholderColor)),
+                                                TextSpan(
+                                                    text: model.orderid,
+                                                    style: GoogleFonts.montserrat(
+                                                        fontSize: 8,
+                                                        fontWeight: FontWeight.w700,
+                                                        color:
+                                                            kTextInputPlaceholderColor))
+                                              ])),
+                                              SizedBox(
+                height: h * 0.005,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>  CarHealth(id:datalist[index].id),
+                      ));
+                },
+                child: RRectCard(
+                  h: h * 0.04,
+                  w: w * 0.24,
+                  color: kGreenColor,
+                  padding: EdgeInsets.symmetric(horizontal: w*0.01),
+                  widget: Center(
+                    child: Text(
+                      "Car Health ",//Analysis",
+                      style: GoogleFonts.montserrat(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w700,
+                        color: kwhitecolor
+                      ),
+                    ),
+                  ),
+                  borderRadius: h * 0.04,
+                ),
+              ),
+              
+                                        ],
+                                      ),
                                       Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.end,

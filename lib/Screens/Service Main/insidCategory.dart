@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cityofcars/Screens/Service%20Main/InsidCategoryTabViw/common_services.dart';
 import 'package:cityofcars/Screens/Service%20Main/productDetail.dart';
+import 'package:cityofcars/Screens/Service%20Main/serviceMain.dart';
 import 'package:cityofcars/Services/models/subcategory.dart';
 import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Services/url.dart';
@@ -105,6 +106,7 @@ class _InsideCategoryState extends State<InsideCategory>
   final itemKey3 = GlobalKey();
   final itemKey4 = GlobalKey();
   final _scrollkey = GlobalKey();
+  TextEditingController search1 = TextEditingController();
   List keys = [];
   // Subcategory? subcategory;
   // List<Data> subdata = [];
@@ -123,7 +125,7 @@ class _InsideCategoryState extends State<InsideCategory>
     // });_
     _id = widget.id;
 
-    fecthdata();
+    fecthdata(false);
 
     _scrollController.addListener(() {
       check();
@@ -173,7 +175,7 @@ class _InsideCategoryState extends State<InsideCategory>
                         currentPage = value;
                       });
                     },
-                    itemCount:images.length,// backimage.length,
+                    itemCount: images.length, // backimage.length,
                     itemBuilder: (context, index) => Container(
                           decoration: BoxDecoration(
                               image: DecorationImage(
@@ -212,9 +214,11 @@ class _InsideCategoryState extends State<InsideCategory>
       ),
       body: isLoading
           ? Padding(
-            padding: Platform.isIOS? EdgeInsets.only(bottom:  100.0):EdgeInsets.only(bottom:  150.0),
-            child: loder,
-          )
+              padding: Platform.isIOS
+                  ? EdgeInsets.only(bottom: 100.0)
+                  : EdgeInsets.only(bottom: 150.0),
+              child: loder,
+            )
           : service.isEmpty
               ? Center(
                   child: Text(
@@ -239,7 +243,8 @@ class _InsideCategoryState extends State<InsideCategory>
                           shadowColor:
                               kTextInputPlaceholderColor.withOpacity(0.3),
                           borderRadius: BorderRadius.circular(h * 0.05),
-                          child: TextField(
+                          child: TextFormField(
+                            controller: search1,
                             decoration: InputDecoration(
                                 contentPadding: EdgeInsets.only(
                                     top: h * 0.01, left: w * 0.05),
@@ -249,8 +254,21 @@ class _InsideCategoryState extends State<InsideCategory>
                                   fontWeight: FontWeight.w600,
                                   color: ksearchTextColor.withOpacity(0.57),
                                 ),
-                                suffixIcon: const Icon(
-                                  Icons.search,
+                                suffixIcon: InkWell(
+                                  onTap: search1.text.isEmpty
+                                      ? () {
+                                          setState(() {});
+                                        }
+                                      : () {
+                                          fecthdata(true);
+
+                                          _scrollController.addListener(() {
+                                            check();
+                                          });
+                                        },
+                                  child: const Icon(
+                                    Icons.search,
+                                  ),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: const BorderSide(
@@ -582,192 +600,242 @@ class _InsideCategoryState extends State<InsideCategory>
                             //     label: bodyType[3],
                             //   ),
                             // ),
-                            Label(
-                              color: korangecolor,
-                              text: "RECOMMEND packes",
-                              textStyle: GoogleFonts.montserrat(
-                                textStyle: const TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.bold,
-                                    color: kwhitecolor),
+                            Visibility(
+                              visible: recdata,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Label(
+                                    color: korangecolor,
+                                    text: "RECOMMEND packes",
+                                    textStyle: GoogleFonts.montserrat(
+                                      textStyle: const TextStyle(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.bold,
+                                          color: kwhitecolor),
+                                    ),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 5),
+                                  ),
+                                  SizedBox(
+                                    height: h * 0.005,
+                                  ),
+                                  Container(
+                                      height: h * 0.18,
+                                      child: FutureBuilder(
+                                        future: getrecmostPlans(),
+                                        builder: (context, AsyncSnapshot snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.done) {
+                                            // mostpop.addAll(snapshot.data);
+                                            if (snapshot.hasData) {
+                                              return ListView.builder(
+                                                controller: _controller2,
+                                                physics:
+                                                    const BouncingScrollPhysics(),
+                                                scrollDirection: Axis.horizontal,
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: h * 0.01,
+                                                    horizontal: h * 0.025),
+                                                itemCount: snapshot.data.length,
+                                                itemBuilder: (context, index) {
+                                                  PlanModel model = PlanModel();
+                                                  model = snapshot.data[index];
+                                                  return Visibility(
+                                                    visible: model.isrec == "true",
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        print("Cat " +
+                                                            model.categoryId
+                                                                .toString() +
+                                                            "^^");
+                                                        Ids.categoryid = model
+                                                            .categoryId
+                                                            .toString();
+                                                        Ids.subcategoryid =
+                                                            model.subcatid.toString();
+                                                        Ids.planid =
+                                                            model.planid.toString();
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (context) =>
+                                                                    ProductDetails(
+                                                                        planDetails:
+                                                                            model)));
+                                                      },
+                                                      child: RRectCard(
+                                                        h: h * 0.1,
+                                                        w: w * 0.25,
+                                                        borderRadius: 15,
+                                                        widget: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Image.network(
+                                                                model.planimage,
+                                                                height: h * 0.04,
+                                                              ),
+                                                              // Image.asset(
+                                                              //     "assets/images/${reccomendedPackes[0]["image"]}"),
+                                                              const SizedBox(
+                                                                height: 5,
+                                                              ),
+                                                              FittedBox(
+                                                                child: Text(
+                                                                  model.packs.first
+                                                                      .planName,
+                                                                  style: GoogleFonts
+                                                                      .montserrat(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    height: 2,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets
+                                                                    .symmetric(
+                                                                        horizontal:
+                                                                            h * 0.01),
+                                                                child: FittedBox(
+                                                                  child: Text(
+                                                                    model.packs.first
+                                                                        .subPlanName,
+                                                                    textScaleFactor:
+                                                                        0.6,
+                                                                    style: GoogleFonts
+                                                                        .montserrat(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      color: kTextInputPlaceholderColor
+                                                                          .withOpacity(
+                                                                              0.6),
+                                                                      height: 2,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            ]),
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                            }
+                                            return const Center(child: Text("Empty"));
+                                          }
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.waiting) {
+                                            if (snapshot.hasData) {
+                                              return ListView.builder(
+                                                controller: _controller2,
+                                                physics:
+                                                    const BouncingScrollPhysics(),
+                                                scrollDirection: Axis.horizontal,
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: h * 0.01,
+                                                    horizontal: h * 0.025),
+                                                itemCount: snapshot.data.length,
+                                                itemBuilder: (context, index) {
+                                                  PlanModel model = PlanModel();
+                                                  model = snapshot.data[index];
+                                                  return Visibility(
+                                                    visible: model.isrec == "true",
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        print("Cat " +
+                                                            model.categoryId
+                                                                .toString() +
+                                                            "^^");
+                                                        Ids.categoryid = model
+                                                            .categoryId
+                                                            .toString();
+                                                        Ids.subcategoryid =
+                                                            model.subcatid.toString();
+                                                        Ids.planid =
+                                                            model.planid.toString();
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (context) =>
+                                                                    ProductDetails(
+                                                                        planDetails:
+                                                                            model)));
+                                                      },
+                                                      child: RRectCard(
+                                                        h: h * 0.1,
+                                                        w: w * 0.25,
+                                                        borderRadius: 15,
+                                                        widget: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Image.network(
+                                                                model.planimage,
+                                                                height: h * 0.04,
+                                                              ),
+                                                              // Image.asset(
+                                                              //     "assets/images/${reccomendedPackes[0]["image"]}"),
+                                                              const SizedBox(
+                                                                height: 5,
+                                                              ),
+                                                              FittedBox(
+                                                                child: Text(
+                                                                  model.packs.first
+                                                                      .planName,
+                                                                  style: GoogleFonts
+                                                                      .montserrat(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    height: 2,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets
+                                                                    .symmetric(
+                                                                        horizontal:
+                                                                            h * 0.01),
+                                                                child: FittedBox(
+                                                                  child: Text(
+                                                                    model.packs.first
+                                                                        .subPlanName,
+                                                                    textScaleFactor:
+                                                                        0.6,
+                                                                    style: GoogleFonts
+                                                                        .montserrat(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      color: kTextInputPlaceholderColor
+                                                                          .withOpacity(
+                                                                              0.6),
+                                                                      height: 2,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            ]),
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                            }
+                                            return loder;
+                                          }
+                                          return loder;
+                                        },
+                                      )),
+                                ],
                               ),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 5),
                             ),
-                            SizedBox(
-                              height: h * 0.005,
-                            ),
-                            Container(
-                                height: h * 0.18,
-                                child: FutureBuilder(
-                                  future: getrecmostPlans(),
-                                  builder: (context, AsyncSnapshot snapshot) {
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.done) {
-                                      // mostpop.addAll(snapshot.data);
-                                      if (snapshot.hasData) {
-                                        return ListView.builder(
-                                controller: _controller2,
-                                physics: const BouncingScrollPhysics(),
-                                scrollDirection: Axis.horizontal,
-                                padding: EdgeInsets.symmetric(
-                                    vertical: h * 0.01, horizontal: h * 0.025),
-                                itemCount: snapshot.data.length,
-                                itemBuilder: (context, index) {
-                                  PlanModel model = PlanModel();
-                                  model= snapshot.data[index];
-                                  return Visibility(
-                                    visible: model.isrec=="true",
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        print("Cat "+model.categoryId.toString()+"^^");
-                                        Ids.categoryid = model.categoryId.toString();
-                                        Ids.subcategoryid = model.subcatid.toString();
-                                        Ids.planid = model.planid.toString();
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => ProductDetails(
-                                                      planDetails:
-                                                          model
-                                                    )));
-                                      },
-                                      child: RRectCard(
-                                        h: h * 0.1,
-                                        w: w * 0.25,
-                                        borderRadius: 15,
-                                        widget: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Image.network(
-                                                model.planimage,
-                                                height: h*0.04,
-                                              ),
-                                              // Image.asset(
-                                              //     "assets/images/${reccomendedPackes[0]["image"]}"),
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              FittedBox(
-                                                child: Text(
-                                                  model.packs.first.planName,
-                                                  style: GoogleFonts.montserrat(
-                                                    fontWeight: FontWeight.w600,
-                                                    height: 2,
-                                                  ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: h * 0.01),
-                                                child: FittedBox(
-                                                  child: Text(
-                                                    model.packs.first.subPlanName,
-                                                    textScaleFactor: 0.6,
-                                                    style: GoogleFonts.montserrat(
-                                                      fontWeight: FontWeight.w600,
-                                                      color:
-                                                          kTextInputPlaceholderColor
-                                                              .withOpacity(0.6),
-                                                      height: 2,
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                            ]),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              );
-                                      }
-                                      return const Center(child: Text("Empty"));
-                                    }
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.waiting) {
-                                      if (snapshot.hasData) {
-                                        return ListView.builder(
-                                controller: _controller2,
-                                physics: const BouncingScrollPhysics(),
-                                scrollDirection: Axis.horizontal,
-                                padding: EdgeInsets.symmetric(
-                                    vertical: h * 0.01, horizontal: h * 0.025),
-                                itemCount: snapshot.data.length,
-                                itemBuilder: (context, index) {
-                                  PlanModel model = PlanModel();
-                                  model= snapshot.data[index];
-                                  return Visibility(
-                                    visible: model.isrec=="true",
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        print("Cat "+model.categoryId.toString()+"^^");
-                                        Ids.categoryid = model.categoryId.toString();
-                                        Ids.subcategoryid = model.subcatid.toString();
-                                        Ids.planid = model.planid.toString();
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => ProductDetails(
-                                                      planDetails:
-                                                          model
-                                                    )));
-                                      },
-                                      child: RRectCard(
-                                        h: h * 0.1,
-                                        w: w * 0.25,
-                                        borderRadius: 15,
-                                        widget: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Image.network(
-                                                model.planimage,
-                                                height: h*0.04,
-                                              ),
-                                              // Image.asset(
-                                              //     "assets/images/${reccomendedPackes[0]["image"]}"),
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              FittedBox(
-                                                child: Text(
-                                                  model.packs.first.planName,
-                                                  style: GoogleFonts.montserrat(
-                                                    fontWeight: FontWeight.w600,
-                                                    height: 2,
-                                                  ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: h * 0.01),
-                                                child: FittedBox(
-                                                  child: Text(
-                                                    model.packs.first.subPlanName,
-                                                    textScaleFactor: 0.6,
-                                                    style: GoogleFonts.montserrat(
-                                                      fontWeight: FontWeight.w600,
-                                                      color:
-                                                          kTextInputPlaceholderColor
-                                                              .withOpacity(0.6),
-                                                      height: 2,
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                            ]),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              );
-                                      }
-                                      return loder;
-                                    }
-                                    return loder;
-                                  },
-                                )),
                             // Container(
                             //   height: h * 0.18,
                             //   child: ListView.builder(
@@ -890,14 +958,37 @@ class _InsideCategoryState extends State<InsideCategory>
         duration: const Duration(milliseconds: 1000));
   }
 
-  fecthdata() {
+  fecthdata(bool search) {
     isLoading = true;
     setState(() {});
-    getSubcategory(_id).then((value) {
+  !search?  getSubcategory(_id).then((value) {
       setState(() {
-
+        service.clear();
         service.addAll(value);
       });
+    }).whenComplete(() {
+      _tabController = TabController(length: service.length, vsync: this);
+      for (int i = 0; i < service.length; i++) {
+        keys.add(i);
+        keys[i] = GlobalKey();
+      }
+      isLoading = false;
+      setState(() {});
+    }):
+    searchGloble(search1.text).then((value) {
+      print("done");
+      if (value) {
+
+        service.clear();
+        service.addAll(Searchdata.subcat);
+        
+        print("condition");
+        
+
+        // pls=value.plans;
+
+        setState(() {});
+      }
     }).whenComplete(() {
       _tabController = TabController(length: service.length, vsync: this);
       for (int i = 0; i < service.length; i++) {

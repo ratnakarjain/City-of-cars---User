@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 import 'package:cityofcars/Screens/Service%20Main/slot.dart';
 import 'package:cityofcars/Utils/preference.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:cityofcars/Screens/selectCity.dart';
 import 'package:cityofcars/Services/servies.dart';
@@ -12,9 +13,11 @@ import 'package:pinput/pinput.dart';
 import 'dart:convert' as convert;
 import '../Services/url.dart';
 import '../Utils/Buttons/button.dart';
+import 'bottomnavBar.dart';
 
 class Verfication extends StatefulWidget {
-  const Verfication({Key? key}) : super(key: key);
+  bool toLogin;
+   Verfication({Key? key,required this.toLogin }) : super(key: key);
 
   @override
   State<Verfication> createState() => _VerficationState();
@@ -69,6 +72,10 @@ class _VerficationState extends State<Verfication> {
                 controller: _controller,
                 forceErrorState: true,
                 defaultPinTheme: defaultPinTheme,
+                inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp("[0-9]")),
+                          ],
                 focusedPinTheme: defaultPinTheme.copyDecorationWith(
                   border: Border.all(color: Color.fromRGBO(114, 178, 238, 1)),
                   borderRadius: BorderRadius.circular(8),
@@ -103,7 +110,7 @@ class _VerficationState extends State<Verfication> {
                       istaped = true;
 
                       if(_controller.text.toString().isEmpty){
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please enter otp first")));
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please enter otp first")));
                         return ;
                       }
                       verify().whenComplete(() {
@@ -140,7 +147,7 @@ class _VerficationState extends State<Verfication> {
           Navigator.pushAndRemoveUntil<dynamic>(
             context,
             MaterialPageRoute<dynamic>(
-              builder: (BuildContext context) => SelectCity(),
+              builder: (BuildContext context) => widget.toLogin?BottomNavBar(index: 0,): SelectCity(),
             ),
             (route) => false, //if you want to disable back feature set to false
           );

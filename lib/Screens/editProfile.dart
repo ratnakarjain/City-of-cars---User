@@ -368,7 +368,9 @@ class _EditProfileState extends State<EditProfile> {
                             controller: pinCode,
                             keyboardType: TextInputType.number,
                             maxLength: 6,
+                            
                             decoration: InputDecoration(
+                              counterText: "",
                                 hintText: "Pin Code*",
                                 hintStyle: GoogleFonts.montserrat(
                                     color: kTextInputPlaceholderColor

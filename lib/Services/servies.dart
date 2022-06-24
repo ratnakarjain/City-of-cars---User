@@ -2,6 +2,8 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:cityofcars/Screens/Service%20Main/serviceMain.dart';
+import 'package:cityofcars/Services/models/carHealthModel.dart';
 import 'package:flutter/material.dart';
 import 'package:cityofcars/Screens/Service%20Main/productDetail.dart';
 import 'package:cityofcars/Services/models/jobcardModel.dart';
@@ -134,7 +136,7 @@ Future getcategaries() async {
         headers: {"Authorization": prefs!.getString('token').toString()});
     if (respnse.statusCode == 200) {
       var data = jsonDecode(respnse.body);
-      print(respnse.body);
+
       if (data["status"]) {
         print(data["getdata"]);
         print(data["getdata"].length);
@@ -432,6 +434,8 @@ Future slot(
   String option,
   String date,
   String time,
+  String leti,
+  String longi
 ) async {
   var url = Uri.parse(slotUrl);
   try {
@@ -446,7 +450,9 @@ Future slot(
       "carno": carNo,
       "contect": contact,
       "optional": option,
-      "houseNo": houseNo
+      "houseNo": houseNo,
+      "latitude": leti,
+      "longitude": longi,
     }, headers: {
       "Authorization": prefs!.getString('token').toString()
     });
@@ -835,6 +841,7 @@ Future getrecentUpdates(String _id) async {
     // }
   } catch (e) {
     print("error $e");
+    return <RecentModel>[];
   }
 }
 
@@ -876,6 +883,7 @@ Future getapproveddetails(String id) async {
     // }
   } catch (e) {
     print("error $e");
+    return <ApprovalModel1>[];
   }
 }
 
@@ -959,6 +967,7 @@ Future getjobcard(String id) async {
     }
   } catch (e) {
     print("error $e");
+    return [];
   }
 }
 
@@ -1058,6 +1067,12 @@ Future getrecmostPlans() async {
           pl.hour = data["data"][i]["hours"].toString();
           pl.isMost = data["data"][i]["mostpopularpack"].toString();
           pl.isrec = data["data"][i]["status"].toString();
+          if(data["data"][i]["mostpopularpack"].toString()=="true"){
+            mostdata =true;
+          }
+          if(data["data"][i]["status"].toString()=="true"){
+            recdata = true;
+          }
           pl.label = data["data"][i]["label"].toString();
           pl.months = data["data"][i]["month"].toString();
           pl.planimage = data["data"][i]["image"].toString();
@@ -1069,9 +1084,9 @@ Future getrecmostPlans() async {
           pl.subplanname = data["data"][i]["subPlanName"].toString();
           pl.termsdetails = data["data"][i]["textField"].toString();
           pl.termsheading = data["data"][i]["heading"].toString();
-          print("ASA" +
-              data["data"][i]["services_id"][0]["category"][0].toString() +
-              "^^");
+          // print("ASA" +
+          //     data["data"][i]["services_id"][0]["category"][0].toString() +
+          //     "^^");
           // if(data["data"][i]["services_id"].length>0) {
           //   if (data["data"][i]["services_id"][0]["category"].length > 0) {
           //     pl.categoryId =
@@ -1096,7 +1111,7 @@ Future getrecmostPlans() async {
           }
           plans.add(pl);
         }
-        print(jsonEncode(plans));
+        print("+++++"+jsonEncode(plans));
         return plans;
       } else {
         return [];
@@ -1280,7 +1295,8 @@ Future feedback(
   String rating,
   String optional,
   String id,
-  String review
+  String review,
+
 ) async {
   var url = Uri.parse(feedbackUrl);
   try {
@@ -1288,15 +1304,14 @@ Future feedback(
       "Authorization": prefs!.getString('token').toString()
     }, body: {
       "Rating": rating,
-      "ServiceQuality": "as",
-      "ExpertBehaviour": "asdas",
-      "OnTime": "asda",
-      "QualitySpares": "ada",
+      "ServiceQuality": review,
       "Optional": optional,
       "orderid": id
     });
     if (respnse.statusCode == 200) {
       var data = jsonDecode(respnse.body);
+      return data;
+     
     } else {
       return Future.error("Server Error");
     }
@@ -1323,6 +1338,163 @@ Future getblog(
       return <BlogsModel>[];
     } else {
       return <BlogsModel>[];
+    }
+  } catch (e) {
+    print("error $e");
+  }
+}
+
+
+Future getCarHealth(
+  String id
+) async {
+  var url = Uri.parse(carhealthUrl+"?orderId="+id);
+  try {
+    var respnse = await http.get(url, headers: {
+      "Authorization": prefs!.getString('token').toString()
+    });
+    if (respnse.statusCode == 200) {
+      var data = jsonDecode(respnse.body);
+      if(data["status"]){
+        var qwe = data["data"].first;
+        print(qwe);
+        CarHealthModel carHealthModel = CarHealthModel();
+        carHealthModel.overallhealth = qwe["overalcarhealth"];
+        carHealthModel.carName = qwe["order"]["orderData"][0]["cars"]["cars"].toString();
+        carHealthModel.brandName = qwe["order"]["orderData"][0]["brands"]["brands"].toString();
+
+        var list =jsonDecode( qwe["MainHealth"]);
+        carHealthModel.totalServices = 
+      prefs!.getInt("totalServices");
+        for(int i=0;i<list.length;i++){
+          CarParts parts = CarParts();
+          parts.partName= list[i]["heading"];
+          parts.rating= list[i]["rate"];
+          parts.des= list[i]["description"];
+          carHealthModel.carparts.add(parts);
+        }
+        return carHealthModel;
+      }
+      return CarHealthModel;
+    } else {
+      return CarHealthModel;
+    }
+  } catch (e) {
+
+    print("error $e");
+    return "error";
+  }
+}
+
+Future searchGloble(String text) async {
+  // print("id" + text.toString() + "========");
+  // String car = "";
+  // if (prefs!.getString("CarId").toString() != "" &&
+  //     prefs!.getString("CarId").toString() != "null") {
+  //   String id = prefs!.getString("CarId").toString();
+  //   print(id);
+
+  //   car = "?carid=" + id + "&";
+  // } else {
+  //   car = "?";
+  // }
+  var url = Uri.parse(globalsearchUrl +"?text=" + text);
+  try {
+    var respnse = await http.get(url,
+        headers: {"Authorization": prefs!.getString('token').toString()});
+    if (respnse.statusCode == 200) {
+      var data = jsonDecode(respnse.body);
+      // ServiceMain.plans.clear();
+      // ServiceMain.category.clear();
+      List<PlanModel> plans = [];
+      List<SubcatModel> subcats = [];
+      if (data["status"]) {
+        var categotry =data["searchData"][0]["category"];
+        for (int i = 0; i < data["searchData"][2]["plan"].length; i++) {
+          var qwe = data["searchData"][2]["plan"][i];
+          PlanModel pl = PlanModel();
+          pl.planid = qwe["_id"].toString();
+          pl.componyprice = qwe["servicepackprice"].toString();
+          // pl.componypricedes=qwe["servicename"].toString();
+          pl.description = qwe["description"].toString();
+          pl.hour = qwe["hours"].toString();
+          pl.isMost = qwe["mostpopularpack"].toString();
+          pl.isrec = qwe["status"].toString();
+          if(qwe["mostpopularpack"].toString()=="true"){
+            mostdata =true;
+          }
+          if(qwe["status"].toString()=="true"){
+            recdata = true;
+          }
+          pl.label = qwe["label"].toString();
+          pl.months = qwe["month"].toString();
+          pl.planimage = qwe["image"].toString();
+          // pl.planname=qwe["planName"].toString();
+          // pl.planpricdes=qwe["typename"].toString();
+          // pl.planprice=qwe["typeprice"].toString();
+          pl.servicepackname = qwe["servicepack"].toString();
+          pl.subcatid = qwe["Subcategory"].toString();
+          // pl.subplanname=qwe["subPlanName"].toString();
+          pl.termsdetails = qwe["textField"].toString();
+          pl.termsheading = qwe["heading"].toString();
+          // for (int j = 0; j < qwe["services_id"].length; j++) {
+          //   IncludeMod ink = IncludeMod();
+          //   ink.image = qwe["services_id"][j]["image"];
+          //   ink.name = qwe["services_id"][j]["title"];
+          //   pl.includes.add(ink);
+          // }
+
+          for (int j = 0; j < qwe["plan"].length; j++) {
+            Packes ink = Packes();
+            ink.planName = qwe["plan"][j]["planName"];
+            ink.subPlanName = qwe["plan"][j]["subPlanName"];
+            ink.planPrice = qwe["plan"][j]["typeprice"];
+            ink.pricedes = qwe["plan"][j]["typename"];
+            ink.packId = qwe["plan"][j]["_id"];
+            pl.packs.add(ink);
+          }
+          plans.add(pl);
+        }
+        for (int i = 0; i < data["searchData"][1]["getsubcategory"].length; i++) {
+          var qwe = data["searchData"][1]["getsubcategory"][i];
+          SubcatModel mod = SubcatModel();
+          mod.id = qwe["_id"];
+          mod.name = qwe["title"];
+          for (int j = 0; j < plans.length; j++) {
+            if (plans[j].subcatid == mod.id) {
+              mod.plans.add(plans[j]);
+            }
+          }
+          subcats.add(mod);
+        }
+        print("plans"+jsonEncode(plans));
+        print("subcats"+jsonEncode(subcats));
+
+        
+        Searchdata.cats=null;
+        Searchdata.plans.clear();
+        Searchdata.subcat.clear();
+        Searchdata.cats=categotry;
+        Searchdata.plans.addAll(plans);
+        Searchdata.subcat.addAll(subcats);
+        print("working");
+        return true;
+      } else {
+        print(Future.error(data["msg"]));
+        print("not working");
+
+        return false;
+        // print(
+        //   "Error====="
+        // );
+      }
+      // Future city = data["getCities"];
+      // print("success============== ${data["getCities"]}");
+
+    } else {
+      print(Future.error("Server Error"));
+      return <SubcatModel>[];
+      print("Error=====");
     }
   } catch (e) {
     print("error $e");

@@ -2,19 +2,23 @@ import 'package:cityofcars/Screens/Service%20Main/cart.dart';
 import 'package:cityofcars/Screens/Service%20Main/payment.dart';
 import 'package:cityofcars/Screens/Service%20Main/selectLocation.dart';
 import 'package:cityofcars/Services/servies.dart';
+import 'package:cityofcars/Services/url.dart';
 import 'package:cityofcars/Utils/Buttons/button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../Utils/constants.dart';
+import '../../Utils/functions.dart';
 
 var h;
 var w;
 String date = "";
 String time = "";
 bool istaped = false;
+bool currentlocation = false;
 
 class Slot extends StatefulWidget {
   const Slot({Key? key}) : super(key: key);
@@ -37,6 +41,12 @@ class _SlotState extends State<Slot> {
   final carNumber = TextEditingController();
   final option = TextEditingController();
   var _formKey = GlobalKey<FormState>();
+  String lati = "";
+  String longi = "";
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,6 +118,26 @@ class _SlotState extends State<Slot> {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Get current location:",
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w700,
+                                  color: kGreenColor),
+                            ),
+                            Checkbox(
+                              focusColor: kGreenColor,
+                              value: currentlocation,
+                              onChanged: (value) {
+                                currentlocation = value!;
+
+                                setState(() {});
+                              },
+                            )
+                          ],
+                        ),
                         Text(
                           "Enter Booking Details",
                           style: GoogleFonts.montserrat(
@@ -309,7 +339,7 @@ class _SlotState extends State<Slot> {
                                 },
                                 maxLength: 6,
                                 decoration: InputDecoration(
-                                  counterText: "",
+                                    counterText: "",
                                     hintText: "Pin Code*",
                                     hintStyle: GoogleFonts.montserrat(
                                       fontSize: 13,
@@ -384,6 +414,9 @@ class _SlotState extends State<Slot> {
                           },
                           cursorColor: korangecolor,
                           maxLength: 10,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                          ],
                           decoration: InputDecoration(
                               counterText: "",
                               hintText: "Contact*",
@@ -448,19 +481,25 @@ class _SlotState extends State<Slot> {
                         TextFormField(
                           controller: carNumber,
                           cursorColor: korangecolor,
+
+                          // inputFormatters: [FilteringTextInputFormatter.allow(RegExp("^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}\$"))],
                           validator: (value) {
                             if (value!.isEmpty) {
                               return "Please enter car number";
                             }
-                            if (value.length != 10) {
+                            if (value.length < 10) {
                               return "Please enter valid car no.";
                             }
+
+                            // if(!RegExp("^[0-9]{2}[0-9]{4}[A-HJ-NP-Z]{2}\$").hasMatch(value)){
+                            //   return "Please enter correct formate";
+                            // }
                             return null;
                           },
-                          maxLength: 10,
+                          maxLength: 12,
                           decoration: InputDecoration(
-                            counterText: "",
-                              hintText: "Car Number eg. RJ70ZX0000",
+                              counterText: "",
+                              hintText: "Car Number eg. RJ70 ZX 0000",
                               hintStyle: GoogleFonts.montserrat(
                                 fontSize: 13,
                                 color: kTextInputPlaceholderColor
@@ -532,20 +571,46 @@ class _SlotState extends State<Slot> {
                                     color: kwhitecolor),
                                 h: h * 0.06,
                                 buttonColor: korangecolor,
-                                onTap: () {
-                                  if(date.isEmpty||time.isEmpty){
-                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(date.isEmpty?"Pick date please":"Pick time please"),));
-                                  }else{
-                                     if (_formKey.currentState!.validate()) {
-                                    istaped=true;
-                                    bookSlot();
-                                    setState(() {});
+                                onTap: () async {
+                                  if (currentlocation) {
+                                    print("done");
+                                    await determinePosition().then((value) {
+                                      lati = value.latitude.toString();
+                                      longi = value.longitude.toString();
+                                      print(lati);
+                                      print(longi);
+                                    }).whenComplete(() {
+                                      if (date.isEmpty || time.isEmpty) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                          content: Text(date.isEmpty
+                                              ? "Pick date please"
+                                              : "Choose time slot"),
+                                        ));
+                                      } else {
+                                        if (_formKey.currentState!.validate()) {
+                                          istaped = true;
+                                          bookSlot();
+                                          setState(() {});
+                                        }
+                                      }
+                                    });
+                                  } else {
+                                    if (date.isEmpty || time.isEmpty) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                        content: Text(date.isEmpty
+                                            ? "Pick date please"
+                                            : "Choose time slot"),
+                                      ));
+                                    } else {
+                                      if (_formKey.currentState!.validate()) {
+                                        istaped = true;
+                                        bookSlot();
+                                        setState(() {});
+                                      }
+                                    }
                                   }
-
-                                  }
-
-                                  
-                                 
                                 },
                               )
                       ]),
@@ -557,8 +622,20 @@ class _SlotState extends State<Slot> {
   }
 
   bookSlot() {
-    slot(name.text, mail.text, contect.text, carNumber.text, houseNo.text,
-            state.text, street.text, pinCode.text, option.text, date, time)
+    slot(
+            name.text,
+            mail.text,
+            contect.text,
+            carNumber.text,
+            houseNo.text,
+            state.text,
+            street.text,
+            pinCode.text,
+            option.text,
+            date,
+            time,
+            lati,
+            longi)
         .then((value) {
       Ids.slotid = value["_id"];
       print(Ids.categoryid);
@@ -566,10 +643,14 @@ class _SlotState extends State<Slot> {
       print(Ids.planid);
       print(Ids.slotid);
       istaped = false;
+      date = "";
+      time = "";
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) =>  Cart(),
+            builder: (context) => Cart(
+              getcart: false,
+            ),
           ));
     });
   }

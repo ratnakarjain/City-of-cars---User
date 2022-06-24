@@ -3,6 +3,7 @@
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:image_downloader/image_downloader.dart';
 // ignore_for_file: deprecated_member_use
 
@@ -16,6 +17,48 @@ import 'package:flutter_share/flutter_share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'dart:io';
+import 'package:geolocator/geolocator.dart';
+
+/// Determine the current position of the device.
+///
+/// When the location services are not enabled or permissions
+/// are denied the `Future` will return an error.
+Future<Position> determinePosition() async {
+  bool serviceEnabled;
+  LocationPermission permission;
+
+  // Test if location services are enabled.
+  serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  if (!serviceEnabled) {
+    // Location services are not enabled don't continue
+    // accessing the position and request users of the 
+    // App to enable the location services.
+    return Future.error('Location services are disabled.');
+  }
+
+  permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.denied) {
+    permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied) {
+      // Permissions are denied, next time you could try
+      // requesting permissions again (this is also where
+      // Android's shouldShowRequestPermissionRationale 
+      // returned true. According to Android guidelines
+      // your App should show an explanatory UI now.
+      return Future.error('Location permissions are denied');
+    }
+  }
+  
+  if (permission == LocationPermission.deniedForever) {
+    // Permissions are denied forever, handle appropriately. 
+    return Future.error(
+      'Location permissions are permanently denied, we cannot request permissions.');
+  } 
+
+  // When we reach here, permissions are granted and we can
+  // continue accessing the position of the device.
+  return await Geolocator.getCurrentPosition();
+}
 
 Future<bool> showExitPopup(context) async{
   return await showDialog(
@@ -62,7 +105,47 @@ Future<bool> showExitPopup(context) async{
         );
       });
 }
+ Future<void> createListMap(Map<String, dynamic> map) async {
+    print("ListSaveMap");
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    List<String>? titleList = preferences.getStringList('titleList');
+    List<String>? bodyList = preferences.getStringList('bodyList');
+    List<String>? isReadList = preferences.getStringList('isRead');
+  List<String>? timeList = preferences.getStringList('timeList');
 
+    // List<String> timeList = preferences.getStringList('timeList');
+    if(titleList!=null && bodyList!=null && isReadList!=null && timeList!=null 
+    ){
+      titleList.add(map["title"].toString());
+      bodyList.add(map["body"].toString());
+      timeList.add(DateTime.now().toIso8601String());
+      isReadList.add("false");
+      preferences.setStringList("titleList", titleList);
+      preferences.setStringList("bodyList", bodyList);
+      preferences.setStringList("isRead", isReadList);
+     preferences.setStringList("timeList", timeList);
+      preferences.commit();
+    }else{
+      List<String> titleListNew = [];
+      List<String> bodyListNew = [];
+      List<String> isReadListNew = [];
+      List<String> timeListNew = [];
+      titleListNew.add(map["title"].toString());
+      bodyListNew.add(map["body"].toString());
+      bodyListNew.add(DateTime.now().toIso8601String());
+
+   
+
+      isReadListNew.add("false");
+
+      preferences.setStringList("titleList", titleListNew);
+      preferences.setStringList("bodyList", bodyListNew);
+      preferences.setStringList("isRead", isReadListNew);
+      preferences.setStringList("timeList", timeListNew);
+      preferences.commit();
+    }
+
+  }
 Future<void> makePhoneCall(String phoneNumber) async {
     // Use `Uri` to ensure that `phoneNumber` is properly URL-encoded.
     // Just using 'tel:$phoneNumber' would create invalid URLs in some cases,

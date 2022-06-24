@@ -11,8 +11,9 @@ import '../../Services/servies.dart';
 import '../../Utils/Buttons/button.dart';
 
 class Cart extends StatefulWidget {
-  static Packes packe =Packes();
-   Cart({Key? key, }) : super(key: key);
+  static Packes packe = Packes();
+  bool getcart;
+  Cart({Key? key, required this.getcart}) : super(key: key);
 
   @override
   State<Cart> createState() => _CartState();
@@ -39,15 +40,47 @@ class _CartState extends State<Cart> {
   @override
   void initState() {
     // TODO: implement initState
-    fecthdata().whenComplete(() {
-      if (data.isNotEmpty) {
-        for (int i = 0; i < data.length; i++) {
-          print("typeprice "+data[i]["selectplan"][0]["typeprice"].toString()+"^^");
-          totalvalue(double.parse(data[i]["selectplan"][0]["typeprice"].toString()));
+    if (!widget.getcart) {
+      fecthdata().whenComplete(() {
+        if (data.isNotEmpty) {
+          
+          for (int i = 0; i < data.length; i++) {
+            print("typeprice " +
+                data[i]["selectplan"][0]["typeprice"].toString() +
+                "^^");
+            totalvalue(
+                double.parse(data[i]["selectplan"][0]["typeprice"].toString()));
+          }
+          setState(() {});
         }
-        setState(() {});
-      }
-    });
+      });
+    } else {
+      getcartitems().then((value) {
+        
+          print("done"+value.toString());
+          
+          data.addAll(value);
+          print("entering");
+          if (data.isEmpty) {
+            _null = "You have nothing in Cart. Please add...";
+            print(_null);
+            setState(() {});
+          } else {
+            _null = "";
+            setState(() {});
+          }
+          print(data.toString() + "============");
+          // for(int i=0; i<data.length; i++){
+          //   plan=data[i]["Plans"];
+          //   print(plan.toString()+"+++++++++++=====");
+          // }
+          //       service.addAll(value);
+          //            print("================="+service.toString());
+          // print("================="+service[0]["title"].toString());
+        });
+      
+    }
+
     super.initState();
   }
 
@@ -132,8 +165,9 @@ class _CartState extends State<Cart> {
                                                             .start,
                                                     children: [
                                                       Text(
-                                                        data[index]["selectplan"][0]
-                                                            ["planName"],
+                                                        data[index]
+                                                                ["selectplan"]
+                                                            [0]["planName"],
                                                         style: GoogleFonts
                                                             .montserrat(
                                                           fontSize: 20,
@@ -160,8 +194,8 @@ class _CartState extends State<Cart> {
                                                     children: [
                                                       Text(
                                                         "₹" +
-                                                            data[index]["selectplan"][0]
-                                                                    [
+                                                            data[index]["selectplan"]
+                                                                        [0][
                                                                     "typeprice"]
                                                                 .toString(),
                                                         style: GoogleFonts
@@ -192,7 +226,7 @@ class _CartState extends State<Cart> {
                                                   left: w * 0.08,
                                                   bottom: h * 0.01),
                                               child: Text(
-                                                "Takes ${data[index]["Plans"]["hours"]} Hrs / Every ${data[index]["Plans"]["hours"]} Months",
+                                                "Takes ${data[index]["Plans"]["hours"]} Hrs / Every ${data[index]["Plans"]["months"]??""} Months",
                                                 style: GoogleFonts.montserrat(
                                                     fontWeight: FontWeight.w600,
                                                     fontSize: 7,
@@ -611,8 +645,16 @@ class _CartState extends State<Cart> {
                                                           isloading = false;
                                                           if (data.isNotEmpty) {
                                                             subtotal = 0;
-                                                            for (int i = 0; i < data.length; i++) {
-                                                              totalvalue(double.parse(data[i]["selectplan"][0]["typeprice"].toString()));
+                                                            for (int i = 0;
+                                                                i < data.length;
+                                                                i++) {
+                                                              totalvalue(double.parse(data[
+                                                                              i]
+                                                                          [
+                                                                          "selectplan"][0]
+                                                                      [
+                                                                      "typeprice"]
+                                                                  .toString()));
                                                             }
                                                           }
                                                         });
@@ -799,7 +841,7 @@ class _CartState extends State<Cart> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text("₹ $subtotal",
+                          Text( data.isEmpty?"₹ 0": "₹ $subtotal",
                               style: GoogleFonts.montserrat(
                                 fontSize: 19,
                                 fontWeight: FontWeight.bold,
@@ -853,19 +895,18 @@ class _CartState extends State<Cart> {
 
   Future fecthdata() async {
     await addcartitem(Cart.packe).then((value) {
-      print("Response "+value.toString()+"^");
+      print("Response " + value.toString() + "^");
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(value["msg"]),
       ));
     }).whenComplete(() async {
+      Cart.packe = Packes();
       await getcartitems().then((value) {
         setState(() {
           data.addAll(value);
           if (value == null) {
             _null = "You have nothing in Cart. Please add...";
-            setState(() {
-
-            });
+            setState(() {});
           } else {
             _null = "";
             setState(() {});

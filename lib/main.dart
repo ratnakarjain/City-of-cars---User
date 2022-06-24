@@ -6,9 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:provider/provider.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Screens/myhomepage.dart';
 import 'Screens/selectBrand.dart';
+import 'Services/models/receivedNotification.dart';
+import 'Utils/functions.dart';
 import 'Utils/preference.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -16,41 +19,117 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
     'cityofcars', // id
-    'High Importance Notifications', // name
-    importance: Importance.high,
-    playSound: true);
+    'cityofcars',
+    description: "User Notification Channel", // name
+    importance: Importance.max,
+    enableLights:true,
+    playSound: true,
+    enableVibration: true);
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  RemoteNotification? notification = message.notification;
-  AndroidNotification? android = message.notification?.android;
-
+   if(message.data!=null){
+      Map<String, dynamic> map = message.data;
+      print(map.toString());
+      createListMap(map);
+   }
   // If `onMessage` is triggered with a notification, construct our own
   // local notification to show to users using the created channel.
-  if (notification != null && android != null) {
-    flutterLocalNotificationsPlugin.show(
-        notification.hashCode,
-        notification.title,
-        notification.body,
-        NotificationDetails(
-          android: AndroidNotificationDetails(
-            channel.id,
-            channel.name,
-            icon: android.smallIcon,
-            // other properties...
-          ),
-        ));
-  }
+  const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+          'cityofcars',
+          'cityofcars',
+          channelDescription: 'User Notification Channel',
+          importance: Importance.max,
+          priority: Priority.high,
+          ticker: 'ticker',
+          enableLights: true,
+          enableVibration: true,
+          playSound: true,
+        );
+        const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+        await flutterLocalNotificationsPlugin.show(
+          10,
+          message.notification!.title,
+          message.notification!.body,
+          platformChannelSpecifics,
+          payload: message.data.toString(),
+        );
+  // if (notification != null && android != null) {
+  //   flutterLocalNotificationsPlugin.show(
+  //       notification.hashCode,
+  //       notification.title,
+  //       notification.body,
+  //       NotificationDetails(
+  //         android: AndroidNotificationDetails(
+  //           channel.id,
+  //           channel.name,
+  //           icon: android.smallIcon,
+  //           // other properties...
+  //         ),
+  //       ));
+  // }
   print('A bg message just showed up :  ${message.messageId}');
 }
+final BehaviorSubject<String?> selectNotificationSubject =
+BehaviorSubject<String?>();
+final BehaviorSubject<ReceivedNotification> didReceiveLocalNotificationSubject =
+BehaviorSubject<ReceivedNotification>();
+String? selectedNotificationPayload;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
   await Firebase.initializeApp();
+
+  const AndroidInitializationSettings initializationSettingsAndroid =
+  AndroidInitializationSettings('@mipmap/ic_launcher');
+
+  final IOSInitializationSettings initializationSettingsIOS =
+  IOSInitializationSettings(
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
+      onDidReceiveLocalNotification: (
+          int id,
+          String? title,
+          String? body,
+          String? payload,
+          ) async {
+        didReceiveLocalNotificationSubject.add(
+          ReceivedNotification(
+            id: id,
+            title: title,
+            body: body,
+            payload: payload,
+          ),
+        );
+      });
+
+  final InitializationSettings initializationSettings = InitializationSettings(
+    android: initializationSettingsAndroid,
+    iOS: initializationSettingsIOS,
+  );
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+      onSelectNotification: (String? payload) async {
+        if (payload != null) {
+          debugPrint('notification payload: $payload');
+         // navigatorKey.currentState!.pushNamed("/notification");
+
+        }
+        selectedNotificationPayload = payload;
+        selectNotificationSubject.add(payload);
+
+      });
+
+
+
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
 
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
@@ -82,82 +161,106 @@ class _MyAppState extends State<MyApp> {
   // get korangecolor => null;
   String id = "";
   String cardetails = "";
+  String tokenId="";
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    FirebaseMessaging.instance.getInitialMessage().then((message) {
-      RemoteNotification? notification = message?.notification;
-  AndroidNotification? android = message?.notification?.android;
-
-  // If `onMessage` is triggered with a notification, construct our own
-  // local notification to show to users using the created channel.
-  if (notification != null && android != null) {
-    flutterLocalNotificationsPlugin.show(
-        notification.hashCode,
-        notification.title,
-        notification.body,
-        NotificationDetails(
-          android: AndroidNotificationDetails(
-            channel.id,
-            channel.name,
-            icon: android.smallIcon,
-            // other properties...
-          ),
-        ));
-  }
-      final routeFrommessage = message!.data["route"];
-     print(routeFrommessage);
-    });
+    token();
+  
     ////Forground notification
-    FirebaseMessaging.onMessage.listen((message) {
-      RemoteNotification? notification = message.notification;
-  AndroidNotification? android = message.notification?.android;
-
+    FirebaseMessaging.onMessage.listen((message)async {
+      print("here");
+      print("message "+message.notification!.title.toString()+"^^");
+   if(message.data!=null){
+      Map<String, dynamic> map = message.data;
+      print(map.toString());
+      createListMap(map);
+   }
   // If `onMessage` is triggered with a notification, construct our own
   // local notification to show to users using the created channel.
-  if (notification != null && android != null) {
-    flutterLocalNotificationsPlugin.show(
-        notification.hashCode,
-        notification.title,
-        notification.body,
-        NotificationDetails(
-          android: AndroidNotificationDetails(
-            channel.id,
-            channel.name,
-            icon: android.smallIcon,
-            // other properties...
-          ),
-        ));
-  }
+  const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+          'cityofcars',
+          'cityofcars',
+          channelDescription: 'User Notification Channel',
+          importance: Importance.max,
+          priority: Priority.high,
+          ticker: 'ticker',
+          enableLights: true,
+          enableVibration: true,
+          playSound: true,
+        );
+        const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+        await flutterLocalNotificationsPlugin.show(
+          10,
+          message.notification!.title,
+          message.notification!.body,
+          platformChannelSpecifics,
+          payload: message.data.toString(),
+        );
+  // if (notification != null && android != null) {
+  //   flutterLocalNotificationsPlugin.show(
+  //       notification.hashCode,
+  //       notification.title,
+  //       notification.body,
+  //       NotificationDetails(
+  //         android: AndroidNotificationDetails(
+  //           channel.id,
+  //           channel.name,
+  //           icon: android.smallIcon,
+  //           // other properties...
+  //         ),
+  //       ));
+  // }
       if (message.notification != null) {
         print(message.notification!.body);
       }
     });
     //Routing on tap notification 
     // when app is in background 
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+    FirebaseMessaging.onMessageOpenedApp.listen((message) async{
       RemoteNotification? notification = message.notification;
   AndroidNotification? android = message.notification?.android;
 
   // If `onMessage` is triggered with a notification, construct our own
   // local notification to show to users using the created channel.
-  if (notification != null && android != null) {
-    flutterLocalNotificationsPlugin.show(
-        notification.hashCode,
-        notification.title,
-        notification.body,
-        NotificationDetails(
-          android: AndroidNotificationDetails(
-            channel.id,
-            channel.name,
-            icon: android.smallIcon,
-            // other properties...
-          ),
-        ));
-  }
-     final routeFrommessage = message.data["route"];
-     print(routeFrommessage);
+  const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+          'cityofcars',
+          'cityofcars',
+          channelDescription: 'User Notification Channel',
+          importance: Importance.max,
+          priority: Priority.high,
+          ticker: 'ticker',
+          enableLights: true,
+          enableVibration: true,
+          playSound: true,
+        );
+        const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+        await flutterLocalNotificationsPlugin.show(
+          10,
+          message.notification!.title,
+          message.notification!.body,
+          platformChannelSpecifics,
+          payload: message.data.toString(),
+        );
+  // if (notification != null && android != null) {
+  //   flutterLocalNotificationsPlugin.show(
+  //       notification.hashCode,
+  //       notification.title,
+  //       notification.body,
+  //       NotificationDetails(
+  //         android: AndroidNotificationDetails(
+  //           channel.id,
+  //           channel.name,
+  //           icon: android.smallIcon,
+  //           // other properties...
+  //         ),
+  //       ));
+  // }
      });
     id = prefs!.getString("userId").toString();
 
@@ -185,4 +288,16 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
+    token() {
+    var messaging = FirebaseMessaging.instance;
+    messaging.getToken().then((value) {
+      print("token: " + value.toString());
+      tokenId = value.toString();
+
+      print("new token: " + tokenId.toString());
+    });
+  }
+
+   
+
 }

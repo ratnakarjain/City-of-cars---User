@@ -4,13 +4,26 @@ import 'package:cityofcars/Screens/Service%20Main/offers.dart';
 import 'package:cityofcars/Screens/Service%20Main/productDetail.dart';
 import 'package:cityofcars/Services/models/offersModel.dart';
 import 'package:cityofcars/Services/models/plansModel.dart';
+import 'package:cityofcars/Services/models/subcategory.dart';
 import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:cityofcars/Utils/functions.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../sos.dart';
+
+class Searchdata {
+  static var cats;
+  static List<PlanModel> plans = [];
+  static List<SubcatModel> subcat = [];
+}
+
+bool recdata = false;
+bool mostdata = false;
 
 class ServiceMain extends StatefulWidget {
   const ServiceMain({Key? key}) : super(key: key);
@@ -24,6 +37,11 @@ class _ServiceMainState extends State<ServiceMain> {
   ScrollController _controller2 = ScrollController();
   var h;
   var w;
+  List<PlanModel> pls1 = [];
+  List<PlanModel> pls2 = [];
+  List cats1 = [];
+  List cats2 = [];
+  bool show = false;
   List<PlanModel> mostpop = [];
   List<OffersModel> offerslist = [];
   List<PlanModel> recom = [];
@@ -37,6 +55,8 @@ class _ServiceMainState extends State<ServiceMain> {
   bool showmost = false;
   bool showrec = false;
 
+  bool saverec = false;
+  bool savemost = false;
   List carServices = [
     {
       "services": "Periodic Services",
@@ -84,6 +104,11 @@ class _ServiceMainState extends State<ServiceMain> {
   ];
   List images = [];
   bool loding1 = true;
+  bool processing = true;
+  bool catlod = false;
+  TextEditingController search = TextEditingController();
+  bool focussearch = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -96,6 +121,25 @@ class _ServiceMainState extends State<ServiceMain> {
     print(Ids.cityid);
     print(Ids.carid);
     print(Ids.brandid);
+    getcategaries().then((value) {
+      if (value != null) {
+        cats1 = value;
+        setState(() {
+          catlod = true;
+        });
+      }
+    });
+    getrecmostPlans().then((value) {
+      if (value != null) {
+        pls1.addAll(value);
+        setState(() {
+          savemost = mostdata;
+          saverec = recdata;
+          print("+++++"+savemost.toString());
+          print("++++"+saverec.toString());
+        });
+      }
+    });
     getcategoryBanner().then((value) {
       images.addAll(value);
       setState(() {});
@@ -105,6 +149,9 @@ class _ServiceMainState extends State<ServiceMain> {
         offerslist.addAll(value);
         setState(() {});
       }
+    }).whenComplete(() {
+      processing = false;
+      setState(() {});
     });
   }
 
@@ -123,7 +170,9 @@ class _ServiceMainState extends State<ServiceMain> {
           foregroundColor: kwhitecolor,
           centerTitle: false,
           title: Text(
-            "Delhi",
+            prefs!.getString("state").toString() == "null"
+                ? "Delhi"
+                : prefs!.getString("state").toString(),
             style: GoogleFonts.montserrat(
                 textStyle: const TextStyle(
                     fontWeight: FontWeight.bold, color: kwhitecolor)),
@@ -173,811 +222,1178 @@ class _ServiceMainState extends State<ServiceMain> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Container(
-            //   height: h*0.2,
-            //   child: Stack(
-            //     children: [
-            //       PageView.builder(
-            //           onPageChanged: (value) {
-            //             setState(() {
-            //               currentPage = value;
-            //             });
-            //           },
-            //           itemCount: backimage.length,
-            //           itemBuilder: (context, index) => Container(
-            //                 decoration: BoxDecoration(
-            //                     image: DecorationImage(
-            //                         image: NetworkImage(
-            //                           backimage[index],
-            //                         ),
-            //                         fit: BoxFit.cover)),
-            //               )),
-            //       Positioned(
-            //         bottom: 0,
-            //         left: 0,
-            //         right: 0,
-            //         child: Row(
-            //           mainAxisAlignment: MainAxisAlignment.center,
-            //           children: backimage.map((url) {
-            //             int index = backimage.indexOf(url);
-            //             return Container(
-            //               width: 8.0,
-            //               height: 8.0,
-            //               margin: const EdgeInsets.symmetric(
-            //                   vertical: 10.0, horizontal: 2.0),
-            //               decoration: BoxDecoration(
-            //                 shape: BoxShape.circle,
-            //                 color: currentPage == index
-            //                     ? const Color(0xFFFFFFFF)
-            //                     : const Color(0xFFFFFFFF).withOpacity(0.5),
-            //               ),
-            //             );
-            //           }).toList(),
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            //  Padding(
-            //     padding: EdgeInsets.only(
-            //         left: w * 0.06, right: w * 0.06, top: 20),
-            //     child: Material(
-            //       color: kwhitecolor,
-            //       elevation: 8,
-            //       shadowColor: kTextInputPlaceholderColor.withOpacity(0.3),
-            //       borderRadius:  BorderRadius.circular(h*0.05),
-            //       child: TextField(
-            //         decoration: InputDecoration(
-            //             hintText: "Search",
-            //             hintStyle:
-            //                 GoogleFonts.montserrat(
-            //                 fontWeight: FontWeight.w600,
-            //                 color: kGreenColor),
-            //             suffixIcon: Icon(
-            //               Icons.search,
-            //             ),
-            //             focusedBorder: OutlineInputBorder(
-            //                 borderSide:
-            //                     BorderSide(color: korangecolor, width: 1.0),
-            //                 borderRadius: BorderRadius.circular(h*0.05)),
-            //             border: OutlineInputBorder(
-            //                 borderSide: BorderSide(
-            //                     color: kTextInputPlaceholderColor,
-            //                     width: 1.0),
-            //                 borderRadius: BorderRadius.circular(h*0.05))),
-            //       ),
-            //     ),
-            //   ),
-            Container(
-              height: h * 0.07,
-              padding: EdgeInsets.only(
-                  left: w * 0.06, right: w * 0.06, top: h * 0.02),
-              child: Material(
-                color: kwhitecolor,
-                elevation: 8,
-                shadowColor: kTextInputPlaceholderColor.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(h * 0.05),
-                child: TextField(
-                  decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.only(top: h * 0.01, left: w * 0.05),
-                      hintText: "Search",
-                      hintStyle: GoogleFonts.montserrat(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        color: ksearchTextColor.withOpacity(0.57),
-                      ),
-                      suffixIcon: const Icon(
-                        Icons.search,
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: korangecolor, width: 1.0),
-                          borderRadius: BorderRadius.circular(h * 0.05)),
-                      border: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: kTextInputPlaceholderColor, width: 1.0),
-                          borderRadius: BorderRadius.circular(h * 0.05))),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: h * 0.015,
-            ),
-            FutureBuilder(
-              future: getcategaries().whenComplete(() {
-                loding1 = false;
-              }),
-              builder: (context, AsyncSnapshot snapshot) {
-                if (loding1) {
-                  return loder;
-                } else {
-                  return snapshot.hasData
-                      ? GridView.count(
-                          // physics:  const ScrollPhysics(),
-                          // physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          controller: _controller2,
-                          padding: EdgeInsets.symmetric(
-                              vertical: h * 0.015, horizontal: h * 0.025),
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                          children:
-                              List.generate(snapshot.data.length, (index) {
-                            print(snapshot.data.length);
-                            return GestureDetector(
-                              onTap: () {
-                                print(snapshot.data[index]["_id"].toString());
-                                Ids.categoryid =
-                                    snapshot.data[index]["_id"].toString();
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => InsideCategory(
-                                              id: snapshot.data[index]["_id"]
-                                                  .toString(),
-                                            )));
-                              },
-                              child: RRectCard(
-                                h: h * 0.20,
-                                w: h * 0.18,
-                                borderRadius: 10,
-                                widget: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Expanded(
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                              // vertical: h * 0.02,
-                                              top: h * 0.04,
-                                              left: w * 0.06,
-                                              right: w * 0.06),
-                                          child: CachedNetworkImage(
-                                              fit: BoxFit.fill,
-                                              imageUrl: snapshot.data[index]
-                                                      ["image"]
-                                                  .toString(),
-                                              placeholder: (context, url) =>
-                                                  Container(),
-                                              errorWidget:
-                                                  (context, url, error) =>
-                                                      Container()
-                                              // Image.network(
-                                              //     "https://i.gifer.com/DKke.gif"),
-                                              ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: h * 0.005,
-                                      ),
-                                      FittedBox(
-                                        child: Text(
-                                          snapshot.data[index]["title"] ==
-                                                      null ||
-                                                  snapshot.data[index]
-                                                          ["title"] ==
-                                                      ""
-                                              ? ""
-                                              : "${snapshot.data[index]["title"]}"
-                                                  .toUpperCase(),
-                                          style: GoogleFonts.montserrat(
-                                              fontWeight: FontWeight.w500,
-                                              height: 3,
-                                              fontSize: 11),
-                                        ),
-                                      ),
-                                      FittedBox(
-                                        child: Text(
-                                          snapshot.data[index]["discreption"] ==
-                                                      null ||
-                                                  snapshot.data[index]
-                                                          ["discreption"] ==
-                                                      ""
-                                              ? ""
-                                              : "${snapshot.data[index]["discreption"]}"
-                                                  .toUpperCase(),
-                                          textAlign: TextAlign.center,
-                                          style: GoogleFonts.montserrat(
-                                              fontWeight: FontWeight.w400,
-                                              height: 1,
-                                              fontSize: 9),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: h * 0.015,
-                                      ),
-                                    ]),
-                              ),
-                            );
-                          }),
-                        )
-                      : Container();
-                }
-              },
-            ),
-
-            SizedBox(
-              height: h * 0.01,
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  width: w * 0.06,
-                ),
-                Text(
-                  "Not sure about the problem? ",
-                  style: GoogleFonts.montserrat(
-                    fontSize: 12,
-                    color: kTextInputPlaceholderColor,
-                  ),
-                ),
-                Text(
-                  "Click here",
-                  style: GoogleFonts.montserrat(
-                    fontSize: 12,
-                    color: kbluecolor,
-                    fontWeight: FontWeight.w700,
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: h * 0.02,
-            ),
-            Visibility(
-              // visible: showmost,
-
+      body: processing
+          ? loder
+          : SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Container(
+                  //   height: h*0.2,
+                  //   child: Stack(
+                  //     children: [
+                  //       PageView.builder(
+                  //           onPageChanged: (value) {
+                  //             setState(() {
+                  //               currentPage = value;
+                  //             });
+                  //           },
+                  //           itemCount: backimage.length,
+                  //           itemBuilder: (context, index) => Container(
+                  //                 decoration: BoxDecoration(
+                  //                     image: DecorationImage(
+                  //                         image: NetworkImage(
+                  //                           backimage[index],
+                  //                         ),
+                  //                         fit: BoxFit.cover)),
+                  //               )),
+                  //       Positioned(
+                  //         bottom: 0,
+                  //         left: 0,
+                  //         right: 0,
+                  //         child: Row(
+                  //           mainAxisAlignment: MainAxisAlignment.center,
+                  //           children: backimage.map((url) {
+                  //             int index = backimage.indexOf(url);
+                  //             return Container(
+                  //               width: 8.0,
+                  //               height: 8.0,
+                  //               margin: const EdgeInsets.symmetric(
+                  //                   vertical: 10.0, horizontal: 2.0),
+                  //               decoration: BoxDecoration(
+                  //                 shape: BoxShape.circle,
+                  //                 color: currentPage == index
+                  //                     ? const Color(0xFFFFFFFF)
+                  //                     : const Color(0xFFFFFFFF).withOpacity(0.5),
+                  //               ),
+                  //             );
+                  //           }).toList(),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  //  Padding(
+                  //     padding: EdgeInsets.only(
+                  //         left: w * 0.06, right: w * 0.06, top: 20),
+                  //     child: Material(
+                  //       color: kwhitecolor,
+                  //       elevation: 8,
+                  //       shadowColor: kTextInputPlaceholderColor.withOpacity(0.3),
+                  //       borderRadius:  BorderRadius.circular(h*0.05),
+                  //       child: TextField(
+                  //         decoration: InputDecoration(
+                  //             hintText: "Search",
+                  //             hintStyle:
+                  //                 GoogleFonts.montserrat(
+                  //                 fontWeight: FontWeight.w600,
+                  //                 color: kGreenColor),
+                  //             suffixIcon: Icon(
+                  //               Icons.search,
+                  //             ),
+                  //             focusedBorder: OutlineInputBorder(
+                  //                 borderSide:
+                  //                     BorderSide(color: korangecolor, width: 1.0),
+                  //                 borderRadius: BorderRadius.circular(h*0.05)),
+                  //             border: OutlineInputBorder(
+                  //                 borderSide: BorderSide(
+                  //                     color: kTextInputPlaceholderColor,
+                  //                     width: 1.0),
+                  //                 borderRadius: BorderRadius.circular(h*0.05))),
+                  //       ),
+                  //     ),
+                  //   ),
+                  Container(
+                    height: h * 0.07,
+                    padding: EdgeInsets.only(
+                        left: w * 0.06, right: w * 0.06, top: h * 0.02),
+                    child: Material(
+                      color: kwhitecolor,
+                      elevation: 8,
+                      shadowColor: kTextInputPlaceholderColor.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(h * 0.05),
+                      child: TextField(
+                        controller: search,
+
+                        // focusNode: FocusNode(canRequestFocus: true),
+                        onTap: () {
+                          focussearch = true;
+                          setState(() {});
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            cats2.clear();
+                            pls2.clear();
+                            show = false;
+                            if (value.isEmpty) {
+                              recdata = saverec;
+                              mostdata = savemost;
+                            }
+                            print("changeqetyu");
+                          });
+                        },
+                       
+                        decoration: InputDecoration(
+                            contentPadding:
+                                EdgeInsets.only(top: h * 0.01, left: w * 0.05),
+                            hintText: "Search",
+                            hintStyle: GoogleFonts.montserrat(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: ksearchTextColor.withOpacity(0.57),
+                            ),
+                            suffixIcon: InkWell(
+                              borderRadius: BorderRadius.circular(h * 0.02),
+                              onTap: search.text.isEmpty
+                                  ? () {
+                                      show = false;
+                                      setState(() {});
+                                    }
+                                  : () {
+                                      print("qwertyui");
+                                      searchGloble(search.text).then((value) {
+                                        print("done");
+                                        if (value) {
+                                          show = true;
+                                          print("condition");
+                                          pls2.clear();
+                                          cats2.clear();
+                                          pls2.addAll(Searchdata.plans);
+                                          cats2.addAll(Searchdata.cats);
+
+                                          // pls=value.plans;
+
+                                          setState(() {});
+                                        }
+                                      });
+                                    },
+                              child: const Icon(
+                                Icons.search,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: korangecolor, width: 1.0),
+                                borderRadius: BorderRadius.circular(h * 0.05)),
+                            border: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: kTextInputPlaceholderColor,
+                                    width: 1.0),
+                                borderRadius: BorderRadius.circular(h * 0.05))),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: h * 0.015,
+                  ),
+                  Visibility(
+                    visible: cats1.isNotEmpty||cats2.isNotEmpty,
+                    child: GridView.count(
+                      // physics:  const ScrollPhysics(),
+                      // physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      controller: _controller2,
+                      padding: EdgeInsets.symmetric(
+                          vertical: h * 0.015, horizontal: h * 0.025),
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      children: List.generate(
+                          cats2.isEmpty ? cats1.length : cats2.length, (index) {
+                        // print(cats1.length);
+                        var data = cats2.isEmpty ? cats1 : cats2;
+                        print(cats2);
+                        return GestureDetector(
+                          onTap: () {
+                            print(data[index]["_id"].toString());
+                            Ids.categoryid = data[index]["_id"].toString();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => InsideCategory(
+                                          id: data[index]["_id"].toString(),
+                                        )));
+                          },
+                          child: RRectCard(
+                            h: h * 0.20,
+                            w: h * 0.18,
+                            borderRadius: 10,
+                            widget: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          // vertical: h * 0.02,
+                                          top: h * 0.04,
+                                          left: w * 0.06,
+                                          right: w * 0.06),
+                                      child: CachedNetworkImage(
+                                          fit: BoxFit.fill,
+                                          imageUrl:
+                                              data[index]["image"].toString(),
+                                          placeholder: (context, url) =>
+                                              Container(),
+                                          errorWidget: (context, url, error) =>
+                                              Container()
+                                          // Image.network(
+                                          //     "https://i.gifer.com/DKke.gif"),
+                                          ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: h * 0.005,
+                                  ),
+                                  FittedBox(
+                                    child: Text(
+                                      data[index]["title"] == null ||
+                                              data[index]["title"] == ""
+                                          ? ""
+                                          : "${data[index]["title"]}"
+                                              .toUpperCase(),
+                                      style: GoogleFonts.montserrat(
+                                          fontWeight: FontWeight.w500,
+                                          height: 3,
+                                          fontSize: 11),
+                                    ),
+                                  ),
+                                  FittedBox(
+                                    child: Text(
+                                      data[index]["discreption"] == null ||
+                                              data[index]["discreption"] == ""
+                                          ? ""
+                                          : "${data[index]["discreption"]}"
+                                              .toUpperCase(),
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.montserrat(
+                                          fontWeight: FontWeight.w400,
+                                          height: 1,
+                                          fontSize: 9),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: h * 0.015,
+                                  ),
+                                ]),
+                          ),
+                        );
+                      }),
+                    ),
+                  ),
+                  // FutureBuilder(
+                  //   future: getcategaries().whenComplete(() {
+                  //     loding1 = false;
+                  //   }),
+                  //   builder: (context, AsyncSnapshot snapshot) {
+                  //     if (loding1) {
+                  //       return loder;
+                  //     } else {
+                  //       return snapshot.hasData
+                  //           ? GridView.count(
+                  //               // physics:  const ScrollPhysics(),
+                  //               // physics: const NeverScrollableScrollPhysics(),
+                  //               shrinkWrap: true,
+                  //               controller: _controller2,
+                  //               padding: EdgeInsets.symmetric(
+                  //                   vertical: h * 0.015, horizontal: h * 0.025),
+                  //               crossAxisCount: 2,
+                  //               crossAxisSpacing: 10,
+                  //               mainAxisSpacing: 10,
+                  //               children:
+                  //                   List.generate(snapshot.data.length, (index) {
+                  //                 print(snapshot.data.length);
+                  //                 return GestureDetector(
+                  //                   onTap: () {
+                  //                     print(snapshot.data[index]["_id"].toString());
+                  //                     Ids.categoryid =
+                  //                         snapshot.data[index]["_id"].toString();
+                  //                     Navigator.push(
+                  //                         context,
+                  //                         MaterialPageRoute(
+                  //                             builder: (context) => InsideCategory(
+                  //                                   id: snapshot.data[index]["_id"]
+                  //                                       .toString(),
+                  //                                 )));
+                  //                   },
+                  //                   child: RRectCard(
+                  //                     h: h * 0.20,
+                  //                     w: h * 0.18,
+                  //                     borderRadius: 10,
+                  //                     widget: Column(
+                  //                         mainAxisAlignment: MainAxisAlignment.center,
+                  //                         children: [
+                  //                           Expanded(
+                  //                             child: Padding(
+                  //                               padding: EdgeInsets.only(
+                  //                                   // vertical: h * 0.02,
+                  //                                   top: h * 0.04,
+                  //                                   left: w * 0.06,
+                  //                                   right: w * 0.06),
+                  //                               child: CachedNetworkImage(
+                  //                                   fit: BoxFit.fill,
+                  //                                   imageUrl: snapshot.data[index]
+                  //                                           ["image"]
+                  //                                       .toString(),
+                  //                                   placeholder: (context, url) =>
+                  //                                       Container(),
+                  //                                   errorWidget:
+                  //                                       (context, url, error) =>
+                  //                                           Container()
+                  //                                   // Image.network(
+                  //                                   //     "https://i.gifer.com/DKke.gif"),
+                  //                                   ),
+                  //                             ),
+                  //                           ),
+                  //                           SizedBox(
+                  //                             height: h * 0.005,
+                  //                           ),
+                  //                           FittedBox(
+                  //                             child: Text(
+                  //                               snapshot.data[index]["title"] ==
+                  //                                           null ||
+                  //                                       snapshot.data[index]
+                  //                                               ["title"] ==
+                  //                                           ""
+                  //                                   ? ""
+                  //                                   : "${snapshot.data[index]["title"]}"
+                  //                                       .toUpperCase(),
+                  //                               style: GoogleFonts.montserrat(
+                  //                                   fontWeight: FontWeight.w500,
+                  //                                   height: 3,
+                  //                                   fontSize: 11),
+                  //                             ),
+                  //                           ),
+                  //                           FittedBox(
+                  //                             child: Text(
+                  //                               snapshot.data[index]["discreption"] ==
+                  //                                           null ||
+                  //                                       snapshot.data[index]
+                  //                                               ["discreption"] ==
+                  //                                           ""
+                  //                                   ? ""
+                  //                                   : "${snapshot.data[index]["discreption"]}"
+                  //                                       .toUpperCase(),
+                  //                               textAlign: TextAlign.center,
+                  //                               style: GoogleFonts.montserrat(
+                  //                                   fontWeight: FontWeight.w400,
+                  //                                   height: 1,
+                  //                                   fontSize: 9),
+                  //                             ),
+                  //                           ),
+                  //                           SizedBox(
+                  //                             height: h * 0.015,
+                  //                           ),
+                  //                         ]),
+                  //                   ),
+                  //                 );
+                  //               }),
+                  //             )
+                  //           : Container();
+                  //     }
+                  //   },
+                  // ),
+
+                  SizedBox(
+                    height: h * 0.01,
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: w * 0.06,
+                      ),
+                      Text(
+                        "Not sure about the problem? ",
+                        style: GoogleFonts.montserrat(
+                          fontSize: 12,
+                          color: kTextInputPlaceholderColor,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Sos()));
+                        },
+                        child: Text(
+                          "Click here",
+                          style: GoogleFonts.montserrat(
+                            fontSize: 12,
+                            color: kbluecolor,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: h * 0.02,
+                  ),
+                  Visibility(
+                    // visible: showmost,
+                    visible: mostdata,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Label(
+                          color: kbluecolor,
+                          text: "most populer packs",
+                          textStyle: GoogleFonts.montserrat(
+                            textStyle: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: kwhitecolor),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
+                        ),
+                        SizedBox(
+                          height: h * 0.01,
+                        ),
+                        Container(
+                          height: h * 0.18,
+                          child: ListView.builder(
+                            controller: _controller2,
+                            physics: const BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            padding: EdgeInsets.symmetric(
+                                vertical: h * 0.01, horizontal: h * 0.025),
+                            itemCount: pls2.isEmpty ? pls1.length : pls2.length,
+                            itemBuilder: (context, index) {
+                              PlanModel model = PlanModel();
+                              print("====");
+
+                              model = pls2.isEmpty ? pls1[index] : pls2[index];
+                              print("====" + model.isMost);
+                              return Visibility(
+                                visible: model.isMost.toString() == "true",
+                                child: GestureDetector(
+                                  onTap: () {
+                                    print("Cat " +
+                                        model.categoryId.toString() +
+                                        "^^");
+                                    Ids.categoryid =
+                                        model.categoryId.toString();
+                                    Ids.subcategoryid =
+                                        model.subcatid.toString();
+                                    Ids.planid = model.planid.toString();
+                                    print("===" + Ids.categoryid);
+                                    print("===" + Ids.subcategoryid);
+                                    print("===" + Ids.planid);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ProductDetails(
+                                                    planDetails: model)));
+                                  },
+                                  child: RRectCard(
+                                    h: h * 0.1,
+                                    w: w * 0.25,
+                                    borderRadius: 15,
+                                    widget: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Image.network(
+                                            model.planimage,
+                                            height: h * 0.04,
+                                          ),
+                                          // Image.asset(
+                                          //     "assets/images/${reccomendedPackes[0]["image"]}"),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          FittedBox(
+                                            child: Text(
+                                              model.packs.first.planName,
+                                              style: GoogleFonts.montserrat(
+                                                fontWeight: FontWeight.w600,
+                                                height: 2,
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: h * 0.01),
+                                            child: FittedBox(
+                                              child: Text(
+                                                model.packs.first.subPlanName,
+                                                textScaleFactor: 0.6,
+                                                style: GoogleFonts.montserrat(
+                                                  fontWeight: FontWeight.w600,
+                                                  color:
+                                                      kTextInputPlaceholderColor
+                                                          .withOpacity(0.6),
+                                                  height: 2,
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        ]),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        // FutureBuilder(
+                        //   future: getrecmostPlans().whenComplete(() {
+                        //     showmost = true;
+                        //   }),
+                        //   builder: (context, AsyncSnapshot snapshot) {
+                        //     if (snapshot.connectionState ==
+                        //         ConnectionState.done) {
+                        //       // mostpop.addAll(snapshot.data);
+                        //       if (snapshot.hasData) {
+                        //         return ListView.builder(
+                        //           controller: _controller2,
+                        //           physics: const BouncingScrollPhysics(),
+                        //           scrollDirection: Axis.horizontal,
+                        //           padding: EdgeInsets.symmetric(
+                        //               vertical: h * 0.01,
+                        //               horizontal: h * 0.025),
+                        //           itemCount: snapshot.data.length,
+                        //           itemBuilder: (context, index) {
+                        //             PlanModel model = PlanModel();
+                        //             model = snapshot.data[index];
+                        //             return Visibility(
+                        //               visible: model.isMost == "true",
+                        //               child: GestureDetector(
+                        //                 onTap: () {
+                        //                   print("Cat " +
+                        //                       model.categoryId.toString() +
+                        //                       "^^");
+                        //                   Ids.categoryid =
+                        //                       model.categoryId.toString();
+                        //                   Ids.subcategoryid =
+                        //                       model.subcatid.toString();
+                        //                   Ids.planid =
+                        //                       model.planid.toString();
+                        //                   print("===" + Ids.categoryid);
+                        //                   print("===" + Ids.subcategoryid);
+                        //                   print("===" + Ids.planid);
+                        //                   Navigator.push(
+                        //                       context,
+                        //                       MaterialPageRoute(
+                        //                           builder: (context) =>
+                        //                               ProductDetails(
+                        //                                   planDetails:
+                        //                                       model)));
+                        //                 },
+                        //                 child: RRectCard(
+                        //                   h: h * 0.1,
+                        //                   w: w * 0.25,
+                        //                   borderRadius: 15,
+                        //                   widget: Column(
+                        //                       mainAxisAlignment:
+                        //                           MainAxisAlignment.center,
+                        //                       children: [
+                        //                         Image.network(
+                        //                           model.planimage,
+                        //                           height: h * 0.04,
+                        //                         ),
+                        //                         // Image.asset(
+                        //                         //     "assets/images/${reccomendedPackes[0]["image"]}"),
+                        //                         const SizedBox(
+                        //                           height: 5,
+                        //                         ),
+                        //                         FittedBox(
+                        //                           child: Text(
+                        //                             model.packs.first
+                        //                                 .planName,
+                        //                             style: GoogleFonts
+                        //                                 .montserrat(
+                        //                               fontWeight:
+                        //                                   FontWeight.w600,
+                        //                               height: 2,
+                        //                             ),
+                        //                           ),
+                        //                         ),
+                        //                         Padding(
+                        //                           padding:
+                        //                               EdgeInsets.symmetric(
+                        //                                   horizontal:
+                        //                                       h * 0.01),
+                        //                           child: FittedBox(
+                        //                             child: Text(
+                        //                               model.packs.first
+                        //                                   .subPlanName,
+                        //                               textScaleFactor: 0.6,
+                        //                               style: GoogleFonts
+                        //                                   .montserrat(
+                        //                                 fontWeight:
+                        //                                     FontWeight.w600,
+                        //                                 color:
+                        //                                     kTextInputPlaceholderColor
+                        //                                         .withOpacity(
+                        //                                             0.6),
+                        //                                 height: 2,
+                        //                               ),
+                        //                             ),
+                        //                           ),
+                        //                         )
+                        //                       ]),
+                        //                 ),
+                        //               ),
+                        //             );
+                        //           },
+                        //         );
+                        //       }
+                        //       return const Center(
+                        //           child: Text("No Data Found"));
+                        //     }
+                        //     if (snapshot.connectionState ==
+                        //         ConnectionState.waiting) {
+                        //       if (snapshot.hasData) {
+                        //         return ListView.builder(
+                        //           controller: _controller2,
+                        //           physics: const BouncingScrollPhysics(),
+                        //           scrollDirection: Axis.horizontal,
+                        //           padding: EdgeInsets.symmetric(
+                        //               vertical: h * 0.01,
+                        //               horizontal: h * 0.025),
+                        //           itemCount: snapshot.data.length,
+                        //           itemBuilder: (context, index) {
+                        //             PlanModel model = PlanModel();
+                        //             model = snapshot.data[index];
+                        //             return Visibility(
+                        //               visible: model.isMost == "true",
+                        //               child: GestureDetector(
+                        //                 onTap: () {
+                        //                   print("Cat " +
+                        //                       model.categoryId.toString() +
+                        //                       "^^");
+                        //                   Ids.categoryid =
+                        //                       model.categoryId.toString();
+                        //                   Ids.subcategoryid =
+                        //                       model.subcatid.toString();
+                        //                   Ids.planid =
+                        //                       model.planid.toString();
+                        //                   Navigator.push(
+                        //                       context,
+                        //                       MaterialPageRoute(
+                        //                           builder: (context) =>
+                        //                               ProductDetails(
+                        //                                   planDetails:
+                        //                                       model)));
+                        //                 },
+                        //                 child: RRectCard(
+                        //                   h: h * 0.1,
+                        //                   w: w * 0.25,
+                        //                   borderRadius: 15,
+                        //                   widget: Column(
+                        //                       mainAxisAlignment:
+                        //                           MainAxisAlignment.center,
+                        //                       children: [
+                        //                         Image.network(
+                        //                           model.planimage,
+                        //                           height: h * 0.04,
+                        //                         ),
+                        //                         // Image.asset(
+                        //                         //     "assets/images/${reccomendedPackes[0]["image"]}"),
+                        //                         const SizedBox(
+                        //                           height: 5,
+                        //                         ),
+                        //                         FittedBox(
+                        //                           child: Text(
+                        //                             model.packs.first
+                        //                                 .planName,
+                        //                             style: GoogleFonts
+                        //                                 .montserrat(
+                        //                               fontWeight:
+                        //                                   FontWeight.w600,
+                        //                               height: 2,
+                        //                             ),
+                        //                           ),
+                        //                         ),
+                        //                         Padding(
+                        //                           padding:
+                        //                               EdgeInsets.symmetric(
+                        //                                   horizontal:
+                        //                                       h * 0.01),
+                        //                           child: FittedBox(
+                        //                             child: Text(
+                        //                               model.packs.first
+                        //                                   .subPlanName,
+                        //                               textScaleFactor: 0.6,
+                        //                               style: GoogleFonts
+                        //                                   .montserrat(
+                        //                                 fontWeight:
+                        //                                     FontWeight.w600,
+                        //                                 color:
+                        //                                     kTextInputPlaceholderColor
+                        //                                         .withOpacity(
+                        //                                             0.6),
+                        //                                 height: 2,
+                        //                               ),
+                        //                             ),
+                        //                           ),
+                        //                         )
+                        //                       ]),
+                        //                 ),
+                        //               ),
+                        //             );
+                        //           },
+                        //         );
+                        //       }
+                        //       return loder;
+                        //     }
+                        //     return loder;
+                        //   },
+                        // )),
+                        SizedBox(
+                          height: h * 0.01,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Visibility(
+                    visible: recdata,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Label(
+                          color: korangecolor,
+                          text: "recommended packs",
+                          textStyle: GoogleFonts.montserrat(
+                            textStyle: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: kwhitecolor),
+                          ),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        ),
+                        SizedBox(
+                          height: h * 0.01,
+                        ),
+                        Container(
+                            height: h * 0.18,
+                            child: ListView.builder(
+                              controller: _controller2,
+                              physics: const BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              padding: EdgeInsets.symmetric(
+                                  vertical: h * 0.01, horizontal: h * 0.025),
+                              itemCount:
+                                  pls2.isEmpty ? pls1.length : pls2.length,
+                              itemBuilder: (context, index) {
+                                PlanModel model = PlanModel();
+                                model =
+                                    pls2.isEmpty ? pls1[index] : pls2[index];
+                                print("====" + model.isrec.toString());
+                                return Visibility(
+                                  visible: model.isrec == "true",
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      print("Cat " +
+                                          model.categoryId.toString() +
+                                          "^^");
+                                      Ids.categoryid =
+                                          model.categoryId.toString();
+                                      Ids.subcategoryid =
+                                          model.subcatid.toString();
+                                      Ids.planid = model.planid.toString();
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ProductDetails(
+                                                      planDetails: model)));
+                                    },
+                                    child: RRectCard(
+                                      h: h * 0.1,
+                                      w: w * 0.25,
+                                      borderRadius: 15,
+                                      widget: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Image.network(
+                                              model.planimage,
+                                              height: h * 0.04,
+                                            ),
+                                            // Image.asset(
+                                            //     "assets/images/${reccomendedPackes[0]["image"]}"),
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            FittedBox(
+                                              child: Text(
+                                                model.packs.first.planName,
+                                                style: GoogleFonts.montserrat(
+                                                  fontWeight: FontWeight.w600,
+                                                  height: 2,
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: h * 0.01),
+                                              child: FittedBox(
+                                                child: Text(
+                                                  model.packs.first.subPlanName,
+                                                  textScaleFactor: 0.6,
+                                                  style: GoogleFonts.montserrat(
+                                                    fontWeight: FontWeight.w600,
+                                                    color:
+                                                        kTextInputPlaceholderColor
+                                                            .withOpacity(0.6),
+                                                    height: 2,
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          ]),
+                                    ),
+                                  ),
+                                );
+                              },
+                            )),
+                      ],
+                    ),
+                  ),
+
+                  // FutureBuilder(
+                  //   future: getrecmostPlans(),
+                  //   builder: (context, AsyncSnapshot snapshot) {
+                  //     if (snapshot.connectionState ==
+                  //         ConnectionState.done) {
+                  //       // mostpop.addAll(snapshot.data);
+                  //       if (snapshot.hasData) {
+                  //         return ListView.builder(
+                  //           controller: _controller2,
+                  //           physics: const BouncingScrollPhysics(),
+                  //           scrollDirection: Axis.horizontal,
+                  //           padding: EdgeInsets.symmetric(
+                  //               vertical: h * 0.01, horizontal: h * 0.025),
+                  //           itemCount: snapshot.data.length,
+                  //           itemBuilder: (context, index) {
+                  //             PlanModel model = PlanModel();
+                  //             model = snapshot.data[index];
+                  //             return Visibility(
+                  //               visible: model.isrec == "true",
+                  //               child: GestureDetector(
+                  //                 onTap: () {
+                  //                   print("Cat " +
+                  //                       model.categoryId.toString() +
+                  //                       "^^");
+                  //                   Ids.categoryid =
+                  //                       model.categoryId.toString();
+                  //                   Ids.subcategoryid =
+                  //                       model.subcatid.toString();
+                  //                   Ids.planid = model.planid.toString();
+                  //                   Navigator.push(
+                  //                       context,
+                  //                       MaterialPageRoute(
+                  //                           builder: (context) =>
+                  //                               ProductDetails(
+                  //                                   planDetails: model)));
+                  //                 },
+                  //                 child: RRectCard(
+                  //                   h: h * 0.1,
+                  //                   w: w * 0.25,
+                  //                   borderRadius: 15,
+                  //                   widget: Column(
+                  //                       mainAxisAlignment:
+                  //                           MainAxisAlignment.center,
+                  //                       children: [
+                  //                         Image.network(
+                  //                           model.planimage,
+                  //                           height: h * 0.04,
+                  //                         ),
+                  //                         // Image.asset(
+                  //                         //     "assets/images/${reccomendedPackes[0]["image"]}"),
+                  //                         const SizedBox(
+                  //                           height: 5,
+                  //                         ),
+                  //                         FittedBox(
+                  //                           child: Text(
+                  //                             model.packs.first.planName,
+                  //                             style: GoogleFonts.montserrat(
+                  //                               fontWeight: FontWeight.w600,
+                  //                               height: 2,
+                  //                             ),
+                  //                           ),
+                  //                         ),
+                  //                         Padding(
+                  //                           padding: EdgeInsets.symmetric(
+                  //                               horizontal: h * 0.01),
+                  //                           child: FittedBox(
+                  //                             child: Text(
+                  //                               model.packs.first
+                  //                                   .subPlanName,
+                  //                               textScaleFactor: 0.6,
+                  //                               style:
+                  //                                   GoogleFonts.montserrat(
+                  //                                 fontWeight:
+                  //                                     FontWeight.w600,
+                  //                                 color:
+                  //                                     kTextInputPlaceholderColor
+                  //                                         .withOpacity(0.6),
+                  //                                 height: 2,
+                  //                               ),
+                  //                             ),
+                  //                           ),
+                  //                         )
+                  //                       ]),
+                  //                 ),
+                  //               ),
+                  //             );
+                  //           },
+                  //         );
+                  //       }
+                  //       return const Center(child: Text("No Data Found"));
+                  //     }
+                  //     if (snapshot.connectionState ==
+                  //         ConnectionState.waiting) {
+                  //       if (snapshot.hasData) {
+                  //         return ListView.builder(
+                  //           controller: _controller2,
+                  //           physics: const BouncingScrollPhysics(),
+                  //           scrollDirection: Axis.horizontal,
+                  //           padding: EdgeInsets.symmetric(
+                  //               vertical: h * 0.01, horizontal: h * 0.025),
+                  //           itemCount: snapshot.data.length,
+                  //           itemBuilder: (context, index) {
+                  //             PlanModel model = PlanModel();
+                  //             model = snapshot.data[index];
+                  //             return Visibility(
+                  //               visible: model.isrec == "true",
+                  //               child: GestureDetector(
+                  //                 onTap: () {
+                  //                   print("Cat " +
+                  //                       model.categoryId.toString() +
+                  //                       "^^");
+                  //                   Ids.categoryid =
+                  //                       model.categoryId.toString();
+                  //                   Ids.subcategoryid =
+                  //                       model.subcatid.toString();
+                  //                   Ids.planid = model.planid.toString();
+                  //                   Navigator.push(
+                  //                       context,
+                  //                       MaterialPageRoute(
+                  //                           builder: (context) =>
+                  //                               ProductDetails(
+                  //                                   planDetails: model)));
+                  //                 },
+                  //                 child: RRectCard(
+                  //                   h: h * 0.1,
+                  //                   w: w * 0.25,
+                  //                   borderRadius: 15,
+                  //                   widget: Column(
+                  //                       mainAxisAlignment:
+                  //                           MainAxisAlignment.center,
+                  //                       children: [
+                  //                         Image.network(
+                  //                           model.planimage,
+                  //                           height: h * 0.04,
+                  //                         ),
+                  //                         // Image.asset(
+                  //                         //     "assets/images/${reccomendedPackes[0]["image"]}"),
+                  //                         const SizedBox(
+                  //                           height: 5,
+                  //                         ),
+                  //                         FittedBox(
+                  //                           child: Text(
+                  //                             model.packs.first.planName,
+                  //                             style: GoogleFonts.montserrat(
+                  //                               fontWeight: FontWeight.w600,
+                  //                               height: 2,
+                  //                             ),
+                  //                           ),
+                  //                         ),
+                  //                         Padding(
+                  //                           padding: EdgeInsets.symmetric(
+                  //                               horizontal: h * 0.01),
+                  //                           child: FittedBox(
+                  //                             child: Text(
+                  //                               model.packs.first
+                  //                                   .subPlanName,
+                  //                               textScaleFactor: 0.6,
+                  //                               style:
+                  //                                   GoogleFonts.montserrat(
+                  //                                 fontWeight:
+                  //                                     FontWeight.w600,
+                  //                                 color:
+                  //                                     kTextInputPlaceholderColor
+                  //                                         .withOpacity(0.6),
+                  //                                 height: 2,
+                  //                               ),
+                  //                             ),
+                  //                           ),
+                  //                         )
+                  //                       ]),
+                  //                 ),
+                  //               ),
+                  //             );
+                  //           },
+                  //         );
+                  //       }
+                  //       return loder;
+                  //     }
+                  //     return loder;
+                  //   },
+                  // )),
+                  SizedBox(
+                    height: h * 0.01,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      makePhoneCall("9999955555");
+                      setState(() {});
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          "assets/images/call.png",
+                          height: h * 0.03,
+                        ),
+                        RichText(
+                          text: TextSpan(
+                              text: "Call us ",
+                              style: GoogleFonts.montserrat(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w700,
+                                color: kbluecolor,
+                                height: 2,
+                              ),
+                              children: [
+                                TextSpan(
+                                  text: "at",
+                                  style: GoogleFonts.montserrat(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w400,
+                                    color: kTextInputPlaceholderColor,
+                                    height: 2,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: " 99999",
+                                  style: GoogleFonts.montserrat(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w700,
+                                    color: kbluecolor,
+                                    height: 2,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: "55555",
+                                  style: GoogleFonts.montserrat(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w700,
+                                    color: kGreenColor,
+                                    height: 2,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: "?",
+                                  style: GoogleFonts.montserrat(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w700,
+                                    color: kTextInputPlaceholderColor,
+                                    height: 2,
+                                  ),
+                                ),
+                              ]),
+                        )
+                      ],
+                    ),
+                  ),
                   Label(
                     color: kbluecolor,
-                    text: "most populer packs",
+                    text: "offers & discounts",
                     textStyle: GoogleFonts.montserrat(
                       textStyle: const TextStyle(
                           fontWeight: FontWeight.bold, color: kwhitecolor),
                     ),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  ),
-                  SizedBox(
-                    height: h * 0.01,
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   ),
                   Container(
-                      height: h * 0.18,
-                      child: FutureBuilder(
-                        future: getrecmostPlans().whenComplete(() {
-                          showmost = true;
-                        }),
-                        builder: (context, AsyncSnapshot snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.done) {
-                            // mostpop.addAll(snapshot.data);
-                            if (snapshot.hasData) {
-                              return ListView.builder(
-                                controller: _controller2,
-                                physics: const BouncingScrollPhysics(),
-                                scrollDirection: Axis.horizontal,
-                                padding: EdgeInsets.symmetric(
-                                    vertical: h * 0.01, horizontal: h * 0.025),
-                                itemCount: snapshot.data.length,
-                                itemBuilder: (context, index) {
-                                  PlanModel model = PlanModel();
-                                  model = snapshot.data[index];
-                                  return Visibility(
-                                    visible: model.isMost == "true",
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        print("Cat " +
-                                            model.categoryId.toString() +
-                                            "^^");
-                                        Ids.categoryid =
-                                            model.categoryId.toString();
-                                        Ids.subcategoryid =
-                                            model.subcatid.toString();
-                                        Ids.planid = model.planid.toString();
-                                        print("===" + Ids.categoryid);
-                                        print("===" + Ids.subcategoryid);
-                                        print("===" + Ids.planid);
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ProductDetails(
-                                                        planDetails: model)));
-                                      },
-                                      child: RRectCard(
-                                        h: h * 0.1,
-                                        w: w * 0.25,
-                                        borderRadius: 15,
-                                        widget: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Image.network(
-                                                model.planimage,
-                                                height: h * 0.04,
-                                              ),
-                                              // Image.asset(
-                                              //     "assets/images/${reccomendedPackes[0]["image"]}"),
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              FittedBox(
-                                                child: Text(
-                                                  model.packs.first.planName,
-                                                  style: GoogleFonts.montserrat(
-                                                    fontWeight: FontWeight.w600,
-                                                    height: 2,
-                                                  ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: h * 0.01),
-                                                child: FittedBox(
-                                                  child: Text(
-                                                    model.packs.first
-                                                        .subPlanName,
-                                                    textScaleFactor: 0.6,
-                                                    style:
-                                                        GoogleFonts.montserrat(
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color:
-                                                          kTextInputPlaceholderColor
-                                                              .withOpacity(0.6),
-                                                      height: 2,
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                            ]),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              );
-                            }
-                            return const Center(child: Text("No Data Found"));
-                          }
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            if (snapshot.hasData) {
-                              return ListView.builder(
-                                controller: _controller2,
-                                physics: const BouncingScrollPhysics(),
-                                scrollDirection: Axis.horizontal,
-                                padding: EdgeInsets.symmetric(
-                                    vertical: h * 0.01, horizontal: h * 0.025),
-                                itemCount: snapshot.data.length,
-                                itemBuilder: (context, index) {
-                                  PlanModel model = PlanModel();
-                                  model = snapshot.data[index];
-                                  return Visibility(
-                                    visible: model.isMost == "true",
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        print("Cat " +
-                                            model.categoryId.toString() +
-                                            "^^");
-                                        Ids.categoryid =
-                                            model.categoryId.toString();
-                                        Ids.subcategoryid =
-                                            model.subcatid.toString();
-                                        Ids.planid = model.planid.toString();
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ProductDetails(
-                                                        planDetails: model)));
-                                      },
-                                      child: RRectCard(
-                                        h: h * 0.1,
-                                        w: w * 0.25,
-                                        borderRadius: 15,
-                                        widget: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Image.network(
-                                                model.planimage,
-                                                height: h * 0.04,
-                                              ),
-                                              // Image.asset(
-                                              //     "assets/images/${reccomendedPackes[0]["image"]}"),
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              FittedBox(
-                                                child: Text(
-                                                  model.packs.first.planName,
-                                                  style: GoogleFonts.montserrat(
-                                                    fontWeight: FontWeight.w600,
-                                                    height: 2,
-                                                  ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: h * 0.01),
-                                                child: FittedBox(
-                                                  child: Text(
-                                                    model.packs.first
-                                                        .subPlanName,
-                                                    textScaleFactor: 0.6,
-                                                    style:
-                                                        GoogleFonts.montserrat(
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color:
-                                                          kTextInputPlaceholderColor
-                                                              .withOpacity(0.6),
-                                                      height: 2,
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                            ]),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              );
-                            }
-                            return loder;
-                          }
-                          return loder;
-                        },
-                      )),
-                  SizedBox(
-                    height: h * 0.01,
-                  ),
-                ],
-              ),
-            ),
-            Label(
-              color: korangecolor,
-              text: "recommended packs",
-              textStyle: GoogleFonts.montserrat(
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.bold, color: kwhitecolor),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            ),
-            SizedBox(
-              height: h * 0.01,
-            ),
-            Container(
-                height: h * 0.18,
-                child: FutureBuilder(
-                  future: getrecmostPlans(),
-                  builder: (context, AsyncSnapshot snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      // mostpop.addAll(snapshot.data);
-                      if (snapshot.hasData) {
-                        return ListView.builder(
-                          controller: _controller2,
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          padding: EdgeInsets.symmetric(
-                              vertical: h * 0.01, horizontal: h * 0.025),
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (context, index) {
-                            PlanModel model = PlanModel();
-                            model = snapshot.data[index];
-                            return Visibility(
-                              visible: model.isrec == "true",
-                              child: GestureDetector(
-                                onTap: () {
-                                  print("Cat " +
-                                      model.categoryId.toString() +
-                                      "^^");
-                                  Ids.categoryid = model.categoryId.toString();
-                                  Ids.subcategoryid = model.subcatid.toString();
-                                  Ids.planid = model.planid.toString();
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ProductDetails(
-                                              planDetails: model)));
-                                },
-                                child: RRectCard(
-                                  h: h * 0.1,
-                                  w: w * 0.25,
-                                  borderRadius: 15,
-                                  widget: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Image.network(
-                                          model.planimage,
-                                          height: h * 0.04,
-                                        ),
-                                        // Image.asset(
-                                        //     "assets/images/${reccomendedPackes[0]["image"]}"),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        FittedBox(
-                                          child: Text(
-                                            model.packs.first.planName,
-                                            style: GoogleFonts.montserrat(
-                                              fontWeight: FontWeight.w600,
-                                              height: 2,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: h * 0.01),
-                                          child: FittedBox(
-                                            child: Text(
-                                              model.packs.first.subPlanName,
-                                              textScaleFactor: 0.6,
-                                              style: GoogleFonts.montserrat(
-                                                fontWeight: FontWeight.w600,
-                                                color:
-                                                    kTextInputPlaceholderColor
-                                                        .withOpacity(0.6),
-                                                height: 2,
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      ]),
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      }
-                      return const Center(child: Text("No Data Found"));
-                    }
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      if (snapshot.hasData) {
-                        return ListView.builder(
-                          controller: _controller2,
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          padding: EdgeInsets.symmetric(
-                              vertical: h * 0.01, horizontal: h * 0.025),
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (context, index) {
-                            PlanModel model = PlanModel();
-                            model = snapshot.data[index];
-                            return Visibility(
-                              visible: model.isrec == "true",
-                              child: GestureDetector(
-                                onTap: () {
-                                  print("Cat " +
-                                      model.categoryId.toString() +
-                                      "^^");
-                                  Ids.categoryid = model.categoryId.toString();
-                                  Ids.subcategoryid = model.subcatid.toString();
-                                  Ids.planid = model.planid.toString();
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ProductDetails(
-                                              planDetails: model)));
-                                },
-                                child: RRectCard(
-                                  h: h * 0.1,
-                                  w: w * 0.25,
-                                  borderRadius: 15,
-                                  widget: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Image.network(
-                                          model.planimage,
-                                          height: h * 0.04,
-                                        ),
-                                        // Image.asset(
-                                        //     "assets/images/${reccomendedPackes[0]["image"]}"),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        FittedBox(
-                                          child: Text(
-                                            model.packs.first.planName,
-                                            style: GoogleFonts.montserrat(
-                                              fontWeight: FontWeight.w600,
-                                              height: 2,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: h * 0.01),
-                                          child: FittedBox(
-                                            child: Text(
-                                              model.packs.first.subPlanName,
-                                              textScaleFactor: 0.6,
-                                              style: GoogleFonts.montserrat(
-                                                fontWeight: FontWeight.w600,
-                                                color:
-                                                    kTextInputPlaceholderColor
-                                                        .withOpacity(0.6),
-                                                height: 2,
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      ]),
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      }
-                      return loder;
-                    }
-                    return loder;
-                  },
-                )),
-            SizedBox(
-              height: h * 0.01,
-            ),
-            GestureDetector(
-              onTap: () {
-                makePhoneCall("9999955555");
-                setState(() {});
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    "assets/images/call.png",
-                    height: h * 0.03,
-                  ),
-                  RichText(
-                    text: TextSpan(
-                        text: "Call us ",
-                        style: GoogleFonts.montserrat(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700,
-                          color: kbluecolor,
-                          height: 2,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: "at",
-                            style: GoogleFonts.montserrat(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400,
-                              color: kTextInputPlaceholderColor,
-                              height: 2,
-                            ),
-                          ),
-                          TextSpan(
-                            text: " 99999",
-                            style: GoogleFonts.montserrat(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w700,
-                              color: kbluecolor,
-                              height: 2,
-                            ),
-                          ),
-                          TextSpan(
-                            text: "55555",
-                            style: GoogleFonts.montserrat(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w700,
-                              color: kGreenColor,
-                              height: 2,
-                            ),
-                          ),
-                          TextSpan(
-                            text: "?",
-                            style: GoogleFonts.montserrat(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w700,
-                              color: kTextInputPlaceholderColor,
-                              height: 2,
-                            ),
-                          ),
-                        ]),
-                  )
-                ],
-              ),
-            ),
-
-            Label(
-              color: kbluecolor,
-              text: "offers & discounts",
-              textStyle: GoogleFonts.montserrat(
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.bold, color: kwhitecolor),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            ),
-            Container(
-              height: h * 0.2,
-              child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                padding: EdgeInsets.symmetric(
-                    horizontal: h * 0.023, vertical: h * 0.01),
-                itemCount: offerslist.length,
-                itemBuilder: (context, index) {
-                  return Visibility(
-                    visible: offerslist[index].status!,
-                    child: GestureDetector(
-                      onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => const Offers()));
-                        show_offer_des(offerslist[index].des.toString(),offerslist[index].discount.toString(),offerslist[index].heading.toString());
-                      },
-                      child: RRectCard(
-                        h: h * 0.1,
-                        w: w * 0.28,
-                        borderRadius: 15,
-                        widget: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.network(
-                                offerslist[index].image.toString(),
-                                height: h * 0.03,
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              FittedBox(
-                                child: Text(
+                    height: h * 0.2,
+                    child: ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: h * 0.023, vertical: h * 0.01),
+                      itemCount: offerslist.length,
+                      itemBuilder: (context, index) {
+                        return Visibility(
+                          visible: offerslist[index].status!,
+                          child: GestureDetector(
+                            onTap: () {
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => const Offers()));
+                              show_offer_des(
+                                  offerslist[index].des.toString(),
                                   offerslist[index].discount.toString(),
-                                  style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w600,
-                                    height: 2,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsets.symmetric(horizontal: h * 0.01),
-                                child: FittedBox(
-                                  child: Text(
-                                    offerslist[index].heading.toString(),
-                                    textScaleFactor: 0.6,
-                                    style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.w600,
-                                      color: kTextInputPlaceholderColor
-                                          .withOpacity(0.6),
-                                      height: 2,
+                                  offerslist[index].heading.toString());
+                            },
+                            child: RRectCard(
+                              h: h * 0.1,
+                              w: w * 0.28,
+                              borderRadius: 15,
+                              widget: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.network(
+                                      offerslist[index].image.toString(),
+                                      height: h * 0.03,
                                     ),
-                                  ),
-                                ),
-                              ),
-                            ]),
-                      ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    FittedBox(
+                                      child: Text(
+                                        offerslist[index].discount.toString(),
+                                        style: GoogleFonts.montserrat(
+                                          fontWeight: FontWeight.w600,
+                                          height: 2,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: h * 0.01),
+                                      child: FittedBox(
+                                        child: Text(
+                                          offerslist[index].heading.toString(),
+                                          textScaleFactor: 0.6,
+                                          style: GoogleFonts.montserrat(
+                                            fontWeight: FontWeight.w600,
+                                            color: kTextInputPlaceholderColor
+                                                .withOpacity(0.6),
+                                            height: 2,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ]),
+                            ),
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
+                  ),
+                  SizedBox(
+                    height: h * 0.1,
+                  ),
+                ],
               ),
             ),
-            SizedBox(
-              height: h * 0.1,
-            ),
-          ],
-        ),
-      ),
     );
   }
 
-  show_offer_des(String des,String offer, String heading) {
+  show_offer_des(String des, String offer, String heading) {
     showModalBottomSheet(
         useRootNavigator: true,
         // backgroundColor: kTransparent,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(h*0.03),topRight: Radius.circular(h*0.03))),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(h * 0.03),
+                topRight: Radius.circular(h * 0.03))),
         context: context,
         builder: (context) {
           return Container(
@@ -986,46 +1402,44 @@ class _ServiceMainState extends State<ServiceMain> {
               // constraints: BoxConstraints(
               //   minHeight: h*0.3
               // ),
-              padding:EdgeInsets.symmetric(
-                  horizontal: w * 0.05,vertical: h * 0.01) ,
-              margin: EdgeInsets.symmetric(
-                   horizontal: w * 0.05),
+              padding: EdgeInsets.symmetric(
+                  horizontal: w * 0.05, vertical: h * 0.01),
+              margin: EdgeInsets.symmetric(horizontal: w * 0.05),
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    SizedBox(height: h*0.01,),
+                    SizedBox(
+                      height: h * 0.01,
+                    ),
                     Text(
                       offer,
-                        style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w600,
-                          height: 1,
-                          fontSize: 12
-                        ),
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w600, height: 1, fontSize: 12),
                     ),
                     Text(
                       heading,
-                        style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w500,
-                          height: 2,
-                          fontSize: 12
-                        ),
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w500, height: 2, fontSize: 12),
                     ),
                     const Divider(
                       color: Colors.blueGrey,
                     ),
                     Text(
                       des,
-                        style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w400,
-                          height: 1,
-                          fontSize: 12
-                        ),
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w400, height: 1, fontSize: 12),
                     ),
-                    SizedBox(height: h*0.03,)
+                    SizedBox(
+                      height: h * 0.03,
+                    )
                   ],
                 ),
               ));
-        });
+        }).whenComplete(() {
+      SystemChannels.textInput.invokeMethod('TextInput.hide');
+      FocusManager.instance.primaryFocus!.unfocus();
+      setState(() {});
+    });
   }
 }

@@ -31,6 +31,7 @@ class _PaymentState extends State<Payment> {
   ScrollController _scrollController = ScrollController();
   TextEditingController special = TextEditingController();
   bool istap = false;
+  bool payondrop = false;
   @override
   void initState() {
     razorpay = Razorpay();
@@ -63,7 +64,6 @@ class _PaymentState extends State<Payment> {
         // print(list);
       }
       data.addAll(value);
-      
     });
     setState(() {});
     super.initState();
@@ -75,7 +75,7 @@ class _PaymentState extends State<Payment> {
     super.dispose();
   }
 
-  opencheckout()  {
+  opencheckout() {
     var options = {
       'key': 'rzp_test_HvQjakwAVoHUHx',
       'amount': 100,
@@ -85,7 +85,7 @@ class _PaymentState extends State<Payment> {
         'contact': '',
         'email': '',
       },
-      'external':{
+      'external': {
         'wallets': ['paytm']
       }
     };
@@ -98,75 +98,78 @@ class _PaymentState extends State<Payment> {
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     print('Success Response: $response');
-    
+
     Fluttertoast.showToast(
-        msg: "Payment Successfull",
-        toastLength: Toast.LENGTH_SHORT); 
-        istaped=true;
-        addorder(response.paymentId!, "Success").then((value) {
-                            if (value == false) {
-                              istaped = false;
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                content: Text("Error"),
-                              ));
-                              setState(() {});
-                            }
+        msg: "Payment Successfull", toastLength: Toast.LENGTH_SHORT);
+    istaped = true;
+    addorder(response.paymentId!, "Success").then((value) {
+      if (value == false) {
+        istaped = false;
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Error"),
+        ));
+        setState(() {});
+      }
 
-                            print(value["_id"] + "1234567890987654321");
-                            String _id = value["_id"];
+      print(value["_id"] + "1234567890987654321");
+      String _id = value["_id"];
 
-                            istaped = false;
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => OrderSuccessful(id: _id),
-                                ));
-                                setState(() {});
-                          });
-                          setState(() {});
+      istaped = false;
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => OrderSuccessful(id: _id),
+          ));
+      setState(() {});
+    });
+    setState(() {});
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
-    print('Error Response:'+ response.code.toString() + " - " + response.message!);
+    print('Error Response:' +
+        response.code.toString() +
+        " - " +
+        response.message!);
     var res = jsonDecode(response.message!);
-     Fluttertoast.showToast(
-        msg:  "Payment Cancelled"   ,//res["error"]["description"],
-        toastLength: Toast.LENGTH_SHORT); 
-        addorder("", "Failed").then((value) {
-                            if (value == false) {
-                              istaped = false;
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                content: Text("Error"),
-                              ));
-                              setState(() {});
-                            }
+    Fluttertoast.showToast(
+        msg: "Payment Cancelled", //res["error"]["description"],
+        toastLength: Toast.LENGTH_SHORT);
+    addorder("", "Failed").then((value) {
+      if (value == false) {
+        istaped = false;
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Error"),
+        ));
+        setState(() {});
+      }
 
-                            print(value["_id"] + "1234567890987654321");
-                            String _id = value["_id"];
+      print(value["_id"] + "1234567890987654321");
+      String _id = value["_id"];
 
-                            istaped = false;
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //       builder: (context) => OrderSuccessful(id: _id),
-                            //     ));
-                                setState(() {});
-                          });
-                          setState(() {});
+      istaped = false;
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => BottomNavBar(index: 0),
+        ),
+        (route) => false,
+      );
+      setState(() {});
+    });
+    setState(() {});
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
     print('External SDK Response: $response');
-     Fluttertoast.showToast(
+    Fluttertoast.showToast(
         msg: "EXTERNAL_WALLET: " + response.walletName!,
-        toastLength: Toast.LENGTH_SHORT); 
+        toastLength: Toast.LENGTH_SHORT);
   }
-totalvalue(double value) {
+
+  totalvalue(double value) {
     price = price + value;
-    print(price.toString()+"=============================");
-}
+    print(price.toString() + "=============================");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -207,7 +210,7 @@ totalvalue(double value) {
                       itemBuilder: (context, index) {
                         PaymentModel data = PaymentModel();
                         data = list[index];
-                        
+
                         return Container(
                           padding: EdgeInsets.only(bottom: h * 0.02),
                           child: Column(
@@ -257,7 +260,7 @@ totalvalue(double value) {
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                           "₹"+ data.price,
+                                            "₹" + data.price,
                                             // "₹2700",
                                             style: GoogleFonts.montserrat(
                                                 fontSize: 22,
@@ -358,7 +361,10 @@ totalvalue(double value) {
                                                       color: ksubHading),
                                                   children: [
                                                     TextSpan(
-                                                        text: " - "+list[index].carname.toString(),
+                                                        text: " - " +
+                                                            list[index]
+                                                                .carname
+                                                                .toString(),
                                                         style: GoogleFonts
                                                             .montserrat(
                                                                 height: 2,
@@ -375,7 +381,7 @@ totalvalue(double value) {
                                         borderRadius: h * 0.02,
                                       ),
                                     ),
-                                  /*  Expanded(
+                                    /*  Expanded(
                                       flex: 5,
                                       child: RRectCard(
                                         h: h * 0.12,
@@ -542,7 +548,7 @@ totalvalue(double value) {
                 child: istaped
                     ? loder
                     : RRecctButton(
-                        onTap: () async{
+                        onTap: () async {
                           // istaped = true;
                           setState(() {});
                           await opencheckout();
@@ -579,29 +585,34 @@ totalvalue(double value) {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: w * 0.04),
-                child: RRecctButton(
+                child:payondrop?loder: RRecctButton(
                   onTap: () {
+                    payondrop= true;
+                    setState(() {
+                      
+                    });
                     addorder("", "Pay on dropoff").then((value) {
-                            if (value == false) {
-                              istaped = false;
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                content: Text("Error"),
-                              ));
-                              setState(() {});
-                            }
+                      if (value == false) {
+                        payondrop = false;
 
-                            print(value["_id"] + "1234567890987654321");
-                            String _id = value["_id"];
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text("Error"),
+                        ));
+                        setState(() {});
+                      }
 
-                            istaped = false;
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => OrderSuccessful(id: _id),
-                                ));
-                                setState(() {});
-                          });
+                      print(value["_id"] + "1234567890987654321");
+                      String _id = value["_id"];
+
+                      payondrop = false;
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => OrderSuccessful(id: _id),
+                          ));
+                      setState(() {});
+                    });
                     // Navigator.pushAndRemoveUntil<dynamic>(
                     //   context,
                     //   MaterialPageRoute<dynamic>(

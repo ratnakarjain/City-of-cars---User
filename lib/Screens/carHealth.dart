@@ -1,12 +1,15 @@
 import 'dart:math';
 
+import 'package:cityofcars/Services/models/carHealthModel.dart';
+import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CarHealth extends StatefulWidget {
-  const CarHealth({Key? key}) : super(key: key);
+  String id;
+   CarHealth({Key? key, required this.id}) : super(key: key);
 
   @override
   State<CarHealth> createState() => _CarHealthState();
@@ -44,11 +47,37 @@ class _CarHealthState extends State<CarHealth> {
     carhealthColor3,
     carhealthColor4,
   ];
+  CarHealthModel carHealthModel = CarHealthModel();
   bool extend = false;
+  bool error = false;
+  bool loading = true;
   ScrollController _controller1 = ScrollController();
   ScrollController _controller2 = ScrollController();
   @override
+  void initState() {
+    super.initState();
+    print(widget.id);
+    getCarHealth(widget.id).then((value) {
+      if(value!=null&&value!="error"){
+carHealthModel = value;
+     setState(() {
+       loading= false;
+      //  print(carHealthModel);
+     });
+      }
+      if(value=="error"){
+        loading=false;
+        error = true;
+        setState(() {
+          
+        });
+      }
+     
+    });
+  }
+  @override
   Widget build(BuildContext context) {
+    
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     int item =33;
@@ -66,10 +95,16 @@ class _CarHealthState extends State<CarHealth> {
               GoogleFonts.montserrat(fontSize: 21, fontWeight: FontWeight.w700),
         ),
       ),
-      body: SingleChildScrollView(
+      body:error?Center(
+        child: Text(
+            "No data",
+            style:
+                GoogleFonts.montserrat(fontSize: 14, fontWeight: FontWeight.w700),
+          ),
+      ):loading?loder: SingleChildScrollView(
         // physics: NeverScrollableScrollPhysics(),
         child: Container(
-          height: h*0.89 + (extend? ( h*0.08*(item-3)):0),
+          height: h*0.89 + (extend? ( h*0.08*(carHealthModel.carparts.length-3)):0),
           width: w,
           child: Stack(
             children: [
@@ -100,11 +135,11 @@ class _CarHealthState extends State<CarHealth> {
                           // gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                           //     childAspectRatio: 2 / 2.4,
                           //     maxCrossAxisExtent: w * 0.4),
-                          physics: BouncingScrollPhysics(),
+                          physics: const BouncingScrollPhysics(),
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
                           controller: _controller1,
-                          itemCount: numbers.length,
+                          itemCount: 2,
                           padding: EdgeInsets.only(left: w * 0.15),
                           itemBuilder: (context, index) {
                             return RRectCard(
@@ -118,7 +153,9 @@ class _CarHealthState extends State<CarHealth> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
+                                    index==0?  carHealthModel.totalServices.toString():
                                       numbers[index]["Value"],
+                                    
                                       style: GoogleFonts.montserrat(
                                           fontSize: 44,
                                           color: kwhitecolor,
@@ -182,14 +219,14 @@ class _CarHealthState extends State<CarHealth> {
                                 children: [
                                   RichText(
                                     text: TextSpan(
-                                        text: "I20 ",
+                                        text: carHealthModel.carName.toString()+" ",
                                         style: GoogleFonts.montserrat(
                                             fontSize: 22,
                                             fontWeight: FontWeight.w700,
                                             color: kwhitecolor),
                                         children: [
                                           TextSpan(
-                                              text: "Hyundai",
+                                              text: carHealthModel.brandName.toString(),
                                               style: GoogleFonts.montserrat(
                                                   fontSize: 22,
                                                   fontWeight: FontWeight.w400,
@@ -201,7 +238,8 @@ class _CarHealthState extends State<CarHealth> {
                                   ),
                                   RichText(
                                     text: TextSpan(
-                                        text: "Average\n",
+                                        text: 
+                                        carHealthModel.overallhealth=="A"? "Average\n":carHealthModel.overallhealth=="P"? "Poor\n":carHealthModel.overallhealth=="G"? "Good\n":"\n",
                                         style: GoogleFonts.montserrat(
                                             fontSize: 22,
                                             fontWeight: FontWeight.w700,
@@ -261,10 +299,10 @@ class _CarHealthState extends State<CarHealth> {
                   children: [
                     Expanded(
                       child: ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         controller: _controller2,
-                        itemCount: item,
+                        itemCount: carHealthModel.carparts.length,
                         padding: EdgeInsets.only(top: h*0.01),
                         itemBuilder: (context, index) {
                           currentN = Random().nextInt(4);
@@ -287,7 +325,7 @@ class _CarHealthState extends State<CarHealth> {
                                   child: RichText(
                                     textAlign: TextAlign.start,
                                     text: TextSpan(
-                                        text: "Engine\n",
+                                        text: carHealthModel.carparts[index].partName.toString()+"\n",
                                         style: GoogleFonts.montserrat(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w700,
@@ -295,7 +333,8 @@ class _CarHealthState extends State<CarHealth> {
                                         children: [
                                           TextSpan(
                                               text:
-                                                  "No warnings on instrument cluster",
+                                                  // "No warnings on instrument cluster",
+                                                  carHealthModel.carparts[index].des.toString(),
                                               style: GoogleFonts.montserrat(
                                                   fontSize: 10,
                                                   fontWeight: FontWeight.w400,
@@ -306,10 +345,10 @@ class _CarHealthState extends State<CarHealth> {
                                   ),
                                 ),
                                 Row(
-                                  children: List.generate(5, (index) => Container(
+                                  children: List.generate(5, (indexx) => Container(
                                     height: h*0.015,
                                     width: h*0.015,
-                                    color: index<=currentN? currentColor : currentColor.withOpacity(0.5),
+                                    color: indexx<carHealthModel.carparts[index].rating!? currentColor : currentColor.withOpacity(0.3),
                                     margin: EdgeInsets.only(right: w*0.01),
                                   ))
                                 )

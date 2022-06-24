@@ -132,7 +132,13 @@ class _JobCardState extends State<JobCard> {
         ),
       ),
       body: data == null
-          ? Container()
+          ? Center(
+            child: Text(
+            "No data",
+            style:
+                GoogleFonts.montserrat(fontSize: 21, fontWeight: FontWeight.w400),
+        ),
+          )
           : Container(
               height: h,
               width: w,
@@ -281,7 +287,7 @@ class _JobCardState extends State<JobCard> {
                                   //     ]),
                                   borderRadius: BorderRadius.circular(h * 0.03),
                                   image: DecorationImage(
-                                      image: NetworkImage(data["image"]),
+                                      image: NetworkImage( data["image"] ?? "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png"),
                                       fit: BoxFit.fill)),
                               // child: Image.asset(
                               //     "assets/images/${images[index]}")

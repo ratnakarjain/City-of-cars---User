@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 
+import 'package:cityofcars/Screens/notification.dart';
+import 'package:cityofcars/Screens/terms.dart';
 import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Utils/Buttons/button.dart';
 import 'package:cityofcars/Utils/constants.dart';
@@ -91,12 +93,11 @@ class _LoginSignUpState extends State<LoginSignUp> {
                       child: Text("SIGN IN",
                           style: GoogleFonts.montserrat(
                             textStyle: TextStyle(
-                              color: isSelected
-                                  ? Colors.white
-                                  : kSinginTextColor.withOpacity(0.6),
-                              fontWeight: FontWeight.w600,
-                              fontSize: 12
-                            ),
+                                color: isSelected
+                                    ? Colors.white
+                                    : kSinginTextColor.withOpacity(0.6),
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12),
                           )),
                     ),
                   ),
@@ -238,6 +239,10 @@ class _LoginSignUpState extends State<LoginSignUp> {
                               controller: mobile,
                               focusNode: myFocusNode1,
                               keyboardType: TextInputType.phone,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp("[0-9]")),
+                              ],
                               // autovalidateMode: AutovalidateMode.onUserInteraction,
                               validator: (value) {
                                 if (value!.isEmpty) {
@@ -319,7 +324,10 @@ class _LoginSignUpState extends State<LoginSignUp> {
                               focusNode: myFocusNode2,
                               controller: mail,
                               keyboardType: TextInputType.emailAddress,
-                              inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r"\s")), FilteringTextInputFormatter.deny(RegExp('[ ]')),],
+                              inputFormatters: [
+                                FilteringTextInputFormatter.deny(RegExp(r"\s")),
+                                FilteringTextInputFormatter.deny(RegExp('[ ]')),
+                              ],
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return null;
@@ -414,6 +422,10 @@ class _LoginSignUpState extends State<LoginSignUp> {
                           controller: mobile,
                           keyboardType: TextInputType.phone,
                           // autovalidateMode: AutovalidateMode.onUserInteraction,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp("[0-9]")),
+                          ],
                           decoration: InputDecoration(
                             counterText: "",
                             hintText: "Mobile No.*",
@@ -473,6 +485,37 @@ class _LoginSignUpState extends State<LoginSignUp> {
                         },
                         child: Text(
                           " Log in",
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                              textStyle: const TextStyle(color: kredcolor)),
+                        ),
+                      ),
+                    ],
+                  )
+                : Container(),
+                isSelected
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Don't have an account?",
+                        style: GoogleFonts.montserrat(
+                            fontStyle: FontStyle.normal,
+                            fontSize: 12,
+                            textStyle: const TextStyle(color: Colors.black)),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          isSelected = !isSelected;
+                          setState(() {
+                            mobile.clear();
+                            mail.clear();
+                            name.clear();
+                          });
+                        },
+                        child: Text(
+                          " Signup",
                           style: GoogleFonts.montserrat(
                               fontWeight: FontWeight.bold,
                               fontSize: 12,
@@ -562,12 +605,32 @@ class _LoginSignUpState extends State<LoginSignUp> {
             const SizedBox(height: 10),
             Visibility(
               visible: !isSelected,
-              child: Text(
-                "By clicking continue, I agree to the all the Terms",
-                style: GoogleFonts.montserrat(
-                    fontStyle: FontStyle.normal,
-                    fontSize: 12,
-                    textStyle: const TextStyle(color: Colors.black)),
+              child: Padding(
+                padding:  EdgeInsets.symmetric(horizontal: width*0.03),
+                child: Column(
+                  children: [
+                    Text(
+                        "By clicking continue, I agree to the all the ",
+                        style: GoogleFonts.montserrat(
+                            fontStyle: FontStyle.normal,
+                            fontSize: 12,
+                            textStyle: const TextStyle(color: Colors.black)),
+                      ),
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>const Terms()));
+                      },
+                      child: Text(
+                        "Terms and Conditions",
+                        style: GoogleFonts.montserrat(
+                            fontStyle: FontStyle.normal,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            textStyle: const TextStyle(color: Colors.black)),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ]),
@@ -614,7 +677,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const Verfication(),
+                builder: (context) =>  Verfication(toLogin: false,),
               ));
 
           return response.body;
@@ -643,6 +706,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
     try {
       var response = await http.post(url, body: {
         'mobile': mobile.text,
+        "type": "customer"
         // "roleId":"624c7a3c9b4a12e570e35d4f"
       });
       if (response.statusCode == 200) {
@@ -662,7 +726,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const Verfication(),
+              builder: (context) =>  Verfication(toLogin:true),
             ));
       } else if (response.statusCode == 201) {
         istaped1 = false;

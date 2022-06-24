@@ -135,40 +135,40 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                           SizedBox(
                             height: h * 0.02,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Rate your experience",
-                                style: GoogleFonts.montserrat(
-                                    color: kTextInputPlaceholderColor,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w400),
-                              ),
-                              Row(
-                                children: List.generate(
-                                    5,
-                                    (index) => GestureDetector(
-                                          onTap: () {
-                                            rate = index + 1;
-                                            rating(rate.toString())
-                                                .then((value) {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(SnackBar(
-                                                content:
-                                                    Text(value.toString()),
-                                              ));
-                                            });
-                                            setState(() {
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.center,
+                          //   children: [
+                          //     Text(
+                          //       "Rate your experience",
+                          //       style: GoogleFonts.montserrat(
+                          //           color: kTextInputPlaceholderColor,
+                          //           fontSize: 13,
+                          //           fontWeight: FontWeight.w400),
+                          //     ),
+                          //     Row(
+                          //       children: List.generate(
+                          //           5,
+                          //           (index) => GestureDetector(
+                          //                 onTap: () {
+                          //                   rate = index + 1;
+                          //                   rating(rate.toString())
+                          //                       .then((value) {
+                          //                     ScaffoldMessenger.of(context)
+                          //                         .showSnackBar(SnackBar(
+                          //                       content:
+                          //                           Text(value.toString()),
+                          //                     ));
+                          //                   });
+                          //                   setState(() {
 
-                                            });
-                                          },
-                                          child:  Icon(Icons.star,
-                                              color:rate>=index+1?korangecolor: kDateCircleColor, size: 14),
-                                        )),
-                              )
-                            ],
-                          )
+                          //                   });
+                          //                 },
+                          //                 child:  Icon(Icons.star,
+                          //                     color:rate>=index+1?korangecolor: kDateCircleColor, size: 14),
+                          //               )),
+                          //     )
+                          //   ],
+                          // )
                         ],
                       ),
                     ),

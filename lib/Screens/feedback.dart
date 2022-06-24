@@ -2,13 +2,15 @@ import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
+import '../Services/models/orderhistoryModel.dart';
 import '../Utils/Buttons/button.dart';
 import '../Utils/constants.dart';
 
 class FeedBack extends StatefulWidget {
-  String id;
-   FeedBack({Key? key,required this.id} ) : super(key: key);
+  OrderHistoryModel order = OrderHistoryModel();
+  FeedBack({Key? key, required this.order}) : super(key: key);
 
   @override
   State<FeedBack> createState() => _FeedBackState();
@@ -35,7 +37,7 @@ class _FeedBackState extends State<FeedBack> {
       "subtype": "pick-up and drop off",
     },
   ];
-  int isSelected=0;
+  int isSelected = 0;
   int rating = 0;
   TextEditingController optional = TextEditingController();
   var _controller = ScrollController();
@@ -43,7 +45,6 @@ class _FeedBackState extends State<FeedBack> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
   }
 
   @override
@@ -83,7 +84,12 @@ class _FeedBackState extends State<FeedBack> {
                                 fontSize: 8, color: kSelectedColor),
                             children: [
                           TextSpan(
-                            text: " 27th Oct\n",
+                            text: widget.order.deliverydate.toString() == "null"
+                                ? "\n"
+                                : DateFormat.MMMMd().format(DateTime.parse(
+                                        widget.order.deliverydate.toString())) +
+                                    "\n",
+                            // " 27th Oct\n",
                             style: GoogleFonts.montserrat(
                                 fontSize: 8,
                                 fontWeight: FontWeight.w700,
@@ -95,15 +101,15 @@ class _FeedBackState extends State<FeedBack> {
                                 fontSize: 8, color: kSelectedColor),
                           ),
                           TextSpan(
-                            text: "271292",
+                            text: widget.order.orderid,
                             style: GoogleFonts.montserrat(
                                 fontSize: 8,
                                 fontWeight: FontWeight.w700,
                                 color: kSelectedColor),
                           )
                         ])),
-                    Image.asset(
-                      "assets/images/Uber1.png",
+                    Image.network(
+                      widget.order.carimage,
                       height: h * 0.06,
                     ),
                     RichText(
@@ -136,15 +142,13 @@ class _FeedBackState extends State<FeedBack> {
                         itemCount: 5,
                         itemBuilder: (context, index) {
                           return GestureDetector(
-                            onTap: (){
-                              rating=index+1;
-                              setState(() {
-                                
-                              });
+                            onTap: () {
+                              rating = index + 1;
+                              setState(() {});
                             },
                             child: Icon(
                               Icons.star,
-                              color:rating>index?korangecolor: ksubHading,
+                              color: rating > index ? korangecolor : ksubHading,
                               size: h * 0.04,
                             ),
                           );
@@ -177,13 +181,13 @@ class _FeedBackState extends State<FeedBack> {
                           topServices.length,
                           (index) => InkWell(
                                 onTap: () {
-                                  isSelected=index+1;
+                                  isSelected = index + 1;
                                   setState(() {});
                                 },
                                 child: RRectCard(
                                   h: h * 0.06,
                                   w: w * 0.45,
-                                  color: isSelected==index+1
+                                  color: isSelected == index + 1
                                       ? kGreenColor
                                       : kLightOrangeBgColor,
                                   widget: Center(
@@ -194,7 +198,7 @@ class _FeedBackState extends State<FeedBack> {
                                                 "${topServices[index]["type"]}\n",
                                             style: GoogleFonts.montserrat(
                                               fontSize: 12,
-                                              color: isSelected==index+1
+                                              color: isSelected == index + 1
                                                   ? kwhitecolor
                                                   : kTextInputPlaceholderColor
                                                       .withOpacity(0.9),
@@ -207,7 +211,8 @@ class _FeedBackState extends State<FeedBack> {
                                                 style: GoogleFonts.montserrat(
                                                     fontSize: 8,
                                                     fontWeight: FontWeight.w400,
-                                                    color: isSelected==index+1
+                                                    color: isSelected ==
+                                                            index + 1
                                                         ? kwhitecolor
                                                         : kTextInputPlaceholderColor
                                                             .withOpacity(0.32)),
@@ -255,15 +260,29 @@ class _FeedBackState extends State<FeedBack> {
                 ),
               ),
               SizedBox(
-                height: h*0.02,
+                height: h * 0.02,
               ),
               Center(
                 child: RRecctButton(
                   h: h * 0.06,
                   w: w * 0.9,
-                  onTap: () {
-                    feedback(rating.toString(), optional.text, widget.id, topServices[isSelected-1]["type"]);
-                    Navigator.pop(context);
+                  onTap: () async {
+                    await feedback(
+                            rating.toString(),
+                            optional.text,
+                            widget.order.id,
+                            topServices[isSelected - 1]["type"])
+                        .then((value) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        duration: const Duration(seconds: 2),
+                        content: Text(value["msg"]),
+                      ));
+                    }).whenComplete(() {
+                      Future.delayed(const Duration(seconds: 3), () {
+                        print('One second has passed.');
+                        Navigator.pop(context); // Prints after 1 second.
+                      });
+                    });
                   },
                   buttonColor: kbluecolor,
                   text: "SEND FEEDBACK",
@@ -280,6 +299,4 @@ class _FeedBackState extends State<FeedBack> {
       ),
     );
   }
-
-  
 }
