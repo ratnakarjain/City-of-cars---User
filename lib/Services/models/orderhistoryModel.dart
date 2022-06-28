@@ -12,4 +12,5 @@ class OrderHistoryModel{
   String servicename = "";
   String details = "";
   String status = "";
+  String invoice = "";
 }

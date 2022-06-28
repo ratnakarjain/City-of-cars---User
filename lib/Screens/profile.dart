@@ -434,23 +434,23 @@ class _ProfileState extends State<Profile> {
                                         ),
                                       ],
                                     ),
-                                    Positioned(
-                                      top: h * 0.01,
-                                      right: w * 0.02,
-                                      child: CircleAvatar(
-                                        radius: h * 0.01,
-                                        foregroundColor: kwhitecolor,
-                                        backgroundColor: kbluecolor,
-                                        child: Text(
-                                          "7",
-                                          style: GoogleFonts.montserrat(
-                                            fontSize: 8,
-                                            color: kwhitecolor,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+                                    // Positioned(
+                                    //   top: h * 0.01,
+                                    //   right: w * 0.02,
+                                    //   child: CircleAvatar(
+                                    //     radius: h * 0.01,
+                                    //     foregroundColor: kwhitecolor,
+                                    //     backgroundColor: kbluecolor,
+                                    //     child: Text(
+                                    //       "7",
+                                    //       style: GoogleFonts.montserrat(
+                                    //         fontSize: 8,
+                                    //         color: kwhitecolor,
+                                    //         fontWeight: FontWeight.w700,
+                                    //       ),
+                                    //     ),
+                                    //   ),
+                                    // ),
                                   ],
                                 ),
                               ),
@@ -492,23 +492,23 @@ class _ProfileState extends State<Profile> {
                                         ),
                                       ],
                                     ),
-                                    Positioned(
-                                      top: h * 0.01,
-                                      right: w * 0.01,
-                                      child: CircleAvatar(
-                                        radius: h * 0.01,
-                                        foregroundColor: kwhitecolor,
-                                        backgroundColor: korangecolor,
-                                        child: Text(
-                                          "5",
-                                          style: GoogleFonts.montserrat(
-                                            fontSize: 8,
-                                            color: kwhitecolor,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+                                    // Positioned(
+                                    //   top: h * 0.01,
+                                    //   right: w * 0.01,
+                                    //   child: CircleAvatar(
+                                    //     radius: h * 0.01,
+                                    //     foregroundColor: kwhitecolor,
+                                    //     backgroundColor: korangecolor,
+                                    //     child: Text(
+                                    //       "5",
+                                    //       style: GoogleFonts.montserrat(
+                                    //         fontSize: 8,
+                                    //         color: kwhitecolor,
+                                    //         fontWeight: FontWeight.w700,
+                                    //       ),
+                                    //     ),
+                                    //   ),
+                                    // ),
                                   ],
                                 ),
                               ),

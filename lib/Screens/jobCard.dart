@@ -80,6 +80,7 @@ class _JobCardState extends State<JobCard> {
   List missing = [];
   var custCon;
   var condi;
+  bool isloading = true;
   @override
   void initState() {
     super.initState();
@@ -110,6 +111,9 @@ class _JobCardState extends State<JobCard> {
         print(geninfo);
         setState(() {});
       }
+      setState(() {
+        isloading = false;
+      });
     });
     setState(() {});
   }
@@ -131,7 +135,7 @@ class _JobCardState extends State<JobCard> {
               GoogleFonts.montserrat(fontSize: 21, fontWeight: FontWeight.w700),
         ),
       ),
-      body: data == null
+      body: isloading?loder: data == null
           ? Center(
             child: Text(
             "No data",
@@ -261,38 +265,41 @@ class _JobCardState extends State<JobCard> {
                       ),
                     ),
 
-                    Container(
-                      height: h * 0.2,
-                      child: Center(
-                        child: ListView.builder(
-                          physics: BouncingScrollPhysics(),
-                          controller: _controller1,
-                          shrinkWrap: true,
-                          padding: EdgeInsets.symmetric(vertical: h * 0.015),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 1,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              height: h * 0.1,
-                              width: w * 0.27,
-                              margin:
-                                  EdgeInsets.symmetric(horizontal: w * 0.02),
-                              decoration: BoxDecoration(
-                                  // gradient: LinearGradient(
-                                  //     begin: Alignment.bottomCenter,
-                                  //     end: Alignment.center,
-                                  //     colors: [
-                                  //       kblackcolor.withOpacity(0.5),
-                                  //       kTransparent
-                                  //     ]),
-                                  borderRadius: BorderRadius.circular(h * 0.03),
-                                  image: DecorationImage(
-                                      image: NetworkImage( data["image"] ?? "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png"),
-                                      fit: BoxFit.fill)),
-                              // child: Image.asset(
-                              //     "assets/images/${images[index]}")
-                            );
-                          },
+                    Visibility(
+                      visible: data["image"]!=null,
+                      child: Container(
+                        height: h * 0.2,
+                        child: Center(
+                          child: ListView.builder(
+                            physics: BouncingScrollPhysics(),
+                            controller: _controller1,
+                            shrinkWrap: true,
+                            padding: EdgeInsets.symmetric(vertical: h * 0.015),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: 1,
+                            itemBuilder: (context, index) {
+                              return  Container(
+                                height: h * 0.1,
+                                width: w * 0.27,
+                                margin:
+                                    EdgeInsets.symmetric(horizontal: w * 0.02),
+                                decoration: BoxDecoration(
+                                    // gradient: LinearGradient(
+                                    //     begin: Alignment.bottomCenter,
+                                    //     end: Alignment.center,
+                                    //     colors: [
+                                    //       kblackcolor.withOpacity(0.5),
+                                    //       kTransparent
+                                    //     ]),
+                                    borderRadius: BorderRadius.circular(h * 0.03),
+                                    image: DecorationImage(
+                                        image: NetworkImage( data["image"] ),
+                                        fit: BoxFit.fill)),
+                                // child: Image.asset(
+                                //     "assets/images/${images[index]}")
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ),
@@ -576,7 +583,7 @@ class _JobCardState extends State<JobCard> {
                                           style: GoogleFonts.montserrat(
                                             fontSize: 10,
                                             fontWeight: FontWeight.w700,
-                                            color: kTextInputPlaceholderColor,
+                                            color: kwhitecolor,
                                           ),
                                         ),
                                       ),

@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:cityofcars/Screens/bottomnavBar.dart';
 
 import 'package:cityofcars/Utils/constants.dart';
@@ -31,9 +33,11 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-   if(message.data!=null){
-      Map<String, dynamic> map = message.data;
+   if(message.notification !=null){
+      Map<String, dynamic> map = HashMap();
       print(map.toString());
+       map["title"] = message.notification!.title;
+       map["body"] = message.notification!.body;
       createListMap(map);
    }
   // If `onMessage` is triggered with a notification, construct our own
@@ -172,9 +176,12 @@ class _MyAppState extends State<MyApp> {
     FirebaseMessaging.onMessage.listen((message)async {
       print("here");
       print("message "+message.notification!.title.toString()+"^^");
-   if(message.data!=null){
-      Map<String, dynamic> map = message.data;
+   if(message.notification !=null){
+      Map<String, dynamic> map = HashMap();
       print(map.toString());
+      map["title"] = message.notification!.title;
+      map["body"] = message.notification!.body;
+      
       createListMap(map);
    }
   // If `onMessage` is triggered with a notification, construct our own
@@ -226,6 +233,14 @@ class _MyAppState extends State<MyApp> {
 
   // If `onMessage` is triggered with a notification, construct our own
   // local notification to show to users using the created channel.
+  if(message.notification !=null){
+      Map<String, dynamic> map = HashMap();
+      print(map.toString());
+      map["title"] = message.notification!.title;
+      map["body"] = message.notification!.body;
+      
+      createListMap(map);
+   }
   const AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
           'cityofcars',
@@ -293,8 +308,10 @@ class _MyAppState extends State<MyApp> {
     messaging.getToken().then((value) {
       print("token: " + value.toString());
       tokenId = value.toString();
+      Prefernece.pref!.setString("fcmtoken",tokenId);
 
-      print("new token: " + tokenId.toString());
+      print("new token: " + Prefernece.pref!.getString("fcmtoken").toString());
+
     });
   }
 

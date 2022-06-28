@@ -116,6 +116,7 @@ class _VerficationState extends State<Verfication> {
                       verify().whenComplete(() {
                         istaped = false;
                         setState(() {});
+                        sendfcm();
                       });
                       setState(() {});
                       // Navigator.push(context,

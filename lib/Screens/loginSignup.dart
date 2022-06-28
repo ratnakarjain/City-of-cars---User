@@ -258,6 +258,14 @@ class _LoginSignUpState extends State<LoginSignUp> {
                                   return null;
                                 }
                               },
+                              onChanged: (value) {
+                                if (value == " ") {
+                                  mobile.clear();
+                                }
+                                if (value == "0") {
+                                  mobile.clear();
+                                }
+                              },
                               maxLength: 10,
                               decoration: InputDecoration(
                                 hintText: "Mobile No.*",
@@ -423,9 +431,16 @@ class _LoginSignUpState extends State<LoginSignUp> {
                           keyboardType: TextInputType.phone,
                           // autovalidateMode: AutovalidateMode.onUserInteraction,
                           inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp("[0-9]")),
+                            FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                           ],
+                          onChanged: (value) {
+                            if (value == " ") {
+                              mobile.clear();
+                            }
+                            if (value == "0") {
+                              mobile.clear();
+                            }
+                          },
                           decoration: InputDecoration(
                             counterText: "",
                             hintText: "Mobile No.*",
@@ -494,7 +509,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
                     ],
                   )
                 : Container(),
-                isSelected
+            isSelected
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -606,19 +621,22 @@ class _LoginSignUpState extends State<LoginSignUp> {
             Visibility(
               visible: !isSelected,
               child: Padding(
-                padding:  EdgeInsets.symmetric(horizontal: width*0.03),
+                padding: EdgeInsets.symmetric(horizontal: width * 0.03),
                 child: Column(
                   children: [
                     Text(
-                        "By clicking continue, I agree to the all the ",
-                        style: GoogleFonts.montserrat(
-                            fontStyle: FontStyle.normal,
-                            fontSize: 12,
-                            textStyle: const TextStyle(color: Colors.black)),
-                      ),
+                      "By clicking continue, I agree to the all the ",
+                      style: GoogleFonts.montserrat(
+                          fontStyle: FontStyle.normal,
+                          fontSize: 12,
+                          textStyle: const TextStyle(color: Colors.black)),
+                    ),
                     GestureDetector(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>const Terms()));
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Terms()));
                       },
                       child: Text(
                         "Terms and Conditions",
@@ -663,11 +681,15 @@ class _LoginSignUpState extends State<LoginSignUp> {
       if (response.statusCode == 200) {
         print("success");
         if (jsonResponse["status"]) {
-          prefs!.setString("token", jsonResponse["token"].toString());
-          prefs!.setString("name", jsonResponse["data"]["name"].toString());
-          prefs!.setString("email", jsonResponse["data"]["email"].toString());
-          prefs!.setString("id", jsonResponse["data"]["_id"].toString());
-          prefs!.setString("mobile", jsonResponse["data"]["mobile"].toString());
+            prefs!.setString('token', jsonResponse["token"].toString());
+            prefs!.setString('id', jsonResponse["data"]["_id"].toString());
+            prefs!.setString('name', jsonResponse["data"]["name"].toString());
+            prefs!.setString('image', jsonResponse["data"]["image"].toString());
+            prefs!.setString('mobile', jsonResponse["data"]["mobile"].toString());
+            prefs!.setString('street', jsonResponse["data"]["Street"].toString());
+            prefs!.setString('state', jsonResponse["data"]["State"].toString());
+            prefs!.setString('pincode', jsonResponse["data"]["PinCode"].toString());
+            prefs!.setString('email', jsonResponse["data"]["email"].toString());
           token = prefs!.getString("token")!;
           Ids.userid = jsonResponse["data"]["_id"];
 
@@ -677,7 +699,9 @@ class _LoginSignUpState extends State<LoginSignUp> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>  Verfication(toLogin: false,),
+                builder: (context) => Verfication(
+                  toLogin: false,
+                ),
               ));
 
           return response.body;
@@ -685,7 +709,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
           istaped2 = false;
           setState(() {});
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(jsonResponse["message"]),
+            content: Text(jsonResponse["msg"]),
           ));
         }
       } else {
@@ -715,10 +739,15 @@ class _LoginSignUpState extends State<LoginSignUp> {
         prefs!.setString("token", jsonResponse["token"]);
         token = prefs!.getString("token")!;
         Ids.userid = jsonResponse["data"]["_id"];
-        prefs!.setString("name", jsonResponse["data"]["name"].toString());
-        prefs!.setString("email", jsonResponse["data"]["email"].toString());
-        prefs!.setString("id", jsonResponse["data"]["_id"].toString());
-        prefs!.setString("mobile", jsonResponse["data"]["mobile"].toString());
+            prefs!.setString('token', jsonResponse["token"].toString());
+            prefs!.setString('id', jsonResponse["data"]["_id"].toString());
+            prefs!.setString('name', jsonResponse["data"]["name"].toString());
+            prefs!.setString('image', jsonResponse["data"]["image"].toString());
+            prefs!.setString('mobile', jsonResponse["data"]["mobile"].toString());
+            prefs!.setString('street', jsonResponse["data"]["Street"].toString());
+            prefs!.setString('state', jsonResponse["data"]["State"].toString());
+            prefs!.setString('pincode', jsonResponse["data"]["PinCode"].toString());
+            prefs!.setString('email', jsonResponse["data"]["email"].toString());
         print("$token");
         print(Ids.userid);
 
@@ -726,7 +755,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>  Verfication(toLogin:true),
+              builder: (context) => Verfication(toLogin: true),
             ));
       } else if (response.statusCode == 201) {
         istaped1 = false;

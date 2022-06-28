@@ -38,9 +38,9 @@ class _ServiceMainState extends State<ServiceMain> {
   var h;
   var w;
   List<PlanModel> pls1 = [];
-  List<PlanModel> pls2 = [];
+  // List<PlanModel> pls2 = [];
   List cats1 = [];
-  List cats2 = [];
+  // List cats2 = [];
   bool show = false;
   List<PlanModel> mostpop = [];
   List<OffersModel> offerslist = [];
@@ -135,8 +135,8 @@ class _ServiceMainState extends State<ServiceMain> {
         setState(() {
           savemost = mostdata;
           saverec = recdata;
-          print("+++++"+savemost.toString());
-          print("++++"+saverec.toString());
+          print("+++++" + savemost.toString());
+          print("++++" + saverec.toString());
         });
       }
     });
@@ -316,23 +316,42 @@ class _ServiceMainState extends State<ServiceMain> {
                         controller: search,
 
                         // focusNode: FocusNode(canRequestFocus: true),
-                        onTap: () {
-                          focussearch = true;
-                          setState(() {});
-                        },
+
                         onChanged: (value) {
-                          setState(() {
-                            cats2.clear();
-                            pls2.clear();
+                          if (value.isNotEmpty) {
                             show = false;
-                            if (value.isEmpty) {
-                              recdata = saverec;
-                              mostdata = savemost;
-                            }
-                            print("changeqetyu");
-                          });
+                          }
+
+                          setState(() {});
+                          if (value == " ") {
+                            search.clear();
+                          }
+                          if (value.isEmpty) {
+                            getcategaries().then((value) {
+                              if (value != null) {
+                                cats1 = value;
+                                setState(() {
+                                  catlod = true;
+                                });
+                              }
+                            });
+                            getrecmostPlans().then((value) {
+                              if (value != null) {
+                                pls1.addAll(value);
+                                setState(() {
+                                  savemost = mostdata;
+                                  saverec = recdata;
+                                  print("+++++" + savemost.toString());
+                                  print("++++" + saverec.toString());
+                                });
+                              }
+                            });
+                            recdata = saverec;
+                            mostdata = savemost;
+                          }
+                          print("changeqetyu");
                         },
-                       
+
                         decoration: InputDecoration(
                             contentPadding:
                                 EdgeInsets.only(top: h * 0.01, left: w * 0.05),
@@ -347,6 +366,7 @@ class _ServiceMainState extends State<ServiceMain> {
                               onTap: search.text.isEmpty
                                   ? () {
                                       show = false;
+                                      print("dvjsbvei");
                                       setState(() {});
                                     }
                                   : () {
@@ -356,14 +376,34 @@ class _ServiceMainState extends State<ServiceMain> {
                                         if (value) {
                                           show = true;
                                           print("condition");
-                                          pls2.clear();
-                                          cats2.clear();
-                                          pls2.addAll(Searchdata.plans);
-                                          cats2.addAll(Searchdata.cats);
+                                          pls1.clear();
+                                          cats1.clear();
+                                          pls1.addAll(Searchdata.plans);
+                                          cats1.addAll(Searchdata.cats);
 
                                           // pls=value.plans;
 
-                                          setState(() {});
+                                          setState(() {
+                                            if (pls1.isEmpty) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(const SnackBar(
+                                                content: Text("No Plans found"),
+                                              ));
+                                            }
+                                            if (cats1.isEmpty) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(const SnackBar(
+                                                content:
+                                                    Text("No Category found"),
+                                              ));
+                                            }
+                                            if (cats1.isEmpty && pls1.isEmpty) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(const SnackBar(
+                                                content: Text("No Data found"),
+                                              ));
+                                            }
+                                          });
                                         }
                                       });
                                     },
@@ -387,7 +427,7 @@ class _ServiceMainState extends State<ServiceMain> {
                     height: h * 0.015,
                   ),
                   Visibility(
-                    visible: cats1.isNotEmpty||cats2.isNotEmpty,
+                    visible: cats1.isNotEmpty,
                     child: GridView.count(
                       // physics:  const ScrollPhysics(),
                       // physics: const NeverScrollableScrollPhysics(),
@@ -398,11 +438,10 @@ class _ServiceMainState extends State<ServiceMain> {
                       crossAxisCount: 2,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
-                      children: List.generate(
-                          cats2.isEmpty ? cats1.length : cats2.length, (index) {
+                      children: List.generate(cats1.length, (index) {
                         // print(cats1.length);
-                        var data = cats2.isEmpty ? cats1 : cats2;
-                        print(cats2);
+                        var data = cats1;
+
                         return GestureDetector(
                           onTap: () {
                             print(data[index]["_id"].toString());
@@ -657,12 +696,11 @@ class _ServiceMainState extends State<ServiceMain> {
                             scrollDirection: Axis.horizontal,
                             padding: EdgeInsets.symmetric(
                                 vertical: h * 0.01, horizontal: h * 0.025),
-                            itemCount: pls2.isEmpty ? pls1.length : pls2.length,
+                            itemCount: pls1.length,
                             itemBuilder: (context, index) {
                               PlanModel model = PlanModel();
-                              print("====");
 
-                              model = pls2.isEmpty ? pls1[index] : pls2[index];
+                              model = pls1[index];
                               print("====" + model.isMost);
                               return Visibility(
                                 visible: model.isMost.toString() == "true",
@@ -974,12 +1012,10 @@ class _ServiceMainState extends State<ServiceMain> {
                               scrollDirection: Axis.horizontal,
                               padding: EdgeInsets.symmetric(
                                   vertical: h * 0.01, horizontal: h * 0.025),
-                              itemCount:
-                                  pls2.isEmpty ? pls1.length : pls2.length,
+                              itemCount: pls1.length,
                               itemBuilder: (context, index) {
                                 PlanModel model = PlanModel();
-                                model =
-                                    pls2.isEmpty ? pls1[index] : pls2[index];
+                                model = pls1[index];
                                 print("====" + model.isrec.toString());
                                 return Visibility(
                                   visible: model.isrec == "true",

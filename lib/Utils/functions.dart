@@ -132,7 +132,7 @@ Future<bool> showExitPopup(context) async{
       List<String> timeListNew = [];
       titleListNew.add(map["title"].toString());
       bodyListNew.add(map["body"].toString());
-      bodyListNew.add(DateTime.now().toIso8601String());
+      timeListNew.add(DateTime.now().toIso8601String());
 
    
 
@@ -195,3 +195,30 @@ Future<void> makePhoneCall(String phoneNumber) async {
         // chooserTitle: 'COC'
         );
   }
+ timedifference(String time){
+  var date2 = DateTime.now();
+  String retTime;
+       var difference = date2
+              .difference(DateTime.parse(time))
+              .inSeconds;
+          retTime = difference.toString() + " seconds ago";
+          if (difference > 60) {
+            var difference = date2
+                .difference(DateTime.parse(time))
+                .inMinutes;
+            retTime = difference.toString() + " minutes ago";
+
+            if (difference > 60) {
+              var difference = date2
+                  .difference(DateTime.parse(time))
+                  .inHours;
+              retTime = difference.toString() + " hours ago";
+              if (difference > 24) {
+                retTime =
+                    time.toString().substring(0, 10);
+              }
+            }
+          }
+         return retTime;
+}
+

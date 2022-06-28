@@ -11,6 +11,7 @@ import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../Services/servies.dart';
 import '../Utils/Shapes/widgets.dart';
@@ -314,13 +315,18 @@ datalist.length==1?GestureDetector(
                                             w: w * 0.17,
                                             h: h * 0.03,
                                           ),
-                                          Text("view invoice     ",
-                                              textAlign: TextAlign.center,
-                                              style: GoogleFonts.montserrat(
-                                                  fontSize: 9,
-                                                  fontWeight: FontWeight.w400,
-                                                  color:
-                                                      kTextInputPlaceholderColor)),
+                                          GestureDetector(
+                                            onTap: ()async{
+                                              // await launch();
+                                            },
+                                            child: Text("view invoice     ",
+                                                textAlign: TextAlign.center,
+                                                style: GoogleFonts.montserrat(
+                                                    fontSize: 9,
+                                                    fontWeight: FontWeight.w400,
+                                                    color:
+                                                        kTextInputPlaceholderColor)),
+                                          ),
                                         ],
                                       )
                                     ],
@@ -354,7 +360,7 @@ datalist.length==1?GestureDetector(
                                             color: kTextInputPlaceholderColor),
                                         children: [
                                       TextSpan(
-                                          text: "Hyundai",
+                                          text: datalist.first.carbrand,
                                           style: GoogleFonts.montserrat(
                                               fontSize: 12,
                                               fontWeight: FontWeight.w400,
@@ -581,7 +587,8 @@ datalist.length==1?GestureDetector(
                                             color: kTextInputPlaceholderColor),
                                         children: [
                                       TextSpan(
-                                          text: "Hyundai",
+                                          text: datalist[index].carbrand,
+                                          // "Hyundai",
                                           style: GoogleFonts.montserrat(
                                               fontSize: 12,
                                               fontWeight: FontWeight.w400,

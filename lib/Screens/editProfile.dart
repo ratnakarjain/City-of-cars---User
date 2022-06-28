@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Utils/functions.dart';
 import 'package:cityofcars/Utils/preference.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -36,16 +37,37 @@ class _EditProfileState extends State<EditProfile> {
   var state = TextEditingController();
   var pinCode = TextEditingController();
   bool isImagePicked = false;
+  String fcm="";
   @override
   void initState() {
-    name.text =prefs!.getString("name").toString()== "null"? "" : prefs!.getString("name").toString();
-    id =prefs!.getString("id").toString()== "null"? "" : prefs!.getString("id").toString();
-    mobile.text = prefs!.getString("mobile").toString()== "null"? "" : prefs!.getString("mobile").toString();
-    email.text =prefs!.getString("email").toString()== "null"? "" : prefs!.getString("email").toString();
-    street.text =prefs!.getString("street").toString()== "null"? "" : prefs!.getString("street").toString();
-    state.text =prefs!.getString("state").toString()== "null"? "" : prefs!.getString("state").toString();
-    pinCode.text = prefs!.getString("pincode").toString()== "null"? "" :prefs!.getString("pincode").toString();
-    image =prefs!.getString("image").toString()== "null"? "" : prefs!.getString("image").toString();
+    name.text = prefs!.getString("name").toString() == "null"
+        ? ""
+        : prefs!.getString("name").toString();
+    id = prefs!.getString("id").toString() == "null"
+        ? ""
+        : prefs!.getString("id").toString();
+    mobile.text = prefs!.getString("mobile").toString() == "null"
+        ? ""
+        : prefs!.getString("mobile").toString();
+    email.text = prefs!.getString("email").toString() == "null"
+        ? ""
+        : prefs!.getString("email").toString();
+    houseNo.text = prefs!.getString('houseno').toString() == "null"
+        ? ""
+        : prefs!.getString('houseno').toString();
+
+    street.text = prefs!.getString("street").toString() == "null"
+        ? ""
+        : prefs!.getString("street").toString();
+    state.text = prefs!.getString("state").toString() == "null"
+        ? ""
+        : prefs!.getString("state").toString();
+    pinCode.text = prefs!.getString("pincode").toString() == "null"
+        ? ""
+        : prefs!.getString("pincode").toString();
+    image = prefs!.getString("image").toString() == "null"
+        ? ""
+        : prefs!.getString("image").toString();
     print(image);
     // TODO: implement initState
     super.initState();
@@ -206,21 +228,24 @@ class _EditProfileState extends State<EditProfile> {
                   children: [
                     TextFormField(
                       controller: name,
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Z]+|\s"))],
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r"[a-zA-Z]+|\s"))
+                      ],
                       decoration: InputDecoration(
                           hintText: "Name*",
                           hintStyle: GoogleFonts.montserrat(
                               color:
                                   kTextInputPlaceholderColor.withOpacity(0.25),
                               fontSize: 13),
-                              focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: kTextInputPlaceholderColor
-                                            .withOpacity(0.25))),
-                                    enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: kTextInputPlaceholderColor
-                                            .withOpacity(0.25))),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kTextInputPlaceholderColor
+                                      .withOpacity(0.25))),
+                          enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kTextInputPlaceholderColor
+                                      .withOpacity(0.25))),
                           border: UnderlineInputBorder(
                               borderSide: BorderSide(
                                   color: kTextInputPlaceholderColor
@@ -239,14 +264,14 @@ class _EditProfileState extends State<EditProfile> {
                               color:
                                   kTextInputPlaceholderColor.withOpacity(0.25),
                               fontSize: 13),
-                              focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: kTextInputPlaceholderColor
-                                            .withOpacity(0.25))),
-                                    enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: kTextInputPlaceholderColor
-                                            .withOpacity(0.25))),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kTextInputPlaceholderColor
+                                      .withOpacity(0.25))),
+                          enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kTextInputPlaceholderColor
+                                      .withOpacity(0.25))),
                           border: UnderlineInputBorder(
                               borderSide: BorderSide(
                                   color: kTextInputPlaceholderColor
@@ -259,21 +284,24 @@ class _EditProfileState extends State<EditProfile> {
                     TextFormField(
                       controller: email,
                       keyboardType: TextInputType.emailAddress,
-                      inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r"\s")), FilteringTextInputFormatter.deny(RegExp('[ ]')),],
+                      inputFormatters: [
+                        FilteringTextInputFormatter.deny(RegExp(r"\s")),
+                        FilteringTextInputFormatter.deny(RegExp('[ ]')),
+                      ],
                       decoration: InputDecoration(
                           hintText: "Email",
                           hintStyle: GoogleFonts.montserrat(
                               color:
                                   kTextInputPlaceholderColor.withOpacity(0.25),
                               fontSize: 13),
-                              focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: kTextInputPlaceholderColor
-                                            .withOpacity(0.25))),
-                                    enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: kTextInputPlaceholderColor
-                                            .withOpacity(0.25))),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kTextInputPlaceholderColor
+                                      .withOpacity(0.25))),
+                          enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kTextInputPlaceholderColor
+                                      .withOpacity(0.25))),
                           border: UnderlineInputBorder(
                               borderSide: BorderSide(
                                   color: kTextInputPlaceholderColor
@@ -291,14 +319,14 @@ class _EditProfileState extends State<EditProfile> {
                               color:
                                   kTextInputPlaceholderColor.withOpacity(0.25),
                               fontSize: 13),
-                              focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: kTextInputPlaceholderColor
-                                            .withOpacity(0.25))),
-                                    enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: kTextInputPlaceholderColor
-                                            .withOpacity(0.25))),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kTextInputPlaceholderColor
+                                      .withOpacity(0.25))),
+                          enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kTextInputPlaceholderColor
+                                      .withOpacity(0.25))),
                           border: UnderlineInputBorder(
                               borderSide: BorderSide(
                                   color: kTextInputPlaceholderColor
@@ -316,14 +344,14 @@ class _EditProfileState extends State<EditProfile> {
                               color:
                                   kTextInputPlaceholderColor.withOpacity(0.25),
                               fontSize: 13),
-                              focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: kTextInputPlaceholderColor
-                                            .withOpacity(0.25))),
-                                    enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: kTextInputPlaceholderColor
-                                            .withOpacity(0.25))),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kTextInputPlaceholderColor
+                                      .withOpacity(0.25))),
+                          enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: kTextInputPlaceholderColor
+                                      .withOpacity(0.25))),
                           border: UnderlineInputBorder(
                               borderSide: BorderSide(
                                   color: kTextInputPlaceholderColor
@@ -344,11 +372,11 @@ class _EditProfileState extends State<EditProfile> {
                                     color: kTextInputPlaceholderColor
                                         .withOpacity(0.25),
                                     fontSize: 13),
-                                    focusedBorder: UnderlineInputBorder(
+                                focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                         color: kTextInputPlaceholderColor
                                             .withOpacity(0.25))),
-                                    enabledBorder: UnderlineInputBorder(
+                                enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                         color: kTextInputPlaceholderColor
                                             .withOpacity(0.25))),
@@ -368,19 +396,18 @@ class _EditProfileState extends State<EditProfile> {
                             controller: pinCode,
                             keyboardType: TextInputType.number,
                             maxLength: 6,
-                            
                             decoration: InputDecoration(
-                              counterText: "",
+                                counterText: "",
                                 hintText: "Pin Code*",
                                 hintStyle: GoogleFonts.montserrat(
                                     color: kTextInputPlaceholderColor
                                         .withOpacity(0.25),
                                     fontSize: 13),
-                                    focusedBorder: UnderlineInputBorder(
+                                focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                         color: kTextInputPlaceholderColor
                                             .withOpacity(0.25))),
-                                    enabledBorder: UnderlineInputBorder(
+                                enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                         color: kTextInputPlaceholderColor
                                             .withOpacity(0.25))),
@@ -407,30 +434,31 @@ class _EditProfileState extends State<EditProfile> {
                 child: RRecctButton(
                   onTap: () {
                     bool validate = isValidation();
-                  if(validate) {
-                    editProfile(
-                      id,
-                      name.text,
-                      email.text,
-                      mobile.text,
-                      street.text,
-                      state.text,
-                      pinCode.text,
-                      file == null ? null : File(file),
-                      context,
-                    ).whenComplete(() =>
-                        Navigator.pushAndRemoveUntil<dynamic>(
-                          context,
-                          MaterialPageRoute<dynamic>(
-                            builder: (BuildContext context) =>
-                                BottomNavBar(
-                                  index: 0,
-                                ),
-                          ),
-                              (route) =>
-                          false, //if you want to disable back feature set to false
-                        ));
-                  }
+                    if (validate) {
+                      editProfile(
+                        id,
+                        name.text,
+                        email.text,
+                        mobile.text,
+                        houseNo.text,
+                        street.text,
+                        state.text,
+                        pinCode.text,
+                        fcm,
+                        file == null ? null : File(file),
+                        context,
+                      ).whenComplete(() =>
+                          Navigator.pushAndRemoveUntil<dynamic>(
+                            context,
+                            MaterialPageRoute<dynamic>(
+                              builder: (BuildContext context) => BottomNavBar(
+                                index: 0,
+                              ),
+                            ),
+                            (route) =>
+                                false, //if you want to disable back feature set to false
+                          ));
+                    }
                   },
                   h: h * 0.06,
                   w: w * 0.9,
@@ -446,14 +474,28 @@ class _EditProfileState extends State<EditProfile> {
       ),
     );
   }
-bool isValidation(){
-  if(name.text.toString().isEmpty) {
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please enter your name")));
-  return false;
-  }else{
-    return true;
+
+  bool isValidation() {
+    if (name.text.toString().isEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Please enter your name")));
+      return false;
+    } else {
+      return true;
+    }
   }
-}
+    token() {
+    var messaging = FirebaseMessaging.instance;
+    messaging.getToken().then((value) {
+      print("token: " + value.toString());
+      fcm = value.toString();
+      Prefernece.pref!.setString("fcmtoken",fcm);
+
+      print("new token: " + Prefernece.pref!.getString("fcmtoken").toString());
+
+    });
+  }
+
   editPic() {
     showDialog(
         context: context,

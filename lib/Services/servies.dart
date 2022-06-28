@@ -21,9 +21,11 @@ import 'dart:convert' as convert;
 
 import 'models/ApprovalsModel.dart';
 import 'models/blogModel.dart';
+import 'models/messageModel.dart';
 import 'models/paymentmodel.dart';
 import 'models/recentsModel.dart';
-bool isLoading =false;
+
+bool isLoading = false;
 var prefs = Prefernece.pref;
 
 Future getcities() async {
@@ -76,7 +78,7 @@ Future getCarData() async {
 
 Future getBrandss() async {
   var url = Uri.parse(getBrands);
-  isLoading= true;
+  isLoading = true;
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -84,18 +86,17 @@ Future getBrandss() async {
       var data = jsonDecode(respnse.body);
       if (data["status"]) {
         print(data["data"]);
-        isLoading=false;
+        isLoading = false;
         return data["data"];
-
       } else {
-        isLoading=false;
+        isLoading = false;
         return Future.error(data["msg"]);
       }
       // Future city = data["getCities"];
       // print("success============== ${data["getCities"]}");
 
     } else {
-        isLoading=false;
+      isLoading = false;
       return Future.error("Server Error");
     }
   } catch (e) {
@@ -162,10 +163,11 @@ Future editProfile(
   String name,
   String email,
   String mobile,
-  // String houseNo,
+  String houseNo,
   String street,
   String state,
   String pincode,
+  String fcm,
   File? file,
   BuildContext context,
 ) async {
@@ -174,13 +176,15 @@ Future editProfile(
   try {
     var request = http.MultipartRequest("POST", url);
     request.headers['Authorization'] = prefs!.getString("token").toString();
+    request.headers['Content-Type'] = 'application/json; charset=UTF-8';
     request.fields['name'] = name.toString();
-    request.fields['_id'] = id.toString();
+    request.fields['userId'] = id.toString();
     request.fields['mobile'] = mobile.toString();
     request.fields['email'] = email.toString();
     request.fields['Street'] = street.toString();
     request.fields['State'] = state.toString();
-    // request.fields['house'] = houseNo.toString();
+    request.fields['House'] = houseNo.toString();
+    request.fields['fcmToken'] = houseNo.toString();
     request.fields['PinCode'] = pincode.toString();
     // request.fields['type'] = "Scout";
     if (file != null) {
@@ -206,6 +210,7 @@ Future editProfile(
           prefs!.setString('image', jsonRes["data"]["image"].toString());
           prefs!.setString('mobile', jsonRes["data"]["mobile"].toString());
           prefs!.setString('street', jsonRes["data"]["Street"].toString());
+          prefs!.setString('houseno', jsonRes["data"]["House"].toString());
           prefs!.setString('state', jsonRes["data"]["State"].toString());
           prefs!.setString('pincode', jsonRes["data"]["PinCode"].toString());
           prefs!.setString('email', jsonRes["data"]["email"].toString());
@@ -423,20 +428,19 @@ Future getSubcategory(String _id) async {
 }
 
 Future slot(
-  String name,
-  String mail,
-  String contact,
-  String carNo,
-  String houseNo,
-  String state,
-  String street,
-  String pinCode,
-  String option,
-  String date,
-  String time,
-  String leti,
-  String longi
-) async {
+    String name,
+    String mail,
+    String contact,
+    String carNo,
+    String houseNo,
+    String state,
+    String street,
+    String pinCode,
+    String option,
+    String date,
+    String time,
+    String leti,
+    String longi) async {
   var url = Uri.parse(slotUrl);
   try {
     var response = await http.post(url, body: {
@@ -735,18 +739,21 @@ Future getOrderhistory() async {
       if (data["status"]) {
         for (int i = 0; i < data["data"].length; i++) {
           OrderHistoryModel model = OrderHistoryModel();
-          var list =data["data"][i];
+          var list = data["data"][i];
           // model.carbrand=list["_id"] ;
           model.carimage = list["orderData"][0]["cars"]["image"].toString();
           model.carname = list["orderData"][0]["cars"]["cars"].toString();
-          model.deliverydate=list["date"].toString();
-          model.deliverytime=list["time"].toString();
+          model.carbrand = list["orderData"][0]["brands"]["brands"].toString();
+          model.deliverydate = list["date"].toString();
+          model.deliverytime = list["time"].toString();
           // model.details=list["_id"];
           model.orderid = list["orderid"].toString();
           model.id = list["_id"].toString();
           if (list["orderData"][0]["selectplan"][0].toString() != "null") {
-            model.packname = list["orderData"][0]["selectplan"][0]["planName"].toString();
-            model.price = list["orderData"][0]["selectplan"][0]["typeprice"].toString();
+            model.packname =
+                list["orderData"][0]["selectplan"][0]["planName"].toString();
+            model.price =
+                list["orderData"][0]["selectplan"][0]["typeprice"].toString();
             model.servicename =
                 list["orderData"][0]["selectplan"][0]["subPlanName"].toString();
           }
@@ -858,7 +865,7 @@ Future getapproveddetails(String id) async {
       if (data["status"] == true) {
         for (int i = 0; i < data["data"].length; i++) {
           ApprovalModel1 model = ApprovalModel1();
-          model.id=data["data"][i]["_id"].toString();
+          model.id = data["data"][i]["_id"].toString();
           model.status = data["data"][i]["status"].toString();
           model.description = data["data"][i]["description"].toString();
           model.heading = data["data"][i]["heading"].toString();
@@ -898,11 +905,8 @@ Future setApprooval(String id, String status, BuildContext context) async {
       var data = jsonDecode(response.body);
       print(data);
       ScaffoldMessenger.of(context)
-            .showSnackBar( SnackBar(content: Text(data["msg"])));
-
-    } else {
-
-    }
+          .showSnackBar(SnackBar(content: Text(data["msg"])));
+    } else {}
   } catch (e) {
     print("error $e");
   }
@@ -1067,10 +1071,10 @@ Future getrecmostPlans() async {
           pl.hour = data["data"][i]["hours"].toString();
           pl.isMost = data["data"][i]["mostpopularpack"].toString();
           pl.isrec = data["data"][i]["status"].toString();
-          if(data["data"][i]["mostpopularpack"].toString()=="true"){
-            mostdata =true;
+          if (data["data"][i]["mostpopularpack"].toString() == "true") {
+            mostdata = true;
           }
-          if(data["data"][i]["status"].toString()=="true"){
+          if (data["data"][i]["status"].toString() == "true") {
             recdata = true;
           }
           pl.label = data["data"][i]["label"].toString();
@@ -1111,7 +1115,7 @@ Future getrecmostPlans() async {
           }
           plans.add(pl);
         }
-        print("+++++"+jsonEncode(plans));
+        print("+++++" + jsonEncode(plans));
         return plans;
       } else {
         return [];
@@ -1131,25 +1135,97 @@ Future getrecmostPlans() async {
   }
 }
 
+// Future postMess(String msg) async {
+//   var url = Uri.parse(postmessageUrl);
+//   try {
+//     var respnse = await http.post(url, body: {
+//       "sender_id": Ids.userid,
+//       "message": msg,
+//       "resive_id": "626259f89d1ec3425360af89"
+//     }, headers: {
+//       "Authorization": prefs!.getString('token').toString()
+//     });
+//     if (respnse.statusCode == 200) {
+//       var data = jsonDecode(respnse.body);
+//       if (data["status"]) {
+//         return "success";
+//       } else {
+//         return "error";
+//         // print(
+//         //   "Error====="
+//         // );
+//       }
+//       // Future city = data["getCities"];
+//       // print("success============== ${data["getCities"]}");
+
+//     } else {
+//       return Future.error("Server Error");
+//       print("Error=====");
+//     }
+//   } catch (e) {
+//     print("error $e");
+//   }
+// }
+
+// Future getMess() async {
+//   var url = Uri.parse(getmessageUrl + "?Sender_id=" + Ids.userid);
+//   try {
+//     var respnse = await http.get(url,
+//         headers: {"Authorization": prefs!.getString('token').toString()});
+//     if (respnse.statusCode == 200) {
+//       var data = jsonDecode(respnse.body);
+//       if (data["status"]) {
+//         return data["data"];
+//       } else {
+//         return "error";
+//         // print(
+//         //   "Error====="
+//         // );
+//       }
+//       // Future city = data["getCities"];
+//       // print("success============== ${data["getCities"]}");
+
+//     } else {
+//       return Future.error("Server Error");
+//       print("Error=====");
+//     }
+//   } catch (e) {
+//     print("error $e");
+//   }
+// }
+
 Future postMess(String msg) async {
+  var user = {};
+  var str;
+  try {
+    var resBody = {};
+
+    resBody["message"] = msg;
+    resBody["type"] = "sender";
+    user["sender_id"] = Ids.userid;
+    user["resive_id"] = "626259f89d1ec3425360af89";
+    user["conversation"] = resBody;
+
+    str = json.encode(user);
+  } catch (e) {}
+
   var url = Uri.parse(postmessageUrl);
   try {
-    var respnse = await http.post(url, body: {
-      "sender_id": Ids.userid,
-      "message": msg,
-      "resive_id": "626259f89d1ec3425360af89"
-    }, headers: {
-      "Authorization": prefs!.getString('token').toString()
+    print(str);
+    print(url);
+    var respnse = await http.post(url, body: str, headers: {
+      "Authorization": prefs!.getString('token').toString(),
+      'Content-Type': 'application/json; charset=UTF-8',
     });
     if (respnse.statusCode == 200) {
       var data = jsonDecode(respnse.body);
       if (data["status"]) {
-        return "success";
+        List<MessageModel> msg = [];
+        msg = messageModelFromJson(jsonEncode(data["Adata"]["conversation"]));
+        print(jsonEncode(msg));
+        return msg;
       } else {
-        return "error";
-        // print(
-        //   "Error====="
-        // );
+        return [];
       }
       // Future city = data["getCities"];
       // print("success============== ${data["getCities"]}");
@@ -1171,12 +1247,12 @@ Future getMess() async {
     if (respnse.statusCode == 200) {
       var data = jsonDecode(respnse.body);
       if (data["status"]) {
-        return data["data"];
+        List<MessageModel> msg = [];
+        msg = messageModelFromJson(jsonEncode(data["data"][0]["conversation"]));
+        print(jsonEncode(msg));
+        return msg;
       } else {
-        return "error";
-        // print(
-        //   "Error====="
-        // );
+        return [];
       }
       // Future city = data["getCities"];
       // print("success============== ${data["getCities"]}");
@@ -1296,7 +1372,6 @@ Future feedback(
   String optional,
   String id,
   String review,
-
 ) async {
   var url = Uri.parse(feedbackUrl);
   try {
@@ -1311,7 +1386,6 @@ Future feedback(
     if (respnse.statusCode == 200) {
       var data = jsonDecode(respnse.body);
       return data;
-     
     } else {
       return Future.error("Server Error");
     }
@@ -1320,18 +1394,15 @@ Future feedback(
   }
 }
 
-
-Future getblog(
-) async {
+Future getblog() async {
   var url = Uri.parse(blogUrl);
   try {
-    var respnse = await http.get(url, headers: {
-      "Authorization": prefs!.getString('token').toString()
-    });
+    var respnse = await http.get(url,
+        headers: {"Authorization": prefs!.getString('token').toString()});
     if (respnse.statusCode == 200) {
-      List<BlogsModel> blogs=[];
+      List<BlogsModel> blogs = [];
       var data = jsonDecode(respnse.body);
-      if(data["status"]){
+      if (data["status"]) {
         blogs = blogsModelFromJson(jsonEncode(data["data"]));
         return blogs;
       }
@@ -1344,33 +1415,30 @@ Future getblog(
   }
 }
 
-
-Future getCarHealth(
-  String id
-) async {
-  var url = Uri.parse(carhealthUrl+"?orderId="+id);
+Future getCarHealth(String id) async {
+  var url = Uri.parse(carhealthUrl + "?orderId=" + id);
   try {
-    var respnse = await http.get(url, headers: {
-      "Authorization": prefs!.getString('token').toString()
-    });
+    var respnse = await http.get(url,
+        headers: {"Authorization": prefs!.getString('token').toString()});
     if (respnse.statusCode == 200) {
       var data = jsonDecode(respnse.body);
-      if(data["status"]){
+      if (data["status"]) {
         var qwe = data["data"].first;
         print(qwe);
         CarHealthModel carHealthModel = CarHealthModel();
         carHealthModel.overallhealth = qwe["overalcarhealth"];
-        carHealthModel.carName = qwe["order"]["orderData"][0]["cars"]["cars"].toString();
-        carHealthModel.brandName = qwe["order"]["orderData"][0]["brands"]["brands"].toString();
+        carHealthModel.carName =
+            qwe["order"]["orderData"][0]["cars"]["cars"].toString();
+        carHealthModel.brandName =
+            qwe["order"]["orderData"][0]["brands"]["brands"].toString();
 
-        var list =jsonDecode( qwe["MainHealth"]);
-        carHealthModel.totalServices = 
-      prefs!.getInt("totalServices");
-        for(int i=0;i<list.length;i++){
+        var list = jsonDecode(qwe["MainHealth"]);
+        carHealthModel.totalServices = prefs!.getInt("totalServices");
+        for (int i = 0; i < list.length; i++) {
           CarParts parts = CarParts();
-          parts.partName= list[i]["heading"];
-          parts.rating= list[i]["rate"];
-          parts.des= list[i]["description"];
+          parts.partName = list[i]["heading"];
+          parts.rating = list[i]["rate"];
+          parts.des = list[i]["description"];
           carHealthModel.carparts.add(parts);
         }
         return carHealthModel;
@@ -1380,7 +1448,6 @@ Future getCarHealth(
       return CarHealthModel;
     }
   } catch (e) {
-
     print("error $e");
     return "error";
   }
@@ -1398,7 +1465,7 @@ Future searchGloble(String text) async {
   // } else {
   //   car = "?";
   // }
-  var url = Uri.parse(globalsearchUrl +"?text=" + text);
+  var url = Uri.parse(globalsearchUrl + "?text=" + text);
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -1409,7 +1476,7 @@ Future searchGloble(String text) async {
       List<PlanModel> plans = [];
       List<SubcatModel> subcats = [];
       if (data["status"]) {
-        var categotry =data["searchData"][0]["category"];
+        var categotry = data["searchData"][0]["category"];
         for (int i = 0; i < data["searchData"][2]["plan"].length; i++) {
           var qwe = data["searchData"][2]["plan"][i];
           PlanModel pl = PlanModel();
@@ -1420,10 +1487,10 @@ Future searchGloble(String text) async {
           pl.hour = qwe["hours"].toString();
           pl.isMost = qwe["mostpopularpack"].toString();
           pl.isrec = qwe["status"].toString();
-          if(qwe["mostpopularpack"].toString()=="true"){
-            mostdata =true;
+          if (qwe["mostpopularpack"].toString() == "true") {
+            mostdata = true;
           }
-          if(qwe["status"].toString()=="true"){
+          if (qwe["status"].toString() == "true") {
             recdata = true;
           }
           pl.label = qwe["label"].toString();
@@ -1455,7 +1522,9 @@ Future searchGloble(String text) async {
           }
           plans.add(pl);
         }
-        for (int i = 0; i < data["searchData"][1]["getsubcategory"].length; i++) {
+        for (int i = 0;
+            i < data["searchData"][1]["getsubcategory"].length;
+            i++) {
           var qwe = data["searchData"][1]["getsubcategory"][i];
           SubcatModel mod = SubcatModel();
           mod.id = qwe["_id"];
@@ -1467,14 +1536,13 @@ Future searchGloble(String text) async {
           }
           subcats.add(mod);
         }
-        print("plans"+jsonEncode(plans));
-        print("subcats"+jsonEncode(subcats));
+        print("plans" + jsonEncode(plans));
+        print("subcats" + jsonEncode(subcats));
 
-        
-        Searchdata.cats=null;
+        Searchdata.cats = null;
         Searchdata.plans.clear();
         Searchdata.subcat.clear();
-        Searchdata.cats=categotry;
+        Searchdata.cats = categotry;
         Searchdata.plans.addAll(plans);
         Searchdata.subcat.addAll(subcats);
         print("working");
@@ -1496,6 +1564,22 @@ Future searchGloble(String text) async {
       return <SubcatModel>[];
       print("Error=====");
     }
+  } catch (e) {
+    print("error $e");
+  }
+}
+
+Future sendfcm() async {
+  var url = Uri.parse(fcmtoken);
+  try {
+    var respnse = await http.post(url,
+    body: {
+      "fcmtoken":prefs!.getString("fcmtoken")
+    },
+        headers: {"Authorization": prefs!.getString('token').toString()});
+    if (respnse.statusCode == 200) {
+      print("Success");
+    } 
   } catch (e) {
     print("error $e");
   }

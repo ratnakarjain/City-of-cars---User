@@ -42,5 +42,6 @@ const String feedbackUrl = baseUrl+"/carfeedbackModel";
 const String blogUrl = baseUrl+"/getBlogs";
 const String carhealthUrl = baseUrl+"/getcarhealth";
 const String globalsearchUrl = baseUrl+"/homesearch";
+const String fcmtoken = baseUrl+"/fcmTokenupdate";
 
 String token = "";

@@ -458,7 +458,11 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Tracking(),
+                              builder: (context) => Tracking(
+                                orderid: data["_id"],
+                                time: data["time"],
+                                date: data["date"],
+                              ),
                             ));
                       },
                       text: "Track your order here",

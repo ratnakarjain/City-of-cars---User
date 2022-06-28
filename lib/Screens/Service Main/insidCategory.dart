@@ -26,7 +26,7 @@ class InsideCategory extends StatefulWidget {
 }
 
 class _InsideCategoryState extends State<InsideCategory>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late TabController _tabController;
   ScrollController _controller1 = new ScrollController();
   ScrollController _controller2 = new ScrollController();
@@ -125,7 +125,7 @@ class _InsideCategoryState extends State<InsideCategory>
     // });_
     _id = widget.id;
 
-    fecthdata(false);
+    fecthdata();
 
     _scrollController.addListener(() {
       check();
@@ -245,6 +245,27 @@ class _InsideCategoryState extends State<InsideCategory>
                           borderRadius: BorderRadius.circular(h * 0.05),
                           child: TextFormField(
                             controller: search1,
+                            
+                            onChanged: (value) {
+                          if (value.isNotEmpty) {
+
+                          }
+
+                          setState(() {});
+                          if (value == " ") {
+                            search1.clear();
+                          }
+                          if (value.isEmpty) {
+                              setState(() {
+                                  
+                                });
+                                _tabController.dispose();
+                                keys.clear();
+                                fecthdata();
+                          }
+                          print("changeqetyu");
+                        },
+
                             decoration: InputDecoration(
                                 contentPadding: EdgeInsets.only(
                                     top: h * 0.01, left: w * 0.05),
@@ -257,10 +278,16 @@ class _InsideCategoryState extends State<InsideCategory>
                                 suffixIcon: InkWell(
                                   onTap: search1.text.isEmpty
                                       ? () {
+                                        print("4321");
+
                                           setState(() {});
                                         }
                                       : () {
-                                          fecthdata(true);
+                                        print("1234");
+                                          _tabController.dispose();
+                                          
+                                          keys.clear();
+                                          search();
 
                                           _scrollController.addListener(() {
                                             check();
@@ -624,7 +651,8 @@ class _InsideCategoryState extends State<InsideCategory>
                                       height: h * 0.18,
                                       child: FutureBuilder(
                                         future: getrecmostPlans(),
-                                        builder: (context, AsyncSnapshot snapshot) {
+                                        builder:
+                                            (context, AsyncSnapshot snapshot) {
                                           if (snapshot.connectionState ==
                                               ConnectionState.done) {
                                             // mostpop.addAll(snapshot.data);
@@ -633,7 +661,8 @@ class _InsideCategoryState extends State<InsideCategory>
                                                 controller: _controller2,
                                                 physics:
                                                     const BouncingScrollPhysics(),
-                                                scrollDirection: Axis.horizontal,
+                                                scrollDirection:
+                                                    Axis.horizontal,
                                                 padding: EdgeInsets.symmetric(
                                                     vertical: h * 0.01,
                                                     horizontal: h * 0.025),
@@ -642,7 +671,8 @@ class _InsideCategoryState extends State<InsideCategory>
                                                   PlanModel model = PlanModel();
                                                   model = snapshot.data[index];
                                                   return Visibility(
-                                                    visible: model.isrec == "true",
+                                                    visible:
+                                                        model.isrec == "true",
                                                     child: GestureDetector(
                                                       onTap: () {
                                                         print("Cat " +
@@ -653,9 +683,11 @@ class _InsideCategoryState extends State<InsideCategory>
                                                             .categoryId
                                                             .toString();
                                                         Ids.subcategoryid =
-                                                            model.subcatid.toString();
-                                                        Ids.planid =
-                                                            model.planid.toString();
+                                                            model.subcatid
+                                                                .toString();
+                                                        Ids.planid = model
+                                                            .planid
+                                                            .toString();
                                                         Navigator.push(
                                                             context,
                                                             MaterialPageRoute(
@@ -675,7 +707,8 @@ class _InsideCategoryState extends State<InsideCategory>
                                                             children: [
                                                               Image.network(
                                                                 model.planimage,
-                                                                height: h * 0.04,
+                                                                height:
+                                                                    h * 0.04,
                                                               ),
                                                               // Image.asset(
                                                               //     "assets/images/${reccomendedPackes[0]["image"]}"),
@@ -684,7 +717,9 @@ class _InsideCategoryState extends State<InsideCategory>
                                                               ),
                                                               FittedBox(
                                                                 child: Text(
-                                                                  model.packs.first
+                                                                  model
+                                                                      .packs
+                                                                      .first
                                                                       .planName,
                                                                   style: GoogleFonts
                                                                       .montserrat(
@@ -700,9 +735,12 @@ class _InsideCategoryState extends State<InsideCategory>
                                                                     .symmetric(
                                                                         horizontal:
                                                                             h * 0.01),
-                                                                child: FittedBox(
+                                                                child:
+                                                                    FittedBox(
                                                                   child: Text(
-                                                                    model.packs.first
+                                                                    model
+                                                                        .packs
+                                                                        .first
                                                                         .subPlanName,
                                                                     textScaleFactor:
                                                                         0.6,
@@ -726,7 +764,8 @@ class _InsideCategoryState extends State<InsideCategory>
                                                 },
                                               );
                                             }
-                                            return const Center(child: Text("Empty"));
+                                            return const Center(
+                                                child: Text("Empty"));
                                           }
                                           if (snapshot.connectionState ==
                                               ConnectionState.waiting) {
@@ -735,7 +774,8 @@ class _InsideCategoryState extends State<InsideCategory>
                                                 controller: _controller2,
                                                 physics:
                                                     const BouncingScrollPhysics(),
-                                                scrollDirection: Axis.horizontal,
+                                                scrollDirection:
+                                                    Axis.horizontal,
                                                 padding: EdgeInsets.symmetric(
                                                     vertical: h * 0.01,
                                                     horizontal: h * 0.025),
@@ -744,7 +784,8 @@ class _InsideCategoryState extends State<InsideCategory>
                                                   PlanModel model = PlanModel();
                                                   model = snapshot.data[index];
                                                   return Visibility(
-                                                    visible: model.isrec == "true",
+                                                    visible:
+                                                        model.isrec == "true",
                                                     child: GestureDetector(
                                                       onTap: () {
                                                         print("Cat " +
@@ -755,9 +796,11 @@ class _InsideCategoryState extends State<InsideCategory>
                                                             .categoryId
                                                             .toString();
                                                         Ids.subcategoryid =
-                                                            model.subcatid.toString();
-                                                        Ids.planid =
-                                                            model.planid.toString();
+                                                            model.subcatid
+                                                                .toString();
+                                                        Ids.planid = model
+                                                            .planid
+                                                            .toString();
                                                         Navigator.push(
                                                             context,
                                                             MaterialPageRoute(
@@ -777,7 +820,8 @@ class _InsideCategoryState extends State<InsideCategory>
                                                             children: [
                                                               Image.network(
                                                                 model.planimage,
-                                                                height: h * 0.04,
+                                                                height:
+                                                                    h * 0.04,
                                                               ),
                                                               // Image.asset(
                                                               //     "assets/images/${reccomendedPackes[0]["image"]}"),
@@ -786,7 +830,9 @@ class _InsideCategoryState extends State<InsideCategory>
                                                               ),
                                                               FittedBox(
                                                                 child: Text(
-                                                                  model.packs.first
+                                                                  model
+                                                                      .packs
+                                                                      .first
                                                                       .planName,
                                                                   style: GoogleFonts
                                                                       .montserrat(
@@ -802,9 +848,12 @@ class _InsideCategoryState extends State<InsideCategory>
                                                                     .symmetric(
                                                                         horizontal:
                                                                             h * 0.01),
-                                                                child: FittedBox(
+                                                                child:
+                                                                    FittedBox(
                                                                   child: Text(
-                                                                    model.packs.first
+                                                                    model
+                                                                        .packs
+                                                                        .first
                                                                         .subPlanName,
                                                                     textScaleFactor:
                                                                         0.6,
@@ -958,15 +1007,16 @@ class _InsideCategoryState extends State<InsideCategory>
         duration: const Duration(milliseconds: 1000));
   }
 
-  fecthdata(bool search) {
+  fecthdata() {
     isLoading = true;
     setState(() {});
-  !search?  getSubcategory(_id).then((value) {
+    getSubcategory(_id).then((value) {
       setState(() {
         service.clear();
         service.addAll(value);
       });
     }).whenComplete(() {
+      
       _tabController = TabController(length: service.length, vsync: this);
       for (int i = 0; i < service.length; i++) {
         keys.add(i);
@@ -974,16 +1024,17 @@ class _InsideCategoryState extends State<InsideCategory>
       }
       isLoading = false;
       setState(() {});
-    }):
+    });
+  }
+
+  search() {
     searchGloble(search1.text).then((value) {
       print("done");
       if (value) {
-
         service.clear();
         service.addAll(Searchdata.subcat);
-        
+
         print("condition");
-        
 
         // pls=value.plans;
 

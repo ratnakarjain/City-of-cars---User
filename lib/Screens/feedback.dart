@@ -114,7 +114,7 @@ class _FeedBackState extends State<FeedBack> {
                     ),
                     RichText(
                         text: TextSpan(
-                            text: "I20 ",
+                            text: widget.order.carname+" ",
                             style: GoogleFonts.montserrat(
                               fontSize: 12,
                               color: kSelectedColor,
@@ -122,7 +122,7 @@ class _FeedBackState extends State<FeedBack> {
                             ),
                             children: [
                           TextSpan(
-                            text: "Hyundai",
+                            text: widget.order.carbrand,
                             style: GoogleFonts.montserrat(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,

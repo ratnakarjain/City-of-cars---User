@@ -109,7 +109,7 @@ class _TrackingState extends State<Tracking> {
                         //   ),
                         // ),
                         SizedBox(
-                          height: h * 0.1,
+                          height: h * 0.03,
                         ),
                         Visibility(
                           visible:
@@ -146,10 +146,13 @@ class _TrackingState extends State<Tracking> {
                                             TextSpan(
                                                 text: widget.date.toString() ==
                                                         "null"
-                                                    ? " -"
+                                                    ? " "
+
                                                     : DateFormat.MMMMd().format(
                                                             DateTime.parse(widget.date
-                                                                .toString())) +
+                                                                .toString()))  +
+                                                                widget.time.toString()=="null"?" ":
+
                                                         " - " +
                                                         DateTime.parse(widget.time.toString())
                                                             .hour
@@ -426,7 +429,20 @@ class _TrackingState extends State<Tracking> {
                                                     RichText(
                                                       text: TextSpan(
                                                           text:
-                                                              "${resmdl.time}\n",
+                                                          DateFormat.MMMMd().format(
+                                                            DateTime.parse(resmdl.time
+                                                                .toString())) +
+                                                        " - " +
+                                                        DateTime.parse(resmdl.time.toString())
+                                                            .hour
+                                                            .toString() +
+                                                        ":" +
+                                                        DateTime.parse(resmdl.time
+                                                                .toString())
+                                                            .minute
+                                                            .toString() +" Hrs\n",
+                                                        // " Hrs",
+                                                        //       "${resmdl.time}\n",
                                                           style: GoogleFonts.montserrat(
                                                               fontSize: 12,
                                                               fontWeight:
