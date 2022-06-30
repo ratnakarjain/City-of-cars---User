@@ -52,7 +52,7 @@ class _SlotState extends State<Slot> {
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
-
+// istaped=false;
     return Scaffold(
         backgroundColor: kLightOrangeBgColor,
         appBar: AppBar(
@@ -574,6 +574,8 @@ class _SlotState extends State<Slot> {
                                 onTap: () async {
                                   if (currentlocation) {
                                     print("done");
+                                    istaped = true;
+                                    setState(() {});
                                     await determinePosition().then((value) {
                                       lati = value.latitude.toString();
                                       longi = value.longitude.toString();
@@ -606,8 +608,8 @@ class _SlotState extends State<Slot> {
                                     } else {
                                       if (_formKey.currentState!.validate()) {
                                         istaped = true;
-                                        bookSlot();
                                         setState(() {});
+                                        bookSlot();
                                       }
                                     }
                                   }

@@ -102,7 +102,7 @@ class _PaymentState extends State<Payment> {
     Fluttertoast.showToast(
         msg: "Payment Successfull", toastLength: Toast.LENGTH_SHORT);
     istaped = true;
-    addorder(response.paymentId!, "Success").then((value) {
+    addorder(response.paymentId!, "Deposited","","online").then((value) {
       if (value == false) {
         istaped = false;
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -134,7 +134,7 @@ class _PaymentState extends State<Payment> {
     Fluttertoast.showToast(
         msg: "Payment Cancelled", //res["error"]["description"],
         toastLength: Toast.LENGTH_SHORT);
-    addorder("", "Failed").then((value) {
+    addorder("", "Failed","","online").then((value) {
       if (value == false) {
         istaped = false;
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -591,7 +591,7 @@ class _PaymentState extends State<Payment> {
                     setState(() {
                       
                     });
-                    addorder("", "Pay on dropoff").then((value) {
+                    addorder("", "Not paid","","cash").then((value) {
                       if (value == false) {
                         payondrop = false;
 

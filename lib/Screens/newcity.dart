@@ -37,7 +37,6 @@ class _NewCityState extends State<NewCity> {
   final _search = TextEditingController();
   @override
   void initState() {
-
     getcities().then((value) {
       citydata = value;
     });
@@ -221,7 +220,16 @@ class _NewCityState extends State<NewCity> {
                                     (index) {
                                   return Center(
                                     child: GestureDetector(
-                                      onTap: () {
+                                      onTap:Ids.cityid ==
+                                              snapshot.data[index]["_id"]
+                                          ? () {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(const SnackBar(
+                                                content:
+                                                    Text("This is your privious city"),
+                                              ));
+                                            }
+                                          : () {
                                         CarsData.city =
                                             snapshot.data[index]["city"];
                                         CarsData.cityimage =
@@ -248,8 +256,8 @@ class _NewCityState extends State<NewCity> {
                                         shadowColor:
                                             Colors.grey.withOpacity(0.2),
                                         child: Container(
-                                          height: size.height * 0.17,
-                                          width: size.height * 0.17,
+                                          height: size.height * 0.19,
+                                          width: size.height * 0.19,
                                           padding: EdgeInsets.all(
                                               size.height * 0.008),
                                           child: Column(
@@ -331,23 +339,33 @@ class _NewCityState extends State<NewCity> {
                                     (index) {
                                   return Center(
                                     child: GestureDetector(
-                                      onTap: () {
-                                        CarsData.city =
-                                            snapshot.data[index]["city"];
-                                        CarsData.cityimage =
-                                            snapshot.data[index]["image"];
-                                        Ids.cityid =
-                                            snapshot.data[index]["_id"];
-                                        pref!.setString("CarId", Ids.carid);
-                                        print(CarsData.city);
-                                        print(CarsData.cityimage);
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const SelectBrand(),
-                                            ));
-                                      },
+                                      onTap: Ids.cityid ==
+                                              snapshot.data[index]["_id"]
+                                          ? () {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(const SnackBar(
+                                                content:
+                                                    Text("This is your privious city"),
+                                              ));
+                                            }
+                                          : () {
+                                              CarsData.city =
+                                                  snapshot.data[index]["city"];
+                                              CarsData.cityimage =
+                                                  snapshot.data[index]["image"];
+                                              Ids.cityid =
+                                                  snapshot.data[index]["_id"];
+                                              pref!.setString(
+                                                  "CarId", Ids.carid);
+                                              print(CarsData.city);
+                                              print(CarsData.cityimage);
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const SelectBrand(),
+                                                  ));
+                                            },
                                       child: Card(
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
@@ -356,8 +374,8 @@ class _NewCityState extends State<NewCity> {
                                         shadowColor:
                                             Colors.grey.withOpacity(0.2),
                                         child: Container(
-                                          height: size.height * 0.17,
-                                          width: size.height * 0.17,
+                                          height: size.height * 0.19,
+                                          width: size.height * 0.19,
                                           padding: EdgeInsets.all(
                                               size.height * 0.008),
                                           child: Column(
@@ -415,14 +433,14 @@ class _NewCityState extends State<NewCity> {
                               );
                             }
                             return Padding(
-                                    padding:  EdgeInsets.only(top: h*0.25),
-                                    child: loder,
-                                  );
+                              padding: EdgeInsets.only(top: h * 0.25),
+                              child: loder,
+                            );
                           }
                           return Padding(
-                                    padding:  EdgeInsets.only(top: h*0.25),
-                                    child: loder,
-                                  );
+                            padding: EdgeInsets.only(top: h * 0.25),
+                            child: loder,
+                          );
                           // print(snapshot.data.length);
                         }),
                   ),
@@ -434,6 +452,4 @@ class _NewCityState extends State<NewCity> {
       ),
     );
   }
-
-
 }

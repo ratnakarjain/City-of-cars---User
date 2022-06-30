@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../Utils/functions.dart';
+import 'bottomnavBar.dart';
+import 'editProfile.dart';
+import 'messages.dart';
+
 var h;
 var w;
 
@@ -16,13 +20,13 @@ class Notifications extends StatefulWidget {
 }
 
 class _NotificationsState extends State<Notifications> {
-    List<String> titleList = [];
+  List<String> titleList = [];
   List<String> bodyList = [];
   List<String> isread = [];
   List<String> timeList = [];
-  // List<String> typeList = [];
+  List<String> typeList = [];
   // List<String> replyIdList = [];
- var preferences = Prefernece.pref;
+  var preferences = Prefernece.pref;
   List selected = [];
   int item = 10;
   @override
@@ -45,7 +49,7 @@ class _NotificationsState extends State<Notifications> {
 //        preferences!.remove("bodyList");
 //      preferences!.remove("isRead");
 //        preferences!.remove("timeList");
-      
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: kLightOrangeBgColor,
@@ -61,123 +65,184 @@ class _NotificationsState extends State<Notifications> {
       ),
       body: SizedBox(
         width: w,
-        child:titleList.isEmpty?Center(
-          child: Text(
-            "No Notifications yet",
-            style:
-                GoogleFonts.montserrat(fontSize: 16, fontWeight: FontWeight.w400),
-          ),
-        ): LayoutBuilder(
-          builder: (context, viewportConstraints) {
-            return SingleChildScrollView(
-              controller: _controller,
-              padding: EdgeInsets.only(bottom: h * 0.1),
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: viewportConstraints.minHeight,
+        child: titleList.isEmpty
+            ? Center(
+                child: Text(
+                  "No Notifications yet",
+                  style: GoogleFonts.montserrat(
+                      fontSize: 16, fontWeight: FontWeight.w400),
                 ),
-                child: IntrinsicHeight(
-                  child: Stack(
-                      children: List.generate(titleList.length, (index) {
-                        
-                    return Container(
-                      // height: h*0.3,
-                      width: w,
-                      margin: EdgeInsets.only(
-                          top: index == titleList.length - 1 ? 0 : (h * 0.05)),
-                      padding: EdgeInsets.only(
-                        bottom: h * 0.02,
-                        top: index == titleList.length - 1
-                            ? h * 0.15
-                            : ((titleList.length - index) * h * 0.11),
+              )
+            : LayoutBuilder(
+                builder: (context, viewportConstraints) {
+                  return SingleChildScrollView(
+                    controller: _controller,
+                    padding: EdgeInsets.only(bottom: h * 0.1),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: viewportConstraints.minHeight,
                       ),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(h * 0.06)),
-                          color: isread[index]=="false" ? kbluecolor : kwhitecolor,
-                          boxShadow: [
-                             BoxShadow(
-                              blurRadius: 5,
-                              color: kTextInputPlaceholderColor.withOpacity(0.5)
-                            )
-                          ]),
-                      child: Row(
-                        children: [
-                          Expanded(
-                              child: InkWell(
-                                  onTap: () {
-                                    // setState(() {
-                                    //   isread[index] = "false";
-                                    // });
-                                  },
-                                  child: CircleAvatar(
-                                    radius: h * 0.015,
-                                    backgroundColor: isread[index] =="false"
-                                        ? kGreenColor
-                                        : carhealthColor4,
-                                  ))),
-                          Expanded(
-                            flex: 3,
-                            child: RichText(
-                              textAlign: TextAlign.start,
-                              text: TextSpan(
-                                  text:
-                                      "${titleList[index]}:\n${bodyList[index]}\n",
-                                  style: GoogleFonts.montserrat(
-                                      fontSize: 14,
-                                      fontWeight: isread[index]=="false"? FontWeight.bold: FontWeight.w500,
-                                      height: 1.5,
-                                      color: isread[index]=="false"
-                                          ? kwhitecolor
-                                          : kTextInputPlaceholderColor),
-                                  children: [
-                                    TextSpan(
-                                        text : timedifference(timeList[index]).toString(),
-                                        style: GoogleFonts.montserrat(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400,
-                                            height: 2,
-                                            color: isread[index]=="false"
-                                                ? kwhitecolor
-                                                : kTextInputPlaceholderColor)),
+                      child: IntrinsicHeight(
+                        child: Stack(
+                            children: List.generate(titleList.length, (index) {
+                          return GestureDetector(
+                            onTap: () {
+                              print("ontap====");
+                              switch (typeList[index].toString().toLowerCase()) {
+                                case "editprofile":
+                                  print("editprofile");
+
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: ((context) =>
+                                              const EditProfile())));
+                                  break;
+                                // case "pendingcart":
+
+                                //   break;
+                                // case "offer":
+
+                                //   break;
+                                case "message":
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: ((context) =>
+                                              const Messages())));
+
+                                  break;
+                                // case "feedback":
+
+                                //   break;
+                                // case "otp":
+                                // Navigator.push(context, MaterialPageRoute(builder: ((context) => Messages())));
+
+                                //   break;
+
+                                case "blog":
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: ((context) => BottomNavBar(
+                                                index: 1,
+                                              ))));
+
+                                  break;
+                                case "":
+                                  break;
+                              }
+                            },
+                            child: Container(
+                              // height: h*0.3,
+                              width: w,
+                              margin: EdgeInsets.only(
+                                  top: index == titleList.length - 1
+                                      ? 0
+                                      : (h * 0.05)),
+                              padding: EdgeInsets.only(
+                                bottom: h * 0.02,
+                                top: index == titleList.length - 1
+                                    ? h * 0.15
+                                    : ((titleList.length - index) * h * 0.11),
+                              ),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(h * 0.06)),
+                                  color: isread[index] == "false"
+                                      ? kbluecolor
+                                      : kwhitecolor,
+                                  boxShadow: [
+                                    BoxShadow(
+                                        blurRadius: 5,
+                                        color: kTextInputPlaceholderColor
+                                            .withOpacity(0.5))
                                   ]),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      child: InkWell(
+                                          onTap: () {
+                                            // setState(() {
+                                            //   isread[index] = "false";
+                                            // });
+                                          },
+                                          child: CircleAvatar(
+                                            radius: h * 0.015,
+                                            backgroundColor:
+                                                isread[index] == "false"
+                                                    ? kGreenColor
+                                                    : carhealthColor4,
+                                          ))),
+                                  Expanded(
+                                    flex: 3,
+                                    child: RichText(
+                                      textAlign: TextAlign.start,
+                                      text: TextSpan(
+                                          text:
+                                              "${titleList[index]}:\n${bodyList[index]}\n",
+                                          style: GoogleFonts.montserrat(
+                                              fontSize: 14,
+                                              fontWeight:
+                                                  isread[index] == "false"
+                                                      ? FontWeight.bold
+                                                      : FontWeight.w500,
+                                              height: 1.5,
+                                              color: isread[index] == "false"
+                                                  ? kwhitecolor
+                                                  : kTextInputPlaceholderColor),
+                                          children: [
+                                            TextSpan(
+                                                text: timedifference(
+                                                        timeList[index])
+                                                    .toString(),
+                                                style: GoogleFonts.montserrat(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w400,
+                                                    height: 2,
+                                                    color: isread[index] ==
+                                                            "false"
+                                                        ? kwhitecolor
+                                                        : kTextInputPlaceholderColor)),
+                                          ]),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
-                          )
-                        ],
+                          );
+                        })),
                       ),
-                    );
-                  })),
-                ),
+                    ),
+                  );
+                },
               ),
-            );
-          },
-        ),
       ),
     );
   }
-  Future<void> getData() async {
 
+  Future<void> getData() async {
     List<String> isRead = [];
-    
+
     if (preferences!.containsKey("titleList")) {
       titleList = preferences!.getStringList("titleList")!;
       bodyList = preferences!.getStringList("bodyList")!;
       isread = preferences!.getStringList("isRead")!;
       timeList = preferences!.getStringList("timeList")!;
-      // reviewList = preferences.getStringList("reviewIdList")!;
+      typeList = preferences!.getStringList("typeList")!;
       // replyIdList = preferences.getStringList("replyIdList")!;
       isread.forEach((element) {
         isRead.add("true");
       });
     }
-    print("title list length "+titleList.length.toString()+"^^");
-    print("title list length "+titleList.toString()+"^^");
-    print("title list length "+timeList.toString()+"^^");
+    print("title list length " + titleList.length.toString() + "^^");
+    print("title list length " + titleList.toString() + "^^");
+    print("title list length " + timeList.toString() + "^^");
+    print("type list length " + typeList.toString() + "^^");
     preferences!.setStringList("isRead", isRead);
     preferences!.commit();
     // notificationCount = 0;
     // context.read<Counter>().getNotify();
-
 
     setState(() {
       // titleList = titleList.reversed.toList();

@@ -69,6 +69,7 @@ class _EditProfileState extends State<EditProfile> {
         ? ""
         : prefs!.getString("image").toString();
     print(image);
+    token();
     // TODO: implement initState
     super.initState();
   }

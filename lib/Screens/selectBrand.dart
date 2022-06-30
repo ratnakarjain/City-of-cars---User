@@ -142,80 +142,80 @@ class _SelectBrandState extends State<SelectBrand> {
         ),
         backgroundColor: kwhitecolor,
         elevation: 0,
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(h * 0.1),
-          child: Container(
-            height: h * 0.07,
-            margin: EdgeInsets.only(bottom: h * 0.025),
-            padding:
-                EdgeInsets.only(left: w * 0.06, right: w * 0.06, top: h * 0.02),
-            child: Material(
-              color: kwhitecolor,
-              // elevation: 8,
-              shadowColor: kTextInputPlaceholderColor.withOpacity(0.3),
-              borderRadius: BorderRadius.circular(h * 0.025),
-              child: TextField(
-                controller: _brand,
-                decoration: InputDecoration(
-                    contentPadding:
-                        EdgeInsets.only(top: h * 0.01, left: w * 0.05),
-                    hintText: "Search",
-                    hintStyle: GoogleFonts.montserrat(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: ksearchTextColor.withOpacity(0.57),
-                    ),
-                    suffixIcon: InkWell(
-                      onTap: () {
-                        brandsloading = true;
-                        FocusManager.instance.primaryFocus?.unfocus();
-                        setState(() {});
-                      },
-                      child: const Icon(
-                        Icons.search,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(color: korangecolor, width: 1.0),
-                        borderRadius: BorderRadius.circular(h * 0.02)),
-                    border: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: kTextInputPlaceholderColor, width: 1.0),
-                        borderRadius: BorderRadius.circular(h * 0.02))),
-              ),
-            ),
-          ),
-          // Container(
-          //     height: h*0.08,
-          //     padding: EdgeInsets.only(
-          //         left: w * 0.06, right: w * 0.06, top: 20),
-          //     child: TextField(
-          //       decoration: InputDecoration(
-          //           hintText: "Search",
-          //           hintStyle: GoogleFonts.montserrat(
-          //             fontSize:15,
-          //             fontWeight: FontWeight.bold,
-          //             color: ksearchTextColor,
+        // bottom: PreferredSize(
+        //   preferredSize: Size.fromHeight(h * 0.1),
+        //   child: Container(
+        //     height: h * 0.07,
+        //     margin: EdgeInsets.only(bottom: h * 0.025),
+        //     padding:
+        //         EdgeInsets.only(left: w * 0.06, right: w * 0.06, top: h * 0.02),
+        //     child: Material(
+        //       color: kwhitecolor,
+        //       // elevation: 8,
+        //       shadowColor: kTextInputPlaceholderColor.withOpacity(0.3),
+        //       borderRadius: BorderRadius.circular(h * 0.025),
+        //       child: TextField(
+        //         controller: _brand,
+        //         decoration: InputDecoration(
+        //             contentPadding:
+        //                 EdgeInsets.only(top: h * 0.01, left: w * 0.05),
+        //             hintText: "Search",
+        //             hintStyle: GoogleFonts.montserrat(
+        //               fontSize: 15,
+        //               fontWeight: FontWeight.w600,
+        //               color: ksearchTextColor.withOpacity(0.57),
+        //             ),
+        //             suffixIcon: InkWell(
+        //               onTap: () {
+        //                 brandsloading = true;
+        //                 FocusManager.instance.primaryFocus?.unfocus();
+        //                 setState(() {});
+        //               },
+        //               child: const Icon(
+        //                 Icons.search,
+        //               ),
+        //             ),
+        //             focusedBorder: OutlineInputBorder(
+        //                 borderSide:
+        //                     const BorderSide(color: korangecolor, width: 1.0),
+        //                 borderRadius: BorderRadius.circular(h * 0.02)),
+        //             border: OutlineInputBorder(
+        //                 borderSide: const BorderSide(
+        //                     color: kTextInputPlaceholderColor, width: 1.0),
+        //                 borderRadius: BorderRadius.circular(h * 0.02))),
+        //       ),
+        //     ),
+        //   ),
+        //   // Container(
+        //   //     height: h*0.08,
+        //   //     padding: EdgeInsets.only(
+        //   //         left: w * 0.06, right: w * 0.06, top: 20),
+        //   //     child: TextField(
+        //   //       decoration: InputDecoration(
+        //   //           hintText: "Search",
+        //   //           hintStyle: GoogleFonts.montserrat(
+        //   //             fontSize:15,
+        //   //             fontWeight: FontWeight.bold,
+        //   //             color: ksearchTextColor,
 
-          //           ),
-          //           suffixIcon: const Icon(
-          //             Icons.search,
+        //   //           ),
+        //   //           suffixIcon: const Icon(
+        //   //             Icons.search,
 
-          //             color: korangecolor,
-          //           ),
+        //   //             color: korangecolor,
+        //   //           ),
 
-          //           focusedBorder: OutlineInputBorder(
-          //               borderSide:
-          //                   const BorderSide(color: korangecolor, width: 1.0),
-          //               borderRadius: BorderRadius.circular(h*0.04)),
-          //           border: OutlineInputBorder(
-          //               borderSide: const BorderSide(
-          //                   color: kTextInputPlaceholderColor, width: 1.0),
-          //               borderRadius: BorderRadius.circular(h*0.04))),
-          //     ),
-          //   ),
-        ),
+        //   //           focusedBorder: OutlineInputBorder(
+        //   //               borderSide:
+        //   //                   const BorderSide(color: korangecolor, width: 1.0),
+        //   //               borderRadius: BorderRadius.circular(h*0.04)),
+        //   //           border: OutlineInputBorder(
+        //   //               borderSide: const BorderSide(
+        //   //                   color: kTextInputPlaceholderColor, width: 1.0),
+        //   //               borderRadius: BorderRadius.circular(h*0.04))),
+        //   //     ),
+        //   //   ),
+        // ),
       ),
       body:
           //  isLoading

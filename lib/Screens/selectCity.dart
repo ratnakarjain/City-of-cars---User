@@ -247,8 +247,8 @@ class _SelectCityState extends State<SelectCity> {
                                         shadowColor:
                                             Colors.grey.withOpacity(0.2),
                                         child: Container(
-                                          height: size.height * 0.17,
-                                          width: size.height * 0.17,
+                                          height: size.height * 0.19,
+                                          width: size.height * 0.19,
                                           padding: EdgeInsets.all(
                                               size.height * 0.008),
                                           child: Column(
@@ -355,8 +355,8 @@ class _SelectCityState extends State<SelectCity> {
                                         shadowColor:
                                             Colors.grey.withOpacity(0.2),
                                         child: Container(
-                                          height: size.height * 0.17,
-                                          width: size.height * 0.17,
+                                          height: size.height * 0.19,
+                                          width: size.height * 0.19,
                                           padding: EdgeInsets.all(
                                               size.height * 0.008),
                                           child: Column(

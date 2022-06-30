@@ -1,6 +1,7 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:cityofcars/Utils/constants.dart';
+import 'package:cityofcars/Utils/preference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -105,33 +106,45 @@ Future<bool> showExitPopup(context) async{
         );
       });
 }
- Future<void> createListMap(Map<String, dynamic> map) async {
+Future<void> createListMap(Map<String, dynamic> map) async {
     print("ListSaveMap");
     SharedPreferences preferences = await SharedPreferences.getInstance();
     List<String>? titleList = preferences.getStringList('titleList');
     List<String>? bodyList = preferences.getStringList('bodyList');
     List<String>? isReadList = preferences.getStringList('isRead');
   List<String>? timeList = preferences.getStringList('timeList');
+  List<String>? typeList = preferences.getStringList('typeList');
+  
 
     // List<String> timeList = preferences.getStringList('timeList');
-    if(titleList!=null && bodyList!=null && isReadList!=null && timeList!=null 
+    if(titleList!=null && bodyList!=null && isReadList!=null && timeList!=null && typeList!=null
     ){
       titleList.add(map["title"].toString());
       bodyList.add(map["body"].toString());
+      typeList.add(map["type"].toString());
+
       timeList.add(DateTime.now().toIso8601String());
       isReadList.add("false");
       preferences.setStringList("titleList", titleList);
       preferences.setStringList("bodyList", bodyList);
       preferences.setStringList("isRead", isReadList);
      preferences.setStringList("timeList", timeList);
+     preferences.setStringList("typeList", typeList);
       preferences.commit();
     }else{
       List<String> titleListNew = [];
       List<String> bodyListNew = [];
       List<String> isReadListNew = [];
       List<String> timeListNew = [];
+      List<String> typeListNew = [];
       titleListNew.add(map["title"].toString());
       bodyListNew.add(map["body"].toString());
+      if(map.containsKey("type")){
+         typeListNew.add(map["type"].toString());
+      }else{
+         typeListNew.add("");
+      }
+     
       timeListNew.add(DateTime.now().toIso8601String());
 
    
@@ -142,10 +155,53 @@ Future<bool> showExitPopup(context) async{
       preferences.setStringList("bodyList", bodyListNew);
       preferences.setStringList("isRead", isReadListNew);
       preferences.setStringList("timeList", timeListNew);
+      preferences.setStringList("typeList", typeListNew);
       preferences.commit();
     }
 
   }
+ 
+//  Future<void> createListMap(Map<String, dynamic> map) async {
+//     print("ListSaveMap");
+//     SharedPreferences preferences = await SharedPreferences.getInstance();
+//     List<String>? titleList = preferences.getStringList('titleList');
+//     List<String>? bodyList = preferences.getStringList('bodyList');
+//     List<String>? isReadList = preferences.getStringList('isRead');
+//   List<String>? timeList = preferences.getStringList('timeList');
+
+//     // List<String> timeList = preferences.getStringList('timeList');
+//     if(titleList!=null && bodyList!=null && isReadList!=null && timeList!=null 
+//     ){
+//       titleList.add(map["title"].toString());
+//       bodyList.add(map["body"].toString());
+//       timeList.add(DateTime.now().toIso8601String());
+//       isReadList.add("false");
+//       preferences.setStringList("titleList", titleList);
+//       preferences.setStringList("bodyList", bodyList);
+//       preferences.setStringList("isRead", isReadList);
+//      preferences.setStringList("timeList", timeList);
+//       preferences.commit();
+//     }else{
+//       List<String> titleListNew = [];
+//       List<String> bodyListNew = [];
+//       List<String> isReadListNew = [];
+//       List<String> timeListNew = [];
+//       titleListNew.add(map["title"].toString());
+//       bodyListNew.add(map["body"].toString());
+//       timeListNew.add(DateTime.now().toIso8601String());
+
+   
+
+//       isReadListNew.add("false");
+
+//       preferences.setStringList("titleList", titleListNew);
+//       preferences.setStringList("bodyList", bodyListNew);
+//       preferences.setStringList("isRead", isReadListNew);
+//       preferences.setStringList("timeList", timeListNew);
+//       preferences.commit();
+//     }
+
+//   }
 Future<void> makePhoneCall(String phoneNumber) async {
     // Use `Uri` to ensure that `phoneNumber` is properly URL-encoded.
     // Just using 'tel:$phoneNumber' would create invalid URLs in some cases,

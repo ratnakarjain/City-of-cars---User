@@ -9,11 +9,15 @@ import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:cityofcars/Utils/functions.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../bottomnavBar.dart';
+import '../editProfile.dart';
+import '../messages.dart';
 import '../sos.dart';
 
 class Searchdata {
@@ -112,6 +116,7 @@ class _ServiceMainState extends State<ServiceMain> {
   @override
   void initState() {
     // TODO: implement initState
+    move();
     super.initState();
     Ids.brandid = prefs!.getString("brandId").toString();
     Ids.carid = prefs!.getString("CarId").toString();
@@ -1478,4 +1483,58 @@ class _ServiceMainState extends State<ServiceMain> {
       setState(() {});
     });
   }
+  move() {
+    FirebaseMessaging.instance.getInitialMessage().then((message) async {
+      print("move start");
+      if (message != null) {
+        if (message.data.isNotEmpty) {
+          print("message is not empty");
+
+          var type = message.data["type"];
+          switch (type.toString().toLowerCase()) {
+            case "editprofile":
+              print("editprofile");
+
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: ((context) => const EditProfile())));
+              break;
+            // case "pendingcart":
+
+            //   break;
+            // case "offer":
+
+            //   break;
+            case "message":
+              Navigator.push(context,
+                  MaterialPageRoute(builder: ((context) => const Messages())));
+
+              break;
+            // case "feedback":
+
+            //   break;
+            // case "otp":
+            // Navigator.push(context, MaterialPageRoute(builder: ((context) => Messages())));
+
+            //   break;
+
+            case "blog":
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: ((context) => BottomNavBar(
+                            index: 1,
+                           
+                          ))));
+
+              break;
+            case "":
+              break;
+          }
+        }
+      }
+    });
+  }
+
 }

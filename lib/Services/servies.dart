@@ -105,15 +105,17 @@ Future getBrandss() async {
 }
 
 Future getfuel() async {
-  var url = Uri.parse(getFuel);
+  var url = Uri.parse(getFuel + "?_id=" + Ids.carid);
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
     if (respnse.statusCode == 200) {
       var data = jsonDecode(respnse.body);
       if (data["status"]) {
-        print(data["data"]);
-        return data["data"];
+        var list = data["data"][0]["fuel"];
+        print(list);
+
+        return list;
       } else {
         return Future.error(data["msg"]);
       }
@@ -184,7 +186,7 @@ Future editProfile(
     request.fields['Street'] = street.toString();
     request.fields['State'] = state.toString();
     request.fields['House'] = houseNo.toString();
-    request.fields['fcmToken'] = houseNo.toString();
+    request.fields['fcmToken'] = fcm.toString();
     request.fields['PinCode'] = pincode.toString();
     // request.fields['type'] = "Scout";
     if (file != null) {
@@ -611,7 +613,8 @@ Future proceed() async {
   }
 }
 
-Future addorder(String paymentid, String paymentstatus) async {
+Future addorder(String paymentid, String paymentstatus, String status1,
+    String status2) async {
   var url = Uri.parse(addorderUrl);
   print("category " + Ids.categoryid.toString() + "^^");
   print("subcategory " + Ids.subcategoryid.toString() + "^^");
@@ -632,7 +635,9 @@ Future addorder(String paymentid, String paymentstatus) async {
     var response = await http.post(url, body: {
       "userid": prefs!.getString("userId").toString(),
       "paymentStatus": paymentstatus,
-      "paymentid": paymentid
+      "paymentid": paymentid,
+      "status1": status1,
+      "status2": status2,
     }, headers: {
       "Authorization": prefs!.getString('token').toString()
     });
@@ -1573,13 +1578,11 @@ Future sendfcm() async {
   var url = Uri.parse(fcmtoken);
   try {
     var respnse = await http.post(url,
-    body: {
-      "fcmtoken":prefs!.getString("fcmtoken")
-    },
+        body: {"fcmtoken": prefs!.getString("fcmtoken")},
         headers: {"Authorization": prefs!.getString('token').toString()});
     if (respnse.statusCode == 200) {
       print("Success");
-    } 
+    }
   } catch (e) {
     print("error $e");
   }
