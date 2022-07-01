@@ -57,235 +57,237 @@ class _NewsState extends State<News> {
               height: h,
               width: w,
               padding: EdgeInsets.only(bottom: h * 0.07),
-              child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                child: Column(
-                    children: List.generate(blogs.length, (index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                        color: kwhitecolor,
-                        borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(h * 0.1)),
-                        boxShadow: const [
-                          BoxShadow(
-                              blurRadius: 5,
-                              offset: Offset(0, 7),
-                              color: Colors.grey)
-                        ]),
-                    margin: EdgeInsets.only(bottom: h * 0.015),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            if (length1 == index + 1) {
-                              length1 = 0;
+              child: ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                itemCount: blogs.length,
+                shrinkWrap: true,
+                // reverse: true,
+                itemBuilder: (context, index) {
+                return Container(
+                  decoration: BoxDecoration(
+                      color: kwhitecolor,
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(h * 0.1)),
+                      boxShadow: const [
+                        BoxShadow(
+                            blurRadius: 5,
+                            offset: Offset(0, 7),
+                            color: Colors.grey)
+                      ]),
+                  margin: EdgeInsets.only(bottom: h * 0.015),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          if (length1 == index + 1) {
+                            length1 = 0;
+                          } else {
+                            if (length2 == index + 1) {
+                              length1 = index + 1;
                             } else {
-                              if (length2 == index + 1) {
-                                length1 = index + 1;
-                              } else {
-                                length1 = index + 1;
-                              }
+                              length1 = index + 1;
                             }
-                            setState(() {});
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: length1 == index + 1
-                                  ? kbluecolor
-                                  : kTransparent,
-                              borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(h * 0.05)),
-                            ),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: w * 0.1, vertical: h * 0.03),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          // "Best and he bestest cars in India",
-                                          blogs[index].blogsheading.toString(),
-                                          style: GoogleFonts.montserrat(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                            color: length1 == index + 1
-                                                ? kwhitecolor
-                                                : kTextInputPlaceholderColor,
-                                          ),
+                          }
+                          setState(() {});
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: length1 == index + 1
+                                ? kbluecolor
+                                : kTransparent,
+                            borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(h * 0.05)),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: w * 0.1, vertical: h * 0.03),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        // "Best and he bestest cars in India",
+                                        blogs[index].blogsheading.toString(),
+                                        style: GoogleFonts.montserrat(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w700,
+                                          color: length1 == index + 1
+                                              ? kwhitecolor
+                                              : kTextInputPlaceholderColor,
                                         ),
-                                        Text(
-                                          // "8 hrs",
-                                          DateTime.parse(blogs[index]
-                                                      .createDate
-                                                      .toString())
-                                                  .hour
-                                                  .toString() +
-                                              " Hrs"
-                                          // DateTime(blogs[index].createDate).hour.toString()
-                                          ,
+                                      ),
+                                      Text(
+                                        // "8 hrs",
+                                        DateTime.parse(blogs[index]
+                                                    .createDate
+                                                    .toString())
+                                                .hour
+                                                .toString() +
+                                            " Hrs"
+                                        // DateTime(blogs[index].createDate).hour.toString()
+                                        ,
+                                        style: GoogleFonts.montserrat(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          color: length1 == index + 1
+                                              ? kwhitecolor
+                                              : kTextInputPlaceholderColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Icon(
+                                    length1 == index + 1
+                                        ? Icons.keyboard_arrow_up
+                                        : Icons.keyboard_arrow_down,
+                                    color: length1 == index + 1
+                                        ? kwhitecolor
+                                        : kTextInputPlaceholderColor,
+                                  )
+                                ],
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  if (length2 == index + 1) {
+                                    length2 = 0;
+                                  } else {
+                                    if (length1 == index + 1) {
+                                      length2 = index + 1;
+                                    } else {
+                                      length2 = index + 1;
+                                    }
+                                  }
+
+                                  setState(() {});
+                                },
+                                child: length2 == index + 1
+                                    ? Container(
+                                        width: w,
+                                        margin:
+                                            EdgeInsets.only(top: h * 0.03),
+                                        child: Text(
+                                          blogs[index].discreption.toString(),
+                                          // "When I was 5 years old, my mother always told me that happiness was the key to life. When I went to school, they asked me what I wanted to be when I grew up.",
                                           style: GoogleFonts.montserrat(
-                                            fontSize: 12,
+                                            fontSize: 13,
                                             fontWeight: FontWeight.w400,
                                             color: length1 == index + 1
                                                 ? kwhitecolor
                                                 : kTextInputPlaceholderColor,
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                    Icon(
-                                      length1 == index + 1
-                                          ? Icons.keyboard_arrow_up
-                                          : Icons.keyboard_arrow_down,
-                                      color: length1 == index + 1
-                                          ? kwhitecolor
-                                          : kTextInputPlaceholderColor,
-                                    )
-                                  ],
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    if (length2 == index + 1) {
-                                      length2 = 0;
-                                    } else {
-                                      if (length1 == index + 1) {
-                                        length2 = index + 1;
-                                      } else {
-                                        length2 = index + 1;
-                                      }
-                                    }
-
-                                    setState(() {});
-                                  },
-                                  child: length2 == index + 1
-                                      ? Container(
-                                          width: w,
-                                          margin:
-                                              EdgeInsets.only(top: h * 0.03),
-                                          child: Text(
-                                            blogs[index].discreption.toString(),
-                                            // "When I was 5 years old, my mother always told me that happiness was the key to life. When I went to school, they asked me what I wanted to be when I grew up.",
-                                            style: GoogleFonts.montserrat(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w400,
-                                              color: length1 == index + 1
-                                                  ? kwhitecolor
-                                                  : kTextInputPlaceholderColor,
-                                            ),
-                                          ),
-                                        )
-                                      : Container(
-                                          height: h * 0.02,
-                                          width: w,
-                                          margin:
-                                              EdgeInsets.only(top: h * 0.03),
-                                          child: Text(
-                                            // "When I was 5 years old, my mother always told me that happiness was the key to life. When I went to school, they asked me what I wanted to be when I grew up.",
-                                            blogs[index].discreption.toString(),
-                                            style: GoogleFonts.montserrat(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w400,
-                                              color: length1 == index + 1
-                                                  ? kwhitecolor
-                                                  : kTextInputPlaceholderColor,
-                                            ),
+                                      )
+                                    : Container(
+                                        height: h * 0.02,
+                                        width: w,
+                                        margin:
+                                            EdgeInsets.only(top: h * 0.03),
+                                        child: Text(
+                                          // "When I was 5 years old, my mother always told me that happiness was the key to life. When I went to school, they asked me what I wanted to be when I grew up.",
+                                          blogs[index].discreption.toString(),
+                                          style: GoogleFonts.montserrat(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w400,
+                                            color: length1 == index + 1
+                                                ? kwhitecolor
+                                                : kTextInputPlaceholderColor,
                                           ),
                                         ),
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                      color: kwhitecolor,
-                                      borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(
-                                            h * 0.06,
-                                          ),
-                                          topLeft: Radius.circular(h * 0.015),
-                                          bottomRight:
-                                              Radius.circular(h * 0.015),
-                                          bottomLeft:
-                                              Radius.circular(h * 0.06)),
-                                      image: DecorationImage(
-                                          image: NetworkImage(
-                                            blogs[index].image.toString(),
-                                          ),
-                                          fit: BoxFit.fill)),
-                                  margin:
-                                      EdgeInsets.symmetric(vertical: h * 0.03),
-                                  height: h * 0.14,
-                                  // child: Image.asset("assets/images/news1.png")
-                                )
-                              ],
-                            ),
+                                      ),
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                    color: kwhitecolor,
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(
+                                          h * 0.06,
+                                        ),
+                                        topLeft: Radius.circular(h * 0.015),
+                                        bottomRight:
+                                            Radius.circular(h * 0.015),
+                                        bottomLeft:
+                                            Radius.circular(h * 0.06)),
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                          blogs[index].image.toString(),
+                                        ),
+                                        fit: BoxFit.fill)),
+                                margin:
+                                    EdgeInsets.symmetric(vertical: h * 0.03),
+                                height: h * 0.14,
+                                // child: Image.asset("assets/images/news1.png")
+                              )
+                            ],
                           ),
                         ),
-                        Container(
-                            width: w,
-                            constraints: BoxConstraints(minHeight: h * 0.04),
-                            child: Stack(
-                              children: [
-                                length1 == index + 1
-                                    ? Container(
-                                        width: w,
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: w * 0.1,
-                                        ),
-                                        margin: EdgeInsets.only(
-                                            top: h * 0.01, bottom: h * 0.07),
-                                        child: Text(
-                                          blogs[index]
-                                              .subDiscreption
-                                              .toString(),
-                                          textAlign: TextAlign.start,
-                                          // "Believe in yourself, take on your challenges, dig deep within yourself to conquer fears. Never let anyone bring you down. You got to keep going.",
-                                          style: GoogleFonts.montserrat(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w400,
-                                              color: knewstextbrif,
-                                              height: 1.5),
-                                        ),
-                                      )
-                                    : Container(),
-                                Positioned(
-                                    bottom: h * 0.008,
-                                    right: w * 0.04,
-                                    child: GestureDetector(
-                                        onTap: () {
-                                          share(
-                                              des: blogs[index]
-                                                  .discreption
-                                                  .toString(),
-                                              heading: blogs[index]
-                                                  .blogsheading
-                                                  .toString(),
-                                              subdes: blogs[index]
-                                                  .subDiscreption
-                                                  .toString(),
-                                              time: blogs[index]
-                                                  .createDate
-                                                  .toString(),
-                                              url: blogs[index]
-                                                  .image
-                                                  .toString());
-                                        },
-                                        child: Icon(
-                                          Icons.share,
-                                          size: h * 0.025,
-                                        )))
-                              ],
-                            )),
-                      ],
-                    ),
-                  );
-                })),
+                      ),
+                      Container(
+                          width: w,
+                          constraints: BoxConstraints(minHeight: h * 0.04),
+                          child: Stack(
+                            children: [
+                              length1 == index + 1
+                                  ? Container(
+                                      width: w,
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: w * 0.1,
+                                      ),
+                                      margin: EdgeInsets.only(
+                                          top: h * 0.01, bottom: h * 0.07),
+                                      child: Text(
+                                        blogs[index]
+                                            .subDiscreption
+                                            .toString(),
+                                        textAlign: TextAlign.start,
+                                        // "Believe in yourself, take on your challenges, dig deep within yourself to conquer fears. Never let anyone bring you down. You got to keep going.",
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w400,
+                                            color: knewstextbrif,
+                                            height: 1.5),
+                                      ),
+                                    )
+                                  : Container(),
+                              Positioned(
+                                  bottom: h * 0.008,
+                                  right: w * 0.04,
+                                  child: GestureDetector(
+                                      onTap: () {
+                                        share(
+                                            des: blogs[index]
+                                                .discreption
+                                                .toString(),
+                                            heading: blogs[index]
+                                                .blogsheading
+                                                .toString(),
+                                            subdes: blogs[index]
+                                                .subDiscreption
+                                                .toString(),
+                                            time: blogs[index]
+                                                .createDate
+                                                .toString(),
+                                            url: blogs[index]
+                                                .image
+                                                .toString());
+                                      },
+                                      child: Icon(
+                                        Icons.share,
+                                        size: h * 0.025,
+                                      )))
+                            ],
+                          )),
+                    ],
+                  ),
+                );
+              }),
               ),
-            ),
+            
     );
   }
   // void _modalBottomSheetMenu() {

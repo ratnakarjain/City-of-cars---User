@@ -282,9 +282,12 @@ class _MyAppState extends State<MyApp> {
             // Navigator.push(context, MaterialPageRoute(builder: ((context) => Messages())));
 
             //   break;
-
             case "orderupdate":
               navigatorKey.currentState!.pushNamed("/orderupdate");
+
+              break;
+            case "orderassign":
+              navigatorKey.currentState!.pushNamed("/orderassign");
 
               break;
               case "blog":
@@ -465,7 +468,8 @@ class _MyAppState extends State<MyApp> {
         "/editprofile": (_) => const EditProfile(),
         "/home": (_) => BottomNavBar(index: 0),
         "/blog": (_) => BottomNavBar(index: 1),
-        "/message": (_) => const Messages(),
+        "/orderassign": (_) => BottomNavBar(index: 2),
+        "/support": (_) => const Messages(),
       },
         theme: ThemeData().copyWith(
           colorScheme: ThemeData().colorScheme.copyWith(
