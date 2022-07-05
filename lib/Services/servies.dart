@@ -21,6 +21,7 @@ import 'dart:convert' as convert;
 
 import 'models/ApprovalsModel.dart';
 import 'models/blogModel.dart';
+import 'models/faqModel.dart';
 import 'models/messageModel.dart';
 import 'models/paymentmodel.dart';
 import 'models/recentsModel.dart';
@@ -875,6 +876,7 @@ Future getapproveddetails(String id) async {
           model.description = data["data"][i]["description"].toString();
           model.heading = data["data"][i]["heading"].toString();
           model.image = data["data"][i]["image"].toString();
+          model.type = data["data"][i]["type"].toString();
           model.price = data["data"][i]["price"].toString();
           model.qty = data["data"][i]["qty"].toString();
           model.subheading = data["data"][i]["subheading"].toString();
@@ -1582,6 +1584,51 @@ Future sendfcm() async {
         headers: {"Authorization": prefs!.getString('token').toString()});
     if (respnse.statusCode == 200) {
       print("Success");
+    }
+  } catch (e) {
+    print("error $e");
+  }
+}
+
+Future getcmsdata() async {
+  var url = Uri.parse(cmsPagesUrl);
+  try {
+    var respnse = await http.get(
+      url,
+
+      // headers: {"Authorization": prefs!.getString('token').toString()}
+    );
+    if (respnse.statusCode == 200) {
+      var data = jsonDecode(respnse.body);
+      var terms = data["data"][0]["Terms_Conditions"] ?? "";
+      var us = data["data"][0]["About"] ?? "";
+      var pp = data["data"][0]["Privacy_Policy"] ?? "";
+      prefs!.setString("terms", terms);
+      prefs!.setString("us", us);
+      prefs!.setString("pp", pp);
+      print("Success");
+    }
+  } catch (e) {
+    print("error $e");
+  }
+}
+
+Future getfaq() async {
+  var url = Uri.parse(faqUrl);
+  try {
+    var respnse = await http.get(
+      url,
+
+      headers: {"Authorization": prefs!.getString('token').toString()}
+    );
+    if (respnse.statusCode == 200) {
+      var data = jsonDecode(respnse.body);
+      List<FaqModel> list =faqModelFromJson(jsonEncode(data["data"]));
+      
+      print("Success");
+      return list;
+    }else{
+      return <FaqModel>[];
     }
   } catch (e) {
     print("error $e");

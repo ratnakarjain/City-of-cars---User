@@ -6,6 +6,7 @@ import 'package:cityofcars/Screens/Service%20Main/slot.dart';
 import 'package:cityofcars/Services/models/plansModel.dart';
 import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -144,11 +145,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                           child: Text(
                             details.packs[index].planName.toString(),
                             style: GoogleFonts.montserrat(
-                                textStyle:  TextStyle(
-                              fontSize:index==selceted? 25:16,
-                              fontWeight: FontWeight.bold,
-                              color: index==selceted? kTextInputPlaceholderColor:kTextInputPlaceholderColor.withOpacity(0.7)
-                            )),
+                                textStyle: TextStyle(
+                                    fontSize: index == selceted ? 25 : 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: index == selceted
+                                        ? kTextInputPlaceholderColor
+                                        : kTextInputPlaceholderColor
+                                            .withOpacity(0.7))),
                           ),
                         ),
                         Expanded(
@@ -159,9 +162,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                             children: [
                               Expanded(
                                 child: SizedBox(
-                                  height: h*0.01,
+                                  height: h * 0.01,
                                   child: Checkbox(
-                                    value: index==selceted,
+                                    value: index == selceted,
                                     side: const BorderSide(
                                         color: kGreenColor, width: 2),
                                     activeColor: kGreenColor,
@@ -183,12 +186,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   children: [
                                     Text(
                                       "₹" + details.packs[index].planPrice,
+                                      overflow: TextOverflow.ellipsis,
                                       style: GoogleFonts.montserrat(
-                                          fontSize: index==selceted? 21:12,
-                                          textStyle:  TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: index==selceted? kTextInputPlaceholderColor : kTextInputPlaceholderColor.withOpacity(0.5)
-                                          )),
+                                          fontSize: index == selceted ? 21 : 12,
+                                          textStyle: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: index == selceted
+                                                  ? kTextInputPlaceholderColor
+                                                  : kTextInputPlaceholderColor
+                                                      .withOpacity(0.5))),
                                     ),
                                     Text(
                                       details.packs[index].pricedes,
@@ -349,11 +355,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ));
                   } else {
                     Cart.packe = details.packs[selceted];
-                    print(jsonEncode(Cart.packe)+"1235432");
+                    print(jsonEncode(Cart.packe) + "1235432");
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>  const Slot(),
+                          builder: (context) => const Slot(),
                         ));
                   }
                 }
@@ -438,13 +444,17 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       child: Column(
                                         children: [
                                           SizedBox(
-                                            height: h * 0.027,
+                                            height: h * 0.015,
                                           ),
-                                          Padding(
+                                          Container(
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: w * 0.09),
+                                                constraints:des?BoxConstraints(): BoxConstraints(
+                                                  maxHeight: h*0.02
+                                                ),
                                             child: Text(
                                               details.description,
+                                              // "sacjhavclavcahvcasvcuvkjdbcksdbvihdsbvisbcbdskvbsdhbvksdvbsdkvbhvsdbvksdbvkdfbvlkdfbvzdfkvbsdfklbv df;obhdsfb dfbh dfb hadf ubhadofbh dalfigbldifugblaidfubv difbgiadfugbviasfugv liasugvliasu vgadiugv adibvadilfubgliadfugbaldfibgadfiubgaidfubgaidfubg",
                                               style: GoogleFonts.montserrat(
                                                 fontSize: 12,
                                                 height: 1.5,

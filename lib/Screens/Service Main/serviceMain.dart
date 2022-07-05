@@ -390,12 +390,14 @@ class _ServiceMainState extends State<ServiceMain> {
 
                                           setState(() {
                                             if (pls1.isEmpty) {
+                                              setState(() {});
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(const SnackBar(
                                                 content: Text("No Plans found"),
                                               ));
                                             }
                                             if (cats1.isEmpty) {
+                                              setState(() {});
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(const SnackBar(
                                                 content:
@@ -1483,6 +1485,7 @@ class _ServiceMainState extends State<ServiceMain> {
       setState(() {});
     });
   }
+
   move() {
     FirebaseMessaging.instance.getInitialMessage().then((message) async {
       print("move start");
@@ -1507,12 +1510,12 @@ class _ServiceMainState extends State<ServiceMain> {
 
             //   break;
             case "orderassign":
-              Navigator.push(context,
-                  MaterialPageRoute(builder: ((context) =>  (BottomNavBar(
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: ((context) => (BottomNavBar(
                             index: 1,
-                           
                           )))));
-
 
               break;
             case "support":
@@ -1534,7 +1537,6 @@ class _ServiceMainState extends State<ServiceMain> {
                   MaterialPageRoute(
                       builder: ((context) => BottomNavBar(
                             index: 1,
-                           
                           ))));
 
               break;
@@ -1545,5 +1547,4 @@ class _ServiceMainState extends State<ServiceMain> {
       }
     });
   }
-
 }

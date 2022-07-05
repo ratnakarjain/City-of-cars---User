@@ -5,6 +5,12 @@ import 'package:cityofcars/Utils/preference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:file_picker/file_picker.dart';
+
+import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 // import 'package:image_downloader/image_downloader.dart';
 // ignore_for_file: deprecated_member_use
 
@@ -106,6 +112,20 @@ Future<bool> showExitPopup(context) async{
         );
       });
 }
+pickfile(List<String>? allowedExtensions,FileType type) async {
+    File? file;
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: type,
+      allowedExtensions: allowedExtensions,
+    );
+
+    if (result != null) {
+      file = File(result.files.single.path!);
+      print("file ${file}");
+      // uploadimg(uuid.v1(), 'file', result.files.single.path!);
+    }
+    return file;
+  }
 Future<void> createListMap(Map<String, dynamic> map) async {
     print("ListSaveMap");
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -160,7 +180,36 @@ Future<void> createListMap(Map<String, dynamic> map) async {
     }
 
   }
- 
+   String urlPDFPath = "";
+  bool exists = true;
+
+
+  bool pdfReady = false;
+  
+
+  Future<File> getFileFromUrl(String url, {name}) async {
+    var fileName = 'testonline';
+    if (name != null) {
+      fileName = name;
+    }
+    try {
+      var data = await http.get(Uri.parse(url));
+      var bytes = data.bodyBytes;
+      var dir = await getApplicationDocumentsDirectory();
+      File file = File("${dir.path}/" + fileName + ".pdf");
+      print(dir.path);
+      File urlFile = await file.writeAsBytes(bytes);
+      return urlFile;
+    } catch (e) {
+      throw Exception("Error opening url file");
+    }
+  }
+
+  void requestPersmission() async {
+    // await PermissionHandler().requestPermissions([PermissionGroup.storage]);
+    Map<Permission, PermissionStatus> statuses =
+        await [Permission.storage].request();
+  }
 //  Future<void> createListMap(Map<String, dynamic> map) async {
 //     print("ListSaveMap");
 //     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -213,6 +262,25 @@ Future<void> makePhoneCall(String phoneNumber) async {
     );
     await launch(launchUri.toString());
   }
+  Future<void> pdflauncher(String path) async {
+    // Use `Uri` to ensure that `phoneNumber` is properly URL-encoded.
+    // Just using 'tel:$phoneNumber' would create invalid URLs in some cases,
+    // such as spaces in the input, which would cause `launch` to fail on some
+    // platforms.
+    final Uri launchUri = Uri(
+      scheme: 'pdf',
+      path: path,
+    );
+    await launch(launchUri.toString());
+  }
+  launchURL(String url) async {
+    
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
  Future share(
       {
       required String url,

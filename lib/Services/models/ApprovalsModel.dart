@@ -7,5 +7,7 @@ class ApprovalModel1 {
   String description = "";
   String image = "";
   String status = "";
+  String type = "";
+  String approvestatus = "";
 
 }

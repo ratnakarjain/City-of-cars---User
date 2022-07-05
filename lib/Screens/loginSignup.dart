@@ -499,7 +499,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
                           });
                         },
                         child: Text(
-                          " Log in",
+                          " Sign in",
                           style: GoogleFonts.montserrat(
                               fontWeight: FontWeight.bold,
                               fontSize: 12,
@@ -530,7 +530,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
                           });
                         },
                         child: Text(
-                          " Signup",
+                          " Sign up",
                           style: GoogleFonts.montserrat(
                               fontWeight: FontWeight.bold,
                               fontSize: 12,

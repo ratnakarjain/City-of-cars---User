@@ -43,5 +43,7 @@ const String blogUrl = baseUrl+"/getBlogs";
 const String carhealthUrl = baseUrl+"/getcarhealth";
 const String globalsearchUrl = baseUrl+"/homesearch";
 const String fcmtoken = baseUrl+"/fcmTokenupdate";
+const String cmsPagesUrl = baseUrl+"/getCmsData";
+const String faqUrl = baseUrl+"/faq";
 
 String token = "";

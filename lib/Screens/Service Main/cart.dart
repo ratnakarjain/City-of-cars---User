@@ -77,6 +77,18 @@ class _CartState extends State<Cart> {
           //       service.addAll(value);
           //            print("================="+service.toString());
           // print("================="+service[0]["title"].toString());
+        }).whenComplete(() {
+          if (data.isNotEmpty) {
+          
+          for (int i = 0; i < data.length; i++) {
+            print("typeprice " +
+                data[i]["selectplan"][0]["typeprice"].toString() +
+                "^^");
+            totalvalue(
+                double.parse(data[i]["selectplan"][0]["typeprice"].toString()));
+          }
+          setState(() {});
+        }
         });
       
     }

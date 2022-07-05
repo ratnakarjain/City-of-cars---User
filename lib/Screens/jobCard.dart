@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:cityofcars/Utils/constants.dart';
+import 'package:cityofcars/Utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -265,7 +266,25 @@ class _JobCardState extends State<JobCard> {
                       ),
                     ),
 
-                    Visibility(
+                  data["type"]=="pdf"?GestureDetector(
+                    onTap: ()async{
+                      await launchURL(data["image"]);
+
+                    },
+                    child: Container(
+                      height: h*0.03,
+                      child: Center(
+                        child: Text(
+                            "Open Document",
+                            style: GoogleFonts.montserrat(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w700,
+                              color: kTextInputPlaceholderColor,
+                            ),
+                          ),
+                      ),
+                    ),
+                  ):  Visibility(
                       visible: data["image"]!=null,
                       child: Container(
                         height: h * 0.2,

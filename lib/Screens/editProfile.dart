@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Utils/functions.dart';
 import 'package:cityofcars/Utils/preference.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -38,6 +39,8 @@ class _EditProfileState extends State<EditProfile> {
   var pinCode = TextEditingController();
   bool isImagePicked = false;
   String fcm="";
+  String filepath = "";
+  var file2;
   @override
   void initState() {
     name.text = prefs!.getString("name").toString() == "null"
@@ -103,43 +106,59 @@ class _EditProfileState extends State<EditProfile> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              "My Documment     ",
-                              style: GoogleFonts.montserrat(
-                                  fontSize: 12, fontWeight: FontWeight.w700),
-                            ),
-                            Icon(
-                              Icons.file_upload_outlined,
-                              color: kbluecolor,
-                              size: h * 0.02,
-                            )
-                          ],
-                        ),
-                        RichText(
-                          textAlign: TextAlign.start,
-                          text: TextSpan(
-                              text: "Registration Certificate\n",
-                              style: GoogleFonts.montserrat(
-                                  color: kSelectedColor, fontSize: 10),
-                              children: [
-                                TextSpan(
-                                    text: "Insurance Policy\n",
-                                    style: GoogleFonts.montserrat(
-                                        color: kSelectedColor, fontSize: 10)),
-                                TextSpan(
-                                    text: "Other\n",
-                                    style: GoogleFonts.montserrat(
-                                        color: kSelectedColor, fontSize: 10)),
-                              ]),
-                        )
-                      ],
-                    ),
                     GestureDetector(
+                      onTap: () async {
+                        file2 = await pickfile(['pdf', 'doc'], FileType.custom);
+                        if (file2 != null) {
+                          filepath = file2.path.split('/').last.toString();
+                          setState(() {});
+                        }
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                "My Documment     ",
+                                style: GoogleFonts.montserrat(
+                                    fontSize: 9, fontWeight: FontWeight.w700),
+                              ),
+                              Icon(
+                                Icons.file_upload_outlined,
+                                color: kbluecolor,
+                                size: h * 0.02,
+                              )
+                            ],
+                          ),
+                          RichText(
+                            textAlign: TextAlign.start,
+                            text: TextSpan(
+                                text: "Registration Certificate\n",
+                                style: GoogleFonts.montserrat(
+                                    color: kSelectedColor, fontSize: 8),
+                                children: [
+                                  TextSpan(
+                                      text: "Insurance Policy\n",
+                                      style: GoogleFonts.montserrat(
+                                          color: kSelectedColor, fontSize: 8)),
+                                  TextSpan(
+                                      text: "Other\n",
+                                      style: GoogleFonts.montserrat(
+                                          color: kSelectedColor, fontSize: 8)),
+                                ]),
+                          ),
+                          Visibility(
+                            visible: filepath != "",
+                            child: Text(
+                              filepath,
+                              style: GoogleFonts.montserrat(
+                                  color: kSelectedColor, fontSize: 12),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),                   GestureDetector(
                         onTap: () async {
                           // editPic();
                           file = await imagePicker();

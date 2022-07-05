@@ -15,6 +15,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../Services/servies.dart';
 import '../Utils/Shapes/widgets.dart';
+import '../Utils/functions.dart';
 import 'Service Main/cart.dart';
 import 'bottomnavBar.dart';
 
@@ -315,17 +316,21 @@ datalist.length==1?GestureDetector(
                                             w: w * 0.17,
                                             h: h * 0.03,
                                           ),
-                                          GestureDetector(
-                                            onTap: ()async{
-                                              // await launch();
-                                            },
-                                            child: Text("view invoice     ",
-                                                textAlign: TextAlign.center,
-                                                style: GoogleFonts.montserrat(
-                                                    fontSize: 9,
-                                                    fontWeight: FontWeight.w400,
-                                                    color:
-                                                        kTextInputPlaceholderColor)),
+                                          Visibility(
+                                            visible: datalist.first.invoice.isNotEmpty,
+                                            child: GestureDetector(
+                                              onTap: ()async{
+                                                await launchURL(datalist.first.invoice);
+                                              },
+                                              child: Text("view invoice",
+                                                  textAlign: TextAlign.center,
+                                                  style: GoogleFonts.montserrat(
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.w400,
+                                                      height: 2,
+                                                      color:
+                                                          kTextInputPlaceholderColor)),
+                                            ),
                                           ),
                                         ],
                                       )
@@ -547,13 +552,28 @@ datalist.length==1?GestureDetector(
                                             w: w * 0.17,
                                             h: h * 0.03,
                                           ),
-                                          Text("view invoice     ",
-                                              textAlign: TextAlign.center,
-                                              style: GoogleFonts.montserrat(
-                                                  fontSize: 9,
-                                                  fontWeight: FontWeight.w400,
-                                                  color:
-                                                      kTextInputPlaceholderColor)),
+                                          Visibility(
+                                            visible: model.invoice.isNotEmpty,
+                                            child: GestureDetector(
+                                              onTap: ()async{
+                                                await launchURL(model.invoice);
+                                                // await launch(
+                                                //   model.invoice,
+                                                //   forceWebView: true,
+                                                //   enableJavaScript: true,
+                                                //   enableDomStorage: true
+                                                // );
+                                              },
+                                              child: Text("view invoice",
+                                                  textAlign: TextAlign.center,
+                                                  style: GoogleFonts.montserrat(
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.w400,
+                                                      height: 2,
+                                                      color:
+                                                          kTextInputPlaceholderColor)),
+                                            ),
+                                          ),
                                         ],
                                       )
                                     ],

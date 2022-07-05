@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cityofcars/Screens/aboutUs.dart';
 import 'package:cityofcars/Screens/bottomnavBar.dart';
 import 'package:cityofcars/Screens/carHealth.dart';
 import 'package:cityofcars/Screens/editProfile.dart';
@@ -8,6 +9,7 @@ import 'package:cityofcars/Screens/messages.dart';
 import 'package:cityofcars/Screens/myhomepage.dart';
 import 'package:cityofcars/Screens/newcity.dart';
 import 'package:cityofcars/Screens/notification.dart';
+import 'package:cityofcars/Screens/privacypolicy.dart';
 import 'package:cityofcars/Screens/selectBrand.dart';
 import 'package:cityofcars/Screens/selectCity.dart';
 import 'package:cityofcars/Screens/sos.dart';
@@ -20,6 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'Service Main/cart.dart';
+import 'faq.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -520,9 +523,13 @@ class _ProfileState extends State<Profile> {
                   ],
                 ),
               ),
+
+
+
               SizedBox(
                 height: h * 0.02,
               ),
+             
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -748,6 +755,132 @@ class _ProfileState extends State<Profile> {
                   ),
                   borderRadius: h * 0.04,
                 ),
+              ),
+              SizedBox(
+                height: h * 0.01,
+              ),
+               GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AboutUs(
+                        
+                        ),
+                      ));
+                },
+                child: RRectCard(
+                  h: h * 0.08,
+                  w: w * 0.9,
+                  widget: Row(
+                    children: [
+                      Expanded(
+                        child: CircleAvatar(
+                          backgroundColor: kbluecolor,
+                          foregroundColor: kwhitecolor,
+                          child: Image.asset("assets/images/sunrise.png"),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          "About us",
+                          style: GoogleFonts.montserrat(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  borderRadius: h * 0.04,
+                ),
+              ),
+              SizedBox(
+                height: h * 0.01,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>PrivacyPolicy()
+                      ));
+                },
+                child: RRectCard(
+                  h: h * 0.08,
+                  w: w * 0.9,
+                  widget: Row(
+                    children: [
+                      Expanded(
+                        child: CircleAvatar(
+                          backgroundColor: kbluecolor,
+                          foregroundColor: kwhitecolor,
+                          child: Image.asset("assets/images/sunrise.png"),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          "Privacy Policy",
+                          style: GoogleFonts.montserrat(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  borderRadius: h * 0.04,
+                ),
+              ),
+              SizedBox(
+                height: h * 0.01,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const FAQS()
+                      ));
+                },
+                child: RRectCard(
+                  h: h * 0.08,
+                  w: w * 0.9,
+                  widget: Row(
+                    children: [
+                      Expanded(
+                        child: CircleAvatar(
+                          backgroundColor: kbluecolor,
+                          foregroundColor: kwhitecolor,
+                          child: Image.asset("assets/images/sunrise.png"),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          "FAQ's",
+                          style: GoogleFonts.montserrat(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  borderRadius: h * 0.04,
+                ),
+              ),
+              
+
+
+
+
+
+
+              SizedBox(
+                height: h * 0.01,
               ),
               SizedBox(
                 height: h * 0.15,

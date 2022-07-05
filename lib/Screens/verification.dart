@@ -54,7 +54,7 @@ class _VerficationState extends State<Verfication> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: false,
-        title: Text("Verfication Code",
+        title: Text("Verification Code",
             style: GoogleFonts.montserrat(fontWeight: FontWeight.w600)),
         foregroundColor: kblackcolor,
       ),

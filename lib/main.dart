@@ -18,6 +18,7 @@ import 'Screens/myhomepage.dart';
 import 'Screens/notification.dart';
 import 'Screens/selectBrand.dart';
 import 'Services/models/receivedNotification.dart';
+import 'Services/servies.dart';
 import 'Utils/functions.dart';
 import 'Utils/preference.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -312,6 +313,8 @@ class _MyAppState extends State<MyApp> {
     // TODO: implement initState
     super.initState();
     token();
+    getcmsdata();
+    requestPersmission();
   _requestPermissions();
     _configureDidReceiveLocalNotificationSubject();
     _configureSelectNotificationSubject();

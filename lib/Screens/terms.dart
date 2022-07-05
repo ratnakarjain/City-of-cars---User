@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../Utils/constants.dart';
+import '../Utils/preference.dart';
 
 class Terms extends StatefulWidget {
   const Terms({Key? key}) : super(key: key);
@@ -14,6 +15,12 @@ class Terms extends StatefulWidget {
 class _TermsState extends State<Terms> {
   var h;
   var w;
+  var des;
+  @override
+  void initState() {
+    super.initState();
+    des = Prefernece.pref!.getString("us")??"";
+  }
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
@@ -52,86 +59,26 @@ class _TermsState extends State<Terms> {
                     BoxShadow(
                         blurRadius: 5, offset: Offset(0, 3), color: Colors.grey)
                   ]),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              child: RichText(
+                text: TextSpan(
+                  // text: 'Who May Use the Services?',
+                  style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18,
+                      color: Colors.black),
                   children: [
-                    RichText(
-                      text: TextSpan(
-                        text: 'Who May Use the Services?',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18,
-                            color: Colors.black),
-                        children: [
-                          TextSpan(
-                            text:
-                                '\n\n\nWhen one door of happiness closes, another opens, but often we look so long at the closed door that we do not see the one that has been opened for us.\n\n',
-                            style: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                                color: Colors.black),
-                          ),
-                        ],
-                      ),
+                    TextSpan(
+                      text:
+                      des.toString(),
+                          // '\n\n\nWhen one door of happiness closes, another opens, but often we look so long at the closed door that we do not see the one that has been opened for us.\n\n',
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                          color: Colors.black),
                     ),
-                    RichText(
-                      text: TextSpan(
-                        text: '•Step 1:',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14,
-                            color: Colors.black),
-                        children: [
-                          TextSpan(
-                            text:
-                                ' You may use the Services only if you agree to form a binding contract with us and are not a person barred from receiving services under the laws of the applicable jurisdiction.\n',
-                            style: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                                color: Colors.black),
-                          ),
-                        ],
-                      ),
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        text: '•Step 2:',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14,
-                            color: Colors.black),
-                        children: [
-                          TextSpan(
-                            text:
-                                ' Our Privacy Policy describes how we handle the information you provide to us when you use our Services.\n\n\n',
-                            style: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                                color: Colors.black),
-                          ),
-                        ],
-                      ),
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        text: 'Privacy',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18,
-                            color: Colors.black),
-                        children: [
-                          TextSpan(
-                            text:
-                                '\n\nWhen one door of happiness closes, another opens, but often we look so long at the closed door that we do not see the one that has been opened for us.\n\n',
-                            style: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                                color: Colors.black),
-                          ),
-                        ],
-                      ),
-                    )
-                  ]),
+                  ],
+                ),
+              ),
             ),
             RRecctButton(
               h: h * 0.06,

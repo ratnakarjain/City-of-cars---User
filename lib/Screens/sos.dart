@@ -1,6 +1,7 @@
 import 'package:cityofcars/Screens/Service%20Main/slot.dart';
 import 'package:cityofcars/Services/servies.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../Utils/Buttons/button.dart';
@@ -137,6 +138,17 @@ class _SosState extends State<Sos> {
                   child: TextFormField(
                     controller: _controller,
                     keyboardType: TextInputType.phone,
+                    inputFormatters: [
+                            FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                          ],
+                          onChanged: (value) {
+                            if (value == " ") {
+                              _controller.clear();
+                            }
+                            if (value == "0") {
+                              _controller.clear();
+                            }
+                          },
                     decoration: InputDecoration(
                         contentPadding:
                             EdgeInsets.symmetric(horizontal: w * 0.09),
