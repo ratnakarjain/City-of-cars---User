@@ -252,6 +252,12 @@ class _EditProfileState extends State<EditProfile> {
                         FilteringTextInputFormatter.allow(
                             RegExp(r"[a-zA-Z]+|\s"))
                       ],
+                      validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Please Enter Name";
+                          }
+                          return null;
+                        },
                       decoration: InputDecoration(
                           hintText: "Name*",
                           hintStyle: GoogleFonts.montserrat(

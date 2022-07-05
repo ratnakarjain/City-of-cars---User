@@ -184,17 +184,19 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      "₹" + details.packs[index].planPrice,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: GoogleFonts.montserrat(
-                                          fontSize: index == selceted ? 21 : 12,
-                                          textStyle: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: index == selceted
-                                                  ? kTextInputPlaceholderColor
-                                                  : kTextInputPlaceholderColor
-                                                      .withOpacity(0.5))),
+                                    FittedBox(
+                                      child: Text(
+                                        "₹" + details.packs[index].planPrice,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: index == selceted ? 21 : 12,
+                                            textStyle: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: index == selceted
+                                                    ? kTextInputPlaceholderColor
+                                                    : kTextInputPlaceholderColor
+                                                        .withOpacity(0.5))),
+                                      ),
                                     ),
                                     Text(
                                       details.packs[index].pricedes,
@@ -449,12 +451,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                                           Container(
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: w * 0.09),
-                                                constraints:des?BoxConstraints(): BoxConstraints(
+                                                constraints:des?const BoxConstraints(): BoxConstraints(
                                                   maxHeight: h*0.02
                                                 ),
                                             child: Text(
-                                              details.description,
-                                              // "sacjhavclavcahvcasvcuvkjdbcksdbvihdsbvisbcbdskvbsdhbvksdvbsdkvbhvsdbvksdbvkdfbvlkdfbvzdfkvbsdfklbv df;obhdsfb dfbh dfb hadf ubhadofbh dalfigbldifugblaidfubv difbgiadfugbviasfugv liasugvliasu vgadiugv adibvadilfubgliadfugbaldfibgadfiubgaidfubgaidfubg",
+                                              details .description,
+                                              // "sacjhavclavcahvcasvcuvkjdb cksdbvihdsbvisbcbdskv bsdhbvksdvbsdkvbhvsdbvksdbv kdfbvlkdfbvzdfkvbsdfklbv df;obhdsfb dfbh dfb hadf ubhadofbh dalfigbldifugblaidfubv difbgiadfugbviasfugv liasugvliasu vgadiugv adibvadilfubgliadfugbaldfibgadfiubgaidfubgaidfubg",
                                               style: GoogleFonts.montserrat(
                                                 fontSize: 12,
                                                 height: 1.5,
@@ -549,14 +551,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       margin: EdgeInsets.only(
                                         top: h * 0.01,
                                       ),
-                                      decoration: BoxDecoration(
-                                          border: index >
-                                                  details.includes.length - 3
-                                              ? const Border()
-                                              : const Border(
-                                                  bottom: BorderSide(
-                                                      color: Colors.blueGrey,
-                                                      width: .5))),
+                                      
                                       child: Column(
                                         children: [
                                           // CachedNetworkImage(

@@ -337,6 +337,15 @@ class _SlotState extends State<Slot> {
                                   }
                                   return null;
                                 },
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp("[0-9]")),
+                                ],
+                                onChanged: (value) {
+                                  if (value == " " || value == "0") {
+                                    pinCode.clear();
+                                  }
+                                },
                                 maxLength: 6,
                                 decoration: InputDecoration(
                                     counterText: "",
@@ -417,6 +426,11 @@ class _SlotState extends State<Slot> {
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                           ],
+                          onChanged: (value) {
+                            if (value == " " || value == "0") {
+                              contect.clear();
+                            }
+                          },
                           decoration: InputDecoration(
                               counterText: "",
                               hintText: "Contact*",
@@ -583,8 +597,8 @@ class _SlotState extends State<Slot> {
                                       print(longi);
                                     }).whenComplete(() {
                                       if (date.isEmpty || time.isEmpty) {
-                                         istaped = false;
-                                      setState(() {});
+                                        istaped = false;
+                                        setState(() {});
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(SnackBar(
                                           content: Text(date.isEmpty
@@ -596,9 +610,9 @@ class _SlotState extends State<Slot> {
                                           istaped = true;
                                           bookSlot();
                                           setState(() {});
-                                        }else{
-                                           istaped = false;
-                                      setState(() {});
+                                        } else {
+                                          istaped = false;
+                                          setState(() {});
                                         }
                                       }
                                     });
@@ -617,10 +631,10 @@ class _SlotState extends State<Slot> {
                                         istaped = true;
                                         setState(() {});
                                         bookSlot();
-                                      }else{
-                                           istaped = false;
-                                      setState(() {});
-                                        }
+                                      } else {
+                                        istaped = false;
+                                        setState(() {});
+                                      }
                                     }
                                   }
                                 },

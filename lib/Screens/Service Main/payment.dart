@@ -76,19 +76,30 @@ class _PaymentState extends State<Payment> {
   }
 
   opencheckout() {
+  //   var options = {
+  //     'key': 'rzp_test_HvQjakwAVoHUHx',
+  //     'amount': 100,
+  //     'name': 'City of Cars',
+  //     'description': 'Payment for the order. ',
+  //     'prefill': {
+  //       'contact': '1234567890',
+  //       'email': 'dsr@gmail',
+  //     },
+  //     'external': {
+  //       'wallets': ['paytm', 'freecharge', 'mobikwik']
+  //     },
+  //   };
     var options = {
-      'key': 'rzp_test_HvQjakwAVoHUHx',
+      'key': 'rzp_test_ZV56ClYdeni9vm',
       'amount': 100,
       'name': 'City of Cars',
-      'description': 'Payment for the order. ',
-      'prefill': {
-        'contact': '',
-        'email': '',
-      },
+      'description': 'Payment for the order.',
+      'retry': {'enabled': true, 'max_count': 1},
+      'send_sms_hash': true,
+      'prefill': {'contact': '', 'email': ''},
       'external': {
         'wallets': ['paytm']
-      }
-    };
+      }};
     try {
       razorpay.open(options);
     } catch (e) {
@@ -102,7 +113,7 @@ class _PaymentState extends State<Payment> {
     Fluttertoast.showToast(
         msg: "Payment Successfull", toastLength: Toast.LENGTH_SHORT);
     istaped = true;
-    addorder(response.paymentId!, "Deposited","","online").then((value) {
+    addorder(response.paymentId!, "Deposited", "", "online").then((value) {
       if (value == false) {
         istaped = false;
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -134,7 +145,7 @@ class _PaymentState extends State<Payment> {
     Fluttertoast.showToast(
         msg: "Payment Cancelled", //res["error"]["description"],
         toastLength: Toast.LENGTH_SHORT);
-    addorder("", "Failed","","online").then((value) {
+    addorder("", "Failed", "", "online").then((value) {
       if (value == false) {
         istaped = false;
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -475,7 +486,10 @@ class _PaymentState extends State<Payment> {
                                 // h: h * 0.1,
                                 w: w,
                                 widget: Padding(
-                                  padding: EdgeInsets.only(left: w * 0.05),
+                                  padding: EdgeInsets.only(
+                                      left: w * 0.05,
+                                      top: h * 0.01,
+                                      bottom: h * 0.01),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -585,54 +599,55 @@ class _PaymentState extends State<Payment> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: w * 0.04),
-                child:payondrop?loder: RRecctButton(
-                  onTap: () {
-                    payondrop= true;
-                    setState(() {
-                      
-                    });
-                    addorder("", "Not paid","","cash").then((value) {
-                      if (value == false) {
-                        payondrop = false;
+                child: payondrop
+                    ? loder
+                    : RRecctButton(
+                        onTap: () {
+                          payondrop = true;
+                          setState(() {});
+                          addorder("", "Not paid", "", "cash").then((value) {
+                            if (value == false) {
+                              payondrop = false;
 
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                          content: Text("Error"),
-                        ));
-                        setState(() {});
-                      }
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text("Error"),
+                              ));
+                              setState(() {});
+                            }
 
-                      print(value["_id"] + "1234567890987654321");
-                      String _id = value["_id"];
+                            print(value["_id"] + "1234567890987654321");
+                            String _id = value["_id"];
 
-                      payondrop = false;
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => OrderSuccessful(id: _id),
-                          ));
-                      setState(() {});
-                    });
-                    // Navigator.pushAndRemoveUntil<dynamic>(
-                    //   context,
-                    //   MaterialPageRoute<dynamic>(
-                    //     builder: (BuildContext context) => BottomNavBar(
-                    //       index: 0,
-                    //     ),
-                    //   ),
-                    //   (route) =>
-                    //       false, //if you want to disable back feature set to false
-                    // );
+                            payondrop = false;
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      OrderSuccessful(id: _id),
+                                ));
+                            setState(() {});
+                          });
+                          // Navigator.pushAndRemoveUntil<dynamic>(
+                          //   context,
+                          //   MaterialPageRoute<dynamic>(
+                          //     builder: (BuildContext context) => BottomNavBar(
+                          //       index: 0,
+                          //     ),
+                          //   ),
+                          //   (route) =>
+                          //       false, //if you want to disable back feature set to false
+                          // );
 
-                    istaped = false;
-                    setState(() {});
-                  },
-                  text: "PAY ON DROP-OFF".toUpperCase(),
-                  h: h * 0.07,
-                  buttonColor: korangecolor,
-                  style: GoogleFonts.montserrat(
-                      color: kwhitecolor, fontWeight: FontWeight.w700),
-                ),
+                          istaped = false;
+                          setState(() {});
+                        },
+                        text: "PAY ON DROP-OFF".toUpperCase(),
+                        h: h * 0.07,
+                        buttonColor: korangecolor,
+                        style: GoogleFonts.montserrat(
+                            color: kwhitecolor, fontWeight: FontWeight.w700),
+                      ),
               ),
               SizedBox(
                 height: h * 0.1,
