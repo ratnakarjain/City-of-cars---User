@@ -38,7 +38,7 @@ class _EditProfileState extends State<EditProfile> {
   var state = TextEditingController();
   var pinCode = TextEditingController();
   bool isImagePicked = false;
-  String fcm="";
+  String fcm = "";
   String filepath = "";
   var file2;
   @override
@@ -158,7 +158,8 @@ class _EditProfileState extends State<EditProfile> {
                           ),
                         ],
                       ),
-                    ),                   GestureDetector(
+                    ),
+                    GestureDetector(
                         onTap: () async {
                           // editPic();
                           file = await imagePicker();
@@ -166,8 +167,9 @@ class _EditProfileState extends State<EditProfile> {
                           print("============================$file");
                           setState(() {});
                         },
-                        child: image.isEmpty || image == "null"
-                            ? isImagePicked
+                        child: Stack(
+                          children: [
+                            isImagePicked
                                 ? Container(
                                     height: h * 0.06,
                                     width: h * 0.06,
@@ -179,35 +181,57 @@ class _EditProfileState extends State<EditProfile> {
                                               File(file),
                                             ))),
                                   )
-                                : Container(
-                                    height: h * 0.06,
-                                    width: h * 0.06,
-                                    decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(
-                                            fit: BoxFit.fill,
-                                            image: AssetImage(
-                                                "assets/images/ava1.png")
-                                            //     image:  FileImage(
-                                            //   File(file),
-                                            // ):
+                                : image.isEmpty || image == "null"
+                                    ? Container(
+                                        height: h * 0.06,
+                                        width: h * 0.06,
+                                        decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                                fit: BoxFit.fill,
+                                                image: AssetImage(
+                                                    "assets/images/ava1.png")
+                                                //     image:  FileImage(
+                                                //   File(file),
+                                                // ):
 
-                                            )),
-                                  )
-                            : Container(
-                                height: h * 0.06,
-                                width: h * 0.06,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: NetworkImage(image.toString())
-                                        //     image:  FileImage(
-                                        //   File(file),
-                                        // ):
+                                                )),
+                                      )
+                                    : Container(
+                                        height: h * 0.06,
+                                        width: h * 0.06,
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                                fit: BoxFit.fill,
+                                                image: NetworkImage(
+                                                    image.toString())
+                                                //     image:  FileImage(
+                                                //   File(file),
+                                                // ):
 
-                                        )),
-                              )
+                                                )),
+                                      ),
+                            Positioned(
+                                bottom: 0,
+                                right: 0,
+                                child: CircleAvatar(
+                                  radius: h * 0.0152,
+                                  backgroundColor: kblackcolor,
+                                  child: CircleAvatar(
+                                    backgroundColor: kwhitecolor,
+                                    radius: h * 0.015,
+                                    child: Icon(
+                                      Icons.edit,
+                                      color: kTextInputPlaceholderColor
+                                          .withOpacity(0.5),
+                                      size: h * 0.02,
+                                    ),
+                                  ),
+                                ))
+                          ],
+                        )
+
                         // CircleAvatar(
                         //   radius: h * 0.03,
                         //   backgroundColor: kwhitecolor,
@@ -253,11 +277,16 @@ class _EditProfileState extends State<EditProfile> {
                             RegExp(r"[a-zA-Z]+|\s"))
                       ],
                       validator: (value) {
-                          if (value!.isEmpty) {
-                            return "Please Enter Name";
-                          }
-                          return null;
-                        },
+                        if (value!.isEmpty) {
+                          return "Please Enter Name";
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        if (value == " ") {
+                          name.clear();
+                        }
+                      },
                       decoration: InputDecoration(
                           hintText: "Name*",
                           hintStyle: GoogleFonts.montserrat(
@@ -284,6 +313,11 @@ class _EditProfileState extends State<EditProfile> {
                     TextFormField(
                       controller: mobile,
                       enabled: false,
+                      onChanged: (value) {
+                        if (value == " ") {
+                          mobile.clear();
+                        }
+                      },
                       decoration: InputDecoration(
                           hintText: "Mobile No.*",
                           hintStyle: GoogleFonts.montserrat(
@@ -309,6 +343,11 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     TextFormField(
                       controller: email,
+                      onChanged: (value) {
+                        if (value == " ") {
+                          email.clear();
+                        }
+                      },
                       keyboardType: TextInputType.emailAddress,
                       inputFormatters: [
                         FilteringTextInputFormatter.deny(RegExp(r"\s")),
@@ -339,6 +378,11 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     TextFormField(
                       controller: houseNo,
+                      onChanged: (value) {
+                        if (value == " ") {
+                          houseNo.clear();
+                        }
+                      },
                       decoration: InputDecoration(
                           hintText: "House No.. & Floor*",
                           hintStyle: GoogleFonts.montserrat(
@@ -364,6 +408,11 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     TextFormField(
                       controller: street,
+                      onChanged: (value) {
+                        if (value == " ") {
+                          street.clear();
+                        }
+                      },
                       decoration: InputDecoration(
                           hintText: "Street*",
                           hintStyle: GoogleFonts.montserrat(
@@ -392,6 +441,11 @@ class _EditProfileState extends State<EditProfile> {
                         Expanded(
                           child: TextFormField(
                             controller: state,
+                            onChanged: (value) {
+                              if (value == " ") {
+                                state.clear();
+                              }
+                            },
                             decoration: InputDecoration(
                                 hintText: "State*",
                                 hintStyle: GoogleFonts.montserrat(
@@ -420,6 +474,11 @@ class _EditProfileState extends State<EditProfile> {
                         Expanded(
                           child: TextFormField(
                             controller: pinCode,
+                            onChanged: (value) {
+                              if (value == " ") {
+                                pinCode.clear();
+                              }
+                            },
                             keyboardType: TextInputType.number,
                             maxLength: 6,
                             decoration: InputDecoration(
@@ -510,15 +569,15 @@ class _EditProfileState extends State<EditProfile> {
       return true;
     }
   }
-    token() {
+
+  token() {
     var messaging = FirebaseMessaging.instance;
     messaging.getToken().then((value) {
       print("token: " + value.toString());
       fcm = value.toString();
-      Prefernece.pref!.setString("fcmtoken",fcm);
+      Prefernece.pref!.setString("fcmtoken", fcm);
 
       print("new token: " + Prefernece.pref!.getString("fcmtoken").toString());
-
     });
   }
 

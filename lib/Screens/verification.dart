@@ -17,7 +17,7 @@ import 'bottomnavBar.dart';
 
 class Verfication extends StatefulWidget {
   bool toLogin;
-   Verfication({Key? key,required this.toLogin }) : super(key: key);
+  Verfication({Key? key, required this.toLogin}) : super(key: key);
 
   @override
   State<Verfication> createState() => _VerficationState();
@@ -73,9 +73,8 @@ class _VerficationState extends State<Verfication> {
                 forceErrorState: true,
                 defaultPinTheme: defaultPinTheme,
                 inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp("[0-9]")),
-                          ],
+                  FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                ],
                 focusedPinTheme: defaultPinTheme.copyDecorationWith(
                   border: Border.all(color: Color.fromRGBO(114, 178, 238, 1)),
                   borderRadius: BorderRadius.circular(8),
@@ -106,22 +105,24 @@ class _VerficationState extends State<Verfication> {
                     buttonColor: korangecolor,
                     style: GoogleFonts.montserrat(
                         color: kwhitecolor, fontWeight: FontWeight.w600),
-                    onTap:_controller.text.isEmpty?(){}: () {
-                      istaped = true;
+                    onTap: _controller.text.isEmpty
+                        ? () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text("Please enter otp first")));
+                          }
+                        : () {
+                            istaped = true;
 
-                      if(_controller.text.toString().isEmpty){
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please enter otp first")));
-                        return ;
-                      }
-                      verify().whenComplete(() {
-                        istaped = false;
-                        setState(() {});
-                        sendfcm();
-                      });
-                      setState(() {});
-                      // Navigator.push(context,
-                      //     MaterialPageRoute(builder: ((context) => SelectCity())));
-                    },
+                            verify().whenComplete(() {
+                              istaped = false;
+                              setState(() {});
+                              sendfcm();
+                            });
+                            setState(() {});
+                            // Navigator.push(context,
+                            //     MaterialPageRoute(builder: ((context) => SelectCity())));
+                          },
                   ),
           ],
         ),
@@ -143,12 +144,16 @@ class _VerficationState extends State<Verfication> {
         if (jsonResponse["status"] == true) {
 //  Navigator.push(context,
 //                     MaterialPageRoute(builder: ((context) => SelectCity())));
-         pref!.setString("userId", Ids.userid);
-         print(pref!.getString("userId").toString()+"===========");
+          pref!.setString("userId", Ids.userid);
+          print(pref!.getString("userId").toString() + "===========");
           Navigator.pushAndRemoveUntil<dynamic>(
             context,
             MaterialPageRoute<dynamic>(
-              builder: (BuildContext context) => widget.toLogin?BottomNavBar(index: 0,): SelectCity(),
+              builder: (BuildContext context) => widget.toLogin
+                  ? BottomNavBar(
+                      index: 0,
+                    )
+                  : SelectCity(),
             ),
             (route) => false, //if you want to disable back feature set to false
           );

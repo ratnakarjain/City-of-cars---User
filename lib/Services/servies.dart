@@ -442,6 +442,7 @@ Future slot(
     String option,
     String date,
     String time,
+    String city,
     String leti,
     String longi) async {
   var url = Uri.parse(slotUrl);
@@ -458,6 +459,7 @@ Future slot(
       "contect": contact,
       "optional": option,
       "houseNo": houseNo,
+      "city": city,
       "latitude": leti,
       "longitude": longi,
     }, headers: {
@@ -841,6 +843,7 @@ Future getrecentUpdates(String _id) async {
         model.description = data["data"][i]["Description"] ?? "";
         model.file = data["data"][i]["image"] ?? "";
         model.time = data["data"][i]["time"] ?? "";
+        model.type = data["data"][i]["type"] ?? "";
         list.add(model);
       }
       return list;
@@ -1212,6 +1215,7 @@ Future postMess(String msg) async {
     user["sender_id"] = Ids.userid;
     user["resive_id"] = "626259f89d1ec3425360af89";
     user["conversation"] = resBody;
+    user["fcmToken"] = "1223e412131asccwe";
 
     str = json.encode(user);
   } catch (e) {}
@@ -1228,7 +1232,7 @@ Future postMess(String msg) async {
       var data = jsonDecode(respnse.body);
       if (data["status"]) {
         List<MessageModel> msg = [];
-        msg = messageModelFromJson(jsonEncode(data["Adata"]["conversation"]));
+        msg = messageModelFromJson(jsonEncode(data["data"]["conversation"]));
         print(jsonEncode(msg));
         return msg;
       } else {
@@ -1388,7 +1392,8 @@ Future feedback(
       "Rating": rating,
       "ServiceQuality": review,
       "Optional": optional,
-      "orderid": id
+      "orderid": id,
+      "fcmToken":"1"
     });
     if (respnse.statusCode == 200) {
       var data = jsonDecode(respnse.body);

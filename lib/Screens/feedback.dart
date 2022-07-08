@@ -114,7 +114,7 @@ class _FeedBackState extends State<FeedBack> {
                     ),
                     RichText(
                         text: TextSpan(
-                            text: widget.order.carname+" ",
+                            text: widget.order.carname + " ",
                             style: GoogleFonts.montserrat(
                               fontSize: 12,
                               color: kSelectedColor,
@@ -267,22 +267,31 @@ class _FeedBackState extends State<FeedBack> {
                   h: h * 0.06,
                   w: w * 0.9,
                   onTap: () async {
-                    await feedback(
-                            rating.toString(),
-                            optional.text,
-                            widget.order.id,
-                            topServices[isSelected - 1]["type"])
-                        .then((value) {
+                    if (rating == 0 ||
+                        optional.text.isEmpty ||
+                        isSelected  <= 0) {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         duration: const Duration(seconds: 2),
-                        content: Text(value["msg"]),
+                        content: Text("Please fill all details"),
                       ));
-                    }).whenComplete(() {
-                      Future.delayed(const Duration(seconds: 3), () {
-                        print('One second has passed.');
-                        Navigator.pop(context); // Prints after 1 second.
+                    } else {
+                      await feedback(
+                              rating.toString(),
+                              optional.text,
+                              widget.order.id,
+                              topServices[isSelected - 1]["type"])
+                          .then((value) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          duration: const Duration(seconds: 2),
+                          content: Text(value["message"]),
+                        ));
+                      }).whenComplete(() {
+                        Future.delayed(const Duration(seconds: 3), () {
+                          print('One second has passed.');
+                          Navigator.pop(context); // Prints after 1 second.
+                        });
                       });
-                    });
+                    }
                   },
                   buttonColor: kbluecolor,
                   text: "SEND FEEDBACK",

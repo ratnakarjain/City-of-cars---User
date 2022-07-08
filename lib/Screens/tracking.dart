@@ -1,4 +1,6 @@
+import 'package:cityofcars/Screens/image.dart';
 import 'package:cityofcars/Screens/messages.dart';
+import 'package:cityofcars/Screens/video.dart';
 import 'package:cityofcars/Services/models/ApprovalsModel.dart';
 import 'package:cityofcars/Services/models/recentsModel.dart';
 import 'package:cityofcars/Utils/Buttons/button.dart';
@@ -25,6 +27,8 @@ class Tracking extends StatefulWidget {
 class _TrackingState extends State<Tracking> {
   var h;
   var w;
+  bool istapped = false;
+  int whichtapped = 0;
   String estimateTime = "";
   List<RecentModel> recent = [];
   List<ApprovalModel1> apprvallist = [];
@@ -308,125 +312,194 @@ class _TrackingState extends State<Tracking> {
                                                   ? GestureDetector(
                                                       onTap: () async {
                                                         print("object");
-                                                        // Navigator.push(
-                                                        //     context,
-                                                        //     MaterialPageRoute(
-                                                        //         builder:
-                                                        //             (context) =>
-                                                        //                 WebVIEW(
-                                                        //                   url: mod
-                                                        //                       .image,
-                                                        //                 )));
 
-                                                        // launchURL(mod.image);
-                                                        await launchURL(mod.image);
-                                                        // getFileFromUrl(
-                                                        //         mod.image)
-                                                        //     .then(
-                                                        //         (value) async {
-                                                        //          await pdflauncher(value.path);
-                                                        //   // launchURL(value.path);
-
-                                                        //   // await launchUrl(
-                                                        //   //     Uri.parse(
-                                                        //   //         value.path),
-                                                        //   //         mode: LaunchMode.externalApplication
-                                                        //   //         );
-                                                        // });
+                                                        await launchURL(
+                                                            mod.image);
                                                       },
-                                                      child: Text(
-                                                          "view document",
-                                                          style: GoogleFonts
-                                                              .montserrat(
-                                                                  fontSize: 14,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  color:
-                                                                      kTextInputPlaceholderColor)),
-                                                    )
-                                                  : Container(
-                                                      height: h * 0.04,
-                                                      width: w * 0.2,
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      h * 0.01),
-                                                          image: DecorationImage(
-                                                              image:
-                                                                  NetworkImage(
-                                                                      mod.image),
-                                                              fit: BoxFit.fill)),
-                                                    )
+                                                      child: Image.asset(
+                                                        "assets/images/pdf.png",
+                                                        height: h * 0.03,
+                                                      ))
+                                                  : mod.type == "video"
+                                                      ? GestureDetector(
+                                                          onTap: () async {
+                                                            //  await launchURL(mod.image);
+                                                            Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder:
+                                                                        (context) =>
+                                                                            VideoApp(
+                                                                              video: mod.image,
+                                                                            )));
+                                                          },
+                                                          child: Container(
+                                                              height: h * 0.04,
+                                                              width: w * 0.2,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(h *
+                                                                            0.01),
+                                                                // image: DecorationImage(
+                                                                //     image:
+                                                                //         NetworkImage(
+                                                                //             mod.image),
+                                                                //     fit: BoxFit.fill)
+                                                              ),
+                                                              child: Stack(
+                                                                children: [
+                                                                  Center(
+                                                                      child:
+                                                                          Hero(
+                                                                    tag:
+                                                                        "video",
+                                                                    child:
+                                                                        Videophoto(
+                                                                      video: mod
+                                                                          .image,
+                                                                    ),
+                                                                  )),
+                                                                  const Center(
+                                                                      child: Icon(
+                                                                          Icons
+                                                                              .play_arrow))
+                                                                ],
+                                                              )),
+                                                        )
+                                                      : mod.type == "image"
+                                                          ? GestureDetector(
+                                                              onTap: () {
+                                                                Navigator.push(
+                                                                    context,
+                                                                    MaterialPageRoute(
+                                                                        builder:
+                                                                            (context) =>
+                                                                                Images(image: mod.image)));
+                                                              },
+                                                              child: Hero(
+                                                                tag: "image",
+                                                                transitionOnUserGestures:
+                                                                    true,
+                                                                child:
+                                                                    Container(
+                                                                  height:
+                                                                      h * 0.04,
+                                                                  width:
+                                                                      w * 0.2,
+                                                                  decoration: BoxDecoration(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(h *
+                                                                              0.01),
+                                                                      image: DecorationImage(
+                                                                          image: NetworkImage(mod
+                                                                              .image),
+                                                                          fit: BoxFit
+                                                                              .fill)),
+                                                                ),
+                                                              ),
+                                                            )
+                                                          : Container()
                                               // Image.asset("assets/images/images2.png")
                                             ],
                                           ),
                                         ),
                                         RRecctButton2(
+                                          w: w * 0.8,
                                           widget: Padding(
                                             padding: EdgeInsets.all(h * 0.01),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              children: [
-                                                Image.asset(
-                                                    "assets/images/edit.png"),
-                                                RichText(
-                                                  text: TextSpan(
-                                                      text: "Do you approve?\n",
-                                                      style: GoogleFonts
-                                                          .montserrat(
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color:
-                                                                  kwhitecolor),
-                                                      children: [
-                                                        TextSpan(
+                                            child: istapped &&
+                                                    whichtapped == index + 1
+                                                ? loder
+                                                : Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceAround,
+                                                    children: [
+                                                      Image.asset(
+                                                          "assets/images/edit.png"),
+                                                      RichText(
+                                                        text: TextSpan(
                                                             text:
-                                                                "qty: ${mod.qty} pcs",
+                                                                "Do you approve?\n",
                                                             style: GoogleFonts
                                                                 .montserrat(
                                                                     fontSize:
-                                                                        10,
+                                                                        12,
                                                                     fontWeight:
                                                                         FontWeight
-                                                                            .w400,
+                                                                            .bold,
                                                                     color:
-                                                                        ksubHading,
-                                                                    height: 2)),
-                                                      ]),
-                                                ),
-                                                InkWell(
-                                                    onTap: () {
-                                                      setApprooval(mod.id,
-                                                          "false", context);
-                                                    },
-                                                    child: CircleAvatar(
-                                                      backgroundColor:
-                                                          kredcolor,
-                                                      child: Center(
-                                                        child: Image.asset(
-                                                            "assets/images/x.png"),
+                                                                        kwhitecolor),
+                                                            children: [
+                                                              TextSpan(
+                                                                  text:
+                                                                      "qty: ${mod.qty} pcs",
+                                                                  style: GoogleFonts.montserrat(
+                                                                      fontSize:
+                                                                          10,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      color:
+                                                                          ksubHading,
+                                                                      height:
+                                                                          2)),
+                                                            ]),
                                                       ),
-                                                    )),
-                                                InkWell(
-                                                    onTap: () {
-                                                      setApprooval(mod.id,
-                                                          "true", context);
-                                                    },
-                                                    child: CircleAvatar(
-                                                      backgroundColor:
-                                                          korangecolor,
-                                                      child: Center(
-                                                        child: Image.asset(
-                                                            "assets/images/check.png"),
-                                                      ),
-                                                    )),
-                                              ],
-                                            ),
+                                                      InkWell(
+                                                          onTap: () {
+                                                            istapped = true;
+                                                            whichtapped =
+                                                                index + 1;
+                                                            setState(() {});
+                                                            setApprooval(
+                                                                    mod.id,
+                                                                    "false",
+                                                                    context)
+                                                                .whenComplete(
+                                                                    () {
+                                                              istapped = false;
+                                                              whichtapped = 0;
+                                                              setState(() {});
+                                                            });
+                                                          },
+                                                          child: CircleAvatar(
+                                                            backgroundColor:
+                                                                kredcolor,
+                                                            child: Center(
+                                                              child: Image.asset(
+                                                                  "assets/images/x.png"),
+                                                            ),
+                                                          )),
+                                                      InkWell(
+                                                          onTap: () {
+                                                            istapped = true;
+                                                            whichtapped =
+                                                                index + 1;
+                                                            setState(() {});
+                                                            setApprooval(
+                                                                    mod.id,
+                                                                    "true",
+                                                                    context)
+                                                                .whenComplete(
+                                                                    () {
+                                                              istapped = false;
+                                                              whichtapped = 0;
+                                                              setState(() {});
+                                                            });
+                                                          },
+                                                          child: CircleAvatar(
+                                                            backgroundColor:
+                                                                korangecolor,
+                                                            child: Center(
+                                                              child: Image.asset(
+                                                                  "assets/images/check.png"),
+                                                            ),
+                                                          )),
+                                                    ],
+                                                  ),
                                           ),
                                           radius: h * 0.04,
                                           buttonColor: kbluecolor,
@@ -587,24 +660,101 @@ class _TrackingState extends State<Tracking> {
                                                         children: [
                                                           Positioned(
                                                             right: 0,
-                                                            child: InkWell(
-                                                                onTap: () {},
-                                                                child: Center(
-                                                                  child:
-                                                                      CircleAvatar(
-                                                                    radius: h *
-                                                                        0.022,
-                                                                    backgroundColor:
-                                                                        kTransparent,
-                                                                    backgroundImage:
-                                                                        NetworkImage(
-                                                                      resmdl
-                                                                          .file,
-                                                                    ),
-                                                                    // child: Image.asset(
-                                                                    //     "assets/images/mask2.png"),
-                                                                  ),
-                                                                )),
+                                                            child: resmdl
+                                                                        .type ==
+                                                                    "pdf"
+                                                                ? GestureDetector(
+                                                                    onTap:
+                                                                        () async {
+                                                                      print(
+                                                                          "object");
+                                                                      // Navigator.push(
+                                                                      //     context,
+                                                                      //     MaterialPageRoute(
+                                                                      //         builder:
+                                                                      //             (context) =>
+                                                                      //                 WebVIEW(
+                                                                      //                   url: mod
+                                                                      //                       .image,
+                                                                      //                 )));
+
+                                                                      // launchURL(mod.image);
+                                                                      await launchURL(
+                                                                          resmdl
+                                                                              .file);
+                                                                      // getFileFromUrl(
+                                                                      //         mod.image)
+                                                                      //     .then(
+                                                                      //         (value) async {
+                                                                      //          await pdflauncher(value.path);
+                                                                      //   // launchURL(value.path);
+
+                                                                      //   // await launchUrl(
+                                                                      //   //     Uri.parse(
+                                                                      //   //         value.path),
+                                                                      //   //         mode: LaunchMode.externalApplication
+                                                                      //   //         );
+                                                                      // });
+                                                                    },
+                                                                    child: Image
+                                                                        .asset(
+                                                                      "assets/images/pdf.png",
+                                                                      height: h *
+                                                                          0.03,
+                                                                    ))
+                                                                : resmdl.type ==
+                                                                        "video"
+                                                                    ? GestureDetector(
+                                                                        onTap:
+                                                                            () async {
+                                                                          //  await launchURL(mod.image);
+                                                                          Navigator.push(
+                                                                              context,
+                                                                              MaterialPageRoute(
+                                                                                  builder: (context) => VideoApp(
+                                                                                        video: resmdl.file,
+                                                                                      )));
+                                                                        },
+                                                                        child: Padding(
+                                                                          padding:  EdgeInsets.all(h*0.005),
+                                                                          child: Center(
+                                                                            child: Hero(
+                                                                              tag: "video",
+                                                                              child: Image.asset(
+                                                                                  "assets/images/video.png",
+                                                                                  height: h * 0.03,
+                                                                                ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      )
+                                                                    : InkWell(
+                                                                        onTap: resmdl
+                                                                                .file.isNotEmpty
+                                                                            ? () {
+                                                                                Navigator.push(context, MaterialPageRoute(builder: (context) => Images(image: resmdl.file)));
+                                                                              }
+                                                                            : () {
+                                                                                print(resmdl.file);
+                                                                              },
+                                                                        child:
+                                                                            Center(
+                                                                          child:
+                                                                              Hero(
+                                                                            tag:
+                                                                                "image",
+                                                                            child:
+                                                                                CircleAvatar(
+                                                                              radius: h * 0.022,
+                                                                              backgroundColor: kTransparent,
+                                                                              backgroundImage: NetworkImage(
+                                                                                resmdl.file,
+                                                                              ),
+                                                                              // child: Image.asset(
+                                                                              //     "assets/images/mask2.png"),
+                                                                            ),
+                                                                          ),
+                                                                        )),
                                                           ),
                                                           // Positioned(
                                                           //   left: 0,

@@ -4,6 +4,7 @@ import 'package:cityofcars/Screens/Service%20Main/selectLocation.dart';
 import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Services/url.dart';
 import 'package:cityofcars/Utils/Buttons/button.dart';
+import 'package:cityofcars/Utils/preference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -660,6 +661,7 @@ class _SlotState extends State<Slot> {
             option.text,
             date,
             time,
+            Prefernece.pref!.getString("cityId").toString(),
             lati,
             longi)
         .then((value) {

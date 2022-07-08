@@ -666,67 +666,59 @@ class _MessagesState extends State<Messages> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              InkWell(
-                onTap: () async {
-                  // await sendMessage(_userID.toString(),false, _messageController.text, '0',
-                  //         'imagePath', _receiverID.toString())
-                  //     .then((value) => setState(() {
-
-                  //   SetInbox(false,_messageController.text.toString().trim(), "0","imagePath", _receiverID.toString(),widget.profileImage, widget.name ).then((value) {
-                  //     _messageController.clear();
-                  //   });
-
-                  // }));
-                },
-                child: Container(
-                  width: w * 0.2,
-                  decoration: BoxDecoration(
-                      color: kgrey,
+              Expanded(
+                flex: 2,
+                child: FloatingActionButton(
+                  backgroundColor: kgrey,
+                  shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                           bottomRight: Radius.elliptical(w * 0.07, h * 0.06))),
-                  child: GestureDetector(
-                    onTap:!send ? (){}: () {
-                      if (_controller.text.isNotEmpty) {
-                        setState(() {
-                          send = false;
-                        });
-                        postMess(_controller.text).then((value) {
-                          if (value != null) {
-                            msg.clear();
-                            msg.addAll(value);
-                            isloading = false;
+                  onPressed: !send
+                      ? () {}
+                      : () {
+                          if (_controller.text.isNotEmpty) {
                             setState(() {
-                              _controller.clear();
-                              send = true;
+                              send = false;
                             });
+                            postMess(_controller.text).then((value) {
+                              if (value != null) {
+                                msg.clear();
+                                msg.addAll(value);
+                                isloading = false;
+                                setState(() {
+                                  _controller.clear();
+                                  send = true;
+                                });
+                              }
+                            });
+                            // if (value == "success") {
+                            //   getMess().then((value) {
+                            //     msg.clear();
+                            //     msg.addAll(value);
+                            //     print(msg);
+                            //     isloading = false;
+                            //     setState(() {
+                            //       _controller.clear();
+                            //     });
+                            //   });
+                            // }
+                            // });
                           }
-                        });
-                        // if (value == "success") {
-                        //   getMess().then((value) {
-                        //     msg.clear();
-                        //     msg.addAll(value);
-                        //     print(msg);
-                        //     isloading = false;
-                        //     setState(() {
-                        //       _controller.clear();
-                        //     });
-                        //   });
-                        // }
-                        // });
-                      }
-                      // if (_controller.text == "") {
-                      //   _scaffoldKey.currentState!.showSnackBar(
-                      //       const SnackBar(content: Text("Empty Text")));
-                      // } else {
-                      //   message.add({
-                      //     "user": "User",
-                      //     "message": _controller.text,
-                      //   });
-                      //   setState(() {
-                      //     _controller.clear();
-                      //   });
-                      // }
-                    },
+                          // if (_controller.text == "") {
+                          //   _scaffoldKey.currentState!.showSnackBar(
+                          //       const SnackBar(content: Text("Empty Text")));
+                          // } else {
+                          //   message.add({
+                          //     "user": "User",
+                          //     "message": _controller.text,
+                          //   });
+                          //   setState(() {
+                          //     _controller.clear();
+                          //   });
+                          // }
+                        },
+                  child: SizedBox(
+                    height: h * 0.08,
                     child: const Center(
                       child: Icon(
                         Icons.arrow_back_ios,
@@ -736,46 +728,48 @@ class _MessagesState extends State<Messages> {
                   ),
                 ),
               ),
-              Container(
-                width: w * 0.8,
-                height: h * 0.07,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(0),
-                  // color: kBackgroundColor,
-                ),
-                child: TextFormField(
-                  controller: _controller,
-                  enabled: send,
+              Expanded(
+                flex: 8,
+                child: Container(
+                  width: w * 0.8,
+                  height: h * 0.07,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(0),
+                    // color: kBackgroundColor,
+                  ),
+                  child: TextFormField(
+                    controller: _controller,
+                    enabled: send,
 
-                  style: GoogleFonts.openSans(
-                      color: kwhitecolor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400),
-                  onChanged: (value) {
-                    if(value==" "){
-                      _controller.clear();
-                      setState(() {
-                        
-                      });
-                    }
-                  },
-                  validator: (val) {},
-                  // focusNode: focusNode,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-                    prefixIconConstraints: const BoxConstraints(minWidth: 30),
-                    suffixIconConstraints: const BoxConstraints(minWidth: 60),
-                    border: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    enabledBorder: InputBorder.none,
-                    errorBorder: InputBorder.none,
-                    disabledBorder: InputBorder.none,
-                    hintText: "Say Something…",
-                    hintStyle: GoogleFonts.openSans(
-                        fontStyle: FontStyle.italic,
+                    style: GoogleFonts.openSans(
                         color: kwhitecolor,
                         fontSize: 16,
-                        fontWeight: FontWeight.w500),
+                        fontWeight: FontWeight.w400),
+                    onChanged: (value) {
+                      if (value == " ") {
+                        _controller.clear();
+                        setState(() {});
+                      }
+                    },
+                    validator: (val) {},
+                    // focusNode: focusNode,
+                    decoration: InputDecoration(
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 10),
+                      prefixIconConstraints: const BoxConstraints(minWidth: 30),
+                      suffixIconConstraints: const BoxConstraints(minWidth: 60),
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                      hintText: "Say Something…",
+                      hintStyle: GoogleFonts.openSans(
+                          fontStyle: FontStyle.italic,
+                          color: kwhitecolor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500),
+                    ),
                   ),
                 ),
               ),

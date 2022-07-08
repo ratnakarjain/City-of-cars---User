@@ -4,5 +4,6 @@ class RecentModel{
   String description = "";
   String file = "";
   String time = "";
+  String? type;
   bool visible = false;
 }

@@ -1004,7 +1004,7 @@ class _InsideCategoryState extends State<InsideCategory>
     contexte = keys[index].currentContext!;
     print(keys[index].currentContext!);
     await Scrollable.ensureVisible(contexte,
-        duration: const Duration(milliseconds: 1000));
+        duration: const Duration(milliseconds: 800));
   }
 
   fecthdata() {

@@ -44,12 +44,13 @@ class _OrderHistoryState extends State<OrderHistory> {
     super.initState();
     getOrderhistory().then((value) {
       datalist.addAll(value);
+      
       isloading= false;
       pref!.setInt("totalServices",datalist.length);
       print(datalist);
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         setState(() {
-
+datalist= datalist.reversed.toList();
         });
       });
 
@@ -307,7 +308,7 @@ datalist.length==1?GestureDetector(
                                                       kTextInputPlaceholderColor)),
                                           RRecctButton(
                                             text: 
-                                            datalist.first.paystatus=="Success"?"Paid":"Pay Later",
+                                            datalist.first.paystatus=="Deposited"?"Paid":"Pay Later",
                                             style: GoogleFonts.montserrat(
                                                 fontSize: 9,
                                                 fontWeight: FontWeight.w700,
@@ -419,6 +420,7 @@ datalist.length==1?GestureDetector(
                   itemWidth: w,
                   physics: const NeverScrollableScrollPhysics(),
                   loop: false,
+                  
                   itemHeight: h * 0.61,
                   onIndexChanged: (value) {
                     setState(() {
@@ -427,6 +429,7 @@ datalist.length==1?GestureDetector(
                   },
                   itemBuilder: (context, index) {
                     OrderHistoryModel model = OrderHistoryModel();
+                    // int index = datalist.length-indexx-1;
                     model = datalist[index];
                     return GestureDetector(
                       onTap: () {
@@ -543,7 +546,7 @@ datalist.length==1?GestureDetector(
                                                       kTextInputPlaceholderColor)),
                                           RRecctButton(
                                             text: 
-                                            model.paystatus=="Success"?"Paid":"Pay Later",
+                                            model.paystatus=="Deposited"?"Paid":"Pay Later",
                                             style: GoogleFonts.montserrat(
                                                 fontSize: 9,
                                                 fontWeight: FontWeight.w700,

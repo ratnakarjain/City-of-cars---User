@@ -139,16 +139,16 @@ class _SosState extends State<Sos> {
                     controller: _controller,
                     keyboardType: TextInputType.phone,
                     inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-                          ],
-                          onChanged: (value) {
-                            if (value == " ") {
-                              _controller.clear();
-                            }
-                            if (value == "0") {
-                              _controller.clear();
-                            }
-                          },
+                      FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                    ],
+                    onChanged: (value) {
+                      if (value == " ") {
+                        _controller.clear();
+                      }
+                      if (value == "0") {
+                        _controller.clear();
+                      }
+                    },
                     decoration: InputDecoration(
                         contentPadding:
                             EdgeInsets.symmetric(horizontal: w * 0.09),
@@ -169,9 +169,14 @@ class _SosState extends State<Sos> {
                         h: h * 0.06,
                         w: w * 0.88,
                         onTap: () {
-                          istaped = true;
-                          tosos();
-                          setState(() {});
+                          if (_controller.text.isNotEmpty &&
+                              prob.text.isNotEmpty) {
+                            istaped = true;
+                            tosos();
+                            setState(() {});
+                          }else{
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please enter complete details")));
+                          }
                         },
                         buttonColor: korangecolor,
                         text: "CONFIRM REQUEST",
