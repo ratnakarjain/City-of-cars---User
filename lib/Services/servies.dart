@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:cityofcars/Screens/Service%20Main/serviceMain.dart';
+import 'package:cityofcars/Screens/jobCard.dart';
 import 'package:cityofcars/Services/models/carHealthModel.dart';
 import 'package:flutter/material.dart';
 import 'package:cityofcars/Screens/Service%20Main/productDetail.dart';
@@ -923,6 +924,7 @@ Future setApprooval(String id, String status, BuildContext context) async {
 }
 
 Future getjobcard(String id) async {
+         JobCard.data = null;
   var url = Uri.parse(getjobcardUrl + "?orderid=" + id);
   try {
     var respnse = await http.get(url,
@@ -930,8 +932,12 @@ Future getjobcard(String id) async {
     if (respnse.statusCode == 200) {
       var data = jsonDecode(respnse.body);
       print("Response " + data.toString() + "&");
+      print("Response " + data["data"].toString() + "&");
+      List newdata = data["data"];
       // JobCardModel model = JobCardModel();
       if (data["status"]) {
+        
+         JobCard.data = newdata.last;
         //   model.username = data["data"]["orderid"]["bookingdata"]["name"];
         //   model.address = data["data"]["orderid"]["bookingdata"]["houseNo"]+" "+data["data"]["orderid"]["bookingdata"]["Street"];
         //   model.city = data["data"]["orderid"]["bookingdata"]["houseNo"]+" "+data["data"]["orderid"]["bookingdata"]["Street"];
@@ -965,7 +971,7 @@ Future getjobcard(String id) async {
         //   model.customersconcerns.addAll(data["data"]["customerConcerns"]);
         //   model.fuellevel = data["data"]["fuel"].toString();
 
-        return data["data"];
+        // return newdata;
       } else {
         return [];
         // print(

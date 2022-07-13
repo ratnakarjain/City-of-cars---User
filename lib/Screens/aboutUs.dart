@@ -1,5 +1,6 @@
 import 'package:cityofcars/Utils/preference.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../Utils/constants.dart';
@@ -37,21 +38,9 @@ class _AboutUsState extends State<AboutUs> {
       ),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: h*0.02,horizontal: w*0.05),
-        child: RichText(
-          text: TextSpan(
-            // text: "About us\n",
-            style:
-              GoogleFonts.montserrat(fontSize: 16, fontWeight: FontWeight.w600, color: kTextInputPlaceholderColor),
-              children: [
-                TextSpan(
-                  text: des.toString(),
-                   style:
-              GoogleFonts.montserrat(fontSize: 14, fontWeight: FontWeight.w400, color: kTextInputPlaceholderColor),
-                )
-              ]
-          ),
-        ),
+        child: Html(data: des.toString(),)
       ),
     );
   }
 }
+

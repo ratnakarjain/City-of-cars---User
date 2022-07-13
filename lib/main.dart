@@ -161,7 +161,7 @@ Future<void> main() async {
     badge: true,
     sound: true,
   );
-  await CountryCodes.init();
+
   Prefernece.pref = await SharedPreferences.getInstance();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);

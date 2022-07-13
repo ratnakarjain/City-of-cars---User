@@ -506,7 +506,44 @@ class _PaymentState extends State<Payment> {
                                         children: [
                                           TextSpan(
                                               text:
-                                                  " ${data.plotStreet}, \n${data.cityCode} \n${data.option}",
+                                                  " ${data.plotStreet}, \n${data.cityCode}",
+                                              style: GoogleFonts.montserrat(
+                                                  fontSize: 11,
+                                                  height: 2,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: ksubHading)),
+                                        ],
+                                      )),
+                                    ],
+                                  ),
+                                ),
+                                borderRadius: h * 0.02,
+                              ),
+                              RRectCard(
+                                // h: h * 0.1,
+                                w: w,
+                                widget: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: w * 0.05,
+                                      top: h * 0.01,
+                                      bottom: h * 0.01),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      RichText(
+                                          text: TextSpan(
+                                        text: "Address",
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: 11,
+                                            height: 2,
+                                            fontWeight: FontWeight.w700,
+                                            color: ksubHading),
+                                        children: [
+                                          TextSpan(
+                                              text:
+                                                  "${data.option}",
                                               style: GoogleFonts.montserrat(
                                                   fontSize: 11,
                                                   height: 2,

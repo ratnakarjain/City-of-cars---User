@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../Utils/constants.dart';
 import '../Utils/preference.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class Terms extends StatefulWidget {
   const Terms({Key? key}) : super(key: key);
@@ -40,55 +41,44 @@ class _TermsState extends State<Terms> {
       body: Container(
         height: h,
         width: w,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Container(
-              margin: EdgeInsets.only(
-                top: h * 0.01,
-              ),
-              padding: EdgeInsets.all(h * 0.03),
-              decoration: BoxDecoration(
-                  color: kwhitecolor,
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(
-                        h * 0.05,
-                      ),
-                      bottomLeft: Radius.circular(h * 0.05)),
-                  boxShadow: const [
-                    BoxShadow(
-                        blurRadius: 5, offset: Offset(0, 3), color: Colors.grey)
-                  ]),
-              child: RichText(
-                text: TextSpan(
-                  // text: 'Who May Use the Services?',
-                  style: GoogleFonts.montserrat(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18,
-                      color: Colors.black),
-                  children: [
-                    TextSpan(
-                      text:
-                      des.toString(),
-                          // '\n\n\nWhen one door of happiness closes, another opens, but often we look so long at the closed door that we do not see the one that has been opened for us.\n\n',
-                      style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14,
-                          color: Colors.black),
-                    ),
-                  ],
+        child: SingleChildScrollView(
+          child: Column(
+
+            children: [
+              Container(
+                margin: EdgeInsets.only(
+                  top: h * 0.01,
+                  bottom: h*0.02
                 ),
+                padding: EdgeInsets.all(h * 0.03),
+                decoration: BoxDecoration(
+                    color: kwhitecolor,
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(
+                          h * 0.05,
+                        ),
+                        bottomLeft: Radius.circular(h * 0.05)),
+                    boxShadow: const [
+                      BoxShadow(
+                          blurRadius: 5, offset: Offset(0, 3), color: Colors.grey)
+                    ]),
+                child:
+                Html(
+                  data: des.toString(),
+
+                )
+                 
               ),
-            ),
-            RRecctButton(
-              h: h * 0.06,
-              w: w * 0.9,
-              buttonColor: kbluecolor,
-              text: "CONTINUE",
-              style: GoogleFonts.montserrat(
-                  color: kwhitecolor, fontWeight: FontWeight.w600),
-            )
-          ],
+              RRecctButton(
+                h: h * 0.06,
+                w: w * 0.9,
+                buttonColor: kbluecolor,
+                text: "CONTINUE",
+                style: GoogleFonts.montserrat(
+                    color: kwhitecolor, fontWeight: FontWeight.w600),
+              )
+            ],
+          ),
         ),
       ),
     );

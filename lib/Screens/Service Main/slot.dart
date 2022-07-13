@@ -598,19 +598,25 @@ class _SlotState extends State<Slot> {
                                       print(longi);
                                     }).whenComplete(() {
                                       if (date.isEmpty || time.isEmpty) {
+                                        _controller.jumpTo(0);
                                         istaped = false;
-                                        setState(() {});
+                                        setState(() {
+                                          isTime = date.isEmpty? false : true;
+
+                                        });
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(SnackBar(
                                           content: Text(date.isEmpty
                                               ? "Pick date please"
                                               : "Choose time slot"),
                                         ));
+
                                       } else {
                                         if (_formKey.currentState!.validate()) {
                                           istaped = true;
                                           bookSlot();
-                                          setState(() {});
+                                          setState(() {
+                                        });
                                         } else {
                                           istaped = false;
                                           setState(() {});
@@ -619,8 +625,12 @@ class _SlotState extends State<Slot> {
                                     });
                                   } else {
                                     if (date.isEmpty || time.isEmpty) {
+                                        _controller.jumpTo(0);
                                       istaped = false;
-                                      setState(() {});
+                                      setState(() {
+                                          isTime = date.isEmpty? false : true;
+
+                                      });
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(
                                         content: Text(date.isEmpty

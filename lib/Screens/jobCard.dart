@@ -12,6 +12,7 @@ import 'image.dart';
 
 class JobCard extends StatefulWidget {
   String orderid;
+  static var data;
   JobCard({Key? key, required this.orderid}) : super(key: key);
 
   @override
@@ -90,7 +91,8 @@ class _JobCardState extends State<JobCard> {
     super.initState();
     print(widget.orderid);
     getjobcard(widget.orderid).then((value) {
-      if (value != null) {
+      if (JobCard.data!=null) {
+        print("entering ===");
         data = value;
         geninfo = jsonDecode(data["genCondition"]);
         custCon = jsonDecode(data["customerConcerns"]);

@@ -13,6 +13,7 @@ import 'package:cityofcars/Screens/privacypolicy.dart';
 import 'package:cityofcars/Screens/selectBrand.dart';
 import 'package:cityofcars/Screens/selectCity.dart';
 import 'package:cityofcars/Screens/sos.dart';
+import 'package:cityofcars/Screens/terms.dart';
 import 'package:cityofcars/Services/models/usercardetailsmodel.dart';
 import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
@@ -785,6 +786,46 @@ class _ProfileState extends State<Profile> {
                         flex: 3,
                         child: Text(
                           "About us",
+                          style: GoogleFonts.montserrat(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  borderRadius: h * 0.04,
+                ),
+              ),
+              SizedBox(
+                height: h * 0.01,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Terms(
+                        
+                        ),
+                      ));
+                },
+                child: RRectCard(
+                  h: h * 0.08,
+                  w: w * 0.9,
+                  widget: Row(
+                    children: [
+                      Expanded(
+                        child: CircleAvatar(
+                          backgroundColor: kbluecolor,
+                          foregroundColor: kwhitecolor,
+                          child: Image.asset("assets/images/sunrise.png"),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          "Terms & Condition",
                           style: GoogleFonts.montserrat(
                             fontSize: 13,
                             fontWeight: FontWeight.w700,
