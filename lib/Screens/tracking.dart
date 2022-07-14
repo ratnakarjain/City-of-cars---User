@@ -8,8 +8,6 @@ import 'package:cityofcars/Utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:url_launcher/url_launcher.dart';
-
 import '../Services/servies.dart';
 import '../Utils/functions.dart';
 import 'bottomnavBar.dart';
@@ -72,6 +70,7 @@ class _TrackingState extends State<Tracking> {
         backgroundColor: kTransparent,
         foregroundColor: kTextInputPlaceholderColor,
         elevation: 0,
+        centerTitle: false,
         title: Text(
           "Tracking",
           style: GoogleFonts.montserrat(
@@ -256,255 +255,269 @@ class _TrackingState extends State<Tracking> {
                                 itemBuilder: (context, index) {
                                   ApprovalModel1 mod = ApprovalModel1();
                                   mod = apprvallist[index];
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                        color: kwhitecolor,
-                                        boxShadow: [
-                                          BoxShadow(
-                                              blurRadius: 3,
-                                              color:
-                                                  kshadowColor.withOpacity(0.2),
-                                              offset: Offset(0, 3))
-                                        ],
-                                        borderRadius: BorderRadius.only(
-                                            bottomLeft:
-                                                Radius.circular(h * 0.12))),
-                                    margin: EdgeInsets.symmetric(
-                                        vertical: h * 0.01),
-                                    padding: EdgeInsets.only(
-                                        left: w * 0.15,
-                                        top: h * 0.01,
-                                        bottom: h * 0.02,
-                                        right: w * 0.1),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: h * 0.01,
-                                              horizontal: w * 0.04),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              RichText(
-                                                text: TextSpan(
-                                                    text: "${mod.heading}\n",
-                                                    style: GoogleFonts.montserrat(
-                                                        fontSize: 13,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color:
-                                                            kTextInputPlaceholderColor),
-                                                    children: [
-                                                      TextSpan(
-                                                          text: mod.subheading,
-                                                          style: GoogleFonts.montserrat(
-                                                              fontSize: 9,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color: kTextInputPlaceholderColor
-                                                                  .withOpacity(
-                                                                      0.48))),
-                                                    ]),
-                                              ),
-                                              mod.type == "pdf"
-                                                  ? GestureDetector(
-                                                      onTap: () async {
-                                                        print("object");
-
-                                                        await launchURL(
-                                                            mod.image);
-                                                      },
-                                                      child: Image.asset(
-                                                        "assets/images/pdf.png",
-                                                        height: h * 0.03,
-                                                      ))
-                                                  : mod.type == "video"
-                                                      ? GestureDetector(
-                                                          onTap: () async {
-                                                            //  await launchURL(mod.image);
-                                                            Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                    builder:
-                                                                        (context) =>
-                                                                            VideoApp(
-                                                                              video: mod.image,
-                                                                            )));
-                                                          },
-                                                          child: Container(
-                                                              height: h * 0.04,
-                                                              width: w * 0.2,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(h *
-                                                                            0.01),
-                                                                // image: DecorationImage(
-                                                                //     image:
-                                                                //         NetworkImage(
-                                                                //             mod.image),
-                                                                //     fit: BoxFit.fill)
-                                                              ),
-                                                              child: Stack(
-                                                                children: [
-                                                                  Center(
-                                                                      child:
-                                                                          Hero(
-                                                                    tag:
-                                                                        "video",
-                                                                    child:
-                                                                        Videophoto(
-                                                                      video: mod
-                                                                          .image,
-                                                                    ),
-                                                                  )),
-                                                                  const Center(
-                                                                      child: Icon(
-                                                                          Icons
-                                                                              .play_arrow))
-                                                                ],
-                                                              )),
-                                                        )
-                                                      : mod.type == "image"
-                                                          ? GestureDetector(
-                                                              onTap: () {
-                                                                Navigator.push(
-                                                                    context,
-                                                                    MaterialPageRoute(
-                                                                        builder:
-                                                                            (context) =>
-                                                                                Images(image: mod.image)));
-                                                              },
-                                                              child: Hero(
-                                                                tag: "image",
-                                                                transitionOnUserGestures:
-                                                                    true,
-                                                                child:
-                                                                    Container(
-                                                                  height:
-                                                                      h * 0.04,
-                                                                  width:
-                                                                      w * 0.2,
-                                                                  decoration: BoxDecoration(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(h *
+                                  return Visibility(
+                                    visible: mod.heading!="",
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: kwhitecolor,
+                                          boxShadow: [
+                                            BoxShadow(
+                                                blurRadius: 3,
+                                                color:
+                                                    kshadowColor.withOpacity(0.2),
+                                                offset: Offset(0, 3))
+                                          ],
+                                          borderRadius: BorderRadius.only(
+                                              bottomLeft:
+                                                  Radius.circular(h * 0.12))),
+                                      margin: EdgeInsets.symmetric(
+                                          vertical: h * 0.01),
+                                      padding: EdgeInsets.only(
+                                          left: w * 0.15,
+                                          top: h * 0.01,
+                                          bottom: h * 0.02,
+                                          right: w * 0.1),
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: h * 0.01,
+                                                horizontal: w * 0.04),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                RichText(
+                                                  text: TextSpan(
+                                                      text: "${mod.heading}\n",
+                                                      style: GoogleFonts.montserrat(
+                                                          fontSize: 13,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color:
+                                                              kTextInputPlaceholderColor),
+                                                      children: [
+                                                        TextSpan(
+                                                            text: mod.subheading,
+                                                            style: GoogleFonts.montserrat(
+                                                                fontSize: 9,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                color: kTextInputPlaceholderColor
+                                                                    .withOpacity(
+                                                                        0.48))),
+                                                      ]),
+                                                ),
+                                                mod.type == "pdf"
+                                                    ? GestureDetector(
+                                                        onTap: () async {
+                                                          print("object");
+                                  
+                                                          await launchURL(
+                                                              mod.image);
+                                                        },
+                                                        child: Image.asset(
+                                                          "assets/images/pdf.png",
+                                                          height: h * 0.03,
+                                                        ))
+                                                    : mod.type == "video"
+                                                        ? GestureDetector(
+                                                            onTap: () async {
+                                                              //  await launchURL(mod.image);
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              VideoApp(
+                                                                                video: mod.image,
+                                                                              )));
+                                                            },
+                                                            child: Container(
+                                                                height: h * 0.04,
+                                                                width: w * 0.2,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(h *
                                                                               0.01),
-                                                                      image: DecorationImage(
-                                                                          image: NetworkImage(mod
-                                                                              .image),
-                                                                          fit: BoxFit
-                                                                              .fill)),
+                                                                  // image: DecorationImage(
+                                                                  //     image:
+                                                                  //         NetworkImage(
+                                                                  //             mod.image),
+                                                                  //     fit: BoxFit.fill)
                                                                 ),
-                                                              ),
-                                                            )
-                                                          : Container()
-                                              // Image.asset("assets/images/images2.png")
-                                            ],
+                                                                child: Stack(
+                                                                  children: [
+                                                                    Center(
+                                                                        child:
+                                                                            Videophoto(
+                                                                        video: mod
+                                                                              .image,
+                                                                      )),
+                                                                    const Center(
+                                                                        child: Icon(
+                                                                            Icons
+                                                                                .play_arrow))
+                                                                  ],
+                                                                )),
+                                                          )
+                                                        : mod.type == "image"
+                                                            ? GestureDetector(
+                                                                onTap: () {
+                                                                  Navigator.push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                          builder:
+                                                                              (context) =>
+                                                                                  Images(image: mod.image)));
+                                                                },
+                                                                child: Hero(
+                                                                  tag: "image",
+                                                                  transitionOnUserGestures:
+                                                                      true,
+                                                                  child:
+                                                                      Container(
+                                                                    height:
+                                                                        h * 0.04,
+                                                                    width:
+                                                                        w * 0.2,
+                                                                    decoration: BoxDecoration(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(h *
+                                                                                0.01),
+                                                                        image: DecorationImage(
+                                                                            image: NetworkImage(mod
+                                                                                .image),
+                                                                            fit: BoxFit
+                                                                                .fill)),
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            : Container()
+                                                // Image.asset("assets/images/images2.png")
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                        RRecctButton2(
-                                          w: w * 0.8,
-                                          widget: Padding(
-                                            padding: EdgeInsets.all(h * 0.01),
-                                            child: istapped &&
-                                                    whichtapped == index + 1
-                                                ? loder
-                                                : Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceAround,
-                                                    children: [
-                                                      Image.asset(
-                                                          "assets/images/edit.png"),
-                                                      RichText(
-                                                        text: TextSpan(
-                                                            text:
-                                                                "Do you approve?\n",
-                                                            style: GoogleFonts
-                                                                .montserrat(
-                                                                    fontSize:
-                                                                        12,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    color:
-                                                                        kwhitecolor),
-                                                            children: [
-                                                              TextSpan(
-                                                                  text:
-                                                                      "qty: ${mod.qty} pcs",
-                                                                  style: GoogleFonts.montserrat(
+                                          RRecctButton2(
+                                            w: w * 0.8,
+                                            widget: Padding(
+                                              padding: EdgeInsets.all(h * 0.01),
+                                              child: 
+                                              mod.approvestatus=="true"?
+                                              Center(
+                                                child: Text(
+                                                    mod.status=="true"?"You approved this request.":"You disapproved this request.",
+                                                              style: GoogleFonts
+                                                                  .montserrat(
                                                                       fontSize:
-                                                                          10,
+                                                                          12,
                                                                       fontWeight:
                                                                           FontWeight
-                                                                              .w400,
+                                                                              .bold,
                                                                       color:
-                                                                          ksubHading,
-                                                                      height:
-                                                                          2)),
-                                                            ]),
-                                                      ),
-                                                      InkWell(
-                                                          onTap: () {
-                                                            istapped = true;
-                                                            whichtapped =
-                                                                index + 1;
-                                                            setState(() {});
-                                                            setApprooval(
-                                                                    mod.id,
-                                                                    "false",
-                                                                    context)
-                                                                .whenComplete(
-                                                                    () {
-                                                              istapped = false;
-                                                              whichtapped = 0;
+                                                                          kwhitecolor),
+                                                ),
+                                              ):
+                                              istapped &&
+                                                      whichtapped == index + 1
+                                                  ? loder
+                                                  : Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceAround,
+                                                      children: [
+                                                        Image.asset(
+                                                            "assets/images/edit.png"),
+                                                        RichText(
+                                                          text: TextSpan(
+                                                              text:
+                                                                  "Do you approve?\n",
+                                                              style: GoogleFonts
+                                                                  .montserrat(
+                                                                      fontSize:
+                                                                          12,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      color:
+                                                                          kwhitecolor),
+                                                              children: [
+                                                                TextSpan(
+                                                                    text:
+                                                                        "qty: ${mod.qty} pcs",
+                                                                    style: GoogleFonts.montserrat(
+                                                                        fontSize:
+                                                                            10,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w400,
+                                                                        color:
+                                                                            ksubHading,
+                                                                        height:
+                                                                            2)),
+                                                              ]),
+                                                        ),
+                                                        InkWell(
+                                                            onTap: () {
+                                                              istapped = true;
+                                                              whichtapped =
+                                                                  index + 1;
                                                               setState(() {});
-                                                            });
-                                                          },
-                                                          child: CircleAvatar(
-                                                            backgroundColor:
-                                                                kredcolor,
-                                                            child: Center(
-                                                              child: Image.asset(
-                                                                  "assets/images/x.png"),
-                                                            ),
-                                                          )),
-                                                      InkWell(
-                                                          onTap: () {
-                                                            istapped = true;
-                                                            whichtapped =
-                                                                index + 1;
-                                                            setState(() {});
-                                                            setApprooval(
-                                                                    mod.id,
-                                                                    "true",
-                                                                    context)
-                                                                .whenComplete(
-                                                                    () {
-                                                              istapped = false;
-                                                              whichtapped = 0;
+                                                              setApprooval(
+                                                                      mod.id,
+                                                                      "false",
+                                                                      context)
+                                                                  .whenComplete(
+                                                                      () {
+                                                                istapped = false;
+                                                                whichtapped = 0;
+                                                                setState(() {});
+                                                              });
+                                                            },
+                                                            child: CircleAvatar(
+                                                              backgroundColor:
+                                                                  kredcolor,
+                                                              child: Center(
+                                                                child: Image.asset(
+                                                                    "assets/images/x.png"),
+                                                              ),
+                                                            )),
+                                                        InkWell(
+                                                            onTap: () {
+                                                              istapped = true;
+                                                              whichtapped =
+                                                                  index + 1;
                                                               setState(() {});
-                                                            });
-                                                          },
-                                                          child: CircleAvatar(
-                                                            backgroundColor:
-                                                                korangecolor,
-                                                            child: Center(
-                                                              child: Image.asset(
-                                                                  "assets/images/check.png"),
-                                                            ),
-                                                          )),
-                                                    ],
-                                                  ),
-                                          ),
-                                          radius: h * 0.04,
-                                          buttonColor: kbluecolor,
-                                        )
-                                      ],
+                                                              setApprooval(
+                                                                      mod.id,
+                                                                      "true",
+                                                                      context)
+                                                                  .whenComplete(
+                                                                      () {
+                                                                istapped = false;
+                                                                whichtapped = 0;
+                                                                setState(() {});
+                                                              });
+                                                            },
+                                                            child: CircleAvatar(
+                                                              backgroundColor:
+                                                                  korangecolor,
+                                                              child: Center(
+                                                                child: Image.asset(
+                                                                    "assets/images/check.png"),
+                                                              ),
+                                                            )),
+                                                      ],
+                                                    ),
+                                            ),
+                                            radius: h * 0.04,
+                                            buttonColor: kbluecolor,
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   );
                                 },

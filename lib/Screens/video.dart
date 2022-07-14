@@ -96,12 +96,15 @@ class _VideophotoState extends State<Videophoto> {
 
   @override
   Widget build(BuildContext context) {
-    return  ClipRRect(
-      borderRadius: BorderRadius.circular(10),
-        child: _controller.value.isInitialized
-            ? VideoPlayer(_controller)
-            : Container(),
-      
+    return  Hero(
+      tag: "video",
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+          child: _controller.value.isInitialized
+              ? VideoPlayer(_controller)
+              : Container(),
+        
+      ),
     );
   }
 

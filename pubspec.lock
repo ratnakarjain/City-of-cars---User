@@ -50,13 +50,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.4"
-  carousel_slider:
-    dependency: "direct main"
-    description:
-      name: carousel_slider
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.1.1"
   characters:
     dependency: transitive
     description:
@@ -92,13 +85,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.16.0"
-  country_codes:
-    dependency: "direct main"
-    description:
-      name: country_codes
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.2.0"
   cross_file:
     dependency: transitive
     description:
@@ -653,13 +639,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.4"
-  scrollable_list_tabview:
-    dependency: "direct main"
-    description:
-      name: scrollable_list_tabview
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.0-nullsafety"
   scrollable_positioned_list:
     dependency: "direct main"
     description:

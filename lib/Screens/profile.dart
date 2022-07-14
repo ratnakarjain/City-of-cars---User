@@ -722,41 +722,7 @@ class _ProfileState extends State<Profile> {
                   borderRadius: h * 0.04,
                 ),
               ),
-              SizedBox(
-                height: h * 0.005,
-              ),
-              GestureDetector(
-                onTap: () {
-                  confirm();
-                  setState(() {});
-                },
-                child: RRectCard(
-                  h: h * 0.08,
-                  w: w * 0.9,
-                  widget: Row(
-                    children: [
-                      Expanded(
-                        child: CircleAvatar(
-                          backgroundColor: korangecolor,
-                          foregroundColor: kwhitecolor,
-                          child: Image.asset("assets/images/heart.png"),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Text(
-                          "Log Out",
-                          style: GoogleFonts.montserrat(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  borderRadius: h * 0.04,
-                ),
-              ),
+              
               SizedBox(
                 height: h * 0.01,
               ),
@@ -913,7 +879,41 @@ class _ProfileState extends State<Profile> {
                   borderRadius: h * 0.04,
                 ),
               ),
-              
+              SizedBox(
+                height: h * 0.005,
+              ),
+              GestureDetector(
+                onTap: () {
+                  confirm();
+                  setState(() {});
+                },
+                child: RRectCard(
+                  h: h * 0.08,
+                  w: w * 0.9,
+                  widget: Row(
+                    children: [
+                      Expanded(
+                        child: CircleAvatar(
+                          backgroundColor: korangecolor,
+                          foregroundColor: kwhitecolor,
+                          child: Image.asset("assets/images/heart.png"),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          "Log Out",
+                          style: GoogleFonts.montserrat(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  borderRadius: h * 0.04,
+                ),
+              ),
 
 
 

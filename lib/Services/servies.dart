@@ -884,6 +884,8 @@ Future getapproveddetails(String id) async {
           model.price = data["data"][i]["price"].toString();
           model.qty = data["data"][i]["qty"].toString();
           model.subheading = data["data"][i]["subheading"].toString();
+          model.approvestatus = data["data"][i]["ApprovelStatus"].toString();
+          print(model.approvestatus);
           modellist.add(model);
         }
       }
