@@ -146,7 +146,7 @@ class _CartState extends State<Cart> {
                                       Container(
                                         height: dropvalue == index + 1
                                             ? h * 0.35
-                                            : h * 0.17,
+                                            : h * 0.18,
                                         decoration: BoxDecoration(
                                             color: kwhitecolor,
                                             borderRadius: BorderRadius.only(

@@ -710,7 +710,7 @@ class _ProfileState extends State<Profile> {
                       Expanded(
                         flex: 3,
                         child: Text(
-                          "Add City",
+                          "Change City",
                           style: GoogleFonts.montserrat(
                             fontSize: 13,
                             fontWeight: FontWeight.w700,
