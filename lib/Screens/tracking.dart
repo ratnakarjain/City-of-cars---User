@@ -256,15 +256,15 @@ class _TrackingState extends State<Tracking> {
                                   ApprovalModel1 mod = ApprovalModel1();
                                   mod = apprvallist[index];
                                   return Visibility(
-                                    visible: mod.heading!="",
+                                    visible: mod.heading != "",
                                     child: Container(
                                       decoration: BoxDecoration(
                                           color: kwhitecolor,
                                           boxShadow: [
                                             BoxShadow(
                                                 blurRadius: 3,
-                                                color:
-                                                    kshadowColor.withOpacity(0.2),
+                                                color: kshadowColor
+                                                    .withOpacity(0.2),
                                                 offset: Offset(0, 3))
                                           ],
                                           borderRadius: BorderRadius.only(
@@ -285,7 +285,8 @@ class _TrackingState extends State<Tracking> {
                                                 horizontal: w * 0.04),
                                             child: Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 RichText(
                                                   text: TextSpan(
@@ -298,7 +299,8 @@ class _TrackingState extends State<Tracking> {
                                                               kTextInputPlaceholderColor),
                                                       children: [
                                                         TextSpan(
-                                                            text: mod.subheading,
+                                                            text:
+                                                                mod.subheading,
                                                             style: GoogleFonts.montserrat(
                                                                 fontSize: 9,
                                                                 fontWeight:
@@ -313,7 +315,7 @@ class _TrackingState extends State<Tracking> {
                                                     ? GestureDetector(
                                                         onTap: () async {
                                                           print("object");
-                                  
+
                                                           await launchURL(
                                                               mod.image);
                                                         },
@@ -328,14 +330,15 @@ class _TrackingState extends State<Tracking> {
                                                               Navigator.push(
                                                                   context,
                                                                   MaterialPageRoute(
-                                                                      builder:
-                                                                          (context) =>
-                                                                              VideoApp(
-                                                                                video: mod.image,
-                                                                              )));
+                                                                      builder: (context) =>
+                                                                          VideoApp(
+                                                                            video:
+                                                                                mod.image,
+                                                                          )));
                                                             },
                                                             child: Container(
-                                                                height: h * 0.04,
+                                                                height:
+                                                                    h * 0.04,
                                                                 width: w * 0.2,
                                                                 decoration:
                                                                     BoxDecoration(
@@ -354,13 +357,12 @@ class _TrackingState extends State<Tracking> {
                                                                     Center(
                                                                         child:
                                                                             Videophoto(
-                                                                        video: mod
-                                                                              .image,
-                                                                      )),
+                                                                      video: mod
+                                                                          .image,
+                                                                    )),
                                                                     const Center(
                                                                         child: Icon(
-                                                                            Icons
-                                                                                .play_arrow))
+                                                                            Icons.play_arrow))
                                                                   ],
                                                                 )),
                                                           )
@@ -370,9 +372,8 @@ class _TrackingState extends State<Tracking> {
                                                                   Navigator.push(
                                                                       context,
                                                                       MaterialPageRoute(
-                                                                          builder:
-                                                                              (context) =>
-                                                                                  Images(image: mod.image)));
+                                                                          builder: (context) =>
+                                                                              Images(image: mod.image)));
                                                                 },
                                                                 child: Hero(
                                                                   tag: "image",
@@ -380,8 +381,8 @@ class _TrackingState extends State<Tracking> {
                                                                       true,
                                                                   child:
                                                                       Container(
-                                                                    height:
-                                                                        h * 0.04,
+                                                                    height: h *
+                                                                        0.04,
                                                                     width:
                                                                         w * 0.2,
                                                                     decoration: BoxDecoration(
@@ -389,10 +390,9 @@ class _TrackingState extends State<Tracking> {
                                                                             BorderRadius.circular(h *
                                                                                 0.01),
                                                                         image: DecorationImage(
-                                                                            image: NetworkImage(mod
-                                                                                .image),
-                                                                            fit: BoxFit
-                                                                                .fill)),
+                                                                            image:
+                                                                                NetworkImage(mod.image),
+                                                                            fit: BoxFit.fill)),
                                                                   ),
                                                                 ),
                                                               )
@@ -405,113 +405,129 @@ class _TrackingState extends State<Tracking> {
                                             w: w * 0.8,
                                             widget: Padding(
                                               padding: EdgeInsets.all(h * 0.01),
-                                              child: 
-                                              mod.approvestatus=="true"?
-                                              Center(
-                                                child: Text(
-                                                    mod.status=="true"?"You approved this request.":"You disapproved this request.",
-                                                              style: GoogleFonts
-                                                                  .montserrat(
-                                                                      fontSize:
-                                                                          12,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      color:
-                                                                          kwhitecolor),
-                                                ),
-                                              ):
-                                              istapped &&
-                                                      whichtapped == index + 1
-                                                  ? loder
-                                                  : Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceAround,
-                                                      children: [
-                                                        Image.asset(
-                                                            "assets/images/edit.png"),
-                                                        RichText(
-                                                          text: TextSpan(
-                                                              text:
-                                                                  "Do you approve?\n",
-                                                              style: GoogleFonts
-                                                                  .montserrat(
-                                                                      fontSize:
-                                                                          12,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      color:
-                                                                          kwhitecolor),
+                                              child:
+                                                  mod.approvestatus == "false"
+                                                      ? Center(
+                                                          child: Text(
+                                                            mod.status == "true"
+                                                                ? "You approved this request."
+                                                                : "You disapproved this request.",
+                                                            style: GoogleFonts
+                                                                .montserrat(
+                                                                    fontSize:
+                                                                        12,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color:
+                                                                        kwhitecolor),
+                                                          ),
+                                                        )
+                                                      : istapped &&
+                                                              whichtapped ==
+                                                                  index + 1
+                                                          ? loder
+                                                          : Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceAround,
                                                               children: [
-                                                                TextSpan(
-                                                                    text:
-                                                                        "qty: ${mod.qty} pcs",
-                                                                    style: GoogleFonts.montserrat(
-                                                                        fontSize:
-                                                                            10,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w400,
-                                                                        color:
-                                                                            ksubHading,
-                                                                        height:
-                                                                            2)),
-                                                              ]),
-                                                        ),
-                                                        InkWell(
-                                                            onTap: () {
-                                                              istapped = true;
-                                                              whichtapped =
-                                                                  index + 1;
-                                                              setState(() {});
-                                                              setApprooval(
-                                                                      mod.id,
-                                                                      "false",
-                                                                      context)
-                                                                  .whenComplete(
-                                                                      () {
-                                                                istapped = false;
-                                                                whichtapped = 0;
-                                                                setState(() {});
-                                                              });
-                                                            },
-                                                            child: CircleAvatar(
-                                                              backgroundColor:
-                                                                  kredcolor,
-                                                              child: Center(
-                                                                child: Image.asset(
-                                                                    "assets/images/x.png"),
-                                                              ),
-                                                            )),
-                                                        InkWell(
-                                                            onTap: () {
-                                                              istapped = true;
-                                                              whichtapped =
-                                                                  index + 1;
-                                                              setState(() {});
-                                                              setApprooval(
-                                                                      mod.id,
-                                                                      "true",
-                                                                      context)
-                                                                  .whenComplete(
-                                                                      () {
-                                                                istapped = false;
-                                                                whichtapped = 0;
-                                                                setState(() {});
-                                                              });
-                                                            },
-                                                            child: CircleAvatar(
-                                                              backgroundColor:
-                                                                  korangecolor,
-                                                              child: Center(
-                                                                child: Image.asset(
-                                                                    "assets/images/check.png"),
-                                                              ),
-                                                            )),
-                                                      ],
-                                                    ),
+                                                                Image.asset(
+                                                                    "assets/images/edit.png"),
+                                                                RichText(
+                                                                  text: TextSpan(
+                                                                      text:
+                                                                          "Do you approve?\n",
+                                                                      style: GoogleFonts.montserrat(
+                                                                          fontSize:
+                                                                              12,
+                                                                          fontWeight: FontWeight
+                                                                              .bold,
+                                                                          color:
+                                                                              kwhitecolor),
+                                                                      children: [
+                                                                        TextSpan(
+                                                                            text:
+                                                                                "qty: ${mod.qty} pcs",
+                                                                            style: GoogleFonts.montserrat(
+                                                                                fontSize: 10,
+                                                                                fontWeight: FontWeight.w400,
+                                                                                color: ksubHading,
+                                                                                height: 2)),
+                                                                      ]),
+                                                                ),
+                                                                InkWell(
+                                                                    onTap: () {
+                                                                      istapped =
+                                                                          true;
+                                                                      whichtapped =
+                                                                          index +
+                                                                              1;
+                                                                      setState(
+                                                                          () {});
+                                                                      setApprooval(
+                                                                              mod.id,
+                                                                              "false",
+                                                                              context)
+                                                                          .whenComplete(() {
+                                                                        istapped =
+                                                                            false;
+                                                                        whichtapped =
+                                                                            0;
+                                                                        setState(
+                                                                            () {
+                                                                          Navigator.pop(
+                                                                              context);
+                                                                        });
+                                                                      });
+                                                                    },
+                                                                    child:
+                                                                        CircleAvatar(
+                                                                      backgroundColor:
+                                                                          kredcolor,
+                                                                      child:
+                                                                          Center(
+                                                                        child: Image.asset(
+                                                                            "assets/images/x.png"),
+                                                                      ),
+                                                                    )),
+                                                                InkWell(
+                                                                    onTap: () {
+                                                                      istapped =
+                                                                          true;
+                                                                      whichtapped =
+                                                                          index +
+                                                                              1;
+                                                                      setState(
+                                                                          () {});
+                                                                      setApprooval(
+                                                                              mod.id,
+                                                                              "true",
+                                                                              context)
+                                                                          .whenComplete(() {
+                                                                        istapped =
+                                                                            false;
+                                                                        whichtapped =
+                                                                            0;
+                                                                        setState(
+                                                                            () {
+                                                                          Navigator.pop(
+                                                                              context);
+                                                                        });
+                                                                      });
+                                                                    },
+                                                                    child:
+                                                                        CircleAvatar(
+                                                                      backgroundColor:
+                                                                          korangecolor,
+                                                                      child:
+                                                                          Center(
+                                                                        child: Image.asset(
+                                                                            "assets/images/check.png"),
+                                                                      ),
+                                                                    )),
+                                                              ],
+                                                            ),
                                             ),
                                             radius: h * 0.04,
                                             buttonColor: kbluecolor,
@@ -728,15 +744,19 @@ class _TrackingState extends State<Tracking> {
                                                                                         video: resmdl.file,
                                                                                       )));
                                                                         },
-                                                                        child: Padding(
-                                                                          padding:  EdgeInsets.all(h*0.005),
-                                                                          child: Center(
-                                                                            child: Hero(
+                                                                        child:
+                                                                            Padding(
+                                                                          padding:
+                                                                              EdgeInsets.all(h * 0.005),
+                                                                          child:
+                                                                              Center(
+                                                                            child:
+                                                                                Hero(
                                                                               tag: "video",
                                                                               child: Image.asset(
-                                                                                  "assets/images/video.png",
-                                                                                  height: h * 0.03,
-                                                                                ),
+                                                                                "assets/images/video.png",
+                                                                                height: h * 0.03,
+                                                                              ),
                                                                             ),
                                                                           ),
                                                                         ),

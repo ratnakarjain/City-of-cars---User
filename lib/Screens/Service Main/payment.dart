@@ -91,7 +91,7 @@ class _PaymentState extends State<Payment> {
   //   };
     var options = {
       'key': 'rzp_test_ZV56ClYdeni9vm',
-      'amount': 100,
+      'amount': price* 100,
       'name': 'City of Cars',
       'description': 'Payment for the order.',
       'retry': {'enabled': true, 'max_count': 1},

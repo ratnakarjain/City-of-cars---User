@@ -93,7 +93,7 @@ class _JobCardState extends State<JobCard> {
     getjobcard(widget.orderid).then((value) {
       if (JobCard.data!=null) {
         print("entering ===");
-        data = value;
+        data = JobCard.data;
         geninfo = jsonDecode(data["genCondition"]);
         custCon = jsonDecode(data["customerConcerns"]);
         condi = jsonDecode(data["condition"]);
@@ -212,14 +212,14 @@ class _JobCardState extends State<JobCard> {
                                                 color: ksubHading),
                                           ),
                                           TextSpan(
-                                            text: "GST:",
+                                            text: "GST: ",
                                             style: GoogleFonts.montserrat(
                                                 fontSize: 10,
                                                 fontWeight: FontWeight.w700,
                                                 color: ksubHading),
                                           ),
                                           TextSpan(
-                                            text: "07ABBCS0227P",
+                                            text: data["Gst"],//"07ABBCS0227P",
                                             style: GoogleFonts.montserrat(
                                                 fontSize: 10,
                                                 fontWeight: FontWeight.w400,

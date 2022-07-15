@@ -42,6 +42,8 @@ class _SlotState extends State<Slot> {
   final carNumber = TextEditingController();
   final option = TextEditingController();
   var _formKey = GlobalKey<FormState>();
+  String errorState = "";
+  String errorPinCode = "";
   String lati = "";
   String longi = "";
   @override
@@ -338,6 +340,7 @@ class _SlotState extends State<Slot> {
                                   }
                                   return null;
                                 },
+                                
                                 inputFormatters: [
                                   FilteringTextInputFormatter.allow(
                                       RegExp("[0-9]")),
