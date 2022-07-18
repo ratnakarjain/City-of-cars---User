@@ -149,6 +149,7 @@ class _SosState extends State<Sos> {
                         _controller.clear();
                       }
                     },
+                    maxLength: 10,
                     decoration: InputDecoration(
                         contentPadding:
                             EdgeInsets.symmetric(horizontal: w * 0.09),
@@ -158,6 +159,7 @@ class _SosState extends State<Sos> {
                           fontWeight: FontWeight.w400,
                           height: 2,
                         ),
+                        counterText:"" ,
                         border: InputBorder.none),
                   ),
                 ),

@@ -268,13 +268,14 @@ class _LoginSignUpState extends State<LoginSignUp> {
                               maxLength: 10,
                               decoration: InputDecoration(
                                 hintText: "Mobile No.*",
+                            prefixText: "+91 ",
                                 counterText: "",
                                 errorStyle: const TextStyle(
                                   height: 0,
                                 ),
                                 border: InputBorder.none,
                                 contentPadding:
-                                    EdgeInsets.only(left: width * 0.1),
+                                    EdgeInsets.only(left: width * 0.03),
                                 hintStyle: TextStyle(
                                     color: kTextInputPlaceholderColor
                                         .withOpacity(0.32)),
@@ -442,6 +443,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
                           },
                           decoration: InputDecoration(
                             counterText: "",
+                            prefixText: "+91",
                             hintText: "Mobile No.*",
                             hintStyle: TextStyle(
                                 color: kTextInputPlaceholderColor

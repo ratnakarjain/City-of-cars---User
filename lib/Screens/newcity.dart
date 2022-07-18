@@ -250,6 +250,11 @@ class _NewCityState extends State<NewCity> {
                                       },
                                       child: Card(
                                         shape: RoundedRectangleBorder(
+                                          side: BorderSide(
+                                            color: Ids.cityid ==
+                                              snapshot.data[index]["_id"]? kbluecolor:kwhitecolor,
+                                              width: 2
+                                          ),
                                             borderRadius:
                                                 BorderRadius.circular(30)),
                                         elevation: 8,
@@ -368,6 +373,11 @@ class _NewCityState extends State<NewCity> {
                                             },
                                       child: Card(
                                         shape: RoundedRectangleBorder(
+                                          side: BorderSide(
+                                            color: Ids.cityid ==
+                                              snapshot.data[index]["_id"]? kbluecolor:kwhitecolor,
+                                              width: 2
+                                          ),
                                             borderRadius:
                                                 BorderRadius.circular(30)),
                                         elevation: 8,

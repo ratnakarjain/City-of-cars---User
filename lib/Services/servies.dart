@@ -173,6 +173,7 @@ Future editProfile(
   String pincode,
   String fcm,
   File? file,
+  File? document,
   BuildContext context,
 ) async {
   var url = Uri.parse(editprofileUrl);
@@ -198,6 +199,13 @@ Future editProfile(
           File(file.path).lengthSync(),
           filename: file.path.split('/').last));
     }
+     if (document != null) {
+      request.files.add(http.MultipartFile(
+          'document',
+          File(document.path).readAsBytes().asStream(),
+          File(document.path).lengthSync(),
+          filename: document.path.split('/').last));
+    }
 
     await request.send().then((response) async {
       if (response.statusCode == 200) {
@@ -211,7 +219,9 @@ Future editProfile(
         if (jsonRes["status"].toString() == "true") {
           print(jsonRes);
           prefs!.setString('name', jsonRes["data"]["name"].toString());
+          if(jsonRes["data"]["image"].toString()!=""&&jsonRes["data"]["image"].toString()!="null"){
           prefs!.setString('image', jsonRes["data"]["image"].toString());
+          }
           prefs!.setString('mobile', jsonRes["data"]["mobile"].toString());
           prefs!.setString('street', jsonRes["data"]["Street"].toString());
           prefs!.setString('houseno', jsonRes["data"]["House"].toString());
@@ -449,6 +459,7 @@ Future slot(
   var url = Uri.parse(slotUrl);
   try {
     var response = await http.post(url, body: {
+
       "date": date,
       "time": time,
       "Street": street,
@@ -463,6 +474,7 @@ Future slot(
       "city": city,
       "latitude": leti,
       "longitude": longi,
+      "user":prefs!.getString("userId").toString()
     }, headers: {
       "Authorization": prefs!.getString('token').toString()
     });
@@ -642,6 +654,7 @@ Future addorder(String paymentid, String paymentstatus, String status1,
       "paymentid": paymentid,
       "status1": status1,
       "status2": status2,
+      "fcmToken": prefs!.getString("fcmtoken").toString()
     }, headers: {
       "Authorization": prefs!.getString('token').toString()
     });
@@ -750,12 +763,14 @@ Future getOrderhistory() async {
           OrderHistoryModel model = OrderHistoryModel();
           var list = data["data"][i];
           // model.carbrand=list["_id"] ;
+          model.invoice = list["invoice"]??"";
           model.carimage = list["orderData"][0]["cars"]["image"].toString();
           model.carname = list["orderData"][0]["cars"]["cars"].toString();
           model.carbrand = list["orderData"][0]["brands"]["brands"].toString();
           model.deliverydate = list["date"].toString();
           model.deliverytime = list["time"].toString();
           // model.details=list["_id"];
+          // model.ordersPlans.addAll( ordersPlanModelFromJson(jsonEncode(list["orderData"])));
           model.orderid = list["orderid"].toString();
           model.id = list["_id"].toString();
           if (list["orderData"][0]["selectplan"][0].toString() != "null") {

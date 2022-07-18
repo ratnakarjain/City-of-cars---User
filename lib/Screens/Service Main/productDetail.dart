@@ -146,7 +146,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             details.packs[index].planName.toString(),
                             style: GoogleFonts.montserrat(
                                 textStyle: TextStyle(
-                                    fontSize: index == selceted ? 25 : 16,
+                                    fontSize:  18,
                                     fontWeight: FontWeight.bold,
                                     color: index == selceted
                                         ? kTextInputPlaceholderColor

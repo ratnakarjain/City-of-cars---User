@@ -864,21 +864,24 @@ class _OrderHistoryState extends State<OrderHistory> {
                         SizedBox(
                           height: h * 0.01,
                         ),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: List.generate(datalist.length, (index) {
-                              return Container(
-                                width: 8.0,
-                                height: 8.0,
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 10.0, horizontal: 4.0),
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: index == currentPage
-                                        ? kdarkpurple
-                                        : ksubHading),
-                              );
-                            })),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: List.generate(datalist.length, (index) {
+                                return Container(
+                                  width: 8.0,
+                                  height: 8.0,
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 10.0, horizontal: 4.0),
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: index == currentPage
+                                          ? kdarkpurple
+                                          : ksubHading),
+                                );
+                              })),
+                        ),
                         SizedBox(
                           height: h * 0.01,
                         ),

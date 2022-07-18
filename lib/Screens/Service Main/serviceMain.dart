@@ -999,7 +999,7 @@ class _ServiceMainState extends State<ServiceMain> {
                       children: [
                         Label(
                           color: korangecolor,
-                          text: "recommended packs",
+                          text: "recommended",
                           textStyle: GoogleFonts.montserrat(
                             textStyle: const TextStyle(
                                 fontWeight: FontWeight.bold,

@@ -531,6 +531,7 @@ class _EditProfileState extends State<EditProfile> {
                         pinCode.text,
                         fcm,
                         file == null ? null : File(file),
+                        file2 == null ? null : file2,
                         context,
                       ).whenComplete(() =>
                           Navigator.pushAndRemoveUntil<dynamic>(
