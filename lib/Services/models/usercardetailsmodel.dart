@@ -11,6 +11,7 @@ class CarsModel {
   String cityid ="";
   String city = "";
   String cityimage = "";
+  String id = "";
   
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -26,6 +27,7 @@ class CarsModel {
     map['carbrandid'] = carbrandid;
     map['carfuelid'] = carfuelid;
     map['cityid'] = cityid;
+    map['_id']= id;
     return map;
   }
 

@@ -45,5 +45,8 @@ const String globalsearchUrl = baseUrl+"/homesearch";
 const String fcmtoken = baseUrl+"/fcmTokenupdate";
 const String cmsPagesUrl = baseUrl+"/getCmsData";
 const String faqUrl = baseUrl+"/faq";
+const String getslotUrl = baseUrl+"/getslotApi";
+const String deletecardataUrl = baseUrl+"/deleteviewcaruser";
+
 
 String token = "";

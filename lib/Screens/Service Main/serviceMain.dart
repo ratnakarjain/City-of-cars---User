@@ -389,21 +389,21 @@ class _ServiceMainState extends State<ServiceMain> {
                                           // pls=value.plans;
 
                                           setState(() {
-                                            if (pls1.isEmpty) {
-                                              setState(() {});
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(const SnackBar(
-                                                content: Text("No Plans found"),
-                                              ));
-                                            }
-                                            if (cats1.isEmpty) {
-                                              setState(() {});
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(const SnackBar(
-                                                content:
-                                                    Text("No Category found"),
-                                              ));
-                                            }
+                                            // if (pls1.isEmpty) {
+                                            //   setState(() {});
+                                            //   ScaffoldMessenger.of(context)
+                                            //       .showSnackBar(const SnackBar(
+                                            //     content: Text("No Plans found"),
+                                            //   ));
+                                            // }
+                                            // if (cats1.isEmpty) {
+                                            //   setState(() {});
+                                            //   ScaffoldMessenger.of(context)
+                                            //       .showSnackBar(const SnackBar(
+                                            //     content:
+                                            //         Text("No Category found"),
+                                            //   ));
+                                            // }
                                             if (cats1.isEmpty && pls1.isEmpty) {
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(const SnackBar(

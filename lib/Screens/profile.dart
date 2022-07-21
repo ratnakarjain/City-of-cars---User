@@ -87,7 +87,16 @@ class _ProfileState extends State<Profile> {
   int isSelected = 0;
   List<CarsModel> modellist = [];
   bool isLoading = true;
-
+  getusercarsdata(){
+ getusercars().then((value) {
+      setState(() {
+        modellist.clear();
+        modellist.addAll(value);
+        print(modellist);
+        isLoading = false;
+      });
+    });
+  }
   @override
   void initState() {
     // TODO: implement initState
@@ -98,13 +107,8 @@ class _ProfileState extends State<Profile> {
       print(isSelected.toString() + "======");
       setState(() {});
     }
-    getusercars().then((value) {
-      setState(() {
-        modellist.addAll(value);
-        print(modellist);
-        isLoading = false;
-      });
-    });
+    getusercarsdata();
+   
   }
 
   @override
@@ -260,6 +264,10 @@ class _ProfileState extends State<Profile> {
                                                       ? korangecolor
                                                       : kgrey.withOpacity(0.5),
                                               child: InkWell(
+                                                onLongPress: () {
+                                                  print("dvkhsdvudhvbcuw");
+                                                  deletecar(currentCar + index);
+                                                },
                                                 onTap: () {
                                                   isSelected =
                                                       index + currentCar + 1;
@@ -524,13 +532,9 @@ class _ProfileState extends State<Profile> {
                   ],
                 ),
               ),
-
-
-
               SizedBox(
                 height: h * 0.02,
               ),
-             
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -722,18 +726,15 @@ class _ProfileState extends State<Profile> {
                   borderRadius: h * 0.04,
                 ),
               ),
-              
               SizedBox(
                 height: h * 0.01,
               ),
-               GestureDetector(
+              GestureDetector(
                 onTap: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => AboutUs(
-                        
-                        ),
+                        builder: (context) => AboutUs(),
                       ));
                 },
                 child: RRectCard(
@@ -771,9 +772,7 @@ class _ProfileState extends State<Profile> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => Terms(
-                        
-                        ),
+                        builder: (context) => Terms(),
                       ));
                 },
                 child: RRectCard(
@@ -808,11 +807,8 @@ class _ProfileState extends State<Profile> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>PrivacyPolicy()
-                      ));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => PrivacyPolicy()));
                 },
                 child: RRectCard(
                   h: h * 0.08,
@@ -846,11 +842,8 @@ class _ProfileState extends State<Profile> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const FAQS()
-                      ));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const FAQS()));
                 },
                 child: RRectCard(
                   h: h * 0.08,
@@ -914,12 +907,6 @@ class _ProfileState extends State<Profile> {
                   borderRadius: h * 0.04,
                 ),
               ),
-
-
-
-
-
-
               SizedBox(
                 height: h * 0.01,
               ),
@@ -1032,71 +1019,84 @@ class _ProfileState extends State<Profile> {
         });
   }
 
-  logout() {
+  deletecar(int cindex) {
     showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text(
-              "Do you want to logout?",
-              style: GoogleFonts.montserrat(
-                  color: kTextInputPlaceholderColor, fontSize: 18),
+            title: Center(
+              child: Text(
+                "Do you want to delete this car?",
+                style: GoogleFonts.montserrat(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
             ),
             actions: [
-              Row(
-                children: [
-                  Expanded(
-                    child: InkWell(
-                      onTap: () {
-                        pref!.remove("userId");
-                        pref!.remove("usercar");
-                        pref!.remove("CCar");
-                        prefs!.remove("CarId");
-
-                        pref!.remove(
-                          "fuelId",
-                        );
-                        pref!.remove(
-                          "cityId",
-                        );
-                        pref!.remove(
-                          "brandId",
-                        );
-                        Navigator.pushAndRemoveUntil<dynamic>(
-                          context,
-                          MaterialPageRoute<dynamic>(
-                            builder: (BuildContext context) =>
-                                LoginSignUp(isSignIn: true),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: w * 0.02, vertical: h * 0.02),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: kbluecolor,
+                            borderRadius: BorderRadius.circular(h * 0.02)),
+                        height: h * 0.04,
+                        child: InkWell(
+                          onTap: () {
+                            deletecardata(modellist[cindex].id).then((value) {
+                              Navigator.pop(context);
+                              currentCar = currentCar-1;
+                              isLoading = true;
+                              setState(() {});
+                             getusercarsdata();
+                            });
+                          },
+                          child: Center(
+                            child: Text(
+                              "Yes",
+                              style: GoogleFonts.montserrat(
+                                fontSize: 13,
+                                color: kwhitecolor,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
                           ),
-                          (route) =>
-                              false, //if you want to disable back feature set to false
-                        );
-                      },
-                      child: Center(
-                        child: Text(
-                          "Yes",
-                          style: GoogleFonts.montserrat(
-                              color: kbluecolor, fontSize: 16),
                         ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Center(
-                        child: Text(
-                          "No",
-                          style: GoogleFonts.montserrat(
-                              color: kredcolor, fontSize: 16),
+                    SizedBox(
+                      width: w * 0.05,
+                    ),
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: kbluecolor,
+                            borderRadius: BorderRadius.circular(h * 0.02)),
+                        height: h * 0.04,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Center(
+                            child: Text(
+                              "No",
+                              style: GoogleFonts.montserrat(
+                                fontSize: 13,
+                                color: kwhitecolor,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  )
-                ],
-              )
+                  ],
+                ),
+              ),
             ],
           );
         });

@@ -46,9 +46,11 @@ class _SlotState extends State<Slot> {
   String errorPinCode = "";
   String lati = "";
   String longi = "";
+
   @override
   void initState() {
     super.initState();
+    
   }
 
   @override
@@ -56,609 +58,615 @@ class _SlotState extends State<Slot> {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
 // istaped=false;
-    return Scaffold(
-        backgroundColor: kLightOrangeBgColor,
-        appBar: AppBar(
-          titleSpacing: -10,
-          centerTitle: false,
-          elevation: 0,
-          backgroundColor: kwhitecolor,
-          foregroundColor: kblackcolor,
-          title: Text(
-            "Select Slot",
-            style: GoogleFonts.montserrat(fontWeight: FontWeight.w600),
-          ),
-          bottom: PreferredSize(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: w * 0.06, vertical: h * 0.005),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          isTime = false;
-                          setState(() {});
-                        },
-                        child: Text(
-                          "Choose Date",
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          isTime = true;
-                          setState(() {});
-                        },
-                        child: Text(
-                          "Choose Time Slot",
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w600),
-                        ),
-                      )
-                    ]),
+    return 
+    
+         Scaffold(
+            backgroundColor: kLightOrangeBgColor,
+            appBar: AppBar(
+              titleSpacing: -10,
+              centerTitle: false,
+              elevation: 0,
+              backgroundColor: kwhitecolor,
+              foregroundColor: kblackcolor,
+              title: Text(
+                "Select Slot",
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600),
               ),
-              preferredSize: Size.fromHeight(h * 0.02)),
-        ),
-        body: SingleChildScrollView(
-          controller: _controller,
-          child: Column(
-            children: [
-              isTime
-                  ? Container(
-                      height: h * 0.35,
-                      width: w,
-                      child: const Center(child: TimeSlot()),
-                    )
-                  : const Calendar(),
-              Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: w * 0.06, vertical: h * 0.04),
-                color: kwhitecolor,
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Get current location:",
+              bottom: PreferredSize(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: w * 0.06, vertical: h * 0.005),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              isTime = false;
+                              setState(() {});
+                            },
+                            child: Text(
+                              "Choose Date >",
                               style: GoogleFonts.montserrat(
-                                  fontWeight: FontWeight.w700,
-                                  color: kGreenColor),
+                                  fontWeight: FontWeight.w600),
                             ),
-                            Checkbox(
-                              focusColor: kGreenColor,
-                              value: currentlocation,
-                              onChanged: (value) {
-                                currentlocation = value!;
-
-                                setState(() {});
-                              },
-                            )
-                          ],
-                        ),
-                        Text(
-                          "Enter Booking Details",
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w700),
-                        ),
-                        // Container(
-                        //   height: h * 0.06,
-                        //   margin: EdgeInsets.only(top: h * 0.02, bottom: 0.01),
-                        //   child: TextFormField(
-                        //     cursorColor: korangecolor,
-                        //     decoration: InputDecoration(
-                        //         hintText: "Enter pick-up location",
-                        //         hintStyle: GoogleFonts.montserrat(fontSize: 13),
-                        //         suffixIcon: const Icon(Icons.search),
-                        //         fillColor: korangecolor,
-                        //         focusColor: korangecolor,
-                        //         suffixIconColor: korangecolor,
-                        //         focusedBorder: OutlineInputBorder(
-                        //             borderSide: const BorderSide(
-                        //                 color: korangecolor, width: 1.0),
-                        //             borderRadius:
-                        //                 BorderRadius.circular(h * 0.02)),
-                        //         border: OutlineInputBorder(
-                        //             borderRadius:
-                        //                 BorderRadius.circular(h * 0.02))),
-                        //   ),
-                        // ),
-                        // InkWell(
-                        //   onTap: () {
-                        //     Navigator.push(
-                        //         context,
-                        //         MaterialPageRoute(
-                        //           builder: (context) => SelectLocation(),
-                        //         ));
-                        //   },
-                        //   child: Container(
-                        //       height: h * 0.06,
-                        //       margin:
-                        //           EdgeInsets.only(top: h * 0.02, bottom: 0.01),
-                        //       padding: EdgeInsets.symmetric(horizontal: w * 0.01),
-                        //       decoration: BoxDecoration(
-                        //           borderRadius: BorderRadius.circular(h * 0.02),
-                        //           border: Border.all(
-                        //               color: kTextInputPlaceholderColor
-                        //                   .withOpacity(0.5))),
-                        //       child: Row(
-                        //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //         children: [
-                        //           Text(
-                        //             "Enter pick-up location",
-                        //             style: GoogleFonts.montserrat(fontSize: 13),
-                        //           ),
-                        //           Icon(
-                        //             Icons.search,
-                        //             color: kTextInputPlaceholderColor
-                        //                 .withOpacity(0.7),
-                        //           )
-                        //         ],
-                        //       )
-                        // TextFormField(
-                        //   cursorColor: korangecolor,
-                        //   decoration: InputDecoration(
-                        //       hintText: "Enter pick-up location",
-                        //       hintStyle: GoogleFonts.montserrat(fontSize: 13),
-                        //       suffixIcon: const Icon(Icons.search),
-                        //       fillColor: korangecolor,
-                        //       focusColor: korangecolor,
-                        //       suffixIconColor: korangecolor,
-                        //       focusedBorder: OutlineInputBorder(
-                        //           borderSide: const BorderSide(
-                        //               color: korangecolor, width: 1.0),
-                        //           borderRadius:
-                        //               BorderRadius.circular(h * 0.02)),
-                        //       border: OutlineInputBorder(
-                        //           borderRadius:
-                        //               BorderRadius.circular(h * 0.02))),
-                        // ),
-                        // ),
-                        // ),
-                        // SizedBox(
-                        //   height: h * 0.02,
-                        // ),
-                        TextFormField(
-                          cursorColor: korangecolor,
-                          controller: houseNo,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Please enter house no.";
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                              hintText: "House No.. & Floor*",
-                              hintStyle: GoogleFonts.montserrat(
-                                fontSize: 13,
-                                color: kTextInputPlaceholderColor
-                                    .withOpacity(0.25),
-                              ),
-                              focusColor: korangecolor,
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: kTextInputPlaceholderColor
-                                      .withOpacity(0.25),
-                                ),
-                              ),
-                              focusedBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: korangecolor,
-                                ),
-                              )),
-                        ),
-                        SizedBox(
-                          height: h * 0.01,
-                        ),
-                        TextFormField(
-                          cursorColor: korangecolor,
-                          controller: street,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Please enter street";
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                              hintText: "Street*",
-                              hintStyle: GoogleFonts.montserrat(
-                                fontSize: 13,
-                                color: kTextInputPlaceholderColor
-                                    .withOpacity(0.25),
-                              ),
-                              focusColor: korangecolor,
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: kTextInputPlaceholderColor
-                                      .withOpacity(0.25),
-                                ),
-                              ),
-                              focusedBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: korangecolor,
-                                ),
-                              )),
-                        ),
-                        SizedBox(
-                          height: h * 0.01,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TextFormField(
-                                controller: state,
-                                cursorColor: korangecolor,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "Please enter state";
-                                  }
-                                  if (!RegExp('[a-zA-Z]').hasMatch(value)) {
-                                    return 'Enter a Valid State';
-                                  }
-                                  return null;
-                                },
-                                decoration: InputDecoration(
-                                    hintText: "State*",
-                                    hintStyle: GoogleFonts.montserrat(
-                                      fontSize: 13,
-                                      color: kTextInputPlaceholderColor
-                                          .withOpacity(0.25),
-                                    ),
-                                    focusColor: korangecolor,
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: kTextInputPlaceholderColor
-                                            .withOpacity(0.25),
-                                      ),
-                                    ),
-                                    focusedBorder: const UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: korangecolor,
-                                      ),
-                                    )),
-                              ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              isTime = true;
+                              setState(() {});
+                            },
+                            child: Text(
+                              "Choose Time Slot >",
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w600),
                             ),
-                            SizedBox(
-                              width: w * 0.05,
-                            ),
-                            Expanded(
-                              child: TextFormField(
-                                keyboardType: TextInputType.number,
-                                controller: pinCode,
-                                cursorColor: korangecolor,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "Please enter pin code";
-                                  }
-                                  if (value.length != 6) {
-                                    return "Pincode should be enter 6 digit";
-                                  }
-                                  return null;
-                                },
-                                
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.allow(
-                                      RegExp("[0-9]")),
-                                ],
-                                onChanged: (value) {
-                                  if (value == " " || value == "0") {
-                                    pinCode.clear();
-                                  }
-                                },
-                                maxLength: 6,
-                                decoration: InputDecoration(
-                                    counterText: "",
-                                    hintText: "Pin Code*",
-                                    hintStyle: GoogleFonts.montserrat(
-                                      fontSize: 13,
-                                      color: kTextInputPlaceholderColor
-                                          .withOpacity(0.25),
-                                    ),
-                                    focusColor: korangecolor,
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: kTextInputPlaceholderColor
-                                            .withOpacity(0.25),
-                                      ),
-                                    ),
-                                    focusedBorder: const UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: korangecolor,
-                                      ),
-                                    )),
-                              ),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: h * 0.01,
-                        ),
-                        TextFormField(
-                          cursorColor: korangecolor,
-                          controller: name,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Enter Your Name';
-                            }
-                            if (!RegExp('[a-zA-Z]').hasMatch(value)) {
-                              return 'Enter a Valid Name';
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                              hintText: "Name*",
-                              hintStyle: GoogleFonts.montserrat(
-                                fontSize: 13,
-                                color: kTextInputPlaceholderColor
-                                    .withOpacity(0.25),
-                              ),
-                              focusColor: korangecolor,
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: kTextInputPlaceholderColor
-                                      .withOpacity(0.25),
-                                ),
-                              ),
-                              focusedBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: korangecolor,
-                                ),
-                              )),
-                        ),
-                        SizedBox(
-                          height: h * 0.01,
-                        ),
-                        TextFormField(
-                          controller: contect,
-                          keyboardType: TextInputType.number,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Please enter contact number";
-                            }
-                            if (value.length < 10) {
-                              return "Mobile no. should be enter 10 digit";
-                            }
-                            return null;
-                          },
-                          cursorColor: korangecolor,
-                          maxLength: 10,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-                          ],
-                          onChanged: (value) {
-                            if (value == " " || value == "0") {
-                              contect.clear();
-                            }
-                          },
-                          decoration: InputDecoration(
-                              counterText: "",
-                              hintText: "Contact*",
-                              hintStyle: GoogleFonts.montserrat(
-                                fontSize: 13,
-                                color: kTextInputPlaceholderColor
-                                    .withOpacity(0.25),
-                              ),
-                              focusColor: korangecolor,
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: kTextInputPlaceholderColor
-                                      .withOpacity(0.25),
-                                ),
-                              ),
-                              focusedBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: korangecolor,
-                                ),
-                              )),
-                        ),
-                        SizedBox(
-                          height: h * 0.01,
-                        ),
-                        TextFormField(
-                          keyboardType: TextInputType.emailAddress,
-                          controller: mail,
-                          cursorColor: korangecolor,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return null;
-                            } else if (!RegExp(
-                                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                .hasMatch(value)) {
-                              return "Enter a valid email";
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                              hintText: "E-Mail",
-                              hintStyle: GoogleFonts.montserrat(
-                                fontSize: 13,
-                                color: kTextInputPlaceholderColor
-                                    .withOpacity(0.25),
-                              ),
-                              focusColor: korangecolor,
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: kTextInputPlaceholderColor
-                                      .withOpacity(0.25),
-                                ),
-                              ),
-                              focusedBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: korangecolor,
-                                ),
-                              )),
-                        ),
-                        SizedBox(
-                          height: h * 0.01,
-                        ),
-                        TextFormField(
-                          controller: carNumber,
-                          cursorColor: korangecolor,
-
-                          // inputFormatters: [FilteringTextInputFormatter.allow(RegExp("^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}\$"))],
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Please enter car number";
-                            }
-                            if (value.length < 10) {
-                              return "Please enter valid car no.";
-                            }
-
-                            // if(!RegExp("^[0-9]{2}[0-9]{4}[A-HJ-NP-Z]{2}\$").hasMatch(value)){
-                            //   return "Please enter correct formate";
-                            // }
-                            return null;
-                          },
-                          maxLength: 12,
-                          decoration: InputDecoration(
-                              counterText: "",
-                              hintText: "Car Number eg. RJ70 ZX 0000",
-                              hintStyle: GoogleFonts.montserrat(
-                                fontSize: 13,
-                                color: kTextInputPlaceholderColor
-                                    .withOpacity(0.25),
-                              ),
-                              focusColor: korangecolor,
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: kTextInputPlaceholderColor
-                                      .withOpacity(0.25),
-                                ),
-                              ),
-                              focusedBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: korangecolor,
-                                ),
-                              )),
-                        ),
-                        SizedBox(
-                          height: h * 0.03,
-                        ),
-                        Text(
-                          "Special Remarks / Preferences",
-                          style: GoogleFonts.montserrat(
-                              color: kTextInputPlaceholderColor),
-                        ),
-                        Container(
-                          height: h * 0.1,
+                          )
+                        ]),
+                  ),
+                  preferredSize: Size.fromHeight(h * 0.02)),
+            ),
+            body: SingleChildScrollView(
+              controller: _controller,
+              child: Column(
+                children: [
+                  isTime
+                      ? Container(
+                          height: h * 0.35,
                           width: w,
-                          margin: EdgeInsets.only(top: h * 0.015),
-                          decoration: BoxDecoration(
-                              color: kwhitecolor,
-                              borderRadius: BorderRadius.circular(h * 0.025),
-                              boxShadow: [
-                                // BoxShadow(
-                                //   blurRadius: 5,
-                                //   offset:
-                                // )
-                              ]),
-                          child: Card(
-                            elevation: 5,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(h * 0.015)),
-                            child: TextFormField(
-                              minLines: 1,
-                              maxLines: 5,
-                              controller: option,
+                          child: const Center(child: TimeSlot()),
+                        )
+                      : const Calendar(),
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: w * 0.06, vertical: h * 0.04),
+                    color: kwhitecolor,
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Get current location:",
+                                  style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.w700,
+                                      color: kGreenColor),
+                                ),
+                                Checkbox(
+                                  focusColor: kGreenColor,
+                                  value: currentlocation,
+                                  onChanged: (value) {
+                                    currentlocation = value!;
+
+                                    setState(() {});
+                                  },
+                                )
+                              ],
+                            ),
+                            Text(
+                              "Enter Booking Details",
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            // Container(
+                            //   height: h * 0.06,
+                            //   margin: EdgeInsets.only(top: h * 0.02, bottom: 0.01),
+                            //   child: TextFormField(
+                            //     cursorColor: korangecolor,
+                            //     decoration: InputDecoration(
+                            //         hintText: "Enter pick-up location",
+                            //         hintStyle: GoogleFonts.montserrat(fontSize: 13),
+                            //         suffixIcon: const Icon(Icons.search),
+                            //         fillColor: korangecolor,
+                            //         focusColor: korangecolor,
+                            //         suffixIconColor: korangecolor,
+                            //         focusedBorder: OutlineInputBorder(
+                            //             borderSide: const BorderSide(
+                            //                 color: korangecolor, width: 1.0),
+                            //             borderRadius:
+                            //                 BorderRadius.circular(h * 0.02)),
+                            //         border: OutlineInputBorder(
+                            //             borderRadius:
+                            //                 BorderRadius.circular(h * 0.02))),
+                            //   ),
+                            // ),
+                            // InkWell(
+                            //   onTap: () {
+                            //     Navigator.push(
+                            //         context,
+                            //         MaterialPageRoute(
+                            //           builder: (context) => SelectLocation(),
+                            //         ));
+                            //   },
+                            //   child: Container(
+                            //       height: h * 0.06,
+                            //       margin:
+                            //           EdgeInsets.only(top: h * 0.02, bottom: 0.01),
+                            //       padding: EdgeInsets.symmetric(horizontal: w * 0.01),
+                            //       decoration: BoxDecoration(
+                            //           borderRadius: BorderRadius.circular(h * 0.02),
+                            //           border: Border.all(
+                            //               color: kTextInputPlaceholderColor
+                            //                   .withOpacity(0.5))),
+                            //       child: Row(
+                            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //         children: [
+                            //           Text(
+                            //             "Enter pick-up location",
+                            //             style: GoogleFonts.montserrat(fontSize: 13),
+                            //           ),
+                            //           Icon(
+                            //             Icons.search,
+                            //             color: kTextInputPlaceholderColor
+                            //                 .withOpacity(0.7),
+                            //           )
+                            //         ],
+                            //       )
+                            // TextFormField(
+                            //   cursorColor: korangecolor,
+                            //   decoration: InputDecoration(
+                            //       hintText: "Enter pick-up location",
+                            //       hintStyle: GoogleFonts.montserrat(fontSize: 13),
+                            //       suffixIcon: const Icon(Icons.search),
+                            //       fillColor: korangecolor,
+                            //       focusColor: korangecolor,
+                            //       suffixIconColor: korangecolor,
+                            //       focusedBorder: OutlineInputBorder(
+                            //           borderSide: const BorderSide(
+                            //               color: korangecolor, width: 1.0),
+                            //           borderRadius:
+                            //               BorderRadius.circular(h * 0.02)),
+                            //       border: OutlineInputBorder(
+                            //           borderRadius:
+                            //               BorderRadius.circular(h * 0.02))),
+                            // ),
+                            // ),
+                            // ),
+                            // SizedBox(
+                            //   height: h * 0.02,
+                            // ),
+                            TextFormField(
+                              cursorColor: korangecolor,
+                              controller: houseNo,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please enter house no.";
+                                }
+                                return null;
+                              },
                               decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: "Optional",
+                                  hintText: "House No.. & Floor*",
                                   hintStyle: GoogleFonts.montserrat(
                                     fontSize: 13,
                                     color: kTextInputPlaceholderColor
                                         .withOpacity(0.25),
                                   ),
-                                  contentPadding: EdgeInsets.all(h * 0.01)),
+                                  focusColor: korangecolor,
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: kTextInputPlaceholderColor
+                                          .withOpacity(0.25),
+                                    ),
+                                  ),
+                                  focusedBorder: const UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: korangecolor,
+                                    ),
+                                  )),
                             ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: h * 0.02,
-                        ),
-                        istaped
-                            ? loder
-                            : RRecctButton(
-                                text: "continue".toUpperCase(),
-                                style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w700,
-                                    color: kwhitecolor),
-                                h: h * 0.06,
-                                buttonColor: korangecolor,
-                                onTap: () async {
-                                  if (currentlocation) {
-                                    print("done");
-                                    istaped = true;
-                                    setState(() {});
-                                    await determinePosition().then((value) {
-                                      lati = value.latitude.toString();
-                                      longi = value.longitude.toString();
-                                      print(lati);
-                                      print(longi);
-                                    }).whenComplete(() {
-                                      if (date.isEmpty || time.isEmpty) {
-                                        _controller.jumpTo(0);
-                                        istaped = false;
-                                        setState(() {
-                                          isTime = date.isEmpty? false : true;
-
-                                        });
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(SnackBar(
-                                          content: Text(date.isEmpty
-                                              ? "Pick date please"
-                                              : "Choose time slot"),
-                                        ));
-
-                                      } else {
-                                        if (_formKey.currentState!.validate()) {
-                                          istaped = true;
-                                          bookSlot();
-                                          setState(() {
-                                        });
-                                        } else {
-                                          istaped = false;
-                                          setState(() {});
-                                        }
+                            SizedBox(
+                              height: h * 0.01,
+                            ),
+                            TextFormField(
+                              cursorColor: korangecolor,
+                              controller: street,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please enter street";
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                  hintText: "Street/City*",
+                                  hintStyle: GoogleFonts.montserrat(
+                                    fontSize: 13,
+                                    color: kTextInputPlaceholderColor
+                                        .withOpacity(0.25),
+                                  ),
+                                  focusColor: korangecolor,
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: kTextInputPlaceholderColor
+                                          .withOpacity(0.25),
+                                    ),
+                                  ),
+                                  focusedBorder: const UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: korangecolor,
+                                    ),
+                                  )),
+                            ),
+                            SizedBox(
+                              height: h * 0.01,
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: state,
+                                    cursorColor: korangecolor,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return "Please enter state";
                                       }
-                                    });
-                                  } else {
-                                    if (date.isEmpty || time.isEmpty) {
-                                        _controller.jumpTo(0);
-                                      istaped = false;
-                                      setState(() {
-                                          isTime = date.isEmpty? false : true;
+                                      if (!RegExp('[a-zA-Z]').hasMatch(value)) {
+                                        return 'Enter a Valid State';
+                                      }
+                                      return null;
+                                    },
+                                    decoration: InputDecoration(
+                                        hintText: "State*",
+                                        hintStyle: GoogleFonts.montserrat(
+                                          fontSize: 13,
+                                          color: kTextInputPlaceholderColor
+                                              .withOpacity(0.25),
+                                        ),
+                                        focusColor: korangecolor,
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: kTextInputPlaceholderColor
+                                                .withOpacity(0.25),
+                                          ),
+                                        ),
+                                        focusedBorder:
+                                            const UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: korangecolor,
+                                          ),
+                                        )),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: w * 0.05,
+                                ),
+                                Expanded(
+                                  child: TextFormField(
+                                    keyboardType: TextInputType.number,
+                                    controller: pinCode,
+                                    cursorColor: korangecolor,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return "Please enter pin code";
+                                      }
+                                      if (value.length != 6) {
+                                        return "Pincode should be enter 6 digit";
+                                      }
+                                      return null;
+                                    },
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp("[0-9]")),
+                                    ],
+                                    onChanged: (value) {
+                                      if (value == " " || value == "0") {
+                                        pinCode.clear();
+                                      }
+                                    },
+                                    maxLength: 6,
+                                    decoration: InputDecoration(
+                                        counterText: "",
+                                        hintText: "Pin Code*",
+                                        hintStyle: GoogleFonts.montserrat(
+                                          fontSize: 13,
+                                          color: kTextInputPlaceholderColor
+                                              .withOpacity(0.25),
+                                        ),
+                                        focusColor: korangecolor,
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: kTextInputPlaceholderColor
+                                                .withOpacity(0.25),
+                                          ),
+                                        ),
+                                        focusedBorder:
+                                            const UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: korangecolor,
+                                          ),
+                                        )),
+                                  ),
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: h * 0.01,
+                            ),
+                            TextFormField(
+                              cursorColor: korangecolor,
+                              controller: name,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Enter Your Name';
+                                }
+                                if (!RegExp('[a-zA-Z]').hasMatch(value)) {
+                                  return 'Enter a Valid Name';
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                  hintText: "Name*",
+                                  hintStyle: GoogleFonts.montserrat(
+                                    fontSize: 13,
+                                    color: kTextInputPlaceholderColor
+                                        .withOpacity(0.25),
+                                  ),
+                                  focusColor: korangecolor,
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: kTextInputPlaceholderColor
+                                          .withOpacity(0.25),
+                                    ),
+                                  ),
+                                  focusedBorder: const UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: korangecolor,
+                                    ),
+                                  )),
+                            ),
+                            SizedBox(
+                              height: h * 0.01,
+                            ),
+                            TextFormField(
+                              controller: contect,
+                              keyboardType: TextInputType.number,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please enter contact number";
+                                }
+                                if (value.length < 10) {
+                                  return "Mobile no. should be enter 10 digit";
+                                }
+                                return null;
+                              },
+                              cursorColor: korangecolor,
+                              maxLength: 10,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp("[0-9]")),
+                              ],
+                              onChanged: (value) {
+                                if (value == " " || value == "0") {
+                                  contect.clear();
+                                }
+                              },
+                              decoration: InputDecoration(
+                                  counterText: "",
+                                  hintText: "Contact*",
+                                  hintStyle: GoogleFonts.montserrat(
+                                    fontSize: 13,
+                                    color: kTextInputPlaceholderColor
+                                        .withOpacity(0.25),
+                                  ),
+                                  focusColor: korangecolor,
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: kTextInputPlaceholderColor
+                                          .withOpacity(0.25),
+                                    ),
+                                  ),
+                                  focusedBorder: const UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: korangecolor,
+                                    ),
+                                  )),
+                            ),
+                            SizedBox(
+                              height: h * 0.01,
+                            ),
+                            TextFormField(
+                              keyboardType: TextInputType.emailAddress,
+                              controller: mail,
+                              cursorColor: korangecolor,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return null;
+                                } else if (!RegExp(
+                                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                    .hasMatch(value)) {
+                                  return "Enter a valid email";
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                  hintText: "E-Mail",
+                                  hintStyle: GoogleFonts.montserrat(
+                                    fontSize: 13,
+                                    color: kTextInputPlaceholderColor
+                                        .withOpacity(0.25),
+                                  ),
+                                  focusColor: korangecolor,
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: kTextInputPlaceholderColor
+                                          .withOpacity(0.25),
+                                    ),
+                                  ),
+                                  focusedBorder: const UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: korangecolor,
+                                    ),
+                                  )),
+                            ),
+                            SizedBox(
+                              height: h * 0.01,
+                            ),
+                            TextFormField(
+                              controller: carNumber,
+                              cursorColor: korangecolor,
 
-                                      });
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                        content: Text(date.isEmpty
-                                            ? "Pick date please"
-                                            : "Choose time slot"),
-                                      ));
-                                    } else {
-                                      if (_formKey.currentState!.validate()) {
+                              // inputFormatters: [FilteringTextInputFormatter.allow(RegExp("^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}\$"))],
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please enter car number";
+                                }
+                                if (value.length < 9) {
+                                  return "Please enter valid car no.";
+                                }
+
+                                // if(!RegExp("^[0-9]{2}[0-9]{4}[A-HJ-NP-Z]{2}\$").hasMatch(value)){
+                                //   return "Please enter correct formate";
+                                // }
+                                return null;
+                              },
+                              maxLength: 12,
+                              decoration: InputDecoration(
+                                  counterText: "",
+                                  hintText: "Car Number eg. RJ70 ZX 0000",
+                                  hintStyle: GoogleFonts.montserrat(
+                                    fontSize: 13,
+                                    color: kTextInputPlaceholderColor
+                                        .withOpacity(0.25),
+                                  ),
+                                  focusColor: korangecolor,
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: kTextInputPlaceholderColor
+                                          .withOpacity(0.25),
+                                    ),
+                                  ),
+                                  focusedBorder: const UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: korangecolor,
+                                    ),
+                                  )),
+                            ),
+                            SizedBox(
+                              height: h * 0.03,
+                            ),
+                            Text(
+                              "Special Remarks / Preferences",
+                              style: GoogleFonts.montserrat(
+                                  color: kTextInputPlaceholderColor),
+                            ),
+                            Container(
+                              height: h * 0.1,
+                              width: w,
+                              margin: EdgeInsets.only(top: h * 0.015),
+                              decoration: BoxDecoration(
+                                  color: kwhitecolor,
+                                  borderRadius:
+                                      BorderRadius.circular(h * 0.025),
+                                  boxShadow: [
+                                    // BoxShadow(
+                                    //   blurRadius: 5,
+                                    //   offset:
+                                    // )
+                                  ]),
+                              child: Card(
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(h * 0.015)),
+                                child: TextFormField(
+                                  minLines: 1,
+                                  maxLines: 5,
+                                  controller: option,
+                                  decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: "Optional",
+                                      hintStyle: GoogleFonts.montserrat(
+                                        fontSize: 13,
+                                        color: kTextInputPlaceholderColor
+                                            .withOpacity(0.25),
+                                      ),
+                                      contentPadding: EdgeInsets.all(h * 0.01)),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: h * 0.02,
+                            ),
+                            istaped
+                                ? loder
+                                : RRecctButton(
+                                    text: "continue".toUpperCase(),
+                                    style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.w700,
+                                        color: kwhitecolor),
+                                    h: h * 0.06,
+                                    buttonColor: korangecolor,
+                                    onTap: () async {
+                                      if (currentlocation) {
+                                        print("done");
                                         istaped = true;
                                         setState(() {});
-                                        bookSlot();
+                                        await determinePosition().then((value) {
+                                          lati = value.latitude.toString();
+                                          longi = value.longitude.toString();
+                                          print(lati);
+                                          print(longi);
+                                        }).whenComplete(() {
+                                          if (date.isEmpty || time.isEmpty) {
+                                            _controller.jumpTo(0);
+                                            istaped = false;
+                                            setState(() {
+                                              isTime =
+                                                  date.isEmpty ? false : true;
+                                            });
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                              content: Text(date.isEmpty
+                                                  ? "Pick date please"
+                                                  : "Choose time slot"),
+                                            ));
+                                          } else {
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              istaped = true;
+                                              bookSlot();
+                                              setState(() {});
+                                            } else {
+                                              istaped = false;
+                                              setState(() {});
+                                            }
+                                          }
+                                        });
                                       } else {
-                                        istaped = false;
-                                        setState(() {});
+                                        if (date.isEmpty || time.isEmpty) {
+                                          _controller.jumpTo(0);
+                                          istaped = false;
+                                          setState(() {
+                                            isTime =
+                                                date.isEmpty ? false : true;
+                                          });
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                            content: Text(date.isEmpty
+                                                ? "Pick date please"
+                                                : "Choose time slot"),
+                                          ));
+                                        } else {
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            istaped = true;
+                                            setState(() {});
+                                            bookSlot();
+                                          } else {
+                                            istaped = false;
+                                            setState(() {});
+                                          }
+                                        }
                                       }
-                                    }
-                                  }
-                                },
-                              )
-                      ]),
-                ),
+                                    },
+                                  )
+                          ]),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ));
+            ));
   }
 
   bookSlot() {

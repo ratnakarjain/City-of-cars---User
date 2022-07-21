@@ -189,7 +189,7 @@ Future editProfile(
     request.fields['Street'] = street.toString();
     request.fields['State'] = state.toString();
     request.fields['House'] = houseNo.toString();
-    request.fields['fcmToken'] = fcm.toString();
+    request.fields['fcmToken'] = "11";
     request.fields['PinCode'] = pincode.toString();
     // request.fields['type'] = "Scout";
     if (file != null) {
@@ -199,7 +199,7 @@ Future editProfile(
           File(file.path).lengthSync(),
           filename: file.path.split('/').last));
     }
-     if (document != null) {
+    if (document != null) {
       request.files.add(http.MultipartFile(
           'document',
           File(document.path).readAsBytes().asStream(),
@@ -219,8 +219,9 @@ Future editProfile(
         if (jsonRes["status"].toString() == "true") {
           print(jsonRes);
           prefs!.setString('name', jsonRes["data"]["name"].toString());
-          if(jsonRes["data"]["image"].toString()!=""&&jsonRes["data"]["image"].toString()!="null"){
-          prefs!.setString('image', jsonRes["data"]["image"].toString());
+          if (jsonRes["data"]["image"].toString() != "" &&
+              jsonRes["data"]["image"].toString() != "null") {
+            prefs!.setString('image', jsonRes["data"]["image"].toString());
           }
           prefs!.setString('mobile', jsonRes["data"]["mobile"].toString());
           prefs!.setString('street', jsonRes["data"]["Street"].toString());
@@ -459,7 +460,6 @@ Future slot(
   var url = Uri.parse(slotUrl);
   try {
     var response = await http.post(url, body: {
-
       "date": date,
       "time": time,
       "Street": street,
@@ -474,7 +474,7 @@ Future slot(
       "city": city,
       "latitude": leti,
       "longitude": longi,
-      "user":prefs!.getString("userId").toString()
+      "user": prefs!.getString("userId").toString()
     }, headers: {
       "Authorization": prefs!.getString('token').toString()
     });
@@ -763,7 +763,7 @@ Future getOrderhistory() async {
           OrderHistoryModel model = OrderHistoryModel();
           var list = data["data"][i];
           // model.carbrand=list["_id"] ;
-          model.invoice = list["invoice"]??"";
+          model.invoice = list["invoice"] ?? "";
           model.carimage = list["orderData"][0]["cars"]["image"].toString();
           model.carname = list["orderData"][0]["cars"]["cars"].toString();
           model.carbrand = list["orderData"][0]["brands"]["brands"].toString();
@@ -941,7 +941,7 @@ Future setApprooval(String id, String status, BuildContext context) async {
 }
 
 Future getjobcard(String id) async {
-         JobCard.data = null;
+  JobCard.data = null;
   var url = Uri.parse(getjobcardUrl + "?orderid=" + id);
   try {
     var respnse = await http.get(url,
@@ -953,8 +953,7 @@ Future getjobcard(String id) async {
       List newdata = data["data"];
       // JobCardModel model = JobCardModel();
       if (data["status"]) {
-        
-         JobCard.data = newdata.last;
+        JobCard.data = newdata.last;
         //   model.username = data["data"]["orderid"]["bookingdata"]["name"];
         //   model.address = data["data"]["orderid"]["bookingdata"]["houseNo"]+" "+data["data"]["orderid"]["bookingdata"]["Street"];
         //   model.city = data["data"]["orderid"]["bookingdata"]["houseNo"]+" "+data["data"]["orderid"]["bookingdata"]["Street"];
@@ -1063,6 +1062,7 @@ Future getusercars() async {
           mod.carfuelid = data["data"][i]["fuel"]["_id"].toString();
           mod.carbrandid = data["data"][i]["brand"]["_id"].toString();
           mod.carid = data["data"][i]["car"]["_id"].toString();
+          mod.id = data["data"][i]["_id"].toString();
           model.add(mod);
         }
         return model;
@@ -1416,7 +1416,7 @@ Future feedback(
       "ServiceQuality": review,
       "Optional": optional,
       "orderid": id,
-      "fcmToken":"1"
+      "fcmToken": "1"
     });
     if (respnse.statusCode == 200) {
       var data = jsonDecode(respnse.body);
@@ -1644,20 +1644,53 @@ Future getcmsdata() async {
 Future getfaq() async {
   var url = Uri.parse(faqUrl);
   try {
-    var respnse = await http.get(
-      url,
-
-      headers: {"Authorization": prefs!.getString('token').toString()}
-    );
+    var respnse = await http.get(url,
+        headers: {"Authorization": prefs!.getString('token').toString()});
     if (respnse.statusCode == 200) {
       var data = jsonDecode(respnse.body);
-      List<FaqModel> list =faqModelFromJson(jsonEncode(data["data"]));
-      
+      List<FaqModel> list = faqModelFromJson(jsonEncode(data["data"]));
+
       print("Success");
       return list;
-    }else{
+    } else {
       return <FaqModel>[];
     }
+  } catch (e) {
+    print("error $e");
+  }
+}
+
+Future getslot() async {
+  var url = Uri.parse(
+      getslotUrl + "?userid=" + prefs!.getString("userId").toString());
+  try {
+    var respnse = await http.get(url,
+        headers: {"Authorization": prefs!.getString('token').toString()});
+    if (respnse.statusCode == 200) {
+      var data = jsonDecode(respnse.body);
+      String id = data["data"][0]["_id"].toString();
+
+      print("Success");
+      return id;
+    } else {
+      return "";
+    }
+  } catch (e) {
+    print("error $e");
+  }
+}
+
+Future deletecardata(String id) async {
+  var url = Uri.parse(deletecardataUrl + "?id=" + id);
+  try {
+    var respnse = await http.post(url,
+        headers: {"Authorization": prefs!.getString('token').toString()});
+    if (respnse.statusCode == 200) {
+      var data = jsonDecode(respnse.body);
+
+      print("Success");
+      return data["status"];
+    } else {}
   } catch (e) {
     print("error $e");
   }

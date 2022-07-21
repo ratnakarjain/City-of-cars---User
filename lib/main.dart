@@ -14,6 +14,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'Screens/glance.dart';
 import 'Screens/messages.dart';
 import 'Screens/myhomepage.dart';
 import 'Screens/notification.dart';
@@ -481,6 +482,7 @@ class _MyAppState extends State<MyApp> {
               ),
         ),
         home: 
+        // const Glance(),
         // OrderDetails()
          id == "" || id == "null"
             ? const MyHomePage()

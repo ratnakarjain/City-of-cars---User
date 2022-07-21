@@ -146,7 +146,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             details.packs[index].planName.toString(),
                             style: GoogleFonts.montserrat(
                                 textStyle: TextStyle(
-                                    fontSize:  18,
+                                    fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                     color: index == selceted
                                         ? kTextInputPlaceholderColor
@@ -189,7 +189,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         "₹" + details.packs[index].planPrice,
                                         overflow: TextOverflow.ellipsis,
                                         style: GoogleFonts.montserrat(
-                                            fontSize: index == selceted ? 21 : 12,
+                                            fontSize:
+                                                index == selceted ? 21 : 12,
                                             textStyle: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 color: index == selceted
@@ -358,11 +359,25 @@ class _ProductDetailsState extends State<ProductDetails> {
                   } else {
                     Cart.packe = details.packs[selceted];
                     print(jsonEncode(Cart.packe) + "1235432");
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Slot(),
-                        ));
+                    getslot().then((value) {
+                      if (value != "") {
+                        Ids.slotid = value;
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Cart(
+                                getcart: false,
+                              ),
+                            ));
+                      } else {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Slot(),
+                            ));
+                        setState(() {});
+                      }
+                    });
                   }
                 }
               },
@@ -451,11 +466,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                                           Container(
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: w * 0.09),
-                                                constraints:des?const BoxConstraints(): BoxConstraints(
-                                                  maxHeight: h*0.02
-                                                ),
+                                            constraints: des
+                                                ? const BoxConstraints()
+                                                : BoxConstraints(
+                                                    maxHeight: h * 0.02),
                                             child: Text(
-                                              details .description,
+                                              details.description,
                                               // "sacjhavclavcahvcasvcuvkjdb cksdbvihdsbvisbcbdskv bsdhbvksdvbsdkvbhvsdbvksdbv kdfbvlkdfbvzdfkvbsdfklbv df;obhdsfb dfbh dfb hadf ubhadofbh dalfigbldifugblaidfubv difbgiadfugbviasfugv liasugvliasu vgadiugv adibvadilfubgliadfugbaldfibgadfiubgaidfubgaidfubg",
                                               style: GoogleFonts.montserrat(
                                                 fontSize: 12,
@@ -551,7 +567,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       margin: EdgeInsets.only(
                                         top: h * 0.01,
                                       ),
-                                      
                                       child: Column(
                                         children: [
                                           // CachedNetworkImage(
