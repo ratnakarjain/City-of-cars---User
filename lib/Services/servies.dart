@@ -1668,10 +1668,11 @@ Future getslot() async {
         headers: {"Authorization": prefs!.getString('token').toString()});
     if (respnse.statusCode == 200) {
       var data = jsonDecode(respnse.body);
-      String id = data["data"][0]["_id"].toString();
-
-      print("Success");
-      return id;
+      if (data["data"] != null) {
+        String id = data["data"]["_id"].toString();
+        return id;
+      }
+      return "";
     } else {
       return "";
     }

@@ -229,6 +229,8 @@ class _SelectCityState extends State<SelectCity> {
                                         Ids.cityid =
                                             snapshot.data[index]["_id"];
                                         pref!.setString("cityId", Ids.cityid);
+                                      pref!.setString("cityname",snapshot.data[index]["city"]);
+
                                         print("=======" + Ids.cityid);
                                         print(CarsData.city);
                                         print(CarsData.cityimage);
@@ -338,6 +340,8 @@ class _SelectCityState extends State<SelectCity> {
                                         Ids.cityid =
                                             snapshot.data[index]["_id"];
                                         pref!.setString("CarId", Ids.carid);
+                                      pref!.setString("cityname",snapshot.data[index]["city"]);
+
                                         print(CarsData.city);
                                         print(CarsData.cityimage);
                                         Navigator.push(

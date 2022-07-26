@@ -289,11 +289,11 @@ class _MyAppState extends State<MyApp> {
               navigatorKey.currentState!.pushNamed("/orderupdate");
 
               break;
-            case "orderassign":
+            case "order":
               navigatorKey.currentState!.pushNamed("/orderassign");
 
               break;
-              case "blog":
+              case "blogs":
               navigatorKey.currentState!.pushNamed("/blog");
 
               break;

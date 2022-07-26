@@ -27,16 +27,19 @@ class _NotificationsState extends State<Notifications> {
   List<String> typeList = [];
   // List<String> replyIdList = [];
   var preferences = Prefernece.pref;
-  List selected = [];
+  // List selected = [];
   int item = 10;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getData();
-    selected = List.generate(item, (index) {
-      return false;
-    });
+
+    // isread.add("false");
+    // preferences!.setStringList("isRead", isread);
+    // selected = List.generate(item, (index) {
+    //   return false;
+    // });
   }
 
   ScrollController _controller = ScrollController();
@@ -54,6 +57,7 @@ class _NotificationsState extends State<Notifications> {
       extendBodyBehindAppBar: true,
       backgroundColor: kLightOrangeBgColor,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: kwhitecolor,
         foregroundColor: kTextInputPlaceholderColor,
         elevation: 0,
@@ -88,15 +92,25 @@ class _NotificationsState extends State<Notifications> {
                           return GestureDetector(
                             onTap: () {
                               print("ontap====");
-                              switch (typeList[index].toString().toLowerCase()) {
-                                case "editprofile":
-                                  print("editprofile");
+                              isread[index] = "true";
+                              preferences!.setStringList("isRead", isread);
+                              switch (
+                                  typeList[index].toString().toLowerCase()) {
+                                case "presets":
+                                  print("presets");
+                                  Navigator.pushAndRemoveUntil<dynamic>(
+                                    context,
+                                    MaterialPageRoute<dynamic>(
+                                      builder: (BuildContext context) =>
+                                          BottomNavBar(
+                                        index: 2,
+                                      ),
+                                    ),
+                                    (route) =>
+                                        false, //if you want to disable back feature set to false
+                                  );
 
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: ((context) =>
-                                              const EditProfile())));
+                                  
                                   break;
                                 // case "pendingcart":
 
@@ -119,14 +133,32 @@ class _NotificationsState extends State<Notifications> {
                                 // Navigator.push(context, MaterialPageRoute(builder: ((context) => Messages())));
 
                                 //   break;
+                                case "order":
+                                  Navigator.pushAndRemoveUntil<dynamic>(
+                                    context,
+                                    MaterialPageRoute<dynamic>(
+                                      builder: (BuildContext context) =>
+                                          BottomNavBar(
+                                        index: 2,
+                                      ),
+                                    ),
+                                    (route) =>
+                                        false, //if you want to disable back feature set to false
+                                  );
+                                  break;
 
-                                case "blog":
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: ((context) => BottomNavBar(
-                                                index: 1,
-                                              ))));
+                                case "blogs":
+                                  Navigator.pushAndRemoveUntil<dynamic>(
+                                    context,
+                                    MaterialPageRoute<dynamic>(
+                                      builder: (BuildContext context) =>
+                                          BottomNavBar(
+                                        index: 1,
+                                      ),
+                                    ),
+                                    (route) =>
+                                        false, //if you want to disable back feature set to false
+                                  );
 
                                   break;
                                 case "":
@@ -222,7 +254,7 @@ class _NotificationsState extends State<Notifications> {
   }
 
   Future<void> getData() async {
-    List<String> isRead = [];
+    // List<String> isRead = [];
 
     if (preferences!.containsKey("titleList")) {
       titleList = preferences!.getStringList("titleList")!;
@@ -231,15 +263,16 @@ class _NotificationsState extends State<Notifications> {
       timeList = preferences!.getStringList("timeList")!;
       typeList = preferences!.getStringList("typeList")!;
       // replyIdList = preferences.getStringList("replyIdList")!;
-      isread.forEach((element) {
-        isRead.add("true");
-      });
+      // isread.forEach((element) {
+      //   isRead.add("true");
+      // });
     }
     print("title list length " + titleList.length.toString() + "^^");
     print("title list length " + titleList.toString() + "^^");
     print("title list length " + timeList.toString() + "^^");
     print("type list length " + typeList.toString() + "^^");
-    preferences!.setStringList("isRead", isRead);
+    print("is read list length " + isread.toString() + "^^");
+    preferences!.setStringList("isRead", isread);
     preferences!.commit();
     // notificationCount = 0;
     // context.read<Counter>().getNotify();

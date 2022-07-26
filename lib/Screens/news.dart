@@ -29,6 +29,7 @@ class _NewsState extends State<News> {
       setState(() {
         length1 = blogs.length + 1;
         length2 = blogs.length + 1;
+        blogs = blogs.reversed.toList();
       });
     });
     // _modalBottomSheetMenu();
@@ -44,6 +45,7 @@ class _NewsState extends State<News> {
       backgroundColor: kwhitecolor,
       appBar: AppBar(
         elevation: 0,
+        automaticallyImplyLeading: false,
         backgroundColor: kwhitecolor,
         foregroundColor: kTextInputPlaceholderColor,
         title: Text(

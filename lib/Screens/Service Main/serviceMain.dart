@@ -170,14 +170,16 @@ class _ServiceMainState extends State<ServiceMain> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(h * 0.18),
         child: AppBar(
+        automaticallyImplyLeading: false,
+
           backgroundColor: kTransparent,
           elevation: 0,
           foregroundColor: kwhitecolor,
           centerTitle: false,
           title: Text(
-            prefs!.getString("state").toString() == "null"
+            prefs!.getString("cityname").toString() == "null"
                 ? "Delhi"
-                : prefs!.getString("state").toString(),
+                : prefs!.getString("cityname").toString(),
             style: GoogleFonts.montserrat(
                 textStyle: const TextStyle(
                     fontWeight: FontWeight.bold, color: kwhitecolor)),
@@ -1523,21 +1525,35 @@ class _ServiceMainState extends State<ServiceMain> {
                   MaterialPageRoute(builder: ((context) => const Messages())));
 
               break;
-            // case "feedback":
+            case "order":
+              Navigator.pushAndRemoveUntil<dynamic>(
+                context,
+                MaterialPageRoute<dynamic>(
+                  builder: (BuildContext context) => BottomNavBar(
+                    index: 2,
+                  ),
+                ),
+                (route) =>
+                    false, //if you want to disable back feature set to false
+              );
+              break;
+            case "otp":
+              Navigator.push(context,
+                  MaterialPageRoute(builder: ((context) => Messages())));
 
-            //   break;
-            // case "otp":
-            // Navigator.push(context, MaterialPageRoute(builder: ((context) => Messages())));
+              break;
 
-            //   break;
-
-            case "blog":
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: ((context) => BottomNavBar(
-                            index: 1,
-                          ))));
+            case "blogs":
+              Navigator.pushAndRemoveUntil<dynamic>(
+                context,
+                MaterialPageRoute<dynamic>(
+                  builder: (BuildContext context) => BottomNavBar(
+                    index: 1,
+                  ),
+                ),
+                (route) =>
+                    false, //if you want to disable back feature set to false
+              );
 
               break;
             case "":

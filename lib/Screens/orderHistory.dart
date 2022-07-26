@@ -74,6 +74,7 @@ class _OrderHistoryState extends State<OrderHistory> {
     return Scaffold(
       backgroundColor: kbg2,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: kwhitecolor,
         foregroundColor: kTextInputPlaceholderColor,
         elevation: 0,

@@ -39,12 +39,12 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
 
   @override
   Widget build(BuildContext context) {
-    ordersuccess(widget.id).then((value) {
-      data = value;
-      print("====="+data.toString());
-      print("====="+data["orderData"].first["bookingdata"]["name"]);
-      // setState(() {});
-    });
+    // ordersuccess(widget.id).then((value) {
+    //   data = value;
+    //   print("====="+data.toString());
+    //   print("====="+data["orderData"].first["bookingdata"]["name"]);
+    //   // setState(() {});
+    // });
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return WillPopScope(

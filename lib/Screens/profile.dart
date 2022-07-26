@@ -20,6 +20,7 @@ import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Utils/preference.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'Service Main/cart.dart';
@@ -87,8 +88,8 @@ class _ProfileState extends State<Profile> {
   int isSelected = 0;
   List<CarsModel> modellist = [];
   bool isLoading = true;
-  getusercarsdata(){
- getusercars().then((value) {
+  getusercarsdata() {
+    getusercars().then((value) {
       setState(() {
         modellist.clear();
         modellist.addAll(value);
@@ -97,6 +98,7 @@ class _ProfileState extends State<Profile> {
       });
     });
   }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -108,7 +110,6 @@ class _ProfileState extends State<Profile> {
       setState(() {});
     }
     getusercarsdata();
-   
   }
 
   @override
@@ -118,6 +119,7 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       backgroundColor: kwhitecolor,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: kwhitecolor,
         foregroundColor: kTextInputPlaceholderColor,
         elevation: 0,
@@ -256,81 +258,100 @@ class _ProfileState extends State<Profile> {
                                                   ])),
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: CircleAvatar(
-                                              radius: h * 0.07,
-                                              backgroundColor:
-                                                  index + currentCar + 1 ==
+                                            child: Stack(
+                                              children: [
+                                                CircleAvatar(
+                                                  radius: h * 0.07,
+                                                  backgroundColor: index +
+                                                              currentCar +
+                                                              1 ==
                                                           isSelected
                                                       ? korangecolor
                                                       : kgrey.withOpacity(0.5),
-                                              child: InkWell(
-                                                onLongPress: () {
-                                                  print("dvkhsdvudhvbcuw");
-                                                  deletecar(currentCar + index);
-                                                },
-                                                onTap: () {
-                                                  isSelected =
-                                                      index + currentCar + 1;
-                                                  String js = jsonEncode(
-                                                      modellist[
-                                                          isSelected - 1]);
-                                                  pref!
-                                                      .setString("usercar", js);
-                                                  pref!.setInt(
-                                                      "CCar", isSelected);
-                                                  Ids.brandid =
-                                                      modellist[isSelected - 1]
+                                                  child: InkWell(
+                                                    onLongPress: () {
+                                                      print("dvkhsdvudhvbcuw");
+                                                      deletecar(
+                                                          currentCar + index);
+                                                    },
+                                                    onTap: () {
+                                                      isSelected = index +
+                                                          currentCar +
+                                                          1;
+                                                      String js = jsonEncode(
+                                                          modellist[
+                                                              isSelected - 1]);
+                                                      pref!.setString(
+                                                          "usercar", js);
+                                                      pref!.setInt(
+                                                          "CCar", isSelected);
+                                                      Ids.brandid = modellist[
+                                                              isSelected - 1]
                                                           .carbrandid
                                                           .toString();
-                                                  Ids.carid =
-                                                      modellist[isSelected - 1]
+                                                      Ids.carid = modellist[
+                                                              isSelected - 1]
                                                           .carid
                                                           .toString();
-                                                  Ids.cityid =
-                                                      modellist[isSelected - 1]
+                                                      Ids.cityid = modellist[
+                                                              isSelected - 1]
                                                           .cityid
                                                           .toString();
-                                                  Ids.fuelid =
-                                                      modellist[isSelected - 1]
+                                                      Ids.fuelid = modellist[
+                                                              isSelected - 1]
                                                           .carfuelid
                                                           .toString();
-                                                  print(Ids.cityid +
-                                                      "  " +
-                                                      Ids.carid +
-                                                      "  " +
-                                                      Ids.brandid +
-                                                      "  " +
-                                                      Ids.fuelid);
+                                                      print(Ids.cityid +
+                                                          "  " +
+                                                          Ids.carid +
+                                                          "  " +
+                                                          Ids.brandid +
+                                                          "  " +
+                                                          Ids.fuelid);
 
-                                                  pref!.setString(
-                                                      "CarId", Ids.carid);
-                                                  pref!.setString(
-                                                      "cityId", Ids.cityid);
-                                                  pref!.setString(
-                                                      "fuelId", Ids.fuelid);
-                                                  pref!.setString(
-                                                      "brandId", Ids.brandid);
+                                                      pref!.setString(
+                                                          "CarId", Ids.carid);
+                                                      pref!.setString(
+                                                          "cityId", Ids.cityid);
+                                                      pref!.setString(
+                                                          "fuelId", Ids.fuelid);
+                                                      pref!.setString("brandId",
+                                                          Ids.brandid);
 
-                                                  print(pref
-                                                      ?.getString("usercar"));
-                                                  print(pref?.getInt("CCar"));
+                                                      print(pref?.getString(
+                                                          "usercar"));
+                                                      print(
+                                                          pref?.getInt("CCar"));
 
-                                                  // print(js);
-                                                  setState(() {});
-                                                },
-                                                child: CircleAvatar(
-                                                  radius: h * 0.06,
-                                                  backgroundColor: kwhitecolor,
-                                                  backgroundImage: NetworkImage(
-                                                      modellist[index +
-                                                              currentCar]
-                                                          .carimage),
-                                                  child: Center(
-                                                      // child: Image.network(
-                                                      //     "${modellist[index + currentCar].carimage}"),
-                                                      ),
+                                                      // print(js);
+                                                      setState(() {});
+                                                    },
+                                                    child: CircleAvatar(
+                                                      radius: h * 0.06,
+                                                      backgroundColor:
+                                                          kwhitecolor,
+                                                      backgroundImage:
+                                                          NetworkImage(
+                                                              modellist[index +
+                                                                      currentCar]
+                                                                  .carimage),
+                                                      child: Center(
+                                                          // child: Image.network(
+                                                          //     "${modellist[index + currentCar].carimage}"),
+                                                          ),
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
+                                                Positioned(
+                                                    right: 5,
+                                                    bottom: 5,
+                                                    child: InkWell(
+                                                        onTap: () {},
+                                                        child: Image.asset(
+                                                          "assets/images/delete-round-button.png",
+                                                          height: h * 0.03,
+                                                        )))
+                                              ],
                                             ),
                                           ),
                                         ],
@@ -953,6 +974,11 @@ class _ProfileState extends State<Profile> {
                             pref!.remove("CCar");
                             prefs!.remove("CarId");
 
+                            // pref!.remove("titleList");
+                            // pref!.remove("bodyList");
+                            // pref!.remove("isRead");
+                            // pref!.remove("timeList");
+
                             pref!.remove(
                               "fuelId",
                             );
@@ -1049,10 +1075,10 @@ class _ProfileState extends State<Profile> {
                           onTap: () {
                             deletecardata(modellist[cindex].id).then((value) {
                               Navigator.pop(context);
-                              currentCar = currentCar-1;
+                              currentCar = currentCar - 1;
                               isLoading = true;
                               setState(() {});
-                             getusercarsdata();
+                              getusercarsdata();
                             });
                           },
                           child: Center(
