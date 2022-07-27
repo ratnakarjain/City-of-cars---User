@@ -169,7 +169,7 @@ class _FAQSState extends State<FAQS> {
                                   ),
                                   builder: (_, collapsed, expanded) {
                                     return Padding(
-                                      padding: EdgeInsets.only(
+                                      padding: const EdgeInsets.only(
                                           left: 10, right: 10, bottom: 10),
                                       child: Expandable(
                                         collapsed: collapsed,

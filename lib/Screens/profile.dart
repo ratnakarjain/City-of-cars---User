@@ -93,7 +93,9 @@ class _ProfileState extends State<Profile> {
       setState(() {
         modellist.clear();
         modellist.addAll(value);
-        print(modellist);
+        pref!.setString("usercarsData", jsonEncode(modellist));
+        // print(jsonEncode(modellist));
+        // print(modellist);
         isLoading = false;
       });
     });
@@ -269,11 +271,6 @@ class _ProfileState extends State<Profile> {
                                                       ? korangecolor
                                                       : kgrey.withOpacity(0.5),
                                                   child: InkWell(
-                                                    onLongPress: () {
-                                                      print("dvkhsdvudhvbcuw");
-                                                      deletecar(
-                                                          currentCar + index);
-                                                    },
                                                     onTap: () {
                                                       isSelected = index +
                                                           currentCar +
@@ -346,7 +343,12 @@ class _ProfileState extends State<Profile> {
                                                     right: 5,
                                                     bottom: 5,
                                                     child: InkWell(
-                                                        onTap: () {},
+                                                        onTap: () {
+                                                          print(
+                                                              "dvkhsdvudhvbcuw");
+                                                          deletecar(currentCar +
+                                                              index);
+                                                        },
                                                         child: Image.asset(
                                                           "assets/images/delete-round-button.png",
                                                           height: h * 0.03,
@@ -1077,8 +1079,17 @@ class _ProfileState extends State<Profile> {
                               Navigator.pop(context);
                               currentCar = currentCar - 1;
                               isLoading = true;
-                              setState(() {});
-                              getusercarsdata();
+                              Navigator.pushAndRemoveUntil<dynamic>(
+                                context,
+                                MaterialPageRoute<dynamic>(
+                                  builder: (BuildContext context) =>
+                                      BottomNavBar(
+                                    index: 3,
+                                  ),
+                                ),
+                                (route) =>
+                                    false, //if you want to disable back feature set to false
+                              );
                             });
                           },
                           child: Center(

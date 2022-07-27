@@ -534,7 +534,7 @@ class _PaymentState extends State<Payment> {
                                     children: [
                                       RichText(
                                           text: TextSpan(
-                                        text: "Address",
+                                        text: "",
                                         style: GoogleFonts.montserrat(
                                             fontSize: 11,
                                             height: 2,

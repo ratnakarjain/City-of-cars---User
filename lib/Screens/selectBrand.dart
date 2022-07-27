@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -5,10 +6,12 @@ import 'package:cityofcars/Screens/Service%20Main/serviceMain.dart';
 import 'package:cityofcars/Services/url.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
+import 'package:cityofcars/Utils/preference.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../Services/models/usercardetailsmodel.dart';
 import '../Services/servies.dart';
 import 'bottomnavBar.dart';
 import 'selectFuel.dart';
@@ -465,7 +468,7 @@ class _SelectBrandState extends State<SelectBrand> {
                                       padding: EdgeInsets.only(top: h * 0.25),
                                       child: loder,
                                     );
-                                    
+
                                     //  Expanded(child: Container(
                                     // height: h*0.7,
                                     // child:Padding(
@@ -576,21 +579,23 @@ class _SelectBrandState extends State<SelectBrand> {
                                   shots = snapshot.data.length;
                                   return GestureDetector(
                                     onTap: () {
-                                      CarsData.name =
-                                          snapshot.data[index]["cars"];
-                                      CarsData.carimage =
-                                          snapshot.data[index]["image"];
-                                      Ids.carid = snapshot.data[index]["_id"];
-                                      prefs!.setString("CarId", Ids.carid);
-                                      print(CarsData.brand);
-                                      print(CarsData.brandimage);
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const SelectFuel(),
-                                          ));
-                                      setState(() {});
+                                      if (chack(snapshot.data[index]["_id"])) {
+                                        CarsData.name =
+                                            snapshot.data[index]["cars"];
+                                        CarsData.carimage =
+                                            snapshot.data[index]["image"];
+                                        Ids.carid = snapshot.data[index]["_id"];
+                                        prefs!.setString("CarId", Ids.carid);
+                                        print(CarsData.brand);
+                                        print(CarsData.brandimage);
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const SelectFuel(),
+                                            ));
+                                        setState(() {});
+                                      }
                                     },
                                     child: RRectCard(
                                       h: h * 0.18,
@@ -652,6 +657,24 @@ class _SelectBrandState extends State<SelectBrand> {
       isSelected = false;
       setState(() {});
     });
+  }
+
+  chack(String id) {
+    List modellist = [];
+    modellist.addAll(
+        jsonDecode(Prefernece.pref!.getString("usercarsData").toString()));
+    for (int i = 0; i < modellist.length; i++) {
+      if (id == modellist[i]["carid"].toString()) {
+        print("showing snacbar");
+        ScaffoldMessenger.of(context).showSnackBar( SnackBar(
+            behavior: SnackBarBehavior.floating,
+            margin: EdgeInsets.only(bottom: h*0.9),
+            content: const Text("This Car is already added")));
+
+        return false;
+      }
+    }
+    return true;
   }
 }
 

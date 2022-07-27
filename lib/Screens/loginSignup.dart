@@ -443,7 +443,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
                           },
                           decoration: InputDecoration(
                             counterText: "",
-                            prefixText: "+91",
+                            prefixText: "+91 ",
                             hintText: "Mobile No.*",
                             hintStyle: TextStyle(
                                 color: kTextInputPlaceholderColor
@@ -453,6 +453,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
                                   color: kTextInputPlaceholderColor
                                       .withOpacity(0.3)),
                             ),
+                            
 
                             // labelText: "Mobile No.",
                             // labelStyle: TextStyle(
@@ -673,7 +674,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
       var response = await http.post(url, body: {
         'name': name.text,
         'email': mail.text,
-        'mobile': mobile.text,
+        'mobile':"91"+ mobile.text,
         "type": "customer"
         // "role":"624c7a3c9b4a12e570e35d4f"
       });
@@ -683,16 +684,16 @@ class _LoginSignUpState extends State<LoginSignUp> {
         print("success");
         if (jsonResponse["status"]) {
             prefs!.setString('token', jsonResponse["token"].toString());
-            prefs!.setString('id', jsonResponse["data"]["_id"].toString());
-            prefs!.setString('name', jsonResponse["data"]["name"].toString());
-            prefs!.setString('image', jsonResponse["data"]["image"].toString());
-            prefs!.setString('mobile', jsonResponse["data"]["mobile"].toString());
-            prefs!.setString('street', jsonResponse["data"]["Street"].toString());
-            prefs!.setString('state', jsonResponse["data"]["State"].toString());
-            prefs!.setString('pincode', jsonResponse["data"]["PinCode"].toString());
-            prefs!.setString('email', jsonResponse["data"]["email"].toString());
+            prefs!.setString('id', jsonResponse["sesdata"]["_id"].toString());
+            prefs!.setString('name', jsonResponse["sesdata"]["name"].toString());
+            prefs!.setString('image', jsonResponse["sesdata"]["image"].toString());
+            prefs!.setString('mobile', jsonResponse["sesdata"]["mobile"].toString());
+            prefs!.setString('street', jsonResponse["sesdata"]["Street"].toString());
+            prefs!.setString('state', jsonResponse["sesdata"]["State"].toString());
+            prefs!.setString('pincode', jsonResponse["sesdata"]["PinCode"].toString());
+            prefs!.setString('email', jsonResponse["sesdata"]["email"].toString());
           token = prefs!.getString("token")!;
-          Ids.userid = jsonResponse["data"]["_id"];
+          Ids.userid = jsonResponse["sesdata"]["_id"];
 
           print("$token");
           print(Ids.userid);

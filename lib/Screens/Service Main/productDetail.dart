@@ -32,6 +32,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   bool service = false;
   int selceted = 0;
   List terms = [];
+  bool booknow = false;
   List backimage = [
     "https://wallpaperaccess.com/full/33110.jpg",
     "https://wallpaperaccess.com/full/14444.jpg",
@@ -336,7 +337,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 // ),
                 ),
             RRecctButton2(
-              onTap: () {
+              onTap:booknow?(){}: () {
                 if (!service && !basic) {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text("Please select price"),
@@ -359,6 +360,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                   } else {
                     Cart.packe = details.packs[selceted];
                     print(jsonEncode(Cart.packe) + "1235432");
+                    booknow=true;
+                    setState(() {
+                      
+                    });
                     getslot().then((value) {
                       if (value != "") {
                         Ids.slotid = value;
@@ -369,13 +374,17 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 getcart: false,
                               ),
                             ));
+                    booknow=false;
+
                       } else {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => const Slot(),
                             ));
-                        setState(() {});
+                        setState(() {
+                          booknow=false;
+                        });
                       }
                     });
                   }
@@ -385,22 +394,25 @@ class _ProductDetailsState extends State<ProductDetails> {
               w: w * 0.8,
               radius: h * 0.02,
               buttonColor: kGreenColor,
-              widget: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Book now ".toUpperCase(),
-                      textScaleFactor: 1,
-                      style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w500, color: kwhitecolor)),
-                  SizedBox(
-                    width: w * 0.04,
-                  ),
-                  Image.asset(
-                    "assets/images/doublArrow.png",
-                    scale: 0.8,
-                  ),
-                ],
-              ),
+              widget: booknow
+                  ? loder
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Book now ".toUpperCase(),
+                            textScaleFactor: 1,
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w500,
+                                color: kwhitecolor)),
+                        SizedBox(
+                          width: w * 0.04,
+                        ),
+                        Image.asset(
+                          "assets/images/doublArrow.png",
+                          scale: 0.8,
+                        ),
+                      ],
+                    ),
             ),
             Container(
               margin: EdgeInsets.only(top: h * 0.03),

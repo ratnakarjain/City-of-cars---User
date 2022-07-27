@@ -239,7 +239,9 @@ Future editProfile(
           print(prefs!.getString('email'));
 
           ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(jsonRes["message"].toString())));
+              SnackBar(
+            behavior: SnackBarBehavior.floating,
+                content: Text(jsonRes["message"].toString())));
           // Navigator.of(context).pop();
           // Navigator.push(
           // context,
@@ -249,11 +251,15 @@ Future editProfile(
 
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(jsonRes["message"].toString())));
+              SnackBar(
+            behavior: SnackBarBehavior.floating,
+                content: Text(jsonRes["message"].toString())));
         }
       } else {
         ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("Please try later")));
+            .showSnackBar(const SnackBar(
+            behavior: SnackBarBehavior.floating,
+              content: Text("Please try later")));
       }
     });
   } catch (e) {

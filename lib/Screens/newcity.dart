@@ -349,7 +349,7 @@ class _NewCityState extends State<NewCity> {
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(const SnackBar(
                                               content:
-                                                  Text("This is your privious city"),
+                                                  Text("This is your previous city"),
                                             ));
                                           }
                                         : () {

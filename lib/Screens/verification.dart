@@ -164,6 +164,11 @@ class _VerficationState extends State<Verfication> {
         }
 
         return response.body;
+      }else{
+         var jsonResponse = convert.jsonDecode(response.body);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(jsonResponse["message"]),
+          ));
       }
     } catch (e) {
       print("error $e");
