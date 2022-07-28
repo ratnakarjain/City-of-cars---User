@@ -38,9 +38,9 @@ class OrdersPlans{
         planName: json["selectplan"][0]["planName"],
         plansubName: json["selectplan"][0]["subPlanName"],
         planPrice: json["selectplan"][0]["typeprice"],
-        // month: json["Plans"]["month"],
-        // hour: json["Plans"]["hours"],
-        // list: List<ServiceList>.from(json["Plans"]["services_id"].map((x) => ServiceList.fromJson(x))),
+        month: json["Plans"]["month"],
+        hour: json["Plans"]["hours"],
+        list: List<ServiceList>.from(json["Plans"]["services_id"].map((x) => ServiceList.fromJson(x))),
     );
 }
 // List<ServiceList> serviceListModelFromJson(String str) => List<ServiceList>.from(json.decode(str).map((x) => OrdersPlans.fromJson(x)));

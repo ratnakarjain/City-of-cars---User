@@ -181,7 +181,7 @@ class _InsideCategoryState extends State<InsideCategory>
                                   image: NetworkImage(
                                     images[index],
                                   ),
-                                  fit: BoxFit.cover)),
+                                  fit: BoxFit.contain)),
                         )),
                 Positioned(
                   bottom: 0,

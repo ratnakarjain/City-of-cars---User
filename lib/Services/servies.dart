@@ -388,6 +388,7 @@ Future getSubcategory(String _id) async {
           pl.isrec = data["plans"][i]["status"].toString();
           pl.label = data["plans"][i]["label"].toString();
           pl.months = data["plans"][i]["month"].toString();
+          pl.document = data["plans"][i]["document"].toString();
           pl.planimage = data["plans"][i]["image"].toString();
           // pl.planname=data["plans"][i]["planName"].toString();
           // pl.planpricdes=data["plans"][i]["typename"].toString();
@@ -776,7 +777,7 @@ Future getOrderhistory() async {
           model.deliverydate = list["date"].toString();
           model.deliverytime = list["time"].toString();
           // model.details=list["_id"];
-          // model.ordersPlans.addAll( ordersPlanModelFromJson(jsonEncode(list["orderData"])));
+          model.ordersPlans.addAll( ordersPlanModelFromJson(jsonEncode(list["orderData"])));
           model.orderid = list["orderid"].toString();
           model.id = list["_id"].toString();
           if (list["orderData"][0]["selectplan"][0].toString() != "null") {

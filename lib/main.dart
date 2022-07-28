@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:cityofcars/Screens/bottomnavBar.dart';
 import 'package:cityofcars/Screens/editProfile.dart';
 import 'package:cityofcars/Screens/orderHistoryDetails.dart';
+import 'package:cityofcars/Screens/splash.dart';
 
 import 'package:cityofcars/Utils/constants.dart';
 
@@ -481,12 +482,12 @@ class _MyAppState extends State<MyApp> {
                 primary: korangecolor,
               ),
         ),
-        home: 
+        home: const Splash()
         // const Glance(),
         // OrderDetails()
-         id == "" || id == "null"
-            ? const MyHomePage()
-            : BottomNavBar(index: 0),
+        //  id == "" || id == "null"
+        //     ? const MyHomePage()
+        //     : BottomNavBar(index: 0),
       ),
     );
   }

@@ -129,7 +129,12 @@ class _NewsState extends State<News> {
                                           ),
                                           Text(
                                             // "8 hrs",
-                                            DateTime.parse(blogs[index]
+                                          //  DateTime.parse(blogs[index]
+                                          //               .createDate
+                                          //               .toString())
+                                          //           .day
+                                          //           .toString()+"/"+
+                                                     DateTime.parse(blogs[index]
                                                         .createDate
                                                         .toString())
                                                     .hour

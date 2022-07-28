@@ -199,7 +199,7 @@ class _ServiceMainState extends State<ServiceMain> {
                           decoration: BoxDecoration(
                               image: DecorationImage(
                                   image: NetworkImage(images[index]),
-                                  fit: BoxFit.cover)),
+                                  fit: BoxFit.contain)),
                         )),
                 Positioned(
                   bottom: 0,

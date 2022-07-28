@@ -19,6 +19,7 @@ class PlanModel {
   String isrec = "";
   String categoryId = "";
   String cars = "";
+  String document = "";
   List<Packes> packs=[];
   List<IncludeMod> includes = [];
   Map<String, dynamic> toJson() {
@@ -27,6 +28,7 @@ class PlanModel {
     map['subcatid'] = subcatid;
     map['label']=label;
     map['planimage']=planimage;
+    map['document']=document;
     map['planname']=planname;
     map['subplanname']=subplanname;
     map['planprice']=planprice;

@@ -18,6 +18,7 @@ import '../Utils/Shapes/widgets.dart';
 import '../Utils/functions.dart';
 import 'Service Main/cart.dart';
 import 'bottomnavBar.dart';
+import 'orderHistoryDetails.dart';
 
 class OrderHistory extends StatefulWidget {
   const OrderHistory({Key? key}) : super(key: key);
@@ -124,7 +125,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                     context,
                                     MaterialPageRoute(
                                         builder: ((context) => JobCard(
-                                            orderid: datalist[currentPage].id,
+                                              orderid: datalist[currentPage].id,
                                             ))));
                               },
                               text: datalist[currentPage].status != "" &&
@@ -167,12 +168,11 @@ class _OrderHistoryState extends State<OrderHistory> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => Tracking(
-                                          orderid: datalist.first.id,
-                                          date: datalist[currentPage]
+                                            orderid: datalist.first.id,
+                                            date: datalist[currentPage]
                                                 .deliverydate,
                                             time: datalist[currentPage]
-                                                .deliverytime
-                                        ),
+                                                .deliverytime),
                                       ));
                                 },
                                 child: Stack(
@@ -540,12 +540,11 @@ class _OrderHistoryState extends State<OrderHistory> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) => Tracking(
-                                              orderid: datalist[index].id,
-                                              date: datalist[currentPage]
-                                                .deliverydate,
-                                            time: datalist[currentPage]
-                                                .deliverytime
-                                            ),
+                                                orderid: datalist[index].id,
+                                                date: datalist[currentPage]
+                                                    .deliverydate,
+                                                time: datalist[currentPage]
+                                                    .deliverytime),
                                           ));
                                     },
                                     child: Stack(
@@ -1019,16 +1018,23 @@ class _OrderHistoryState extends State<OrderHistory> {
 
                         RRecctButton(
                           onTap: () {
-                            Navigator.pushAndRemoveUntil<dynamic>(
-                              context,
-                              MaterialPageRoute<dynamic>(
-                                builder: (BuildContext context) => BottomNavBar(
-                                  index: 0,
-                                ),
-                              ),
-                              (route) =>
-                                  false, //if you want to disable back feature set to false
-                            );
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => OrderDetails(
+                                          ordersPlans:
+                                              datalist[currentPage].ordersPlans,
+                                        )));
+                            // Navigator.pushAndRemoveUntil<dynamic>(
+                            //   context,
+                            //   MaterialPageRoute<dynamic>(
+                            //     builder: (BuildContext context) => BottomNavBar(
+                            //       index: 0,
+                            //     ),
+                            //   ),
+                            //   (route) =>
+                            //       false, //if you want to disable back feature set to false
+                            // );
                           },
                           text: "BOOK AGAIN",
                           style: GoogleFonts.montserrat(

@@ -95,7 +95,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   image: NetworkImage(
                                     images[index],
                                   ),
-                                  fit: BoxFit.cover)),
+                                  fit: BoxFit.contain)),
                         )),
                 Positioned(
                   bottom: 0,
@@ -441,15 +441,20 @@ class _ProductDetailsState extends State<ProductDetails> {
                         Padding(
                           padding:
                               EdgeInsets.only(top: h * 0.05, left: w * 0.051),
-                          child: Label(
-                            text: "description",
-                            color: korangecolor,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: w * 0.05, vertical: h * 0.005),
-                            textStyle: GoogleFonts.montserrat(
-                                fontSize: 9,
-                                fontWeight: FontWeight.w500,
-                                color: kwhitecolor),
+                          child: Row(
+                            children: [
+                              Label(
+                                text: "description",
+                                color: korangecolor,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: w * 0.05, vertical: h * 0.005),
+                                textStyle: GoogleFonts.montserrat(
+                                    fontSize: 9,
+                                    fontWeight: FontWeight.w500,
+                                    color: kwhitecolor),
+                              ),
+                              // Icon(Icons.pages)
+                            ],
                           ),
                         ),
                         SizedBox(

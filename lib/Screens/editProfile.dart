@@ -40,6 +40,7 @@ class _EditProfileState extends State<EditProfile> {
   bool isImagePicked = false;
   String fcm = "";
   String filepath = "";
+  bool savingChanges = false;
   var file2;
   @override
   void initState() {
@@ -515,11 +516,22 @@ class _EditProfileState extends State<EditProfile> {
               SizedBox(
                 height: h * 0.04,
               ),
+              // Container(
+                    //   height: h*0.06,
+                    //   width: w*0.9,
+                    //   decoration: BoxDecoration(
+                    //     color: kwhitecolor.withOpacity(0.3)
+                    //   ),
+                    //   padding: EdgeInsets.all(h*0.01),
+                    //   child: loder,
+                    // ),
               Center(
-                child: RRecctButton(
+                child:savingChanges?loder: RRecctButton(
                   onTap: () {
                     bool validate = isValidation();
                     if (validate) {
+                      savingChanges = true;
+                      setState(() {});
                       editProfile(
                         id,
                         name.text,
@@ -533,17 +545,20 @@ class _EditProfileState extends State<EditProfile> {
                         file == null ? null : File(file),
                         file2 == null ? null : file2,
                         context,
-                      ).whenComplete(() =>
-                          Navigator.pushAndRemoveUntil<dynamic>(
-                            context,
-                            MaterialPageRoute<dynamic>(
-                              builder: (BuildContext context) => BottomNavBar(
-                                index: 0,
-                              ),
+                      ).whenComplete(() {
+                        savingChanges = false;
+                        setState(() {});
+                        Navigator.pushAndRemoveUntil<dynamic>(
+                          context,
+                          MaterialPageRoute<dynamic>(
+                            builder: (BuildContext context) => BottomNavBar(
+                              index: 0,
                             ),
-                            (route) =>
-                                false, //if you want to disable back feature set to false
-                          ));
+                          ),
+                          (route) =>
+                              false, //if you want to disable back feature set to false
+                        );
+                      });
                     }
                   },
                   h: h * 0.06,
