@@ -129,12 +129,12 @@ class _NewsState extends State<News> {
                                           ),
                                           Text(
                                             // "8 hrs",
-                                          //  DateTime.parse(blogs[index]
-                                          //               .createDate
-                                          //               .toString())
-                                          //           .day
-                                          //           .toString()+"/"+
-                                                     DateTime.parse(blogs[index]
+                                            //  DateTime.parse(blogs[index]
+                                            //               .createDate
+                                            //               .toString())
+                                            //           .day
+                                            //           .toString()+"/"+
+                                            DateTime.parse(blogs[index]
                                                         .createDate
                                                         .toString())
                                                     .hour
@@ -250,9 +250,9 @@ class _NewsState extends State<News> {
                                               Radius.circular(h * 0.06)),
                                       child: CachedNetworkImage(
                                           fit: BoxFit.fill,
-                                          
                                           height: h * 0.14,
-                                          imageUrl: blogs[index].image.toString(),
+                                          imageUrl:
+                                              blogs[index].image.toString(),
                                           placeholder: (context, url) => loder,
                                           errorWidget: (context, url, error) =>
                                               // Icon(Icons.error)
@@ -294,31 +294,58 @@ class _NewsState extends State<News> {
                                         )
                                       : Container(),
                                   Positioned(
-                                      bottom: h * 0.008,
-                                      right: w * 0.04,
-                                      child: GestureDetector(
-                                          onTap: () {
-                                            share(
-                                                des: blogs[index]
-                                                    .discreption
-                                                    .toString(),
-                                                heading: blogs[index]
-                                                    .blogsheading
-                                                    .toString(),
-                                                subdes: blogs[index]
-                                                    .subDiscreption
-                                                    .toString(),
-                                                time: blogs[index]
-                                                    .createDate
-                                                    .toString(),
-                                                url: blogs[index]
-                                                    .image
-                                                    .toString());
-                                          },
-                                          child: Icon(
-                                            Icons.share,
-                                            size: h * 0.025,
-                                          )))
+                                    bottom: h * 0.008,
+                                    right: w * 0.04,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        share(
+                                            des: blogs[index]
+                                                .discreption
+                                                .toString(),
+                                            heading: blogs[index]
+                                                .blogsheading
+                                                .toString(),
+                                            subdes: blogs[index]
+                                                .subDiscreption
+                                                .toString(),
+                                            time: blogs[index]
+                                                .createDate
+                                                .toString(),
+                                            url: blogs[index].image.toString());
+                                      },
+                                      child: Icon(
+                                        Icons.share,
+                                        size: h * 0.025,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    bottom: h * 0.008,
+                                    right: w * 0.1,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        // share(
+                                        //     des: blogs[index]
+                                        //         .discreption
+                                        //         .toString(),
+                                        //     heading: blogs[index]
+                                        //         .blogsheading
+                                        //         .toString(),
+                                        //     subdes: blogs[index]
+                                        //         .subDiscreption
+                                        //         .toString(),
+                                        //     time: blogs[index]
+                                        //         .createDate
+                                        //         .toString(),
+                                        //     url: blogs[index].image.toString());
+                                        addbookmark(blogs[index].id.toString());
+                                      },
+                                      child: Icon(
+                                        Icons.bookmark_border,
+                                        size: h * 0.03,
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               )),
                         ],

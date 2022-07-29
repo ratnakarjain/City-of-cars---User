@@ -1703,3 +1703,18 @@ Future deletecardata(String id) async {
     print("error $e");
   }
 }
+Future addbookmark(String id) async {
+  var url = Uri.parse(addbookmarkUrl + "?blogs=" + id);
+  try {
+    var respnse = await http.post(url,
+        headers: {"Authorization": prefs!.getString('token').toString()});
+    if (respnse.statusCode == 200) {
+      var data = jsonDecode(respnse.body);
+
+      print("Success");
+      return data["status"];
+    } else {}
+  } catch (e) {
+    print("error $e");
+  }
+}

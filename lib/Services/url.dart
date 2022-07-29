@@ -47,6 +47,7 @@ const String cmsPagesUrl = baseUrl+"/getCmsData";
 const String faqUrl = baseUrl+"/faq";
 const String getslotUrl = baseUrl+"/getslotApi";
 const String deletecardataUrl = baseUrl+"/deleteviewcaruser";
+const String addbookmarkUrl = baseUrl+"/AddStatus";
 
 
 String token = "";

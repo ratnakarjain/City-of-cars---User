@@ -8,10 +8,12 @@ import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../Utils/Buttons/button.dart';
 import '../../Utils/constants.dart';
+import '../../Utils/functions.dart';
 
 class ProductDetails extends StatefulWidget {
   static String selctedprice = "";
@@ -337,59 +339,60 @@ class _ProductDetailsState extends State<ProductDetails> {
                 // ),
                 ),
             RRecctButton2(
-              onTap:booknow?(){}: () {
-                if (!service && !basic) {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Please select price"),
-                  ));
-                } else {
-                  print(Ids.brandid + "vsdv");
-                  print(Ids.carid + "dvsdvsd");
-                  print(Ids.cityid + "vsv");
-                  print(Ids.fuelid + "dsdvs");
-                  print(Ids.categoryid + "dsdvs");
-                  print(Ids.subcategoryid + "dsdvs");
-                  print(Ids.planid + "dsdvs");
-                  if (Ids.brandid == "" &&
-                      Ids.carid == "" &&
-                      Ids.cityid == "" &&
-                      Ids.fuelid == "") {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text("Please select car first"),
-                    ));
-                  } else {
-                    Cart.packe = details.packs[selceted];
-                    print(jsonEncode(Cart.packe) + "1235432");
-                    booknow=true;
-                    setState(() {
-                      
-                    });
-                    getslot().then((value) {
-                      if (value != "") {
-                        Ids.slotid = value;
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Cart(
-                                getcart: false,
-                              ),
-                            ));
-                    booknow=false;
-
+              onTap: booknow
+                  ? () {}
+                  : () {
+                      if (!service && !basic) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text("Please select price"),
+                        ));
                       } else {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Slot(),
-                            ));
-                        setState(() {
-                          booknow=false;
-                        });
+                        print(Ids.brandid + "vsdv");
+                        print(Ids.carid + "dvsdvsd");
+                        print(Ids.cityid + "vsv");
+                        print(Ids.fuelid + "dsdvs");
+                        print(Ids.categoryid + "dsdvs");
+                        print(Ids.subcategoryid + "dsdvs");
+                        print(Ids.planid + "dsdvs");
+                        if (Ids.brandid == "" &&
+                            Ids.carid == "" &&
+                            Ids.cityid == "" &&
+                            Ids.fuelid == "") {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            content: Text("Please select car first"),
+                          ));
+                        } else {
+                          Cart.packe = details.packs[selceted];
+                          print(jsonEncode(Cart.packe) + "1235432");
+                          booknow = true;
+                          setState(() {});
+                          getslot().then((value) {
+                            if (value != "") {
+                              Ids.slotid = value;
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Cart(
+                                      getcart: false,
+                                    ),
+                                  ));
+                              booknow = false;
+                            } else {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const Slot(),
+                                  ));
+                              setState(() {
+                                booknow = false;
+                              });
+                            }
+                          });
+                        }
                       }
-                    });
-                  }
-                }
-              },
+                    },
               h: h * 0.05,
               w: w * 0.8,
               radius: h * 0.02,
@@ -453,7 +456,18 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     fontWeight: FontWeight.w500,
                                     color: kwhitecolor),
                               ),
-                              
+                              Spacer(),
+                              GestureDetector(
+                                  onTap: () async {
+                                    if (details.document != "") {
+                                      await launchURL(details.document);
+                                    }
+                                  },
+                                  child: SvgPicture.asset("assets/svg/doc.svg",
+                                      height: h * 0.04, color: korangecolor)),
+
+                              SizedBox(width: w * 0.1)
+
                               // Icon(Icons.pages)
                             ],
                           ),
