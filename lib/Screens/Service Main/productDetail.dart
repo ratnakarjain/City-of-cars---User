@@ -453,6 +453,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     fontWeight: FontWeight.w500,
                                     color: kwhitecolor),
                               ),
+                              
                               // Icon(Icons.pages)
                             ],
                           ),
