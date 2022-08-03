@@ -661,14 +661,17 @@ class _SelectBrandState extends State<SelectBrand> {
 
   chack(String id) {
     List modellist = [];
-    modellist.addAll(
-        jsonDecode(Prefernece.pref!.getString("usercarsData").toString()));
+    if (Prefernece.pref!.getString("usercarsData") != null) {
+      modellist.addAll(
+          jsonDecode(Prefernece.pref!.getString("usercarsData").toString()));
+    }
+
     for (int i = 0; i < modellist.length; i++) {
       if (id == modellist[i]["carid"].toString()) {
         print("showing snacbar");
-        ScaffoldMessenger.of(context).showSnackBar( SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             behavior: SnackBarBehavior.floating,
-            margin: EdgeInsets.only(bottom: h*0.9),
+            margin: EdgeInsets.only(bottom: h * 0.9),
             content: const Text("This Car is already added")));
 
         return false;

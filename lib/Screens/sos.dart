@@ -81,7 +81,7 @@ class _SosState extends State<Sos> {
                   controller: prob,
                   maxLines: 8,
                   style: GoogleFonts.montserrat(
-                    fontSize: 10,
+                    fontSize: 14,
                     fontWeight: FontWeight.w400,
                     height: 2,
                   ),
@@ -176,6 +176,12 @@ class _SosState extends State<Sos> {
                             istaped = true;
                             tosos();
                             setState(() {});
+                          }else if (_controller.text.length<10&&prob.text.isNotEmpty){
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Mobile number should be 10 digit")));
+                            
+                          }else if (prob.text.isEmpty&&_controller.text.length==10){
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please enter your problem")));
+                            
                           }else{
                             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please enter complete details")));
                           }

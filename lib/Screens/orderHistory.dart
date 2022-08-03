@@ -270,6 +270,8 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                       .spaceBetween,
                                               children: [
                                                 Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
                                                   children: [
                                                     RichText(
                                                         text: TextSpan(
@@ -584,6 +586,9 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                           .spaceBetween,
                                                   children: [
                                                     Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       children: [
                                                         RichText(
                                                             text: TextSpan(

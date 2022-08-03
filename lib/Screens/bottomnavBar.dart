@@ -9,11 +9,12 @@ import 'package:circular_bottom_navigation/circular_bottom_navigation.dart';
 import 'package:circular_bottom_navigation/tab_item.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../Services/models/usercardetailsmodel.dart';
 import '../Utils/functions.dart';
 
 class BottomNavBar extends StatefulWidget {
-  int index ;
-   BottomNavBar({Key? key,required this.index}) : super(key: key);
+  int index;
+  BottomNavBar({Key? key, required this.index}) : super(key: key);
 
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
@@ -42,10 +43,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    selectedPos=widget.index;
+    
+    selectedPos = widget.index;
     _navigationController = CircularBottomNavigationController(selectedPos);
   }
-  List <Widget> widgets = [
+
+  List<Widget> widgets = [
     ServiceMain(),
     News(),
     OrderHistory(),
@@ -55,25 +58,24 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop:(() =>  showExitPopup(context)),
+      onWillPop: (() => showExitPopup(context)),
       child: Scaffold(
-        extendBody: true,
-        body: widgets[selectedPos],
-
+          extendBody: true,
+          body: widgets[selectedPos],
           bottomNavigationBar: CircularBottomNavigation(
-        tabItems,
-        controller: _navigationController,
-        barHeight: bottomNavBarHeight,
-        iconsSize: 20,
-        normalIconColor: kwhitecolor,
-        barBackgroundColor: kbluecolor,
-        animationDuration: Duration(milliseconds: 300),
-        selectedCallback: (selectedPos) {
-          setState(() {
-            this.selectedPos = selectedPos!;
-          });
-        },
-      )),
+            tabItems,
+            controller: _navigationController,
+            barHeight: bottomNavBarHeight,
+            iconsSize: 20,
+            normalIconColor: kwhitecolor,
+            barBackgroundColor: kbluecolor,
+            animationDuration: Duration(milliseconds: 300),
+            selectedCallback: (selectedPos) {
+              setState(() {
+                this.selectedPos = selectedPos!;
+              });
+            },
+          )),
     );
   }
 }

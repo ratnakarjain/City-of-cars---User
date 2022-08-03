@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../Services/models/usercardetailsmodel.dart';
 import '../bottomnavBar.dart';
 import '../editProfile.dart';
 import '../messages.dart';
@@ -112,12 +113,13 @@ class _ServiceMainState extends State<ServiceMain> {
   bool catlod = false;
   TextEditingController search = TextEditingController();
   bool focussearch = false;
-
+  start() async {}
   @override
   void initState() {
     // TODO: implement initState
     move();
     super.initState();
+    // getusercarsdata(true);
     Ids.brandid = prefs!.getString("brandId").toString();
     Ids.carid = prefs!.getString("CarId").toString();
     Ids.cityid = prefs!.getString("cityId").toString();
@@ -170,8 +172,7 @@ class _ServiceMainState extends State<ServiceMain> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(h * 0.18),
         child: AppBar(
-        automaticallyImplyLeading: false,
-
+          automaticallyImplyLeading: false,
           backgroundColor: kTransparent,
           elevation: 0,
           foregroundColor: kwhitecolor,
@@ -1504,6 +1505,19 @@ class _ServiceMainState extends State<ServiceMain> {
                   context,
                   MaterialPageRoute(
                       builder: ((context) => const EditProfile())));
+              break;
+            case "approvel":
+              print("approvel");
+              Navigator.pushAndRemoveUntil<dynamic>(
+                context,
+                MaterialPageRoute<dynamic>(
+                  builder: (BuildContext context) => BottomNavBar(
+                    index: 2,
+                  ),
+                ),
+                (route) =>
+                    false, //if you want to disable back feature set to false
+              );
               break;
             // case "pendingcart":
 

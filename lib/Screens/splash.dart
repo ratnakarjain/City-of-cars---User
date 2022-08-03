@@ -4,6 +4,7 @@ import 'package:cityofcars/Utils/preference.dart';
 import 'package:flutter/material.dart';
 
 import 'bottomnavBar.dart';
+import 'myhomepage.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
@@ -13,7 +14,7 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
-  String id ="";
+  String id = "";
   @override
   void initState() {
     // TODO: implement initState
@@ -24,15 +25,17 @@ class _SplashState extends State<Splash> {
       Navigator.pushAndRemoveUntil<dynamic>(
         context,
         MaterialPageRoute<dynamic>(
-          builder: (BuildContext context) => BottomNavBar(
-            index: 0,
-          ),
+          builder: (BuildContext context) => id == "" || id == "null"
+              ? const MyHomePage()
+              : BottomNavBar(
+                  index: 0,
+                ),
         ),
         (route) => false, //if you want to disable back feature set to false
       );
       //  id == "" || id == "null"
-        //     ? const MyHomePage()
-        //     : BottomNavBar(index: 0),
+      //     ? const MyHomePage()
+      //     : BottomNavBar(index: 0),
     });
   }
 
@@ -42,11 +45,33 @@ class _SplashState extends State<Splash> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        decoration: const BoxDecoration(
-            image: DecorationImage(
-          image: AssetImage("assets/images/Splash.png"),
-          fit: BoxFit.cover,
-        )),
+        // decoration: const BoxDecoration(
+        //     image: DecorationImage(
+        //   image: AssetImage("assets/images/Splash.png"),
+        //   fit: BoxFit.cover,
+        // )),
+        child: Stack(
+          children: [
+            Positioned(
+              top: MediaQuery.of(context).size.height*0.25,
+              right: 0,
+              left: 0,
+              child: Image.asset(
+                "assets/images/COClogo.png",
+                height: MediaQuery.of(context).size.height*0.2,
+              ),
+            ),
+            Positioned(
+              top: MediaQuery.of(context).size.height*0.7,
+              right: 0,
+              left: 0,
+              child: Image.asset(
+                "assets/images/COClogoname.png",
+                height: MediaQuery.of(context).size.height*0.1,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

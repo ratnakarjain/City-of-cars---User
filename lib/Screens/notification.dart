@@ -112,6 +112,21 @@ class _NotificationsState extends State<Notifications> {
 
                                   
                                   break;
+                                  case "approvel":
+                                  print("approvel");
+                                  Navigator.pushAndRemoveUntil<dynamic>(
+                                    context,
+                                    MaterialPageRoute<dynamic>(
+                                      builder: (BuildContext context) =>
+                                          BottomNavBar(
+                                        index: 2,
+                                      ),
+                                    ),
+                                    (route) =>
+                                        false, //if you want to disable back feature set to false
+                                  );
+                                  break;
+                                  
                                 // case "pendingcart":
 
                                 //   break;

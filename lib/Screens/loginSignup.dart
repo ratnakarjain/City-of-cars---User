@@ -28,6 +28,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
   var mobile = TextEditingController();
   var name = TextEditingController();
   var prefs = Prefernece.pref;
+  String mobilenumber = "";
 
   var height;
   var width;
@@ -268,7 +269,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
                               maxLength: 10,
                               decoration: InputDecoration(
                                 hintText: "Mobile No.*",
-                            prefixText: "+91 ",
+                                prefixText: "+91 ",
                                 counterText: "",
                                 errorStyle: const TextStyle(
                                   height: 0,
@@ -453,7 +454,6 @@ class _LoginSignUpState extends State<LoginSignUp> {
                                   color: kTextInputPlaceholderColor
                                       .withOpacity(0.3)),
                             ),
-                            
 
                             // labelText: "Mobile No.",
                             // labelStyle: TextStyle(
@@ -555,6 +555,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
 
                         if (_formKey.currentState!.validate()) {
                           istaped1 = true;
+                          mobilenumber = mobile.text;
                           login();
                           // Navigator.push(
                           //     context,
@@ -592,6 +593,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
                           nameError = "";
                           emailError = "";
                           mobileError = "";
+                          mobilenumber = mobile.text;
                           register().whenComplete(() {
                             nameError = "";
                             emailError = "";
@@ -674,7 +676,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
       var response = await http.post(url, body: {
         'name': name.text,
         'email': mail.text,
-        'mobile':"91"+ mobile.text,
+        'mobile': "91" + mobile.text,
         "type": "customer"
         // "role":"624c7a3c9b4a12e570e35d4f"
       });
@@ -683,15 +685,21 @@ class _LoginSignUpState extends State<LoginSignUp> {
       if (response.statusCode == 200) {
         print("success");
         if (jsonResponse["status"]) {
-            prefs!.setString('token', jsonResponse["token"].toString());
-            prefs!.setString('id', jsonResponse["sesdata"]["_id"].toString());
-            prefs!.setString('name', jsonResponse["sesdata"]["name"].toString());
-            prefs!.setString('image', jsonResponse["sesdata"]["image"].toString());
-            prefs!.setString('mobile', jsonResponse["sesdata"]["mobile"].toString());
-            prefs!.setString('street', jsonResponse["sesdata"]["Street"].toString());
-            prefs!.setString('state', jsonResponse["sesdata"]["State"].toString());
-            prefs!.setString('pincode', jsonResponse["sesdata"]["PinCode"].toString());
-            prefs!.setString('email', jsonResponse["sesdata"]["email"].toString());
+          prefs!.setString('token', jsonResponse["token"].toString());
+          prefs!.setString('id', jsonResponse["sesdata"]["_id"].toString());
+          prefs!.setString('name', jsonResponse["sesdata"]["name"].toString());
+          prefs!
+              .setString('image', jsonResponse["sesdata"]["image"].toString());
+          prefs!.setString(
+              'mobile', jsonResponse["sesdata"]["mobile"].toString());
+          prefs!.setString(
+              'street', jsonResponse["sesdata"]["Street"].toString());
+          prefs!
+              .setString('state', jsonResponse["sesdata"]["State"].toString());
+          prefs!.setString(
+              'pincode', jsonResponse["sesdata"]["PinCode"].toString());
+          prefs!
+              .setString('email', jsonResponse["sesdata"]["email"].toString());
           token = prefs!.getString("token")!;
           Ids.userid = jsonResponse["sesdata"]["_id"];
 
@@ -702,6 +710,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
               context,
               MaterialPageRoute(
                 builder: (context) => Verfication(
+                  mobile: mobilenumber,
                   toLogin: false,
                 ),
               ));
@@ -731,7 +740,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
     var url = Uri.parse(loginUrl);
     try {
       var response = await http.post(url, body: {
-        'mobile': mobile.text,
+        'mobile': "91" + mobile.text,
         "type": "customer"
         // "roleId":"624c7a3c9b4a12e570e35d4f"
       });
@@ -741,15 +750,15 @@ class _LoginSignUpState extends State<LoginSignUp> {
         prefs!.setString("token", jsonResponse["token"]);
         token = prefs!.getString("token")!;
         Ids.userid = jsonResponse["data"]["_id"];
-            prefs!.setString('token', jsonResponse["token"].toString());
-            prefs!.setString('id', jsonResponse["data"]["_id"].toString());
-            prefs!.setString('name', jsonResponse["data"]["name"].toString());
-            prefs!.setString('image', jsonResponse["data"]["image"].toString());
-            prefs!.setString('mobile', jsonResponse["data"]["mobile"].toString());
-            prefs!.setString('street', jsonResponse["data"]["Street"].toString());
-            prefs!.setString('state', jsonResponse["data"]["State"].toString());
-            prefs!.setString('pincode', jsonResponse["data"]["PinCode"].toString());
-            prefs!.setString('email', jsonResponse["data"]["email"].toString());
+        prefs!.setString('token', jsonResponse["token"].toString());
+        prefs!.setString('id', jsonResponse["data"]["_id"].toString());
+        prefs!.setString('name', jsonResponse["data"]["name"].toString());
+        prefs!.setString('image', jsonResponse["data"]["image"].toString());
+        prefs!.setString('mobile', jsonResponse["data"]["mobile"].toString());
+        prefs!.setString('street', jsonResponse["data"]["Street"].toString());
+        prefs!.setString('state', jsonResponse["data"]["State"].toString());
+        prefs!.setString('pincode', jsonResponse["data"]["PinCode"].toString());
+        prefs!.setString('email', jsonResponse["data"]["email"].toString());
         print("$token");
         print(Ids.userid);
 
@@ -757,7 +766,8 @@ class _LoginSignUpState extends State<LoginSignUp> {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => Verfication(toLogin: true),
+              builder: (context) =>
+                  Verfication(mobile: mobilenumber, toLogin: true),
             ));
       } else if (response.statusCode == 201) {
         istaped1 = false;

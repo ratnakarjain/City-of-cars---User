@@ -1,4 +1,6 @@
 // ignore_for_file: deprecated_member_use
+import 'dart:convert';
+
 import 'package:cityofcars/Screens/Service%20Main/slot.dart';
 import 'package:cityofcars/Utils/preference.dart';
 import 'package:flutter/services.dart';
@@ -11,13 +13,15 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 import 'dart:convert' as convert;
+import '../Services/models/usercardetailsmodel.dart';
 import '../Services/url.dart';
 import '../Utils/Buttons/button.dart';
 import 'bottomnavBar.dart';
 
 class Verfication extends StatefulWidget {
   bool toLogin;
-  Verfication({Key? key, required this.toLogin}) : super(key: key);
+  String mobile;
+  Verfication({Key? key, required this.toLogin,required this.mobile}) : super(key: key);
 
   @override
   State<Verfication> createState() => _VerficationState();
@@ -84,8 +88,9 @@ class _VerficationState extends State<Verfication> {
             ),
             GestureDetector(
               onTap: () {
-                _scaffoldKey.currentState!.showSnackBar(
-                    const SnackBar(content: Text("OTP resent successfully")));
+                resendotp(widget.mobile,context);
+                // _scaffoldKey.currentState!.showSnackBar(
+                //     const SnackBar(content: Text("OTP resent successfully")));
               },
               child: Text(
                 "Resend code",
@@ -111,14 +116,38 @@ class _VerficationState extends State<Verfication> {
                                 const SnackBar(
                                     content: Text("Please enter otp first")));
                           }
-                        : () {
+                        : () async {
                             istaped = true;
-
-                            verify().whenComplete(() {
-                              istaped = false;
-                              setState(() {});
-                              sendfcm();
+                            getusercars().then((value) {
+                              modellist.clear();
+                              modellist.addAll(value);
+                              Prefernece.pref!.setString(
+                                  "usercarsData", jsonEncode(modellist));
+                              // print(jsonEncode(modellist));
+                              // print(modellist);
+                              if (isSelected == 0) {
+                                isSelected = 1;
+                              }
+                              Prefernece.pref!.setString("brandId",
+                                  modellist[0].carbrandid.toString());
+                              Prefernece.pref!.setString(
+                                  "CarId", modellist[0].carid.toString());
+                              Prefernece.pref!.setString(
+                                  "cityId", modellist[0].cityid.toString());
+                              Prefernece.pref!.setString(
+                                  "fuelId", modellist[0].carfuelid.toString());
+                              // Ids.brandid = ;
+                              // Ids.carid = modellist[0].carid.toString();
+                              // Ids.cityid = modellist[0].cityid.toString();
+                              // Ids.fuelid = modellist[0].carfuelid.toString();
+                            }).whenComplete(() {
+                              verify().whenComplete(() {
+                                istaped = false;
+                                setState(() {});
+                                sendfcm();
+                              });
                             });
+
                             setState(() {});
                             // Navigator.push(context,
                             //     MaterialPageRoute(builder: ((context) => SelectCity())));
@@ -146,6 +175,7 @@ class _VerficationState extends State<Verfication> {
 //                     MaterialPageRoute(builder: ((context) => SelectCity())));
           pref!.setString("userId", Ids.userid);
           print(pref!.getString("userId").toString() + "===========");
+          //  await getusercarsdata(true).whenComplete(() {
           Navigator.pushAndRemoveUntil<dynamic>(
             context,
             MaterialPageRoute<dynamic>(
@@ -157,6 +187,7 @@ class _VerficationState extends State<Verfication> {
             ),
             (route) => false, //if you want to disable back feature set to false
           );
+          // });
         } else {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(jsonResponse["message"]),
@@ -164,11 +195,11 @@ class _VerficationState extends State<Verfication> {
         }
 
         return response.body;
-      }else{
-         var jsonResponse = convert.jsonDecode(response.body);
+      } else {
+        var jsonResponse = convert.jsonDecode(response.body);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(jsonResponse["message"]),
-          ));
+          content: Text(jsonResponse["message"]),
+        ));
       }
     } catch (e) {
       print("error $e");

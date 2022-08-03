@@ -238,10 +238,9 @@ Future editProfile(
           print(prefs!.getString('pincode'));
           print(prefs!.getString('email'));
 
-          ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-            behavior: SnackBarBehavior.floating,
-                content: Text(jsonRes["message"].toString())));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              behavior: SnackBarBehavior.floating,
+              content: Text(jsonRes["message"].toString())));
           // Navigator.of(context).pop();
           // Navigator.push(
           // context,
@@ -250,16 +249,14 @@ Future editProfile(
           // ));
 
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-            behavior: SnackBarBehavior.floating,
-                content: Text(jsonRes["message"].toString())));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              behavior: SnackBarBehavior.floating,
+              content: Text(jsonRes["message"].toString())));
         }
       } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             behavior: SnackBarBehavior.floating,
-              content: Text("Please try later")));
+            content: Text("Please try later")));
       }
     });
   } catch (e) {
@@ -777,7 +774,8 @@ Future getOrderhistory() async {
           model.deliverydate = list["date"].toString();
           model.deliverytime = list["time"].toString();
           // model.details=list["_id"];
-          model.ordersPlans.addAll( ordersPlanModelFromJson(jsonEncode(list["orderData"])));
+          model.ordersPlans
+              .addAll(ordersPlanModelFromJson(jsonEncode(list["orderData"])));
           model.orderid = list["orderid"].toString();
           model.id = list["_id"].toString();
           if (list["orderData"][0]["selectplan"][0].toString() != "null") {
@@ -1047,7 +1045,7 @@ Future getcategoryBanner() async {
 
 Future getusercars() async {
   var url = Uri.parse(
-      getusercarsUrl + "?userid=" + prefs!.getString("userId").toString());
+      getusercarsUrl + "?userid=" + prefs!.getString("id").toString());
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -1703,8 +1701,64 @@ Future deletecardata(String id) async {
     print("error $e");
   }
 }
+
 Future addbookmark(String id) async {
   var url = Uri.parse(addbookmarkUrl + "?blogs=" + id);
+  try {
+    var respnse = await http.post(url,
+        headers: {"Authorization": prefs!.getString('token').toString()});
+    if (respnse.statusCode == 200) {
+      var data = jsonDecode(respnse.body);
+
+      print("Success");
+      return data["status"];
+    } else {}
+  } catch (e) {
+    print("error $e");
+  }
+}
+
+Future resendotp(String mobile, BuildContext context) async {
+  var url = Uri.parse(resendotpUrl);
+  try {
+    var respnse = await http.post(url,
+        body: {"mobile": mobile},
+        headers: {"Authorization": prefs!.getString('token').toString()});
+    if (respnse.statusCode == 200) {
+      var data = jsonDecode(respnse.body);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(data["message"])));
+
+      print("Success");
+      return data["status"];
+    } else {}
+  } catch (e) {
+    print("error $e");
+  }
+}
+
+Future getsavedblog() async {
+  var url = Uri.parse(blogUrl+"?userid="+prefs!.getString("id").toString());
+  try {
+    var respnse = await http.get(url,
+        headers: {"Authorization": prefs!.getString('token').toString()});
+    if (respnse.statusCode == 200) {
+      List<BlogsModel> blogs = [];
+      var data = jsonDecode(respnse.body);
+      if (data["status"]) {
+        blogs = blogsModelFromJson(jsonEncode(data["data"]));
+        return blogs;
+      }
+      return <BlogsModel>[];
+    } else {
+      return <BlogsModel>[];
+    }
+  } catch (e) {
+    print("error $e");
+  }
+}
+
+Future deleteaccount(BuildContext context) async {
+  var url = Uri.parse(deleteaccountUrl+"?userId="+Ids.userid);
   try {
     var respnse = await http.post(url,
         headers: {"Authorization": prefs!.getString('token').toString()});

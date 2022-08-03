@@ -346,11 +346,11 @@ class _NewCityState extends State<NewCity> {
                                     onTap: Ids.cityid ==
                                             snapshot.data[index]["_id"]
                                         ? () {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(const SnackBar(
-                                              content:
-                                                  Text("This is your previous city"),
-                                            ));
+                                            // ScaffoldMessenger.of(context)
+                                            //     .showSnackBar(const SnackBar(
+                                            //   content:
+                                            //       Text("This is your previous city"),
+                                            // ));
                                           }
                                         : () {
                                             CarsData.city =

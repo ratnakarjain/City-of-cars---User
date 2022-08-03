@@ -48,6 +48,9 @@ const String faqUrl = baseUrl+"/faq";
 const String getslotUrl = baseUrl+"/getslotApi";
 const String deletecardataUrl = baseUrl+"/deleteviewcaruser";
 const String addbookmarkUrl = baseUrl+"/AddStatus";
+const String resendotpUrl = baseUrl+"/resendOtp";
+const String deleteaccountUrl = baseUrl+"/deleteuser";
+
 
 
 String token = "";

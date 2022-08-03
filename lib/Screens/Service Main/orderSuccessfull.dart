@@ -185,7 +185,7 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                             children: [
                               TextSpan(
                                 text:
-                                    "Pick-up from ${data["orderData"].first["bookingdata"]["name"]}",
+                                    "Pick-up from ${data["orderData"].first["bookingdata"]["name"]} ",
                                 style: GoogleFonts.montserrat(
                                     color: kbluecolor,
                                     fontSize: 13,

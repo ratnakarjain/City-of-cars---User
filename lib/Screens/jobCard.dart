@@ -91,7 +91,7 @@ class _JobCardState extends State<JobCard> {
     super.initState();
     print(widget.orderid);
     getjobcard(widget.orderid).then((value) {
-      if (JobCard.data!=null) {
+      if (JobCard.data != null) {
         print("entering ===");
         data = JobCard.data;
         geninfo = jsonDecode(data["genCondition"]);
@@ -219,7 +219,7 @@ class _JobCardState extends State<JobCard> {
                                                 color: ksubHading),
                                           ),
                                           TextSpan(
-                                            text: data["Gst"],//"07ABBCS0227P",
+                                            text: data["Gst"], //"07ABBCS0227P",
                                             style: GoogleFonts.montserrat(
                                                 fontSize: 10,
                                                 fontWeight: FontWeight.w400,
@@ -283,52 +283,60 @@ class _JobCardState extends State<JobCard> {
                                 child: Container(
                                   height: h * 0.04,
                                   child: Center(
-                                    child: Text(
-                                      "Open Document",
-                                      style: GoogleFonts.montserrat(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w700,
-                                        color: kTextInputPlaceholderColor,
-                                      ),
-                                    ),
-                                  ),
+                                      child: Image.asset(
+                                    "assets/images/pdf.png",
+                                    height: h * 0.03,
+                                  )),
                                 ),
                               )
                             : data["type"] == "video"
-                                ? GestureDetector(
-                                    onTap: () async {
-                                      // await launchURL(data["image"]);
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => VideoApp(
-                                                    video: data["image"],
-                                                  )));
-                                    },
-                                    child: Container(
-                                      height: h * 0.04,
-                                      child: Center(
-                                        child: Text(
-                                          "Open Video",
-                                          style: GoogleFonts.montserrat(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w700,
-                                            color: kTextInputPlaceholderColor,
-                                          ),
-                                        ),
-                                      ),
-                                    ))
+                                ? Center(
+                                    child: GestureDetector(
+                                        onTap: () async {
+                                          // await launchURL(data["image"]);
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      VideoApp(
+                                                        video: data["image"],
+                                                      )));
+                                        },
+                                        child: Container(
+                                            height: h * 0.1,
+                                            width: w * 0.27,
+                                            margin: EdgeInsets.symmetric(
+                                                horizontal: w * 0.02),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      h * 0.03),
+                                            ),
+                                            child: Stack(
+                                              children: [
+                                                Center(
+                                                    child: Videophoto(
+                                                  video: data["image"],
+                                                )),
+                                                const Center(
+                                                    child:
+                                                        Icon(Icons.play_arrow))
+                                              ],
+                                            )
+                                            // child: Image.asset(
+                                            //     "assets/images/${images[index]}")
+                                            )),
+                                  )
                                 : Visibility(
                                     visible: data["image"] != null,
                                     child: GestureDetector(
-
-                                      onTap: (){
+                                      onTap: () {
                                         Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => Images(
-                                                    image: data["image"],
-                                                  )));
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => Images(
+                                                      image: data["image"],
+                                                    )));
                                       },
                                       child: Hero(
                                         tag: "image",
@@ -336,7 +344,7 @@ class _JobCardState extends State<JobCard> {
                                           height: h * 0.2,
                                           child: Center(
                                             child: ListView.builder(
-                                              physics: BouncingScrollPhysics(),
+                                              physics: const BouncingScrollPhysics(),
                                               controller: _controller1,
                                               shrinkWrap: true,
                                               padding: EdgeInsets.symmetric(

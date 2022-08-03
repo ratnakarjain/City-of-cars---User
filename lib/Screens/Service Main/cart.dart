@@ -882,23 +882,27 @@ class _CartState extends State<Cart> {
               SizedBox(
                 height: h * 0.03,
               ),
-              Center(
-                child: RRecctButton(
-                  onTap: () {
-                    // proceed();
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const Payment()));
-                  },
-                  buttonColor: korangecolor,
-                  text: "Proceed".toUpperCase(),
-                  h: h * 0.06,
-                  w: w * 0.9,
-                  style: GoogleFonts.montserrat(
-                    color: kwhitecolor,
-                    fontWeight: FontWeight.w600,
+               Visibility(
+                visible: data.isNotEmpty,
+                 child: Center(
+                  child: RRecctButton(
+                    onTap: () {
+                      // proceed();
+                      
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => const Payment()));
+                    },
+                    buttonColor: korangecolor,
+                    text: "Proceed".toUpperCase(),
+                    h: h * 0.06,
+                    w: w * 0.9,
+                    style: GoogleFonts.montserrat(
+                      color: kwhitecolor,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
               ),
+               ),
               SizedBox(
                 height: h * 0.04,
               ),

@@ -41,6 +41,7 @@ class _EditProfileState extends State<EditProfile> {
   String fcm = "";
   String filepath = "";
   bool savingChanges = false;
+  var _formKey = GlobalKey<FormState>();
   var file2;
   @override
   void initState() {
@@ -179,7 +180,7 @@ class _EditProfileState extends State<EditProfile> {
                                         image: DecorationImage(
                                             fit: BoxFit.fill,
                                             image: FileImage(
-                                              File(file),
+                                              File(file.toString()),
                                             ))),
                                   )
                                 : image.isEmpty || image == "null"
@@ -269,248 +270,289 @@ class _EditProfileState extends State<EditProfile> {
                     ]),
                 padding: EdgeInsets.symmetric(
                     horizontal: w * 0.05, vertical: h * 0.03),
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: name,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                            RegExp(r"[a-zA-Z]+|\s"))
-                      ],
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Please Enter Name";
-                        }
-                        return null;
-                      },
-                      onChanged: (value) {
-                        if (value == " ") {
-                          name.clear();
-                        }
-                      },
-                      decoration: InputDecoration(
-                          hintText: "Name*",
-                          hintStyle: GoogleFonts.montserrat(
-                              color:
-                                  kTextInputPlaceholderColor.withOpacity(0.25),
-                              fontSize: 13),
-                          focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: kTextInputPlaceholderColor
-                                      .withOpacity(0.25))),
-                          enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: kTextInputPlaceholderColor
-                                      .withOpacity(0.25))),
-                          border: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: kTextInputPlaceholderColor
-                                      .withOpacity(0.25))),
-                          contentPadding: EdgeInsets.only(left: w * 0.02)),
-                    ),
-                    SizedBox(
-                      height: h * 0.01,
-                    ),
-                    TextFormField(
-                      controller: mobile,
-                      enabled: false,
-                      onChanged: (value) {
-                        if (value == " ") {
-                          mobile.clear();
-                        }
-                      },
-                      decoration: InputDecoration(
-                          hintText: "Mobile No.*",
-                          hintStyle: GoogleFonts.montserrat(
-                              color:
-                                  kTextInputPlaceholderColor.withOpacity(0.25),
-                              fontSize: 13),
-                          focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: kTextInputPlaceholderColor
-                                      .withOpacity(0.25))),
-                          enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: kTextInputPlaceholderColor
-                                      .withOpacity(0.25))),
-                          border: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: kTextInputPlaceholderColor
-                                      .withOpacity(0.25))),
-                          contentPadding: EdgeInsets.only(left: w * 0.02)),
-                    ),
-                    SizedBox(
-                      height: h * 0.01,
-                    ),
-                    TextFormField(
-                      controller: email,
-                      onChanged: (value) {
-                        if (value == " ") {
-                          email.clear();
-                        }
-                      },
-                      keyboardType: TextInputType.emailAddress,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.deny(RegExp(r"\s")),
-                        FilteringTextInputFormatter.deny(RegExp('[ ]')),
-                      ],
-                      decoration: InputDecoration(
-                          hintText: "Email",
-                          hintStyle: GoogleFonts.montserrat(
-                              color:
-                                  kTextInputPlaceholderColor.withOpacity(0.25),
-                              fontSize: 13),
-                          focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: kTextInputPlaceholderColor
-                                      .withOpacity(0.25))),
-                          enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: kTextInputPlaceholderColor
-                                      .withOpacity(0.25))),
-                          border: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: kTextInputPlaceholderColor
-                                      .withOpacity(0.25))),
-                          contentPadding: EdgeInsets.only(left: w * 0.02)),
-                    ),
-                    SizedBox(
-                      height: h * 0.01,
-                    ),
-                    TextFormField(
-                      controller: houseNo,
-                      onChanged: (value) {
-                        if (value == " ") {
-                          houseNo.clear();
-                        }
-                      },
-                      decoration: InputDecoration(
-                          hintText: "House No.. & Floor*",
-                          hintStyle: GoogleFonts.montserrat(
-                              color:
-                                  kTextInputPlaceholderColor.withOpacity(0.25),
-                              fontSize: 13),
-                          focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: kTextInputPlaceholderColor
-                                      .withOpacity(0.25))),
-                          enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: kTextInputPlaceholderColor
-                                      .withOpacity(0.25))),
-                          border: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: kTextInputPlaceholderColor
-                                      .withOpacity(0.25))),
-                          contentPadding: EdgeInsets.only(left: w * 0.02)),
-                    ),
-                    SizedBox(
-                      height: h * 0.01,
-                    ),
-                    TextFormField(
-                      controller: street,
-                      onChanged: (value) {
-                        if (value == " ") {
-                          street.clear();
-                        }
-                      },
-                      decoration: InputDecoration(
-                          hintText: "Street*",
-                          hintStyle: GoogleFonts.montserrat(
-                              color:
-                                  kTextInputPlaceholderColor.withOpacity(0.25),
-                              fontSize: 13),
-                          focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: kTextInputPlaceholderColor
-                                      .withOpacity(0.25))),
-                          enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: kTextInputPlaceholderColor
-                                      .withOpacity(0.25))),
-                          border: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: kTextInputPlaceholderColor
-                                      .withOpacity(0.25))),
-                          contentPadding: EdgeInsets.only(left: w * 0.02)),
-                    ),
-                    SizedBox(
-                      height: h * 0.01,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: state,
-                            onChanged: (value) {
-                              if (value == " ") {
-                                state.clear();
-                              }
-                            },
-                            decoration: InputDecoration(
-                                hintText: "State*",
-                                hintStyle: GoogleFonts.montserrat(
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        controller: name,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(
+                              RegExp(r"[a-zA-Z]+|\s"))
+                        ],
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Please Enter Name";
+                          }
+                          return null;
+                        },
+                        onChanged: (value) {
+                          if (value == " ") {
+                            name.clear();
+                          }
+                        },
+                        
+                        decoration: InputDecoration(
+                            hintText: "Name*",
+                            hintStyle: GoogleFonts.montserrat(
+                                color:
+                                    kTextInputPlaceholderColor.withOpacity(0.25),
+                                fontSize: 13),
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
                                     color: kTextInputPlaceholderColor
-                                        .withOpacity(0.25),
-                                    fontSize: 13),
-                                focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: kTextInputPlaceholderColor
-                                            .withOpacity(0.25))),
-                                enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: kTextInputPlaceholderColor
-                                            .withOpacity(0.25))),
-                                border: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: kTextInputPlaceholderColor
-                                            .withOpacity(0.25))),
-                                contentPadding:
-                                    EdgeInsets.only(left: w * 0.02)),
-                          ),
-                        ),
-                        SizedBox(
-                          width: w * 0.05,
-                        ),
-                        Expanded(
-                          child: TextFormField(
-                            controller: pinCode,
-                            onChanged: (value) {
-                              if (value == " ") {
-                                pinCode.clear();
-                              }
-                            },
-                            keyboardType: TextInputType.number,
-                            maxLength: 6,
-                            decoration: InputDecoration(
-                                counterText: "",
-                                hintText: "Pin Code*",
-                                hintStyle: GoogleFonts.montserrat(
+                                        .withOpacity(0.25))),
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
                                     color: kTextInputPlaceholderColor
-                                        .withOpacity(0.25),
-                                    fontSize: 13),
-                                focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: kTextInputPlaceholderColor
-                                            .withOpacity(0.25))),
-                                enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: kTextInputPlaceholderColor
-                                            .withOpacity(0.25))),
-                                border: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: kTextInputPlaceholderColor
-                                            .withOpacity(0.25))),
-                                contentPadding:
-                                    EdgeInsets.only(left: w * 0.02)),
+                                        .withOpacity(0.25))),
+                            border: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: kTextInputPlaceholderColor
+                                        .withOpacity(0.25))),
+                            contentPadding: EdgeInsets.only(left: w * 0.02)),
+                      ),
+                      SizedBox(
+                        height: h * 0.01,
+                      ),
+                      TextFormField(
+                        controller: mobile,
+                        enabled: false,
+                        onChanged: (value) {
+                          if (value == " ") {
+                            mobile.clear();
+                          }
+                        },
+                        decoration: InputDecoration(
+                            hintText: "Mobile No.*",
+                            hintStyle: GoogleFonts.montserrat(
+                                color:
+                                    kTextInputPlaceholderColor.withOpacity(0.25),
+                                fontSize: 13),
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: kTextInputPlaceholderColor
+                                        .withOpacity(0.25))),
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: kTextInputPlaceholderColor
+                                        .withOpacity(0.25))),
+                            border: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: kTextInputPlaceholderColor
+                                        .withOpacity(0.25))),
+                            contentPadding: EdgeInsets.only(left: w * 0.02)),
+                      ),
+                      SizedBox(
+                        height: h * 0.01,
+                      ),
+                      TextFormField(
+                        controller: email,
+                        onChanged: (value) {
+                          if (value == " ") {
+                            email.clear();
+                          }
+                        },
+                        keyboardType: TextInputType.emailAddress,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.deny(RegExp(r"\s")),
+                          FilteringTextInputFormatter.deny(RegExp('[ ]')),
+                        ],
+                        validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Please Enter Email";
+                            } else if (!RegExp(
+                                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                .hasMatch(value)) {
+                              return "Please Enter Valid Email";
+                            }
+                            return null;
+                          },
+                        decoration: InputDecoration(
+                            hintText: "Email",
+                            hintStyle: GoogleFonts.montserrat(
+                                color:
+                                    kTextInputPlaceholderColor.withOpacity(0.25),
+                                fontSize: 13),
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: kTextInputPlaceholderColor
+                                        .withOpacity(0.25))),
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: kTextInputPlaceholderColor
+                                        .withOpacity(0.25))),
+                            border: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: kTextInputPlaceholderColor
+                                        .withOpacity(0.25))),
+                            contentPadding: EdgeInsets.only(left: w * 0.02)),
+                      ),
+                      SizedBox(
+                        height: h * 0.01,
+                      ),
+                      TextFormField(
+                        controller: houseNo,
+                        onChanged: (value) {
+                          if (value == " ") {
+                            houseNo.clear();
+                          }
+                        },
+                        validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Please Enter House No.";
+                            }
+                            return null;
+                          },
+                        decoration: InputDecoration(
+                            hintText: "House No.. & Floor*",
+                            hintStyle: GoogleFonts.montserrat(
+                                color:
+                                    kTextInputPlaceholderColor.withOpacity(0.25),
+                                fontSize: 13),
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: kTextInputPlaceholderColor
+                                        .withOpacity(0.25))),
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: kTextInputPlaceholderColor
+                                        .withOpacity(0.25))),
+                            border: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: kTextInputPlaceholderColor
+                                        .withOpacity(0.25))),
+                            contentPadding: EdgeInsets.only(left: w * 0.02)),
+                      ),
+                      SizedBox(
+                        height: h * 0.01,
+                      ),
+                      TextFormField(
+                        controller: street,
+                        onChanged: (value) {
+                          if (value == " ") {
+                            street.clear();
+                          }
+                        },
+                         validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Please Enter Street";
+                            }
+                            return null;
+                          },
+                        decoration: InputDecoration(
+                            hintText: "Street*",
+                            hintStyle: GoogleFonts.montserrat(
+                                color:
+                                    kTextInputPlaceholderColor.withOpacity(0.25),
+                                fontSize: 13),
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: kTextInputPlaceholderColor
+                                        .withOpacity(0.25))),
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: kTextInputPlaceholderColor
+                                        .withOpacity(0.25))),
+                            border: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: kTextInputPlaceholderColor
+                                        .withOpacity(0.25))),
+                            contentPadding: EdgeInsets.only(left: w * 0.02)),
+                      ),
+                      SizedBox(
+                        height: h * 0.01,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              controller: state,
+                              onChanged: (value) {
+                                if (value == " ") {
+                                  state.clear();
+                                }
+                              },
+                              validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return "Please Enter State";
+                                  }
+                                  return null;
+                                },
+                              decoration: InputDecoration(
+                                  hintText: "State*",
+                                  hintStyle: GoogleFonts.montserrat(
+                                      color: kTextInputPlaceholderColor
+                                          .withOpacity(0.25),
+                                      fontSize: 13),
+                                  focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: kTextInputPlaceholderColor
+                                              .withOpacity(0.25))),
+                                  enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: kTextInputPlaceholderColor
+                                              .withOpacity(0.25))),
+                                  border: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: kTextInputPlaceholderColor
+                                              .withOpacity(0.25))),
+                                  contentPadding:
+                                      EdgeInsets.only(left: w * 0.02)),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: h * 0.04,
-                    )
-                  ],
+                          SizedBox(
+                            width: w * 0.05,
+                          ),
+                          Expanded(
+                            child: TextFormField(
+                              controller: pinCode,
+                              onChanged: (value) {
+                                if (value == " ") {
+                                  pinCode.clear();
+                                }
+                              },
+                               validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return "Please Enter Pin Code";
+                                  } else if (value.length != 6) {
+                                    return "Pin Code should be enter 6 digit";
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                              keyboardType: TextInputType.number,
+                              maxLength: 6,
+                              decoration: InputDecoration(
+                                  counterText: "",
+                                  hintText: "Pin Code*",
+                                  hintStyle: GoogleFonts.montserrat(
+                                      color: kTextInputPlaceholderColor
+                                          .withOpacity(0.25),
+                                      fontSize: 13),
+                                  focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: kTextInputPlaceholderColor
+                                              .withOpacity(0.25))),
+                                  enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: kTextInputPlaceholderColor
+                                              .withOpacity(0.25))),
+                                  border: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: kTextInputPlaceholderColor
+                                              .withOpacity(0.25))),
+                                  contentPadding:
+                                      EdgeInsets.only(left: w * 0.02)),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: h * 0.04,
+                      )
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
@@ -529,7 +571,7 @@ class _EditProfileState extends State<EditProfile> {
                 child:savingChanges?loder: RRecctButton(
                   onTap: () {
                     bool validate = isValidation();
-                    if (validate) {
+                    if (_formKey.currentState!.validate()) {
                       savingChanges = true;
                       setState(() {});
                       editProfile(

@@ -35,6 +35,8 @@ class _TrackingState extends State<Tracking> {
   @override
   void initState() {
     super.initState();
+    print(widget.date);
+    print(widget.time);
     print(widget.orderid);
     // getestimateTime(widget.orderid.toString()).then((value) {}).whenComplete(() {
     //   esti = true;
@@ -154,34 +156,71 @@ class _TrackingState extends State<Tracking> {
                                                           kTextInputPlaceholderColor),
                                                   children: [
                                                 TextSpan(
-                                                    text: widget.date.toString() ==
+                                                    text: widget.date
+                                                                .toString() ==
                                                             "null"
                                                         ? " "
-                                                        : DateFormat.MMMMd().format(DateTime.parse(widget.date.toString())) +
-                                                                    widget.time
-                                                                        .toString() ==
-                                                                "null"
-                                                            ? " "
-                                                            : " - " +
-                                                                DateTime.parse(widget
-                                                                        .time
-                                                                        .toString())
-                                                                    .hour
-                                                                    .toString() +
-                                                                ":" +
-                                                                DateTime.parse(widget
-                                                                        .time
-                                                                        .toString())
-                                                                    .minute
-                                                                    .toString() +
-                                                                " Hrs",
+                                                        : DateFormat.MMMMd()
+                                                            .format(DateTime
+                                                                .parse(widget
+                                                                    .date
+                                                                    .toString())),
+                                                    // +
+                                                    //             widget.time
+                                                    //                 .toString() ==
+                                                    //         "null"
+                                                    //     ? " "
+                                                    //     : " - " +
+                                                    //         DateTime.parse(widget
+                                                    //                 .time
+                                                    //                 .toString())
+                                                    //             .hour
+                                                    //             .toString() +
+                                                    //         ":" +
+                                                    //         DateTime.parse(widget
+                                                    //                 .time
+                                                    //                 .toString())
+                                                    //             .minute
+                                                    //             .toString() +
+                                                    //         " Hrs",
 
                                                     // widget.date.toString() + "  " + widget.time.toString(),
                                                     style: GoogleFonts.montserrat(
                                                         fontSize: 12,
                                                         fontWeight:
                                                             FontWeight.w400,
-                                                        color: kTextInputPlaceholderColor))
+                                                        color:
+                                                            kTextInputPlaceholderColor),
+                                                    children: [
+                                                      TextSpan(
+                                                        text:
+                                                            //  widget.date.toString() ==
+                                                            //         "null"
+                                                            //     ? " "
+                                                            //     : DateFormat.MMMMd().format(DateTime.parse(widget.date.toString())) +
+                                                            //                 widget.time
+                                                            //                     .toString() ==
+                                                            //             "null"
+                                                            //         ? " "
+                                                            //         : " - " +
+                                                            widget.time.toString() ==
+                                                                    "null"
+                                                                ? ""
+                                                                : " " +
+                                                                    DateTime.parse(widget
+                                                                            .time
+                                                                            .toString())
+                                                                        .hour
+                                                                        .toString() +
+                                                                    ":" +
+                                                                    DateTime.parse(widget
+                                                                            .time
+                                                                            .toString())
+                                                                        .minute
+                                                                        .toString() +
+                                                                    " Hrs",
+                                                      )
+                                                    ])
                                               ])),
                                           Row(
                                             mainAxisAlignment:
@@ -375,25 +414,21 @@ class _TrackingState extends State<Tracking> {
                                                                           builder: (context) =>
                                                                               Images(image: mod.image)));
                                                                 },
-                                                                child: Hero(
-                                                                  tag: "image",
-                                                                  transitionOnUserGestures:
-                                                                      true,
-                                                                  child:
-                                                                      Container(
-                                                                    height: h *
-                                                                        0.04,
-                                                                    width:
-                                                                        w * 0.2,
-                                                                    decoration: BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(h *
-                                                                                0.01),
-                                                                        image: DecorationImage(
-                                                                            image:
-                                                                                NetworkImage(mod.image),
-                                                                            fit: BoxFit.fill)),
-                                                                  ),
+                                                                child:
+                                                                    Container(
+                                                                  height:
+                                                                      h * 0.04,
+                                                                  width:
+                                                                      w * 0.2,
+                                                                  decoration: BoxDecoration(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(h *
+                                                                              0.01),
+                                                                      image: DecorationImage(
+                                                                          image: NetworkImage(mod
+                                                                              .image),
+                                                                          fit: BoxFit
+                                                                              .fill)),
                                                                 ),
                                                               )
                                                             : Container()
@@ -476,8 +511,17 @@ class _TrackingState extends State<Tracking> {
                                                                             0;
                                                                         setState(
                                                                             () {
-                                                                          Navigator.pop(
-                                                                              context);
+                                                                          Navigator.pushAndRemoveUntil<
+                                                                              dynamic>(
+                                                                            context,
+                                                                            MaterialPageRoute<dynamic>(
+                                                                              builder: (BuildContext context) => BottomNavBar(
+                                                                                index: 2,
+                                                                              ),
+                                                                            ),
+                                                                            (route) =>
+                                                                                false, //if you want to disable back feature set to false
+                                                                          );
                                                                         });
                                                                       });
                                                                     },
@@ -511,8 +555,17 @@ class _TrackingState extends State<Tracking> {
                                                                             0;
                                                                         setState(
                                                                             () {
-                                                                          Navigator.pop(
-                                                                              context);
+                                                                          Navigator.pushAndRemoveUntil<
+                                                                              dynamic>(
+                                                                            context,
+                                                                            MaterialPageRoute<dynamic>(
+                                                                              builder: (BuildContext context) => BottomNavBar(
+                                                                                index: 2,
+                                                                              ),
+                                                                            ),
+                                                                            (route) =>
+                                                                                false, //if you want to disable back feature set to false
+                                                                          );
                                                                         });
                                                                       });
                                                                     },

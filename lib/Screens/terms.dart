@@ -69,14 +69,14 @@ class _TermsState extends State<Terms> {
                 )
                  
               ),
-              RRecctButton(
-                h: h * 0.06,
-                w: w * 0.9,
-                buttonColor: kbluecolor,
-                text: "CONTINUE",
-                style: GoogleFonts.montserrat(
-                    color: kwhitecolor, fontWeight: FontWeight.w600),
-              )
+              // RRecctButton(
+              //   h: h * 0.06,
+              //   w: w * 0.9,
+              //   buttonColor: kbluecolor,
+              //   text: "CONTINUE",
+              //   style: GoogleFonts.montserrat(
+              //       color: kwhitecolor, fontWeight: FontWeight.w600),
+              // )
             ],
           ),
         ),

@@ -338,7 +338,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                 //   ],
                 // ),
                 ),
-            RRecctButton2(
+           booknow
+                  ? loder
+                  : RRecctButton2(
               onTap: booknow
                   ? () {}
                   : () {
@@ -397,9 +399,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               w: w * 0.8,
               radius: h * 0.02,
               buttonColor: kGreenColor,
-              widget: booknow
-                  ? loder
-                  : Row(
+              widget:  Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text("Book now ".toUpperCase(),
@@ -461,6 +461,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   onTap: () async {
                                     if (details.document != "") {
                                       await launchURL(details.document);
+                                    }else{
+                                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No Document")));
                                     }
                                   },
                                   child: SvgPicture.asset("assets/svg/doc.svg",

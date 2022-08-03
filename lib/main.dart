@@ -27,6 +27,7 @@ import 'Utils/preference.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
 final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
@@ -34,7 +35,7 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
     'cityofcars',
     description: "User Notification Channel", // name
     importance: Importance.max,
-    enableLights:true,
+    enableLights: true,
     playSound: true,
     enableVibration: true);
 
@@ -97,62 +98,57 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 //   print('A bg message just showed up :  ${message.messageId}');
 // }
 
-
 final BehaviorSubject<String?> selectNotificationSubject =
-BehaviorSubject<String?>();
+    BehaviorSubject<String?>();
 final BehaviorSubject<ReceivedNotification> didReceiveLocalNotificationSubject =
-BehaviorSubject<ReceivedNotification>();
+    BehaviorSubject<ReceivedNotification>();
 String? selectedNotificationPayload;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   await Firebase.initializeApp();
 
   const AndroidInitializationSettings initializationSettingsAndroid =
-  AndroidInitializationSettings('@mipmap/ic_launcher');
+      AndroidInitializationSettings('@mipmap/ic_launcher');
 
   final IOSInitializationSettings initializationSettingsIOS =
-  IOSInitializationSettings(
-      requestAlertPermission: true,
-      requestBadgePermission: true,
-      requestSoundPermission: true,
-      onDidReceiveLocalNotification: (
-          int id,
-          String? title,
-          String? body,
-          String? payload,
+      IOSInitializationSettings(
+          requestAlertPermission: true,
+          requestBadgePermission: true,
+          requestSoundPermission: true,
+          onDidReceiveLocalNotification: (
+            int id,
+            String? title,
+            String? body,
+            String? payload,
           ) async {
-        didReceiveLocalNotificationSubject.add(
-          ReceivedNotification(
-            id: id,
-            title: title,
-            body: body,
-            payload: payload,
-          ),
-        );
-      });
+            didReceiveLocalNotificationSubject.add(
+              ReceivedNotification(
+                id: id,
+                title: title,
+                body: body,
+                payload: payload,
+              ),
+            );
+          });
 
   final InitializationSettings initializationSettings = InitializationSettings(
     android: initializationSettingsAndroid,
     iOS: initializationSettingsIOS,
   );
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings,
       onSelectNotification: (String? payload) async {
-        if (payload != null) {
-          debugPrint('notification payload: $payload');
-         // navigatorKey.currentState!.pushNamed("/notification");
+    if (payload != null) {
+      debugPrint('notification payload: $payload');
+      // navigatorKey.currentState!.pushNamed("/notification");
 
-        }
-        selectedNotificationPayload = payload;
-        selectNotificationSubject.add(payload);
-
-      });
-
-
+    }
+    selectedNotificationPayload = payload;
+    selectNotificationSubject.add(payload);
+  });
 
   // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
 
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
@@ -184,7 +180,7 @@ class _MyAppState extends State<MyApp> {
   // get korangecolor => null;
   String id = "";
   String cardetails = "";
-  String tokenId="";
+  String tokenId = "";
   Future<void> _requestPermissions() async {
     flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
@@ -198,7 +194,8 @@ class _MyAppState extends State<MyApp> {
     Map<Permission, PermissionStatus> statuses =
         await [Permission.notification].request();
   }
-   void _configureDidReceiveLocalNotificationSubject() {
+
+  void _configureDidReceiveLocalNotificationSubject() {
     print("_configureDidReceiveLocalNotificationSubject");
     didReceiveLocalNotificationSubject.stream
         .listen((ReceivedNotification receivedNotification) async {
@@ -237,7 +234,7 @@ class _MyAppState extends State<MyApp> {
     print("_configureSelectNotificationSubject");
 
     selectNotificationSubject.stream.listen((String? payload) async {
-      print("chacking payload"+payload.toString());
+      print("chacking payload" + payload.toString());
       if (payload != null) {
         if (payload != "") {
           var listdata = await breakPayload(payload);
@@ -279,6 +276,12 @@ class _MyAppState extends State<MyApp> {
               navigatorKey.currentState!.pushNamed("/message");
 
               break;
+            case "approvel":
+              navigatorKey.currentState!.pushNamed("/orderassign");
+              break;
+              case "presets":
+              navigatorKey.currentState!.pushNamed("/orderassign");
+              break;
             // case "feedback":
 
             //   break;
@@ -294,7 +297,7 @@ class _MyAppState extends State<MyApp> {
               navigatorKey.currentState!.pushNamed("/orderassign");
 
               break;
-              case "blogs":
+            case "blogs":
               navigatorKey.currentState!.pushNamed("/blog");
 
               break;
@@ -318,141 +321,141 @@ class _MyAppState extends State<MyApp> {
     token();
     getcmsdata();
     requestPersmission();
-  _requestPermissions();
+    _requestPermissions();
     _configureDidReceiveLocalNotificationSubject();
     _configureSelectNotificationSubject();
-    
+
     ////Forground notification
-    FirebaseMessaging.onMessage.listen((message)async {
+    FirebaseMessaging.onMessage.listen((message) async {
       print("here");
-      print("message "+message.notification!.title.toString()+"^^");
-      print("notification data"+message.data.toString());
+      print("message " + message.notification!.title.toString() + "^^");
+      print("notification data" + message.data.toString());
       print("notification notification" + message.notification.toString());
 
       if (message.notification != null) {
         print("notification notification" +
             message.notification!.title.toString());
       }
-   if(message.notification !=null){
-      Map<String, dynamic> map = HashMap();
-      print(map.toString());
-      map["title"] = message.notification!.title;
-      map["body"] = message.notification!.body;
-       if (message.data.isNotEmpty) {
-      if (message.data.containsKey("type")) {
-        map["type"] = message.data["type"];
-      }
-    }
+      if (message.notification != null) {
+        Map<String, dynamic> map = HashMap();
+        print(map.toString());
+        map["title"] = message.notification!.title;
+        map["body"] = message.notification!.body;
+        if (message.data.isNotEmpty) {
+          if (message.data.containsKey("type")) {
+            map["type"] = message.data["type"];
+          }
+        }
         print("type =" + map["type"]);
-      
-      createListMap(map);
-   }
-  // If `onMessage` is triggered with a notification, construct our own
-  // local notification to show to users using the created channel.
-  const AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails(
-          'cityofcars',
-          'cityofcars',
-          channelDescription: 'User Notification Channel',
-          importance: Importance.max,
-          priority: Priority.high,
-          ticker: 'ticker',
-          enableLights: true,
-          enableVibration: true,
-          playSound: true,
-        );
-        const NotificationDetails platformChannelSpecifics =
-        NotificationDetails(android: androidPlatformChannelSpecifics);
-        await flutterLocalNotificationsPlugin.show(
-          10,
-          message.notification!.title,
-          message.notification!.body,
-          platformChannelSpecifics,
-          payload: message.data.toString(),
-        );
-  // if (notification != null && android != null) {
-  //   flutterLocalNotificationsPlugin.show(
-  //       notification.hashCode,
-  //       notification.title,
-  //       notification.body,
-  //       NotificationDetails(
-  //         android: AndroidNotificationDetails(
-  //           channel.id,
-  //           channel.name,
-  //           icon: android.smallIcon,
-  //           // other properties...
-  //         ),
-  //       ));
-  // }
-      print("notification data"+message.data.toString());
+
+        createListMap(map);
+      }
+      // If `onMessage` is triggered with a notification, construct our own
+      // local notification to show to users using the created channel.
+      const AndroidNotificationDetails androidPlatformChannelSpecifics =
+          AndroidNotificationDetails(
+        'cityofcars',
+        'cityofcars',
+        channelDescription: 'User Notification Channel',
+        importance: Importance.max,
+        priority: Priority.high,
+        ticker: 'ticker',
+        enableLights: true,
+        enableVibration: true,
+        playSound: true,
+      );
+      const NotificationDetails platformChannelSpecifics =
+          NotificationDetails(android: androidPlatformChannelSpecifics);
+      await flutterLocalNotificationsPlugin.show(
+        10,
+        message.notification!.title,
+        message.notification!.body,
+        platformChannelSpecifics,
+        payload: message.data.toString(),
+      );
+      // if (notification != null && android != null) {
+      //   flutterLocalNotificationsPlugin.show(
+      //       notification.hashCode,
+      //       notification.title,
+      //       notification.body,
+      //       NotificationDetails(
+      //         android: AndroidNotificationDetails(
+      //           channel.id,
+      //           channel.name,
+      //           icon: android.smallIcon,
+      //           // other properties...
+      //         ),
+      //       ));
+      // }
+      print("notification data" + message.data.toString());
 
       if (message.notification != null) {
         print(message.notification!.body);
       }
     });
-    //Routing on tap notification 
-    // when app is in background 
-    FirebaseMessaging.onMessageOpenedApp.listen((message) async{
+    //Routing on tap notification
+    // when app is in background
+    FirebaseMessaging.onMessageOpenedApp.listen((message) async {
       RemoteNotification? notification = message.notification;
-  AndroidNotification? android = message.notification?.android;
-      print("notification data"+message.data.toString());
+      AndroidNotification? android = message.notification?.android;
+      print("notification data" + message.data.toString());
 
+      // If `onMessage` is triggered with a notification, construct our own
+      // local notification to show to users using the created channel.
+      if (message.notification != null) {
+        if (message.data['type'] == 'editprofile') {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => EditProfile()));
+        }
+        Map<String, dynamic> map = HashMap();
 
-  // If `onMessage` is triggered with a notification, construct our own
-  // local notification to show to users using the created channel.
-  if(message.notification !=null){
-    if (message.data['type'] == 'editprofile') {
-        Navigator.push(context,MaterialPageRoute(builder: (context)=>EditProfile()));
+        print(map.toString());
+        map["title"] = message.notification!.title;
+        map["body"] = message.notification!.body;
+        if (message.data.isNotEmpty) {
+          if (message.data.containsKey("type")) {
+            map["type"] = message.data["type"];
+          }
+        }
+
+        createListMap(map);
       }
-      Map<String, dynamic> map = HashMap();
-
-      print(map.toString());
-      map["title"] = message.notification!.title;
-      map["body"] = message.notification!.body;
-       if (message.data.isNotEmpty) {
-      if (message.data.containsKey("type")) {
-        map["type"] = message.data["type"];
-      }
-    }
-      
-      createListMap(map);
-   }
-  const AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails(
-          'cityofcars',
-          'cityofcars',
-          channelDescription: 'User Notification Channel',
-          importance: Importance.max,
-          priority: Priority.high,
-          ticker: 'ticker',
-          enableLights: true,
-          enableVibration: true,
-          playSound: true,
-        );
-        const NotificationDetails platformChannelSpecifics =
-        NotificationDetails(android: androidPlatformChannelSpecifics);
-        await flutterLocalNotificationsPlugin.show(
-          10,
-          message.notification!.title,
-          message.notification!.body,
-          platformChannelSpecifics,
-          payload: message.data.toString(),
-        );
-  // if (notification != null && android != null) {
-  //   flutterLocalNotificationsPlugin.show(
-  //       notification.hashCode,
-  //       notification.title,
-  //       notification.body,
-  //       NotificationDetails(
-  //         android: AndroidNotificationDetails(
-  //           channel.id,
-  //           channel.name,
-  //           icon: android.smallIcon,
-  //           // other properties...
-  //         ),
-  //       ));
-  // }
-     });
+      const AndroidNotificationDetails androidPlatformChannelSpecifics =
+          AndroidNotificationDetails(
+        'cityofcars',
+        'cityofcars',
+        channelDescription: 'User Notification Channel',
+        importance: Importance.max,
+        priority: Priority.high,
+        ticker: 'ticker',
+        enableLights: true,
+        enableVibration: true,
+        playSound: true,
+      );
+      const NotificationDetails platformChannelSpecifics =
+          NotificationDetails(android: androidPlatformChannelSpecifics);
+      await flutterLocalNotificationsPlugin.show(
+        10,
+        message.notification!.title,
+        message.notification!.body,
+        platformChannelSpecifics,
+        payload: message.data.toString(),
+      );
+      // if (notification != null && android != null) {
+      //   flutterLocalNotificationsPlugin.show(
+      //       notification.hashCode,
+      //       notification.title,
+      //       notification.body,
+      //       NotificationDetails(
+      //         android: AndroidNotificationDetails(
+      //           channel.id,
+      //           channel.name,
+      //           icon: android.smallIcon,
+      //           // other properties...
+      //         ),
+      //       ));
+      // }
+    });
     id = prefs!.getString("userId").toString();
 
     cardetails = prefs!.getString("usercar").toString();
@@ -466,46 +469,44 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_) => Shots()),
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'City of Cars',
-        navigatorKey: navigatorKey,
-        routes: <String, WidgetBuilder>{
-        "/notification": (_) => const Notifications(),
-        "/editprofile": (_) => const EditProfile(),
-        "/home": (_) => BottomNavBar(index: 0),
-        "/blog": (_) => BottomNavBar(index: 1),
-        "/orderassign": (_) => BottomNavBar(index: 2),
-        "/support": (_) => const Messages(),
-      },
-        theme: ThemeData().copyWith(
-          colorScheme: ThemeData().colorScheme.copyWith(
-                primary: korangecolor,
-              ),
-        ),
-        home: const Splash()
-        // const Glance(),
-        // OrderDetails()
-        //  id == "" || id == "null"
-        //     ? const MyHomePage()
-        //     : BottomNavBar(index: 0),
-      ),
+          debugShowCheckedModeBanner: false,
+          title: 'City of Cars',
+          navigatorKey: navigatorKey,
+          routes: <String, WidgetBuilder>{
+            "/notification": (_) => const Notifications(),
+            "/editprofile": (_) => const EditProfile(),
+            "/home": (_) => BottomNavBar(index: 0),
+            "/blog": (_) => BottomNavBar(index: 1),
+            "/orderassign": (_) => BottomNavBar(index: 2),
+            "/support": (_) => const Messages(),
+          },
+          theme: ThemeData().copyWith(
+            colorScheme: ThemeData().colorScheme.copyWith(
+                  primary: korangecolor,
+                ),
+          ),
+          home: const Splash()
+          // const Glance(),
+          // OrderDetails()
+          //  id == "" || id == "null"
+          //     ? const MyHomePage()
+          //     : BottomNavBar(index: 0),
+          ),
     );
   }
-    token() {
+
+  token() {
     var messaging = FirebaseMessaging.instance;
     messaging.getToken().then((value) {
       print("token: " + value.toString());
       tokenId = value.toString();
-      Prefernece.pref!.setString("fcmtoken",tokenId);
+      Prefernece.pref!.setString("fcmtoken", tokenId);
 
       print("new token: " + Prefernece.pref!.getString("fcmtoken").toString());
-
     });
   }
-
-   
-
 }
+
 Future<List<String>> breakPayload(String? _payload) async {
   String a = _payload!.replaceAll("{", "");
   String b = a.replaceAll("}", "");

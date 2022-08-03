@@ -39,6 +39,7 @@ class _FeedBackState extends State<FeedBack> {
   ];
   int isSelected = 0;
   int rating = 0;
+  bool onTapload = false;
   TextEditingController optional = TextEditingController();
   var _controller = ScrollController();
   @override
@@ -79,7 +80,7 @@ class _FeedBackState extends State<FeedBack> {
                   children: [
                     RichText(
                         text: TextSpan(
-                            text: "DELIVERY DATE:",
+                            text: "DELIVERY DATE: ",
                             style: GoogleFonts.montserrat(
                                 fontSize: 8, color: kSelectedColor),
                             children: [
@@ -262,43 +263,51 @@ class _FeedBackState extends State<FeedBack> {
               SizedBox(
                 height: h * 0.02,
               ),
-              Center(
-                child: RRecctButton(
-                  h: h * 0.06,
-                  w: w * 0.9,
-                  onTap: () async {
-                    if (rating == 0 ||
-                        optional.text.isEmpty ||
-                        isSelected  <= 0) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        duration: const Duration(seconds: 2),
-                        content: Text("Please fill all details"),
-                      ));
-                    } else {
-                      await feedback(
-                              rating.toString(),
-                              optional.text,
-                              widget.order.id,
-                              topServices[isSelected - 1]["type"])
-                          .then((value) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          duration: const Duration(seconds: 2),
-                          content: Text(value["message"]),
-                        ));
-                      }).whenComplete(() {
-                        Future.delayed(const Duration(seconds: 3), () {
-                          print('One second has passed.');
-                          Navigator.pop(context); // Prints after 1 second.
-                        });
-                      });
-                    }
-                  },
-                  buttonColor: kbluecolor,
-                  text: "SEND FEEDBACK",
-                  style: GoogleFonts.montserrat(
-                      color: kwhitecolor, fontWeight: FontWeight.w600),
-                ),
-              ),
+              onTapload
+                  ? loder
+                  : Center(
+                      child: RRecctButton(
+                        h: h * 0.06,
+                        w: w * 0.9,
+                        onTap: () async {
+                          if (rating == 0 ||
+                              optional.text.isEmpty ||
+                              isSelected <= 0) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              duration: const Duration(seconds: 2),
+                              content: Text("Please fill all details"),
+                            ));
+                          } else {
+                            onTapload = true;
+                            setState(() {});
+                            await feedback(
+                                    rating.toString(),
+                                    optional.text,
+                                    widget.order.id,
+                                    topServices[isSelected - 1]["type"])
+                                .then((value) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                duration: const Duration(seconds: 2),
+                                content: Text(value["message"]),
+                              ));
+                            }).whenComplete(() {
+                              Future.delayed(const Duration(seconds: 3), () {
+                                print('One second has passed.');
+                                Navigator.pop(
+                                    context); // Prints after 1 second.
+                              });
+                              onTapload = false;
+                              setState(() {});
+                            });
+                          }
+                        },
+                        buttonColor: kbluecolor,
+                        text: "SEND FEEDBACK",
+                        style: GoogleFonts.montserrat(
+                            color: kwhitecolor, fontWeight: FontWeight.w600),
+                      ),
+                    ),
               SizedBox(
                 height: h * 0.03,
               )

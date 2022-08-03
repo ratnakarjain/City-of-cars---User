@@ -26,6 +26,7 @@ class _SelectFuelState extends State<SelectFuel> {
     {"image": "Petrol.png", "type": "Petrol"},
     {"image": "EV.png", "type": "EV"}
   ];
+  bool fuelselcting = false;
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
@@ -206,28 +207,44 @@ class _SelectFuelState extends State<SelectFuel> {
                                     (index) {
                                   return Center(
                                     child: GestureDetector(
-                                      onTap: () {
-                                        CarsData.fuel =
-                                            snapshot.data[index]["fuel"];
-                                        CarsData.fuelimage =
-                                            snapshot.data[index]["image"];
-                                        Ids.fuelid =
-                                            snapshot.data[index]["_id"];
-                                        prefs!.setString("fuelId", Ids.fuelid);
-                                        addusercitycardata().then((value) {
-                                          value != "Error"
-                                              ? Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const Glance(),
-                                                  ))
-                                              : ScaffoldMessenger.of(context)
-                                                  .showSnackBar(const SnackBar(
-                                                  content: Text("Error"),
-                                                ));
-                                        });
-                                      },
+                                      onTap: fuelselcting
+                                          ? () {
+                                            print("tap");
+                                          }
+                                          : () {
+                                              fuelselcting = true;
+                                              setState(() {});
+                                              CarsData.fuel =
+                                                  snapshot.data[index]["fuel"];
+                                              CarsData.fuelimage =
+                                                  snapshot.data[index]["image"];
+                                              Ids.fuelid =
+                                                  snapshot.data[index]["_id"];
+                                              prefs!.setString(
+                                                  "fuelId", Ids.fuelid);
+                                              addusercitycardata()
+                                                  .then((value) {
+                                                value != "Error"
+                                                    ? Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const Glance(),
+                                                        )).whenComplete(() {
+                                                        fuelselcting = false;
+                                                        setState(() {});
+                                                      })
+                                                    : ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                            const SnackBar(
+                                                        content: Text("Error"),
+                                                      ));
+                                              }).whenComplete(() {
+                                                fuelselcting = false;
+                                                setState(() {});
+                                              });
+                                            },
                                       child: RRectCard(
                                         h: h * 0.12,
                                         w: h * 0.12,
