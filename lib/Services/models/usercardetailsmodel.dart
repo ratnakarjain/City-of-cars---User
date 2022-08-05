@@ -7,27 +7,26 @@ import '../servies.dart';
 
 List<CarsModel> modellist = [];
 int isSelected = 0;
-Future getusercarsdata(bool set)async {
- await getusercars().then((value) {
+Future getusercarsdata(bool set) async {
+  await getusercars().then((value) {
     modellist.clear();
     modellist.addAll(value);
     Prefernece.pref!.setString("usercarsData", jsonEncode(modellist));
     // print(jsonEncode(modellist));
     // print(modellist);
-    if(isSelected==0){
+    if (isSelected == 0) {
       isSelected = 1;
     }
-    if(set){
-      Prefernece.pref!.setString("brandId",modellist[0].carbrandid.toString());
-      Prefernece.pref!.setString("CarId",modellist[0].carid.toString());
-      Prefernece.pref!.setString("cityId",modellist[0].cityid.toString());
-      Prefernece.pref!.setString("fuelId",modellist[0].carfuelid.toString());
-    // Ids.brandid = ;
-    // Ids.carid = modellist[0].carid.toString();
-    // Ids.cityid = modellist[0].cityid.toString();
-    // Ids.fuelid = modellist[0].carfuelid.toString();
+    if (set) {
+      Prefernece.pref!.setString("brandId", modellist[0].carbrandid.toString());
+      Prefernece.pref!.setString("CarId", modellist[0].carid.toString());
+      Prefernece.pref!.setString("cityId", modellist[0].cityid.toString());
+      Prefernece.pref!.setString("fuelId", modellist[0].carfuelid.toString());
+      // Ids.brandid = ;
+      // Ids.carid = modellist[0].carid.toString();
+      // Ids.cityid = modellist[0].cityid.toString();
+      // Ids.fuelid = modellist[0].carfuelid.toString();
     }
-    
   });
 }
 

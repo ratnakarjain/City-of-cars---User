@@ -243,7 +243,7 @@ class _CartState extends State<Cart> {
                                                     left: w * 0.08,
                                                     bottom: h * 0.01),
                                                 child: Text(
-                                                  "Takes ${data[index]["Plans"]["hours"]} Hrs / Every ${data[index]["Plans"]["months"]??""} Months",
+                                                  "Takes ${data[index]["Plans"]["hours"]} Hrs / Every ${data[index]["Plans"]["month"]??""} Months",
                                                   style: GoogleFonts.montserrat(
                                                       fontWeight: FontWeight.w600,
                                                       fontSize: 7,

@@ -804,13 +804,10 @@ class _TrackingState extends State<Tracking> {
                                                                           child:
                                                                               Center(
                                                                             child:
-                                                                                Hero(
-                                                                              tag: "video",
-                                                                              child: Image.asset(
-                                                                                "assets/images/video.png",
-                                                                                height: h * 0.03,
-                                                                              ),
-                                                                            ),
+                                                                                Image.asset(
+                                                                                  "assets/images/video.png",
+                                                                                  height: h * 0.03,
+                                                                                ),
                                                                           ),
                                                                         ),
                                                                       )
@@ -826,20 +823,15 @@ class _TrackingState extends State<Tracking> {
                                                                         child:
                                                                             Center(
                                                                           child:
-                                                                              Hero(
-                                                                            tag:
-                                                                                "image",
-                                                                            child:
-                                                                                CircleAvatar(
+                                                                              CircleAvatar(
                                                                               radius: h * 0.022,
                                                                               backgroundColor: kTransparent,
                                                                               backgroundImage: NetworkImage(
-                                                                                resmdl.file,
+                                                                              resmdl.file,
                                                                               ),
                                                                               // child: Image.asset(
                                                                               //     "assets/images/mask2.png"),
                                                                             ),
-                                                                          ),
                                                                         )),
                                                           ),
                                                           // Positioned(

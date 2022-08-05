@@ -28,14 +28,14 @@ class _BottomNavBarState extends State<BottomNavBar> {
   List<TabItem> tabItems = List.of([
     TabItem(Icons.home, "Home".toUpperCase(), korangecolor,
         labelStyle: GoogleFonts.montserrat(color: kwhitecolor, fontSize: 9)),
-    TabItem(Icons.list_alt_rounded, "Document".toUpperCase(), korangecolor,
+    TabItem(Icons.list_alt_rounded, "Blogs".toUpperCase(), korangecolor,
         labelStyle: GoogleFonts.montserrat(color: kwhitecolor, fontSize: 9)),
     TabItem(Icons.shopping_cart, "Orders".toUpperCase(), korangecolor,
         labelStyle: GoogleFonts.montserrat(color: kwhitecolor, fontSize: 9)),
     TabItem(Icons.person, "Profile".toUpperCase(), korangecolor,
         labelStyle: GoogleFonts.montserrat(color: kwhitecolor, fontSize: 9)),
     TabItem(
-        Icons.notifications_none, "Notification".toUpperCase(), korangecolor,
+        Icons.notifications_none, "Notifications".toUpperCase(), korangecolor,
         labelStyle: GoogleFonts.montserrat(color: kwhitecolor, fontSize: 9)),
   ]);
   var _navigationController;

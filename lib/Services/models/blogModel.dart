@@ -23,7 +23,8 @@ class BlogsModel {
         this.discreption,
         this.subDiscreption,
         this.image,
-        this.status
+        this.status,
+        this.profileBlogs
     });
 
     String? id;
@@ -33,6 +34,7 @@ class BlogsModel {
     String? subDiscreption;
     String? image;
     bool? status;
+    bool? profileBlogs;
 
     factory BlogsModel.fromJson(Map<String, dynamic> json) => BlogsModel(
         id: json["_id"],
@@ -42,6 +44,7 @@ class BlogsModel {
         subDiscreption: json["SubDiscreption"],
         image: json["image"],
         status: json["status"],
+        profileBlogs:json["profileBlogs"]
     );
 
     Map<String, dynamic> toJson() => {

@@ -1702,13 +1702,14 @@ Future deletecardata(String id) async {
   }
 }
 
-Future addbookmark(String id) async {
+Future addbookmark(String id,BuildContext context) async {
   var url = Uri.parse(addbookmarkUrl + "?blogs=" + id);
   try {
     var respnse = await http.post(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
     if (respnse.statusCode == 200) {
       var data = jsonDecode(respnse.body);
+      
 
       print("Success");
       return data["status"];

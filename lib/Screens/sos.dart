@@ -171,7 +171,7 @@ class _SosState extends State<Sos> {
                         h: h * 0.06,
                         w: w * 0.88,
                         onTap: () {
-                          if (_controller.text.isNotEmpty &&
+                          if (_controller.text.length==10 &&
                               prob.text.isNotEmpty) {
                             istaped = true;
                             tosos();

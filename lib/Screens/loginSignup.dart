@@ -714,20 +714,22 @@ class _LoginSignUpState extends State<LoginSignUp> {
                   toLogin: false,
                 ),
               ));
-
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(jsonResponse["message"]),
+          ));
           return response.body;
         } else {
           istaped2 = false;
           setState(() {});
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(jsonResponse["msg"]),
+            content: Text(jsonResponse["message"]),
           ));
         }
       } else {
         istaped2 = false;
         setState(() {});
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(jsonResponse["msg"]),
+          content: Text(jsonResponse["message"]),
         ));
       }
     } catch (e) {

@@ -369,7 +369,7 @@ class _EditProfileState extends State<EditProfile> {
                             return null;
                           },
                         decoration: InputDecoration(
-                            hintText: "Email",
+                            hintText: "Email*",
                             hintStyle: GoogleFonts.montserrat(
                                 color:
                                     kTextInputPlaceholderColor.withOpacity(0.25),

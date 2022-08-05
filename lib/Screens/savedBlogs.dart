@@ -45,7 +45,7 @@ class _SavedBlogsState extends State<SavedBlogs> {
       backgroundColor: kwhitecolor,
       appBar: AppBar(
         elevation: 0,
-        automaticallyImplyLeading: false,
+        // automaticallyImplyLeading: false,
         backgroundColor: kwhitecolor,
         foregroundColor: kTextInputPlaceholderColor,
         title: Text(

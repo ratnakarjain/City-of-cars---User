@@ -338,12 +338,31 @@ class _NewsState extends State<News> {
                                         //         .createDate
                                         //         .toString(),
                                         //     url: blogs[index].image.toString());
-                                        addbookmark(blogs[index].id.toString());
+                                        addbookmark(blogs[index].id.toString(),
+                                                context)
+                                            .whenComplete(() {
+                                          getblog().then((value) {
+                                            blogs.clear();
+                                            blogs.addAll(value);
+                                            setState(() {
+                                              length1 = blogs.length + 1;
+                                              length2 = blogs.length + 1;
+                                              blogs = blogs.reversed.toList();
+                                            });
+                                          });
+                                          setState(() {});
+                                        });
                                       },
-                                      child: Icon(
-                                        Icons.bookmark_border,
-                                        size: h * 0.03,
-                                      ),
+                                      child: !blogs[index].profileBlogs!
+                                          ? Icon(
+                                              Icons.bookmark_border,
+                                              size: h * 0.03,
+                                            )
+                                          : Icon(
+                                              Icons.bookmark,
+                                              size: h * 0.03,
+                                              color: korangecolor,
+                                            ),
                                     ),
                                   ),
                                 ],

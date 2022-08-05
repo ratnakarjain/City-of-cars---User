@@ -267,7 +267,7 @@ class _SlotState extends State<Slot> {
                             return null;
                           },
                           decoration: InputDecoration(
-                              hintText: "Street/City*",
+                              hintText: "Street / City*",
                               hintStyle: GoogleFonts.montserrat(
                                 fontSize: 13,
                                 color: kTextInputPlaceholderColor
