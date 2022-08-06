@@ -76,22 +76,22 @@ class _PaymentState extends State<Payment> {
   }
 
   opencheckout() {
-  //   var options = {
-  //     'key': 'rzp_test_HvQjakwAVoHUHx',
-  //     'amount': 100,
-  //     'name': 'City of Cars',
-  //     'description': 'Payment for the order. ',
-  //     'prefill': {
-  //       'contact': '1234567890',
-  //       'email': 'dsr@gmail',
-  //     },
-  //     'external': {
-  //       'wallets': ['paytm', 'freecharge', 'mobikwik']
-  //     },
-  //   };
+    //   var options = {
+    //     'key': 'rzp_test_HvQjakwAVoHUHx',
+    //     'amount': 100,
+    //     'name': 'City of Cars',
+    //     'description': 'Payment for the order. ',
+    //     'prefill': {
+    //       'contact': '1234567890',
+    //       'email': 'dsr@gmail',
+    //     },
+    //     'external': {
+    //       'wallets': ['paytm', 'freecharge', 'mobikwik']
+    //     },
+    //   };
     var options = {
       'key': 'rzp_test_ZV56ClYdeni9vm',
-      'amount': price* 100,
+      'amount': price * 100,
       'name': 'City of Cars',
       'description': 'Payment for the order.',
       'retry': {'enabled': true, 'max_count': 1},
@@ -99,7 +99,8 @@ class _PaymentState extends State<Payment> {
       'prefill': {'contact': '', 'email': ''},
       'external': {
         'wallets': ['paytm']
-      }};
+      }
+    };
     try {
       razorpay.open(options);
     } catch (e) {
@@ -523,18 +524,16 @@ class _PaymentState extends State<Payment> {
                                 // h: h * 0.1,
                                 w: w,
                                 widget: Padding(
-                                  padding: EdgeInsets.only(
-                                      left: w * 0.05,
-                                      top: h * 0.01,
-                                      bottom: h * 0.01),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: w * 0.05, vertical: h * 0.01),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       RichText(
                                           text: TextSpan(
-                                        text: "",
+                                        text:
+                                            "Special Remark / Additional Jobs\n",
                                         style: GoogleFonts.montserrat(
                                             fontSize: 11,
                                             height: 2,
@@ -542,8 +541,7 @@ class _PaymentState extends State<Payment> {
                                             color: ksubHading),
                                         children: [
                                           TextSpan(
-                                              text:
-                                                  "${data.option}",
+                                              text: "${data.option}",
                                               style: GoogleFonts.montserrat(
                                                   fontSize: 11,
                                                   height: 2,
@@ -556,44 +554,52 @@ class _PaymentState extends State<Payment> {
                                 ),
                                 borderRadius: h * 0.02,
                               ),
+                              // SizedBox(
+                              //   height: h * 0.1,
+                              // ),
+
+                              //                 RRectCard(
+                              //                   // h: h * 0.1,
+                              //                   w: w,
+                              //                   widget: Padding(
+                              //                     padding: EdgeInsets.only(
+                              //                         left: w * 0.05,
+                              //                         top: h * 0.01,
+                              //                         bottom: h * 0.01),
+                              //                     child: Column(
+                              //                       crossAxisAlignment:
+                              //                           CrossAxisAlignment.start,
+                              //                       mainAxisAlignment: MainAxisAlignment.center,
+                              //                       children: [
+                              //                         RichText(
+                              //                             text: TextSpan(
+                              //                           text: "",
+                              //                           style: GoogleFonts.montserrat(
+                              //                               fontSize: 11,
+                              //                               height: 2,
+                              //                               fontWeight: FontWeight.w700,
+                              //                               color: ksubHading),
+                              //                           children: [
+                              //                             TextSpan(
+                              //                                 text:
+                              //                                     "${data.option}",
+                              //                                 style: GoogleFonts.montserrat(
+                              //                                     fontSize: 11,
+                              //                                     height: 2,
+                              //                                     fontWeight: FontWeight.w500,
+                              //                                     color: ksubHading)),
+                              //                           ],
+                              //                         )),
+                              //                       ],
+                              //                     ),
+                              //                   ),
+                              //                   borderRadius: h * 0.02,
+                              //                 ),
                             ],
                           ),
                         );
                       },
                     ),
-              RRectCard(
-                // h: h * 0.1,
-                w: w,
-                widget: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: w * 0.05, vertical: h * 0.01),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      RichText(
-                          text: TextSpan(
-                        text: "Special Remark / Additional Jobs",
-                        style: GoogleFonts.montserrat(
-                            fontSize: 11,
-                            height: 2,
-                            fontWeight: FontWeight.w700,
-                            color: ksubHading),
-                      )),
-                      TextFormField(
-                        controller: special,
-                        maxLines: 5,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                borderRadius: h * 0.02,
-              ),
-              SizedBox(
-                height: h * 0.1,
-              ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: w * 0.04),
                 child: istaped

@@ -1017,8 +1017,9 @@ Future getcategoryBanner() async {
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
-    if (respnse.statusCode == 200) {
       var data = jsonDecode(respnse.body);
+      ServiceMain.message =  data["message"]??"";
+    if (respnse.statusCode == 200) {
       List image = [];
       if (data["status"]) {
         for (int i = 0; i < data["data"].length; i++) {
@@ -1703,7 +1704,7 @@ Future deletecardata(String id) async {
 }
 
 Future addbookmark(String id,BuildContext context) async {
-  var url = Uri.parse(addbookmarkUrl + "?blogs=" + id);
+  var url = Uri.parse(addbookmarkUrl + "?blogs=" + id+"&userid="+Ids.userid);
   try {
     var respnse = await http.post(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -1738,7 +1739,7 @@ Future resendotp(String mobile, BuildContext context) async {
 }
 
 Future getsavedblog() async {
-  var url = Uri.parse(blogUrl+"?userid="+prefs!.getString("id").toString());
+  var url = Uri.parse(savedblogUrl+"?userId="+Ids.userid);
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});

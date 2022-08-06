@@ -39,6 +39,7 @@ const String postmessageUrl = baseUrl+"/userSupport";
 const String getmessageUrl = baseUrl+"/getuserSupport";
 const String getofferUrl = baseUrl+"/getoffer";
 const String feedbackUrl = baseUrl+"/carfeedbackModel";
+const String savedblogUrl = baseUrl+"/getprofileblogs";
 const String blogUrl = baseUrl+"/getBlogs";
 const String carhealthUrl = baseUrl+"/getcarhealth";
 const String globalsearchUrl = baseUrl+"/homesearch";

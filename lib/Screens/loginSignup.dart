@@ -167,13 +167,18 @@ class _LoginSignUpState extends State<LoginSignUp> {
                               focusNode: myFocusNode,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  nameError = "Enter name";
+                                  nameError = "Please Enter name";
                                   setState(() {});
                                   return "";
                                 } else {
                                   return null;
                                 }
                               },
+                              onChanged: ((value) {
+                                if (value == " ") {
+                                  name.clear();
+                                }
+                              }),
                               // autovalidateMode: AutovalidateMode.onUserInteraction,
                               controller: name,
                               decoration: InputDecoration(
@@ -246,7 +251,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
                               // autovalidateMode: AutovalidateMode.onUserInteraction,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  mobileError = "Enter mobile Number";
+                                  mobileError = "Please Enter mobile Number";
                                   setState(() {});
                                   return "";
                                 } else if (value.length != 10) {
@@ -343,7 +348,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
                                 } else if (!RegExp(
                                         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                     .hasMatch(value)) {
-                                  emailError = "Enter a valid email";
+                                  emailError = "Please Enter a valid email id";
                                   return '';
                                 }
                                 return null;
@@ -418,7 +423,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
                           },
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return "Enter mobile Number";
+                              return "Please Enter mobile Number";
                             } else if (value.length != 10) {
                               return "Mobile no. should be enter 10 digit";
                             } else {
@@ -706,6 +711,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
           print("$token");
           print(Ids.userid);
           istaped2 = false;
+          setState(() {});
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -735,6 +741,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
     } catch (e) {
       print("error $e");
       istaped2 = false;
+      setState(() {});
     }
   }
 
@@ -765,6 +772,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
         print(Ids.userid);
 
         istaped1 = false;
+        setState(() {});
         Navigator.push(
             context,
             MaterialPageRoute(

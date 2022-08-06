@@ -106,17 +106,17 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
       vsync: this,
     );
     slidecontroller =
-        AnimationController(duration: const Duration(seconds: 1), vsync: this);
+        AnimationController(duration: const Duration(milliseconds: 600), vsync: this);
     slideanimation =
-        Tween<double>(begin: 1.0, end: 1.0).animate(slidecontroller);
+        Tween<double>(begin: 0.3, end: 1.0).animate(slidecontroller);
     slidecontroller.forward();
     scalecontroller =
-        AnimationController(duration: const Duration(seconds: 1), vsync: this);
+        AnimationController(duration: const Duration(milliseconds: 600), vsync: this);
     scaleanimation =
-        Tween<double>(begin: 0.7, end: 1.0).animate(scalecontroller);
+        Tween<double>(begin: 0.5, end: 0.7).animate(scalecontroller);
 
-    Future.delayed(const Duration(milliseconds: 1100), () {
-      // scalecontroller.forward();
+    Future.delayed(const Duration(milliseconds: 700), () {
+      scalecontroller.forward();
       start = true;
       setState(() {});
     });
@@ -166,7 +166,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
             child: Stack(
               children: [
                  AnimatedPositioned(
-                      duration: const Duration(seconds: 1),
+                      duration: const Duration(milliseconds: 600),
                       top: start
                           ? MediaQuery.of(context).size.height * 0.25
                           : MediaQuery.of(context).size.height * 0.35,
@@ -219,7 +219,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
                 //   ),
                 // ),
                 AnimatedPositioned(
-                  duration: const Duration(seconds: 1),
+                  duration: const Duration(milliseconds: 600),
                   top: start
                       ? MediaQuery.of(context).size.height * 0.7
                       : MediaQuery.of(context).size.height * 0.8,

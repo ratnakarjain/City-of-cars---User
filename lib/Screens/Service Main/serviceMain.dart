@@ -9,6 +9,7 @@ import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:cityofcars/Utils/functions.dart';
+import 'package:cityofcars/Utils/preference.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../Services/models/usercardetailsmodel.dart';
 import '../bottomnavBar.dart';
 import '../editProfile.dart';
+import '../loginSignup.dart';
 import '../messages.dart';
 import '../sos.dart';
 
@@ -31,6 +33,7 @@ bool recdata = false;
 bool mostdata = false;
 
 class ServiceMain extends StatefulWidget {
+  static String message = "";
   const ServiceMain({Key? key}) : super(key: key);
 
   @override
@@ -147,10 +150,7 @@ class _ServiceMainState extends State<ServiceMain> {
         });
       }
     });
-    getcategoryBanner().then((value) {
-      images.addAll(value);
-      setState(() {});
-    });
+    
     getoffers().then((value) {
       if (value != null) {
         offerslist.addAll(value);
@@ -160,10 +160,18 @@ class _ServiceMainState extends State<ServiceMain> {
       processing = false;
       setState(() {});
     });
+    getcategoryBanner().then((value) {
+      images.addAll(value);
+      setState(() {});
+    }).whenComplete(() {
+      userexistensecheck();
+    });
+
   }
 
   @override
   Widget build(BuildContext context) {
+    
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -1577,4 +1585,17 @@ class _ServiceMainState extends State<ServiceMain> {
       }
     });
   }
+  userexistensecheck(){
+  if(ServiceMain.message=="Invalid Token"){
+    Prefernece.pref!.clear();
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Your account has been deleted.")));
+    Navigator.pushAndRemoveUntil<dynamic>(
+        context,
+        MaterialPageRoute<dynamic>(
+          builder: (BuildContext context) => LoginSignUp(isSignIn: false)
+        ),
+        (route) => false, //if you want to disable back feature set to false
+      );
+  }
+ }
 }
