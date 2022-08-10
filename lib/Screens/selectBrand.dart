@@ -103,45 +103,17 @@ class _SelectBrandState extends State<SelectBrand> {
       resizeToAvoidBottomInset: false,
       backgroundColor: kbg3,
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
         centerTitle: false,
-        title: Padding(
-          padding: const EdgeInsets.only(left: 22, top: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                isSelected ? "Select Your Car" : "Select Your Brand",
-                style: GoogleFonts.montserrat(
-                    textStyle: const TextStyle(
-                  fontSize: 21,
-                  fontWeight: FontWeight.bold,
-                  color: kTextInputPlaceholderColor,
-                )),
-              ),
-              // GestureDetector(
-              //   onTap: () {
-              //     Navigator.pushAndRemoveUntil<dynamic>(
-              //       context,
-              //       MaterialPageRoute<dynamic>(
-              //         builder: (BuildContext context) => BottomNavBar(
-              //           index: 0,
-              //         ),
-              //       ),
-              //       (route) =>
-              //           false, //if you want to disable back feature set to false
-              //     );
-              //   },
-              //   child: Text(
-              //     "Skip & Explore".toUpperCase(),
-              //     textScaleFactor: 0.6,
-              //     style: GoogleFonts.montserrat(
-              //         fontWeight: FontWeight.w600, color: kbluecolor),
-              //   ),
-              // ),
-            ],
-          ),
+        foregroundColor: kTextInputPlaceholderColor,
+        title: Text(
+          isSelected ? "Select Your Car" : "Select Your Brand",
+          style: GoogleFonts.montserrat(
+              textStyle: const TextStyle(
+            fontSize: 21,
+            fontWeight: FontWeight.bold,
+            color: kTextInputPlaceholderColor,
+          )),
         ),
         backgroundColor: kwhitecolor,
         elevation: 0,
@@ -522,7 +494,7 @@ class _SelectBrandState extends State<SelectBrand> {
               child: Column(
                 children: [
                   Text(
-                    "Select Cars",
+                    "Select Car",
                     textScaleFactor: 1.3,
                     style: GoogleFonts.montserrat(
                         height: 2, fontWeight: FontWeight.w600),

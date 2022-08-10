@@ -763,6 +763,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
         prefs!.setString('id', jsonResponse["data"]["_id"].toString());
         prefs!.setString('name', jsonResponse["data"]["name"].toString());
         prefs!.setString('image', jsonResponse["data"]["image"].toString());
+        prefs!.setString('houseno', jsonResponse["data"]["House"].toString());
         prefs!.setString('mobile', jsonResponse["data"]["mobile"].toString());
         prefs!.setString('street', jsonResponse["data"]["Street"].toString());
         prefs!.setString('state', jsonResponse["data"]["State"].toString());

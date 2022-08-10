@@ -57,7 +57,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
         backgroundColor: kwhitecolor,
         foregroundColor: kTextInputPlaceholderColor,
         title: Text(
-          "News",
+          "Blogs",
           style:
               GoogleFonts.montserrat(fontSize: 21, fontWeight: FontWeight.w700),
         ),

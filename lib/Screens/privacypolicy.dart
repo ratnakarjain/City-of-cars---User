@@ -18,7 +18,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
   @override
   void initState() {
     super.initState();
-    des = Prefernece.pref!.getString("us")??"";
+    des = Prefernece.pref!.getString("pp")??"";
   }
   @override
   Widget build(BuildContext context) {

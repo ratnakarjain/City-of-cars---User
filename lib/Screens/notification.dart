@@ -133,7 +133,7 @@ class _NotificationsState extends State<Notifications> {
                                 // case "offer":
 
                                 //   break;
-                                case "message":
+                                case "conversation":
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(

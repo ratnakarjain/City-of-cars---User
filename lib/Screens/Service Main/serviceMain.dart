@@ -335,7 +335,44 @@ class _ServiceMainState extends State<ServiceMain> {
 
                         onChanged: (value) {
                           if (value.isNotEmpty) {
-                            show = false;
+                            show = false;searchGloble(search.text).then((value) {
+                                        print("done");
+                                        if (value) {
+                                          show = true;
+                                          print("condition");
+                                          pls1.clear();
+                                          cats1.clear();
+                                          pls1.addAll(Searchdata.plans);
+                                          cats1.addAll(Searchdata.cats);
+
+                                          // pls=value.plans;
+
+                                          setState(() {
+                                            // if (pls1.isEmpty) {
+                                            //   setState(() {});
+                                            //   ScaffoldMessenger.of(context)
+                                            //       .showSnackBar(const SnackBar(
+                                            //     content: Text("No Plans found"),
+                                            //   ));
+                                            // }
+                                            // if (cats1.isEmpty) {
+                                            //   setState(() {});
+                                            //   ScaffoldMessenger.of(context)
+                                            //       .showSnackBar(const SnackBar(
+                                            //     content:
+                                            //         Text("No Category found"),
+                                            //   ));
+                                            // }
+                                            if (cats1.isEmpty && pls1.isEmpty) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(const SnackBar(
+                                                content: Text("No Data found"),
+                                              ));
+                                            }
+                                          });
+                                        }
+                                      });
+
                           }
 
                           setState(() {});
@@ -1527,9 +1564,13 @@ class _ServiceMainState extends State<ServiceMain> {
                     false, //if you want to disable back feature set to false
               );
               break;
-            // case "pendingcart":
+            case "conversation":
+            Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: ((context) => const Messages())));
 
-            //   break;
+              break;
             // case "offer":
 
             //   break;

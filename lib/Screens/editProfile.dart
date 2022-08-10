@@ -45,13 +45,14 @@ class _EditProfileState extends State<EditProfile> {
   var file2;
   @override
   void initState() {
+    String number;
     name.text = prefs!.getString("name").toString() == "null"
         ? ""
         : prefs!.getString("name").toString();
     id = prefs!.getString("id").toString() == "null"
         ? ""
         : prefs!.getString("id").toString();
-    mobile.text = prefs!.getString("mobile").toString() == "null"
+    number = prefs!.getString("mobile").toString() == "null"
         ? ""
         : prefs!.getString("mobile").toString();
     email.text = prefs!.getString("email").toString() == "null"
@@ -73,6 +74,7 @@ class _EditProfileState extends State<EditProfile> {
     image = prefs!.getString("image").toString() == "null"
         ? ""
         : prefs!.getString("image").toString();
+        mobile.text ="91 "+ number.split("91").last;
     print(image);
     token();
     // TODO: implement initState
@@ -578,14 +580,14 @@ class _EditProfileState extends State<EditProfile> {
                         id,
                         name.text,
                         email.text,
-                        mobile.text,
+                        "91"+mobile.text.split("91 ").last,
                         houseNo.text,
                         street.text,
                         state.text,
                         pinCode.text,
                         fcm,
-                        file == null ? null : File(file),
-                        file2 == null ? null : file2,
+                       image==""? file == null ? null : File(file):File(image),
+                        file2 == null ? null : File(file2),
                         context,
                       ).whenComplete(() {
                         savingChanges = false;

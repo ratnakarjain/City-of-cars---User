@@ -425,128 +425,128 @@ class _ProfileState extends State<Profile> {
                     SizedBox(
                       height: h * 0.01,
                     ),
-                    Center(
-                      child: Container(
-                        margin: EdgeInsets.symmetric(vertical: h * 0.02),
-                        height: h * 0.07,
-                        width: w * 0.4,
-                        decoration: BoxDecoration(
-                            color: kwhitecolor,
-                            borderRadius: BorderRadius.circular(h * 0.03)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const Messages(),
-                                    ));
-                              },
-                              child: SizedBox(
-                                height: h * 0.07,
-                                width: w * 0.12,
-                                child: Stack(
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(Icons.mail),
-                                        Text(
-                                          "Support",
-                                          style: GoogleFonts.montserrat(
-                                            fontSize: 7,
-                                            color: ksubHading,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    // Positioned(
-                                    //   top: h * 0.01,
-                                    //   right: w * 0.02,
-                                    //   child: CircleAvatar(
-                                    //     radius: h * 0.01,
-                                    //     foregroundColor: kwhitecolor,
-                                    //     backgroundColor: kbluecolor,
-                                    //     child: Text(
-                                    //       "7",
-                                    //       style: GoogleFonts.montserrat(
-                                    //         fontSize: 8,
-                                    //         color: kwhitecolor,
-                                    //         fontWeight: FontWeight.w700,
-                                    //       ),
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            VerticalDivider(
-                              color: kgrey,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.pushAndRemoveUntil<dynamic>(
-                                  context,
-                                  MaterialPageRoute<dynamic>(
-                                    builder: (BuildContext context) =>
-                                        BottomNavBar(
-                                      index: 4,
-                                    ),
-                                  ),
-                                  (route) =>
-                                      false, //if you want to disable back feature set to false
-                                );
-                              },
-                              child: SizedBox(
-                                height: h * 0.07,
-                                width: w * 0.12,
-                                child: Stack(
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(Icons.notifications),
-                                        Text(
-                                          "Notifications",
-                                          style: GoogleFonts.montserrat(
-                                            fontSize: 7,
-                                            color: ksubHading,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    // Positioned(
-                                    //   top: h * 0.01,
-                                    //   right: w * 0.01,
-                                    //   child: CircleAvatar(
-                                    //     radius: h * 0.01,
-                                    //     foregroundColor: kwhitecolor,
-                                    //     backgroundColor: korangecolor,
-                                    //     child: Text(
-                                    //       "5",
-                                    //       style: GoogleFonts.montserrat(
-                                    //         fontSize: 8,
-                                    //         color: kwhitecolor,
-                                    //         fontWeight: FontWeight.w700,
-                                    //       ),
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
+                    // Center(
+                    //   child: Container(
+                    //     margin: EdgeInsets.symmetric(vertical: h * 0.02),
+                    //     height: h * 0.07,
+                    //     width: w * 0.4,
+                    //     decoration: BoxDecoration(
+                    //         color: kwhitecolor,
+                    //         borderRadius: BorderRadius.circular(h * 0.03)),
+                    //     child: Row(
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       children: [
+                    //         GestureDetector(
+                    //           onTap: () {
+                    //             Navigator.push(
+                    //                 context,
+                    //                 MaterialPageRoute(
+                    //                   builder: (context) => const Messages(),
+                    //                 ));
+                    //           },
+                    //           child: SizedBox(
+                    //             height: h * 0.07,
+                    //             width: w * 0.12,
+                    //             child: Stack(
+                    //               children: [
+                    //                 Column(
+                    //                   mainAxisAlignment:
+                    //                       MainAxisAlignment.center,
+                    //                   children: [
+                    //                     Icon(Icons.mail),
+                    //                     Text(
+                    //                       "Support",
+                    //                       style: GoogleFonts.montserrat(
+                    //                         fontSize: 7,
+                    //                         color: ksubHading,
+                    //                         fontWeight: FontWeight.w700,
+                    //                       ),
+                    //                     ),
+                    //                   ],
+                    //                 ),
+                    //                 // Positioned(
+                    //                 //   top: h * 0.01,
+                    //                 //   right: w * 0.02,
+                    //                 //   child: CircleAvatar(
+                    //                 //     radius: h * 0.01,
+                    //                 //     foregroundColor: kwhitecolor,
+                    //                 //     backgroundColor: kbluecolor,
+                    //                 //     child: Text(
+                    //                 //       "7",
+                    //                 //       style: GoogleFonts.montserrat(
+                    //                 //         fontSize: 8,
+                    //                 //         color: kwhitecolor,
+                    //                 //         fontWeight: FontWeight.w700,
+                    //                 //       ),
+                    //                 //     ),
+                    //                 //   ),
+                    //                 // ),
+                    //               ],
+                    //             ),
+                    //           ),
+                    //         ),
+                    //         VerticalDivider(
+                    //           color: kgrey,
+                    //         ),
+                    //         GestureDetector(
+                    //           onTap: () {
+                    //             Navigator.pushAndRemoveUntil<dynamic>(
+                    //               context,
+                    //               MaterialPageRoute<dynamic>(
+                    //                 builder: (BuildContext context) =>
+                    //                     BottomNavBar(
+                    //                   index: 4,
+                    //                 ),
+                    //               ),
+                    //               (route) =>
+                    //                   false, //if you want to disable back feature set to false
+                    //             );
+                    //           },
+                    //           child: SizedBox(
+                    //             height: h * 0.07,
+                    //             width: w * 0.12,
+                    //             child: Stack(
+                    //               children: [
+                    //                 Column(
+                    //                   mainAxisAlignment:
+                    //                       MainAxisAlignment.center,
+                    //                   children: [
+                    //                     Icon(Icons.notifications),
+                    //                     Text(
+                    //                       "Notifications",
+                    //                       style: GoogleFonts.montserrat(
+                    //                         fontSize: 7,
+                    //                         color: ksubHading,
+                    //                         fontWeight: FontWeight.w700,
+                    //                       ),
+                    //                     ),
+                    //                   ],
+                    //                 ),
+                    //                 // Positioned(
+                    //                 //   top: h * 0.01,
+                    //                 //   right: w * 0.01,
+                    //                 //   child: CircleAvatar(
+                    //                 //     radius: h * 0.01,
+                    //                 //     foregroundColor: kwhitecolor,
+                    //                 //     backgroundColor: korangecolor,
+                    //                 //     child: Text(
+                    //                 //       "5",
+                    //                 //       style: GoogleFonts.montserrat(
+                    //                 //         fontSize: 8,
+                    //                 //         color: kwhitecolor,
+                    //                 //         fontWeight: FontWeight.w700,
+                    //                 //       ),
+                    //                 //     ),
+                    //                 //   ),
+                    //                 // ),
+                    //               ],
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // )
                   ],
                 ),
               ),
@@ -732,7 +732,7 @@ class _ProfileState extends State<Profile> {
                       Expanded(
                         flex: 3,
                         child: Text(
-                          "Saved Blogs",
+                          "My blogs",
                           style: GoogleFonts.montserrat(
                             fontSize: 13,
                             fontWeight: FontWeight.w700,

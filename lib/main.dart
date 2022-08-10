@@ -272,7 +272,7 @@ class _MyAppState extends State<MyApp> {
             // case "offer":
 
             //   break;
-            case "message":
+            case "conversation":
               navigatorKey.currentState!.pushNamed("/message");
 
               break;

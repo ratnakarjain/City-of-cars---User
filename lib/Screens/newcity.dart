@@ -50,44 +50,17 @@ class _NewCityState extends State<NewCity> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
+        foregroundColor: kTextInputPlaceholderColor,
         centerTitle: false,
-        title: Padding(
-          padding: const EdgeInsets.only(left: 22, top: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Select Your City",
-                style: GoogleFonts.montserrat(
-                    textStyle: const TextStyle(
-                  fontSize: 21,
-                  fontWeight: FontWeight.bold,
-                  color: kTextInputPlaceholderColor,
-                )),
-              ),
-              // GestureDetector(
-              //   onTap: () {
-              //     Navigator.pushAndRemoveUntil<dynamic>(
-              //       context,
-              //       MaterialPageRoute<dynamic>(
-              //         builder: (BuildContext context) => BottomNavBar(
-              //           index: 0,
-              //         ),
-              //       ),
-              //       (route) =>
-              //           false, //if you want to disable back feature set to false
-              //     );
-              //   },
-              //   child: Text(
-              //     "Skip & Explore".toUpperCase(),
-              //     textScaleFactor: 0.6,
-              //     style: GoogleFonts.montserrat(
-              //         fontWeight: FontWeight.w600, color: kbluecolor),
-              //   ),
-              // ),
-            ],
-          ),
+        title: Text(
+          "Select Your City",
+          style: GoogleFonts.montserrat(
+              textStyle: const TextStyle(
+            fontSize: 21,
+            fontWeight: FontWeight.bold,
+            color: kTextInputPlaceholderColor,
+          )),
         ),
         backgroundColor: kwhitecolor,
         elevation: 0,

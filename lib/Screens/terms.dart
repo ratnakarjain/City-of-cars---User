@@ -20,7 +20,7 @@ class _TermsState extends State<Terms> {
   @override
   void initState() {
     super.initState();
-    des = Prefernece.pref!.getString("us")??"";
+    des = Prefernece.pref!.getString("terms")??"";
   }
   @override
   Widget build(BuildContext context) {

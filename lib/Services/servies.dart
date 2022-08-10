@@ -208,12 +208,13 @@ Future editProfile(
     }
 
     await request.send().then((response) async {
-      if (response.statusCode == 200) {
-        print("Uploaded!");
-        var respone = await response.stream.bytesToString();
+      var respone = await response.stream.bytesToString();
         const JsonDecoder _decoder = JsonDecoder();
         var jsonRes;
         jsonRes = _decoder.convert(respone.toString());
+      if (response.statusCode == 200) {
+        print("Uploaded!");
+        
         print("Response: " + jsonRes.toString() + "_");
         print(jsonRes["status"]);
         if (jsonRes["status"].toString() == "true") {
@@ -1093,7 +1094,7 @@ Future getusercars() async {
 Future getrecmostPlans() async {
   print("CAr Id " + prefs!.getString("CarId").toString() + "^");
   var url = Uri.parse(
-      getpoprecUrl + "?carid=" + prefs!.getString("CarId").toString());
+      getpoprecUrl + "?carid=" + prefs!.getString("CarId").toString()=="null"?prefs!.getString("CarId").toString():"");
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
