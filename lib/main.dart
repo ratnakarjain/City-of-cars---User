@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Screens/glance.dart';
@@ -319,7 +318,6 @@ class _MyAppState extends State<MyApp> {
     // TODO: implement initState
     super.initState();
     token();
-    getcmsdata();
     requestPersmission();
     _requestPermissions();
     _configureDidReceiveLocalNotificationSubject();
@@ -464,11 +462,9 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => Shots()),
-      ],
-      child: MaterialApp(
+    return 
+      
+     MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'City of Cars',
           navigatorKey: navigatorKey,
@@ -491,7 +487,7 @@ class _MyAppState extends State<MyApp> {
           //  id == "" || id == "null"
           //     ? const MyHomePage()
           //     : BottomNavBar(index: 0),
-          ),
+        
     );
   }
 

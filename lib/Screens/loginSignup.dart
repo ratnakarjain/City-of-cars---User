@@ -49,6 +49,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
     // TODO: implement initState
     super.initState();
     isSelected = widget.isSignIn;
+    getcmsdata();
     // mobile.text = "1234567890";
   }
 

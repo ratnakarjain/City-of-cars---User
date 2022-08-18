@@ -9,7 +9,7 @@ import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:cityofcars/Utils/preference.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+
 
 import '../Services/models/usercardetailsmodel.dart';
 import '../Services/servies.dart';

@@ -173,6 +173,7 @@ Future editProfile(
   String pincode,
   String fcm,
   File? file,
+  String image,
   File? document,
   BuildContext context,
 ) async {
@@ -198,6 +199,9 @@ Future editProfile(
           File(file.path).readAsBytes().asStream(),
           File(file.path).lengthSync(),
           filename: file.path.split('/').last));
+    }else{
+    request.fields['image'] = image.toString();
+
     }
     if (document != null) {
       request.files.add(http.MultipartFile(
@@ -1641,6 +1645,9 @@ Future getcmsdata() async {
       prefs!.setString("terms", terms);
       prefs!.setString("us", us);
       prefs!.setString("pp", pp);
+      print(prefs!.getString("terms"));
+      print(prefs!.getString("us"));
+      print(prefs!.getString("pp"));
       print("Success");
     }
   } catch (e) {

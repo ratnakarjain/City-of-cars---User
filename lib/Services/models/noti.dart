@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Screens/Service Main/InsidCategoryTabViw/common_services.dart';

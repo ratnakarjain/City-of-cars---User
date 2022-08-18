@@ -1571,9 +1571,14 @@ class _ServiceMainState extends State<ServiceMain> {
                       builder: ((context) => const Messages())));
 
               break;
-            // case "offer":
-
-            //   break;
+            case "presets":
+ Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: ((context) => (BottomNavBar(
+                            index: 2,
+                          )))));
+              break;
             case "orderassign":
               Navigator.push(
                   context,

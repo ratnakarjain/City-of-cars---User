@@ -133,7 +133,7 @@ class _ProfileState extends State<Profile> {
           ),
         ),
       ),
-      body: Container(
+      body: SizedBox(
         height: h,
         width: w,
         child: SingleChildScrollView(
@@ -147,7 +147,7 @@ class _ProfileState extends State<Profile> {
                     boxShadow: [
                       BoxShadow(
                           blurRadius: 3,
-                          offset: Offset(0, 5),
+                          offset: const Offset(0, 5),
                           color: kTextInputPlaceholderColor.withOpacity(0.1))
                     ]),
                 padding: EdgeInsets.symmetric(horizontal: w * 0.05),
@@ -226,7 +226,7 @@ class _ProfileState extends State<Profile> {
                                                 }
                                               });
                                             },
-                                            child: Icon(Icons.arrow_back_ios)),
+                                            child: const Icon(Icons.arrow_back_ios)),
                                       )
                                     : Container(),
                                 Column(
@@ -320,7 +320,7 @@ class _ProfileState extends State<Profile> {
                                                     modellist[
                                                             index + currentCar]
                                                         .carimage),
-                                                child: Center(
+                                                child: const Center(
                                                     // child: Image.network(
                                                     //     "${modellist[index + currentCar].carimage}"),
                                                     ),
@@ -368,7 +368,7 @@ class _ProfileState extends State<Profile> {
                                               });
                                             },
                                             child:
-                                                Icon(Icons.arrow_forward_ios)),
+                                                const Icon(Icons.arrow_forward_ios)),
                                       )
                                     : Container(),
                               ],
@@ -553,46 +553,46 @@ class _ProfileState extends State<Profile> {
               SizedBox(
                 height: h * 0.02,
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Cart(
-                          getcart: true,
-                        ),
-                      ));
-                },
-                child: RRectCard(
-                  h: h * 0.08,
-                  w: w * 0.9,
-                  widget: Row(
-                    children: [
-                      Expanded(
-                        child: CircleAvatar(
-                          backgroundColor: kbluecolor,
-                          foregroundColor: kwhitecolor,
-                          child: Image.asset("assets/images/sunrise.png"),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Text(
-                          "Cart",
-                          style: GoogleFonts.montserrat(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  borderRadius: h * 0.04,
-                ),
-              ),
-              SizedBox(
-                height: h * 0.02,
-              ),
+              // GestureDetector(
+              //   onTap: () {
+              //     Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //           builder: (context) => Cart(
+              //             getcart: true,
+              //           ),
+              //         ));
+              //   },
+              //   child: RRectCard(
+              //     h: h * 0.08,
+              //     w: w * 0.9,
+              //     widget: Row(
+              //       children: [
+              //         Expanded(
+              //           child: CircleAvatar(
+              //             backgroundColor: kbluecolor,
+              //             foregroundColor: kwhitecolor,
+              //             child: Image.asset("assets/images/sunrise.png"),
+              //           ),
+              //         ),
+              //         Expanded(
+              //           flex: 3,
+              //           child: Text(
+              //             "Cart",
+              //             style: GoogleFonts.montserrat(
+              //               fontSize: 13,
+              //               fontWeight: FontWeight.w700,
+              //             ),
+              //           ),
+              //         )
+              //       ],
+              //     ),
+              //     borderRadius: h * 0.04,
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: h * 0.02,
+              // ),
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -631,46 +631,46 @@ class _ProfileState extends State<Profile> {
               SizedBox(
                 height: h * 0.005,
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BottomNavBar(
-                          index: 2,
-                        ),
-                      ));
-                },
-                child: RRectCard(
-                  h: h * 0.08,
-                  w: w * 0.9,
-                  widget: Row(
-                    children: [
-                      Expanded(
-                        child: CircleAvatar(
-                          backgroundColor: korangecolor,
-                          foregroundColor: kwhitecolor,
-                          child: Image.asset("assets/images/heart.png"),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Text(
-                          "Order History",
-                          style: GoogleFonts.montserrat(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  borderRadius: h * 0.04,
-                ),
-              ),
-              SizedBox(
-                height: h * 0.005,
-              ),
+              // GestureDetector(
+              //   onTap: () {
+              //     Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //           builder: (context) => BottomNavBar(
+              //             index: 2,
+              //           ),
+              //         ));
+              //   },
+              //   child: RRectCard(
+              //     h: h * 0.08,
+              //     w: w * 0.9,
+              //     widget: Row(
+              //       children: [
+              //         Expanded(
+              //           child: CircleAvatar(
+              //             backgroundColor: korangecolor,
+              //             foregroundColor: kwhitecolor,
+              //             child: Image.asset("assets/images/heart.png"),
+              //           ),
+              //         ),
+              //         Expanded(
+              //           flex: 3,
+              //           child: Text(
+              //             "Order History",
+              //             style: GoogleFonts.montserrat(
+              //               fontSize: 13,
+              //               fontWeight: FontWeight.w700,
+              //             ),
+              //           ),
+              //         )
+              //       ],
+              //     ),
+              //     borderRadius: h * 0.04,
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: h * 0.005,
+              // ),
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -709,44 +709,44 @@ class _ProfileState extends State<Profile> {
               SizedBox(
                 height: h * 0.005,
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SavedBlogs(),
-                      ));
-                },
-                child: RRectCard(
-                  h: h * 0.08,
-                  w: w * 0.9,
-                  widget: Row(
-                    children: [
-                      Expanded(
-                        child: CircleAvatar(
-                          backgroundColor: kbluecolor,
-                          foregroundColor: kwhitecolor,
-                          child: Image.asset("assets/images/sunrise.png"),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Text(
-                          "My blogs",
-                          style: GoogleFonts.montserrat(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  borderRadius: h * 0.04,
-                ),
-              ),
-              SizedBox(
-                height: h * 0.01,
-              ),
+              // GestureDetector(
+              //   onTap: () {
+              //     Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //           builder: (context) => const SavedBlogs(),
+              //         ));
+              //   },
+              //   child: RRectCard(
+              //     h: h * 0.08,
+              //     w: w * 0.9,
+              //     widget: Row(
+              //       children: [
+              //         Expanded(
+              //           child: CircleAvatar(
+              //             backgroundColor: kbluecolor,
+              //             foregroundColor: kwhitecolor,
+              //             child: Image.asset("assets/images/sunrise.png"),
+              //           ),
+              //         ),
+              //         Expanded(
+              //           flex: 3,
+              //           child: Text(
+              //             "My blogs",
+              //             style: GoogleFonts.montserrat(
+              //               fontSize: 13,
+              //               fontWeight: FontWeight.w700,
+              //             ),
+              //           ),
+              //         )
+              //       ],
+              //     ),
+              //     borderRadius: h * 0.04,
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: h * 0.01,
+              // ),
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -790,7 +790,7 @@ class _ProfileState extends State<Profile> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => AboutUs(),
+                        builder: (context) => const AboutUs(),
                       ));
                 },
                 child: RRectCard(
@@ -828,7 +828,7 @@ class _ProfileState extends State<Profile> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => Terms(),
+                        builder: (context) => const Terms(),
                       ));
                 },
                 child: RRectCard(
@@ -864,7 +864,7 @@ class _ProfileState extends State<Profile> {
               GestureDetector(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => PrivacyPolicy()));
+                      MaterialPageRoute(builder: (context) => const PrivacyPolicy()));
                 },
                 child: RRectCard(
                   h: h * 0.08,
@@ -1161,7 +1161,9 @@ deleteAccount() {
                               ),
                               (route) =>
                                   false, //if you want to disable back feature set to false
-                            );
+                            ).whenComplete(() {
+    getcmsdata();
+                            });
                           },
                           child: Center(
                             child: Text(

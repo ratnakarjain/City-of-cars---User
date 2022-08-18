@@ -4,6 +4,8 @@ import 'package:cityofcars/Screens/loginSignup.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../Services/servies.dart';
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
@@ -31,6 +33,11 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
+    @override
+    void initState() {
+      super.initState();
+    getcmsdata();
+    }
     return Scaffold(
       body: SizedBox(
         height: h,

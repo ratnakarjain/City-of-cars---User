@@ -84,21 +84,31 @@ class _OrderHistoryState extends State<OrderHistory> {
           style:
               GoogleFonts.montserrat(fontSize: 21, fontWeight: FontWeight.w700),
         ),
-        // actions: [
-        //   Padding(
-        //     padding:  EdgeInsets.only(right: w*0.03),
-        //     child: GestureDetector(
-        //       onTap: (){
-        //         Navigator.push(
-        //                     context,
-        //                     MaterialPageRoute(
-        //                         builder: ((context) =>  Cart(
-        //                             ))));
-        //       },
-        //       child: const Icon(Icons.shopping_cart)
-        //     ),
-        //   )
-        // ],
+        actions: [
+          Padding(
+            padding:  EdgeInsets.only(right: w*0.03,bottom: h*0.01,top: h*0.01),
+            // height: h*0.02,
+            // width: w*0.2,
+            child: ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(kwhitecolor)
+              ),
+              onPressed: (){
+                Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Cart(
+                          getcart: true,
+                        ),
+                      ));
+              },
+              child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: w*0.05),
+              child: const Icon(Icons.shopping_cart,color: kTextInputPlaceholderColor,),
+            ),
+            ),
+          )
+        ],
       ),
       body: isloading
           ? loder

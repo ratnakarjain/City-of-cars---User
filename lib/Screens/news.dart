@@ -1,4 +1,4 @@
-import 'dart:math';
+
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cityofcars/Services/models/blogModel.dart';
@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../Utils/constants.dart';
 import '../Utils/functions.dart';
+import 'savedBlogs.dart';
 
 class News extends StatefulWidget {
   const News({Key? key}) : super(key: key);
@@ -61,6 +62,20 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
           style:
               GoogleFonts.montserrat(fontSize: 21, fontWeight: FontWeight.w700),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: InkWell(
+              onTap: (){
+                Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SavedBlogs(),
+                        ));
+              },
+              child: const Icon(Icons.favorite_border)),
+          )
+        ],
       ),
       body: isloading
           ? loder

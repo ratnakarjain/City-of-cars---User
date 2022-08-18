@@ -26,7 +26,7 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
   var h;
   var w;
-  var file;
+  String? file;
   String image = "";
   String id = "";
   var prefs = Prefernece.pref;
@@ -74,7 +74,7 @@ class _EditProfileState extends State<EditProfile> {
     image = prefs!.getString("image").toString() == "null"
         ? ""
         : prefs!.getString("image").toString();
-        mobile.text ="91 "+ number.split("91").last;
+        mobile.text ="+91 "+ number.split("91").last;
     print(image);
     token();
     // TODO: implement initState
@@ -580,14 +580,15 @@ class _EditProfileState extends State<EditProfile> {
                         id,
                         name.text,
                         email.text,
-                        "91"+mobile.text.split("91 ").last,
+                        "91"+mobile.text.split("+91 ").last,
                         houseNo.text,
                         street.text,
                         state.text,
                         pinCode.text,
                         fcm,
-                       image==""? file == null ? null : File(file):File(image),
-                        file2 == null ? null : File(file2),
+                        file == null ? null : File(file!),
+                        image,
+                        file2 ==null?null: File(file2),
                         context,
                       ).whenComplete(() {
                         savingChanges = false;
@@ -596,7 +597,7 @@ class _EditProfileState extends State<EditProfile> {
                           context,
                           MaterialPageRoute<dynamic>(
                             builder: (BuildContext context) => BottomNavBar(
-                              index: 0,
+                              index: 3,
                             ),
                           ),
                           (route) =>
