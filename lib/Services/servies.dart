@@ -587,7 +587,7 @@ Future deletecartitem(String _id) async {
 }
 
 Future sos(String number, String problem) async {
-  var url = Uri.parse(sosUrl);
+  var url = Uri.parse(sosUrl+"?userid="+prefs!.getString("id").toString());
   try {
     var response = await http.post(url,
         body: {"text": problem, "MobileNo": number},

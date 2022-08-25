@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:cityofcars/Screens/Service%20Main/slot.dart';
 import 'package:cityofcars/Utils/preference.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:cityofcars/Screens/selectCity.dart';
@@ -47,7 +48,21 @@ class _VerficationState extends State<Verfication> {
       borderRadius: BorderRadius.circular(20),
     ),
   );
+@override
+  void initState() {
+    token() {
+    var messaging = FirebaseMessaging.instance;
+    messaging.getToken().then((value) {
+      print("token: " + value.toString());
+      var tokenId = value.toString();
+      Prefernece.pref!.setString("fcmtoken", tokenId);
 
+      print("new token: " + Prefernece.pref!.getString("fcmtoken").toString());
+    });
+  }
+    super.initState();
+    
+  }
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;

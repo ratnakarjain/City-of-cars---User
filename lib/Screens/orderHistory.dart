@@ -400,10 +400,11 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                                     color:
                                                                         kTextInputPlaceholderColor)),
                                                         RRecctButton(
-                                                          text: datalist.first
+                                                          text:  datalist.first
                                                                       .paystatus ==
                                                                   "Deposited"
-                                                              ? "Paid"
+                                                              ? "Paid":datalist.first
+                                                                      .paystatus =="Failed"?"Failed"
                                                               : "Pay Later",
                                                           style: GoogleFonts
                                                               .montserrat(
@@ -754,10 +755,12 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                                     color:
                                                                         kTextInputPlaceholderColor)),
                                                             RRecctButton(
-                                                              text: model.paystatus ==
-                                                                      "Deposited"
-                                                                  ? "Paid"
-                                                                  : "Pay Later",
+                                                              text: datalist.first
+                                                                      .paystatus ==
+                                                                  "Deposited"
+                                                              ? "Paid":datalist[index]
+                                                                      .paystatus =="Failed"?"Failed"
+                                                              : "Pay Later",
                                                               style: GoogleFonts.montserrat(
                                                                   fontSize: 9,
                                                                   fontWeight:

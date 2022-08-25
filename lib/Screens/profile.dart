@@ -163,9 +163,10 @@ class _ProfileState extends State<Profile> {
                                   builder: (context) => const SelectBrand(),
                                 ));
                           },
-                          child: const Icon(
+                          child:  Icon(
                             Icons.add,
                             color: kbluecolor,
+                            size: h*0.035,
                           ),
                         ),
                         RichText(
@@ -202,7 +203,7 @@ class _ProfileState extends State<Profile> {
                         :
                     Visibility(
                       visible: modellist.isNotEmpty,
-                      child: Container(
+                      child: SizedBox(
                         height: h * 0.2,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,

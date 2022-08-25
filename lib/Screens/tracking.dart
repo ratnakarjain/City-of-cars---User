@@ -668,7 +668,7 @@ class _TrackingState extends State<Tracking> {
                                                               // " Hrs",
                                                               //       "${resmdl.time}\n",
                                                               style: GoogleFonts.montserrat(
-                                                                  fontSize: 12,
+                                                                  fontSize: 9,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w600,
@@ -687,7 +687,7 @@ class _TrackingState extends State<Tracking> {
                                                                     // "Scout reached your location",
                                                                     style: GoogleFonts.montserrat(
                                                                         fontSize:
-                                                                            10,
+                                                                            11,
                                                                         fontWeight:
                                                                             FontWeight
                                                                                 .bold,

@@ -51,6 +51,9 @@ class _SlotState extends State<Slot> {
   @override
   void initState() {
     super.initState();
+    contect.text = prefs!.getString("mobile").toString() == "null"
+        ? ""
+        : prefs!.getString("mobile").toString();
   }
 
   @override

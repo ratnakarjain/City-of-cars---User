@@ -666,13 +666,58 @@ class _MessagesState extends State<Messages> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+                            Expanded(
+                flex: 8,
+                child: Container(
+                  width: w * 0.8,
+                  height: h * 0.07,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(0),
+                    // color: kBackgroundColor,
+                  ),
+                  child: TextFormField(
+                    controller: _controller,
+                    enabled: send,
+
+                    style: GoogleFonts.openSans(
+                        color: kwhitecolor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400),
+                    onChanged: (value) {
+                      if (value == " ") {
+                        _controller.clear();
+                        setState(() {});
+                      }
+                    },
+                    validator: (val) {},
+                    // focusNode: focusNode,
+                    decoration: InputDecoration(
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 10),
+                      prefixIconConstraints: const BoxConstraints(minWidth: 30),
+                      suffixIconConstraints: const BoxConstraints(minWidth: 60),
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                      hintText: "Say Something…",
+                      hintStyle: GoogleFonts.openSans(
+                          fontStyle: FontStyle.italic,
+                          color: kwhitecolor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                ),
+              ),
               Expanded(
                 flex: 2,
                 child: FloatingActionButton(
                   backgroundColor: kgrey,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
-                          bottomRight: Radius.elliptical(w * 0.07, h * 0.06))),
+                          bottomLeft: Radius.elliptical(w * 0.07, h * 0.06))),
                   onPressed: !send
                       ? () {}
                       : () {
@@ -721,58 +766,14 @@ class _MessagesState extends State<Messages> {
                     height: h * 0.08,
                     child: const Center(
                       child: Icon(
-                        Icons.arrow_back_ios,
+                        Icons.arrow_forward_ios,
                         color: kwhitecolor,
                       ),
                     ),
                   ),
                 ),
               ),
-              Expanded(
-                flex: 8,
-                child: Container(
-                  width: w * 0.8,
-                  height: h * 0.07,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(0),
-                    // color: kBackgroundColor,
-                  ),
-                  child: TextFormField(
-                    controller: _controller,
-                    enabled: send,
 
-                    style: GoogleFonts.openSans(
-                        color: kwhitecolor,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400),
-                    onChanged: (value) {
-                      if (value == " ") {
-                        _controller.clear();
-                        setState(() {});
-                      }
-                    },
-                    validator: (val) {},
-                    // focusNode: focusNode,
-                    decoration: InputDecoration(
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 10),
-                      prefixIconConstraints: const BoxConstraints(minWidth: 30),
-                      suffixIconConstraints: const BoxConstraints(minWidth: 60),
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      errorBorder: InputBorder.none,
-                      disabledBorder: InputBorder.none,
-                      hintText: "Say Something…",
-                      hintStyle: GoogleFonts.openSans(
-                          fontStyle: FontStyle.italic,
-                          color: kwhitecolor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                ),
-              ),
             ],
           ),
         ));
