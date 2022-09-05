@@ -43,7 +43,7 @@ class _PaymentState extends State<Payment> {
       data.addAll(value);
       for (int i = 0; i < data.length; i++) {
         PaymentModel med = PaymentModel();
-        med.planname = data[i]["selectplan"][0]["planName"].toString();
+        med.planname = data[i]["Plans"]["plan"][0]["planName"].toString();
         med.price = data[i]["selectplan"][0]["typeprice"].toString();
         med.hour = data[i]["Plans"]["hours"].toString();
         med.month = data[i]["Plans"]["month"].toString();

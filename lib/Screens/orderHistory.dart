@@ -500,9 +500,9 @@ class _OrderHistoryState extends State<OrderHistory> {
                                               RichText(
                                                   textAlign: TextAlign.center,
                                                   text: TextSpan(
-                                                      text: datalist
-                                                              .first.packname
-                                                              .toString() +
+                                                      text: datalist[0]
+                                                                        
+                                                                    .ordersPlans[0].planName.toString() +
                                                           "\n",
                                                       style: GoogleFonts.montserrat(
                                                           fontSize: 32,
@@ -512,8 +512,9 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                               kTextInputPlaceholderColor),
                                                       children: [
                                                         TextSpan(
-                                                            text: datalist.first
-                                                                    .servicename +
+                                                            text: datalist[0]
+                                                                        
+                                                                    .ordersPlans[0].plansubName.toString() +
                                                                 "\n",
                                                             style: GoogleFonts
                                                                 .montserrat(
@@ -865,8 +866,9 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                       textAlign: TextAlign
                                                           .center,
                                                       text: TextSpan(
-                                                          text: model.packname
-                                                                  .toString() +
+                                                          text: datalist[index]
+                                                                        
+                                                                    .ordersPlans[0].planName.toString() +
                                                               "\n",
                                                           style: GoogleFonts
                                                               .montserrat(
@@ -878,8 +880,9 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                                       kTextInputPlaceholderColor),
                                                           children: [
                                                             TextSpan(
-                                                                text: model
-                                                                        .servicename +
+                                                                text: datalist[index]
+                                                                        
+                                                                    .ordersPlans[0].plansubName.toString() +
                                                                     "\n",
                                                                 style: GoogleFonts.montserrat(
                                                                     fontSize:

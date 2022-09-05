@@ -183,7 +183,7 @@ class _CartState extends State<Cart> {
                                                       children: [
                                                         Text(
                                                           data[index]
-                                                                  ["selectplan"]
+                                                                  ["Plans"]["plan"]
                                                               [0]["planName"],
                                                           style: GoogleFonts
                                                               .montserrat(
@@ -193,7 +193,10 @@ class _CartState extends State<Cart> {
                                                           ),
                                                         ),
                                                         Text(
-                                                          "Service Pack",
+                                                          // "Service Pack",
+                                                          data[index]
+                                                                  ["Plans"]["plan"]
+                                                              [1]["planName"],
                                                           style: GoogleFonts.montserrat(
                                                               fontSize: 12,
                                                               fontWeight:

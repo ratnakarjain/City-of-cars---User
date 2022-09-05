@@ -144,7 +144,11 @@ class _CommonServicesState extends State<CommonServices> {
                                                 ),
                                               ),
                                               Text(
-                                                "Services Pack",
+                                                // "Services Pack",
+                                                plans[index]
+                                                    .packs
+                                                    [1]
+                                                    .planName,
                                                 style: GoogleFonts.montserrat(
                                                     fontSize: 8,
                                                     fontWeight: FontWeight.w600,

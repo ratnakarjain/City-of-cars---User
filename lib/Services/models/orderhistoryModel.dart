@@ -35,8 +35,8 @@ class OrdersPlans{
     this.plansubName
   });
    factory OrdersPlans.fromJson(Map<String, dynamic> json) => OrdersPlans(
-        planName: json["selectplan"][0]["planName"],
-        plansubName: json["selectplan"][0]["subPlanName"],
+        planName: json["Plans"]["plan"][0]["planName"],
+        plansubName: json["Plans"]["plan"][1]["planName"],
         planPrice: json["selectplan"][0]["typeprice"],
         month: json["Plans"]["month"],
         hour: json["Plans"]["hours"],

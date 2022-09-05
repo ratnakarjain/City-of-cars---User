@@ -135,31 +135,41 @@ class _ProductDetailsState extends State<ProductDetails> {
             Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: w * 0.06, vertical: h * 0.03),
-                child: ListView.builder(
-                  itemCount: details.packs.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          flex: 3,
-                          child: Text(
-                            details.packs[index].planName.toString(),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            details.packs[0].planName.toString(),
                             style: GoogleFonts.montserrat(
-                                textStyle: TextStyle(
-                                    fontSize: 18,
+                                textStyle: const TextStyle(
+                                    fontSize: 25,
                                     fontWeight: FontWeight.bold,
-                                    color: index == selceted
-                                        ? kTextInputPlaceholderColor
-                                        : kTextInputPlaceholderColor
-                                            .withOpacity(0.7))),
+                                    color:kTextInputPlaceholderColor
+                                        )),
                           ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Row(
+                          Text(
+                            details.packs[1].planName.toString(),
+                            style: GoogleFonts.montserrat(
+                                textStyle:  TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color:kTextInputPlaceholderColor.withOpacity(0.6)
+                                        )),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: ListView.builder(
+                        itemCount: details.packs.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -216,11 +226,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 ),
                               ),
                             ],
-                          ),
-                        )
-                      ],
-                    );
-                  },
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 )
                 // Row(
                 //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
