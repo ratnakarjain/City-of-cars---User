@@ -11,12 +11,9 @@ import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:cityofcars/Utils/functions.dart';
 import 'package:cityofcars/Utils/preference.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../../Services/models/usercardetailsmodel.dart';
 import '../bottomnavBar.dart';
 import '../editProfile.dart';
 import '../loginSignup.dart';

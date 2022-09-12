@@ -365,7 +365,6 @@ Future getSubcategory(String _id) async {
       prefs!.getString("CarId").toString() != "null") {
     String id = prefs!.getString("CarId").toString();
     print(id);
-
     car = "?carid=" + id + "&";
   } else {
     car = "?";
@@ -1098,7 +1097,7 @@ Future getusercars() async {
 Future getrecmostPlans() async {
   print("CAr Id " + prefs!.getString("CarId").toString() + "^");
   var url = Uri.parse(
-      getpoprecUrl + "?carid=" + prefs!.getString("CarId").toString()=="null"?prefs!.getString("CarId").toString():"");
+      getpoprecUrl + "?carid=" + prefs!.getString("CarId").toString());
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -1106,6 +1105,8 @@ Future getrecmostPlans() async {
       var data = jsonDecode(respnse.body);
       List<PlanModel> plans = [];
       if (data["state"]) {
+            mostdata = false;
+            recdata = false;
         for (int i = 0; i < data["data"].length; i++) {
           PlanModel pl = PlanModel();
           pl.planid = data["data"][i]["_id"].toString();

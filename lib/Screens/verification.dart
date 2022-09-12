@@ -1,4 +1,5 @@
 // ignore_for_file: deprecated_member_use
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:cityofcars/Screens/Service%20Main/slot.dart';
@@ -33,6 +34,12 @@ class _VerficationState extends State<Verfication> {
 
   var h;
   var w;
+  final interval = const Duration(seconds: 1);
+
+  final int timerMaxSeconds = 90;
+
+  int currentSeconds = 0;
+  bool istimeroff = false;
   bool istaped = false;
   var pref = Prefernece.pref;
   var _controller = TextEditingController();
@@ -50,6 +57,9 @@ class _VerficationState extends State<Verfication> {
   );
 @override
   void initState() {
+    // timer();
+    startTimeout();
+    print(widget.mobile);
     token() {
     var messaging = FirebaseMessaging.instance;
     messaging.getToken().then((value) {
@@ -103,16 +113,27 @@ class _VerficationState extends State<Verfication> {
             ),
             GestureDetector(
               onTap: () {
-                resendotp(widget.mobile,context);
+                if(istimeroff){
+               
+                resendotp("91"+widget.mobile,context);
+                startTimeout();
+                }
                 // _scaffoldKey.currentState!.showSnackBar(
                 //     const SnackBar(content: Text("OTP resent successfully")));
               },
               child: Text(
                 "Resend code",
                 style: GoogleFonts.montserrat(
-                    color: kbluecolor, fontWeight: FontWeight.w500),
+                    color:istimeroff? kbluecolor:kbluecolor.withOpacity(0.5), fontWeight: FontWeight.w500),
               ),
             ),
+
+            SizedBox(
+              height: h * 0.05,
+            ),
+            Visibility(
+              visible: !istimeroff,
+              child: Text(timerText)),
             SizedBox(
               height: h * 0.05,
             ),
@@ -198,7 +219,7 @@ class _VerficationState extends State<Verfication> {
                   ? BottomNavBar(
                       index: 0,
                     )
-                  : SelectCity(),
+                  : const SelectCity(),
             ),
             (route) => false, //if you want to disable back feature set to false
           );
@@ -226,5 +247,23 @@ class _VerficationState extends State<Verfication> {
 //       }).catchError((e){
 //         print("error $e");
 //       });
+  }
+  String get timerText =>
+      '${((timerMaxSeconds - currentSeconds) ~/ 60).toString().padLeft(2, '0')}: ${((timerMaxSeconds - currentSeconds) % 60).toString().padLeft(2, '0')}';
+
+  
+  startTimeout([int? milliseconds]) {
+    var duration = interval;
+    Timer.periodic(duration, (timer) {
+      setState(() {
+        print(timer.tick);
+        currentSeconds = timer.tick;
+        if (timer.tick >= timerMaxSeconds){
+         timer.cancel();
+         istimeroff = true;
+         
+        } 
+      });
+    });
   }
 }

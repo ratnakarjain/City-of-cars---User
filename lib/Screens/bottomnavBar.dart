@@ -69,7 +69,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             iconsSize: 20,
             normalIconColor: kwhitecolor,
             barBackgroundColor: kbluecolor,
-            animationDuration: Duration(milliseconds: 300),
+            animationDuration: const Duration(milliseconds: 300),
             selectedCallback: (selectedPos) {
               setState(() {
                 this.selectedPos = selectedPos!;
