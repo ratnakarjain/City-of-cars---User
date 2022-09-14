@@ -238,6 +238,8 @@ class _ServiceMainState extends State<ServiceMain> {
       body: processing
           ? loder
           : SingleChildScrollView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            physics: const BouncingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -332,7 +334,8 @@ class _ServiceMainState extends State<ServiceMain> {
 
                         onChanged: (value) {
                           if (value.isNotEmpty) {
-                            show = false;searchGloble(search.text).then((value) {
+                            show = false;
+                            searchGloble(search.text).then((value) {
                                         print("done");
                                         if (value) {
                                           show = true;
@@ -417,7 +420,9 @@ class _ServiceMainState extends State<ServiceMain> {
                                   ? () {
                                       show = false;
                                       print("dvjsbvei");
-                                      setState(() {});
+                                      setState(() {
+                                        FocusScope.of(context).unfocus();
+                                      });
                                     }
                                   : () {
                                       print("qwertyui");
@@ -434,6 +439,7 @@ class _ServiceMainState extends State<ServiceMain> {
                                           // pls=value.plans;
 
                                           setState(() {
+                                            FocusScope.of(context).unfocus();
                                             // if (pls1.isEmpty) {
                                             //   setState(() {});
                                             //   ScaffoldMessenger.of(context)
