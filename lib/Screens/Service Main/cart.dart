@@ -599,13 +599,14 @@ class _CartState extends State<Cart> {
                                                                                 shrinkWrap: true,
                                                                                 physics: const NeverScrollableScrollPhysics(),
                                                                                 itemBuilder: (context, indexx) {
-                                                                                  return Padding(
+                                                                                  return Container(
+                                                                                    width:data[index]["Plans"]["services_id"].length > 3 ? w*0.14 : w*0.16, 
                                                                                     padding: EdgeInsets.symmetric(horizontal: w * 0.02),
                                                                                     child: Column(
                                                                                       children: [
                                                                                         CachedNetworkImage(
                                                                                           fit: BoxFit.fill,
-                                                                                          height: h * 0.03,
+                                                                                          height: h * 0.025,
                                                                                           imageUrl: data[index]["Plans"]["services_id"][indexx]["image"].toString(),
                                                                                           placeholder: (context, url) => Container(),
                                                                                           errorWidget: (context, url, error) => Image.network("https://i.gifer.com/DKke.gif"),
@@ -618,6 +619,7 @@ class _CartState extends State<Cart> {
                                                                                           data[index]["Plans"]["services_id"][indexx]["title"] ?? "",
                                                                                           // "Engine Oil ",
                                                                                           // textScaleFactor: 0.7,
+                                                                                          overflow: TextOverflow.ellipsis,
                                                                                           style: GoogleFonts.montserrat(fontSize: 8, fontWeight: FontWeight.w600, color: kTextInputPlaceholderColor.withOpacity(0.6)),
                                                                                         ),
                                                                                       ],

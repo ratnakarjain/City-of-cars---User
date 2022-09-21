@@ -551,7 +551,7 @@ class _SelectBrandState extends State<SelectBrand> {
                                   shots = snapshot.data.length;
                                   return GestureDetector(
                                     onTap: () {
-                                      if (chack(snapshot.data[index]["_id"])) {
+                                      // if (chack(snapshot.data[index]["_id"])) {
                                         CarsData.name =
                                             snapshot.data[index]["cars"];
                                         CarsData.carimage =
@@ -567,7 +567,7 @@ class _SelectBrandState extends State<SelectBrand> {
                                                   const SelectFuel(),
                                             ));
                                         setState(() {});
-                                      }
+                                      // }
                                     },
                                     child: RRectCard(
                                       h: h * 0.18,
@@ -631,26 +631,26 @@ class _SelectBrandState extends State<SelectBrand> {
     });
   }
 
-  chack(String id) {
-    List modellist = [];
-    if (Prefernece.pref!.getString("usercarsData") != null) {
-      modellist.addAll(
-          jsonDecode(Prefernece.pref!.getString("usercarsData").toString()));
-    }
+  // chack(String id) {
+  //   List modellist = [];
+  //   if (Prefernece.pref!.getString("usercarsData") != null) {
+  //     modellist.addAll(
+  //         jsonDecode(Prefernece.pref!.getString("usercarsData").toString()));
+  //   }
 
-    for (int i = 0; i < modellist.length; i++) {
-      if (id == modellist[i]["carid"].toString()) {
-        print("showing snacbar");
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            behavior: SnackBarBehavior.floating,
-            margin: EdgeInsets.only(bottom: h * 0.9),
-            content: const Text("This Car is already added")));
+  //   for (int i = 0; i < modellist.length; i++) {
+  //     if (id == modellist[i]["carid"].toString()) {
+  //       print("showing snacbar");
+  //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //           behavior: SnackBarBehavior.floating,
+  //           margin: EdgeInsets.only(bottom: h * 0.9),
+  //           content: const Text("This Car is already added")));
 
-        return false;
-      }
-    }
-    return true;
-  }
+  //       return false;
+  //     }
+  //   }
+  //   return true;
+  // }
 }
 
 class Shots extends ChangeNotifier {

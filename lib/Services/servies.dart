@@ -608,7 +608,27 @@ Future proceed() async {
         headers: {"Authorization": prefs!.getString('token').toString()});
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
-      print(data["data"]);
+      // print(data["data"]);
+      // for (int i = 0; i < data["data"].length; i++) {
+      //   PaymentModel med = PaymentModel();
+      //   var model = data["data"][i];
+      //   med.planname = model["Plans"]["plan"][0]["planName"].toString();
+      //   med.price = model["selectplan"][0]["typeprice"].toString();
+      //   med.hour = model["Plans"]["hours"].toString();
+      //   med.month = model["Plans"]["month"].toString();
+      //   med.plotStreet = model["bookingdata"]["houseNo"].toString() +
+      //       " " +
+      //       model["bookingdata"]["Street"].toString();
+      //   med.cityCode = model["bookingdata"]["state"].toString() +
+      //       " - " +
+      //       model["bookingdata"]["pincode"].toString();
+      //   med.option = model["bookingdata"]["optional"].toString();
+      //   med.contect = model["bookingdata"]["contect"].toString();
+      //   med.name = model["bookingdata"]["name"].toString();
+      //   med.carno = model["bookingdata"]["carno"].toString();
+      //   med.carname = model["cars"]["cars"].toString();
+      //   // print(list);
+      // }
       // for (int i = 0; i < data.length; i++) {
       //   PaymentModel med = PaymentModel();
       //   med.planname = data["data"][i]["Plans"]["planName"].toString();

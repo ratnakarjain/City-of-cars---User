@@ -405,7 +405,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                                   "Deposited"
                                                               ? "Paid":datalist.first
                                                                       .paystatus =="Failed"?"Failed"
-                                                              : "Pay Later",
+                                                              :datalist.first.paystatus.toUpperCase(),//  "Pay Later",
                                                           style: GoogleFonts
                                                               .montserrat(
                                                                   fontSize: 9,
@@ -497,47 +497,60 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                 "assets/images/map.png",
                                                 height: h * 0.15,
                                               ),
-                                              RichText(
-                                                  textAlign: TextAlign.center,
-                                                  text: TextSpan(
-                                                      text: datalist[0]
-                                                                        
-                                                                    .ordersPlans[0].planName.toString() +
-                                                          "\n",
-                                                      style: GoogleFonts.montserrat(
-                                                          fontSize: 32,
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                          color:
-                                                              kTextInputPlaceholderColor),
-                                                      children: [
-                                                        TextSpan(
-                                                            text: datalist[0]
-                                                                        
-                                                                    .ordersPlans[0].plansubName.toString() +
-                                                                "\n",
-                                                            style: GoogleFonts
-                                                                .montserrat(
-                                                                    fontSize:
-                                                                        11,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    color:
-                                                                        kTextInputPlaceholderColor)),
-                                                        TextSpan(
-                                                            text:
-                                                                "The package includes the use of 3M products and services",
-                                                            style: GoogleFonts.montserrat(
-                                                                fontSize: 12,
-                                                                height: 2,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                color: kTextInputPlaceholderColor
-                                                                    .withOpacity(
-                                                                        0.49))),
-                                                      ])),
+                                              FittedBox(
+                                                child: Column(
+                                                  children: [
+                                                    Text(
+                                                      datalist[0]
+                                                                          
+                                                                      .ordersPlans[0].planName.toString() +
+                                                            "\n",
+                                                            textAlign: TextAlign.center,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    maxLines: 1,
+                                                        style: GoogleFonts.montserrat(
+                                                            fontSize: 32,
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            color:
+                                                                kTextInputPlaceholderColor),
+                                                    ),
+                                                    Text(
+                                                      datalist[0]
+                                                                          
+                                                                      .ordersPlans[0].plansubName.toString() +
+                                                                  "\n",
+                                                                  textAlign: TextAlign.center,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    // maxLines: 2,
+                                                              style: GoogleFonts
+                                                                  .montserrat(
+                                                                      fontSize:
+                                                                          11,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      color:
+                                                                          kTextInputPlaceholderColor)
+                                                    ),
+                                                    Text(
+                                                      "The package includes the use of 3M products and services",
+                                                      textAlign: TextAlign.center,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    // maxLines: 2,
+                                                              style: GoogleFonts.montserrat(
+                                                                  fontSize: 12,
+                                                                  // height: 2,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color: kTextInputPlaceholderColor
+                                                                      .withOpacity(
+                                                                          0.49))
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         
@@ -756,12 +769,13 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                                     color:
                                                                         kTextInputPlaceholderColor)),
                                                             RRecctButton(
-                                                              text: datalist.first
+                                                              text: datalist[index]
                                                                       .paystatus ==
                                                                   "Deposited"
                                                               ? "Paid":datalist[index]
                                                                       .paystatus =="Failed"?"Failed"
-                                                              : "Pay Later",
+                                                              :datalist[index]
+                                                                      .paystatus.toUpperCase(),// "Pay Later",
                                                               style: GoogleFonts.montserrat(
                                                                   fontSize: 9,
                                                                   fontWeight:
@@ -862,50 +876,105 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                     "assets/images/map.png",
                                                     height: h * 0.15,
                                                   ),
-                                                  RichText(
-                                                      textAlign: TextAlign
-                                                          .center,
-                                                      text: TextSpan(
-                                                          text: datalist[index]
-                                                                        
-                                                                    .ordersPlans[0].planName.toString() +
-                                                              "\n",
-                                                          style: GoogleFonts
-                                                              .montserrat(
-                                                                  fontSize: 32,
+                                                  FittedBox(
+                                                child: Column(
+                                                  children: [
+                                                    Text(
+                                                      datalist[index]
+                                                                          
+                                                                      .ordersPlans[0].planName.toString() +
+                                                            "\n",
+                                                            textAlign: TextAlign.center,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    maxLines: 1,
+                                                        style: GoogleFonts.montserrat(
+                                                            fontSize: 32,
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            color:
+                                                                kTextInputPlaceholderColor),
+                                                    ),
+                                                    Text(
+                                                      datalist[index]
+                                                                          
+                                                                      .ordersPlans[0].plansubName.toString() +
+                                                                  "\n",
+                                                                  textAlign: TextAlign.center,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    // maxLines: 2,
+                                                              style: GoogleFonts
+                                                                  .montserrat(
+                                                                      fontSize:
+                                                                          11,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      color:
+                                                                          kTextInputPlaceholderColor)
+                                                    ),
+                                                    Text(
+                                                      "The package includes the use of 3M products and services",
+                                                      textAlign: TextAlign.center,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    // maxLines: 2,
+                                                              style: GoogleFonts.montserrat(
+                                                                  fontSize: 12,
+                                                                  // height: 2,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w700,
-                                                                  color:
-                                                                      kTextInputPlaceholderColor),
-                                                          children: [
-                                                            TextSpan(
-                                                                text: datalist[index]
+                                                                          .w400,
+                                                                  color: kTextInputPlaceholderColor
+                                                                      .withOpacity(
+                                                                          0.49))
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+
+                                                  // RichText(
+                                                  //     textAlign: TextAlign
+                                                  //         .center,
+                                                  //     text: TextSpan(
+                                                  //         text: datalist[index]
                                                                         
-                                                                    .ordersPlans[0].plansubName.toString() +
-                                                                    "\n",
-                                                                style: GoogleFonts.montserrat(
-                                                                    fontSize:
-                                                                        11,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    color:
-                                                                        kTextInputPlaceholderColor)),
-                                                            TextSpan(
-                                                                text:
-                                                                    "The package includes the use of 3M products and services",
-                                                                style: GoogleFonts.montserrat(
-                                                                    fontSize:
-                                                                        12,
-                                                                    height: 2,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    color: kTextInputPlaceholderColor
-                                                                        .withOpacity(
-                                                                            0.49))),
-                                                          ])),
+                                                  //                   .ordersPlans[0].planName.toString() +
+                                                  //             "\n",
+                                                  //         style: GoogleFonts
+                                                  //             .montserrat(
+                                                  //                 fontSize: 32,
+                                                  //                 fontWeight:
+                                                  //                     FontWeight
+                                                  //                         .w700,
+                                                  //                 color:
+                                                  //                     kTextInputPlaceholderColor),
+                                                  //         children: [
+                                                  //           TextSpan(
+                                                  //               text: datalist[index]
+                                                                        
+                                                  //                   .ordersPlans[0].plansubName.toString() +
+                                                  //                   "\n",
+                                                  //               style: GoogleFonts.montserrat(
+                                                  //                   fontSize:
+                                                  //                       11,
+                                                  //                   fontWeight:
+                                                  //                       FontWeight
+                                                  //                           .w400,
+                                                  //                   color:
+                                                  //                       kTextInputPlaceholderColor)),
+                                                  //           TextSpan(
+                                                  //               text:
+                                                  //                   "The package includes the use of 3M products and services",
+                                                  //               style: GoogleFonts.montserrat(
+                                                  //                   fontSize:
+                                                  //                       12,
+                                                  //                   height: 2,
+                                                  //                   fontWeight:
+                                                  //                       FontWeight
+                                                  //                           .w400,
+                                                  //                   color: kTextInputPlaceholderColor
+                                                  //                       .withOpacity(
+                                                  //                           0.49))),
+                                                  //         ])),
                                                 ],
                                               ),
                                               Positioned(

@@ -348,74 +348,81 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   children: [
-                                    RichText(
-                                      textAlign: TextAlign.center,
-                                      text: TextSpan(
-                                          text: data["orderData"].first["category"]["title"]+ "\n",
-                                          style: GoogleFonts.montserrat(
-                                              color: kTextInputPlaceholderColor
-                                                  .withOpacity(0.5),
-                                              fontWeight: FontWeight.w700,
-                                              height: 1.5,
-                                              fontSize: 7),
-                                          children: [
-                                            TextSpan(
-                                              text: data["orderData"].first["category"]["discreption"],
-                                              style: GoogleFonts.montserrat(
-                                                  color:
-                                                      kTextInputPlaceholderColor
-                                                          .withOpacity(0.5),
-                                                  fontWeight: FontWeight.w400,
-                                                  height: 1.5,
-                                                  fontSize: 5),
-                                            ),
-                                          ]),
+                                    Expanded(
+                                      child: RichText(
+                                        textAlign: TextAlign.center,
+                                        text: TextSpan(
+                                            text: data["orderData"].first["category"]["title"]+ "\n",
+                                            style: GoogleFonts.montserrat(
+                                                color: kTextInputPlaceholderColor
+                                                    .withOpacity(0.5),
+                                                fontWeight: FontWeight.w700,
+                                                height: 1.5,
+                                                fontSize: 7),
+                                            children: [
+                                              TextSpan(
+                                                text: data["orderData"].first["category"]["discreption"],
+                                                style: GoogleFonts.montserrat(
+                                                    color:
+                                                        kTextInputPlaceholderColor
+                                                            .withOpacity(0.5),
+                                                    fontWeight: FontWeight.w400,
+                                                    height: 1.5,
+                                                    fontSize: 5),
+                                              ),
+                                            ]),
+                                      ),
                                     ),
-                                    RichText(
-                                      textAlign: TextAlign.center,
-                                      text: TextSpan(
-                                          text: "${data["orderData"].first["subcategory"]["title"] }\n",
-                                          style: GoogleFonts.montserrat(
-                                              color: kTextInputPlaceholderColor
-                                                  .withOpacity(0.5),
-                                              fontWeight: FontWeight.w700,
-                                              height: 1.5,
-                                              fontSize: 7),
-                                          children: [
-                                            TextSpan(
-                                              text: data["orderData"].first["subcategory"]["discreption"],
-                                              style: GoogleFonts.montserrat(
-                                                  color:
-                                                      kTextInputPlaceholderColor
-                                                          .withOpacity(0.5),
-                                                  fontWeight: FontWeight.w400,
-                                                  height: 1.5,
-                                                  fontSize: 5),
-                                            ),
-                                          ]),
+                                    Expanded(
+                                      child: RichText(
+                                        textAlign: TextAlign.center,
+                                        text: TextSpan(
+                                            text: "${data["orderData"].first["subcategory"]["title"] }\n",
+                                            style: GoogleFonts.montserrat(
+                                                color: kTextInputPlaceholderColor
+                                                    .withOpacity(0.5),
+                                                fontWeight: FontWeight.w700,
+                                                height: 1.5,
+                                                fontSize: 7),
+                                            children: [
+                                              TextSpan(
+                                                text: data["orderData"].first["subcategory"]["discreption"],
+                                                style: GoogleFonts.montserrat(
+                                                    color:
+                                                        kTextInputPlaceholderColor
+                                                            .withOpacity(0.5),
+                                                    fontWeight: FontWeight.w400,
+                                                    height: 1.5,
+                                                    fontSize: 5),
+                                              ),
+                                            ]),
+                                      ),
                                     ),
-                                    RichText(
-                                      textAlign: TextAlign.center,
-                                      text: TextSpan(
-                                          text: "${data["orderData"].first["selectplan"].first["planName"]}\n",
-                                          style: GoogleFonts.montserrat(
-                                              color: kTextInputPlaceholderColor
-                                                  .withOpacity(0.5),
-                                              fontWeight: FontWeight.w700,
-                                              height: 1.5,
-                                              fontSize: 7),
-                                          children: [
-                                            TextSpan(
-                                              text: data["orderData"].first["selectplan"].first["subPlanName"],
-                                              style: GoogleFonts.montserrat(
-                                                  color:
-                                                      kTextInputPlaceholderColor
-                                                          .withOpacity(0.5),
-                                                  fontWeight: FontWeight.w400,
-                                                  height: 1.5,
-                                                  fontSize: 5),
-                                            ),
-                                          ]),
+                                    Expanded(
+                                      child: RichText(
+                                        textAlign: TextAlign.center,
+                                        // maxLines: 2,
+                                        text: TextSpan(
+                                            text: "${data["orderData"].first["selectplan"].first["planName"]}\n",
+                                            style: GoogleFonts.montserrat(
+                                                color: kTextInputPlaceholderColor
+                                                    .withOpacity(0.5),
+                                                fontWeight: FontWeight.w700,
+                                                height: 1.5,
+                                                fontSize: 7),
+                                            children: [
+                                              TextSpan(
+                                                text: data["orderData"].first["selectplan"].first["subPlanName"],
+                                                style: GoogleFonts.montserrat(
+                                                    color:
+                                                        kTextInputPlaceholderColor
+                                                            .withOpacity(0.5),
+                                                    fontWeight: FontWeight.w400,
+                                                    height: 1.5,
+                                                    fontSize: 5),
+                                              ),
+                                            ]),
+                                      ),
                                     ),
                                     SizedBox(),
                                     SizedBox(),

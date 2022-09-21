@@ -154,10 +154,13 @@ class _EditProfileState extends State<EditProfile> {
                           ),
                           Visibility(
                             visible: filepath != "",
-                            child: Text(
-                              filepath,
-                              style: GoogleFonts.montserrat(
-                                  color: kSelectedColor, fontSize: 12),
+                            child: SizedBox(
+                              width: w*0.65,
+                              child: Text(
+                                filepath,
+                                style: GoogleFonts.montserrat(
+                                    color: kSelectedColor, fontSize: 12),
+                              ),
                             ),
                           ),
                         ],
@@ -573,7 +576,9 @@ class _EditProfileState extends State<EditProfile> {
                 child:savingChanges?loder: RRecctButton(
                   onTap: () {
                     bool validate = isValidation();
-                    if (_formKey.currentState!.validate()) {
+                    if (true
+                      // _formKey.currentState!.validate()
+                      ) {
                       savingChanges = true;
                       setState(() {});
                       editProfile(
@@ -588,7 +593,7 @@ class _EditProfileState extends State<EditProfile> {
                         fcm,
                         file == null ? null : File(file!),
                         image,
-                        file2 ==null?null: File(file2),
+                        file2,
                         context,
                       ).whenComplete(() {
                         savingChanges = false;

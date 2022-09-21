@@ -38,33 +38,7 @@ class _PaymentState extends State<Payment> {
     razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
-    proceed().then((value) {
-      List data = [];
-      data.addAll(value);
-      for (int i = 0; i < data.length; i++) {
-        PaymentModel med = PaymentModel();
-        med.planname = data[i]["Plans"]["plan"][0]["planName"].toString();
-        med.price = data[i]["selectplan"][0]["typeprice"].toString();
-        med.hour = data[i]["Plans"]["hours"].toString();
-        med.month = data[i]["Plans"]["month"].toString();
-        med.plotStreet = data[i]["bookingdata"]["houseNo"].toString() +
-            " " +
-            data[i]["bookingdata"]["Street"].toString();
-        med.cityCode = data[i]["bookingdata"]["state"].toString() +
-            " - " +
-            data[i]["bookingdata"]["pincode"].toString();
-        med.option = data[i]["bookingdata"]["optional"].toString();
-        med.contect = data[i]["bookingdata"]["contect"].toString();
-        med.name = data[i]["bookingdata"]["name"].toString();
-        med.carno = data[i]["bookingdata"]["carno"].toString();
-        med.carname = data[i]["cars"]["cars"].toString();
-        totalvalue(double.parse(med.price));
-        list.add(med);
-        setState(() {});
-        // print(list);
-      }
-      data.addAll(value);
-    });
+    go();
     setState(() {});
     super.initState();
   }
@@ -700,5 +674,39 @@ class _PaymentState extends State<Payment> {
         ),
       ),
     );
+  }
+
+  Future go ()async{
+    proceed().then((value) {
+      List data = [];
+      data.addAll(value);
+      for (int i = 0; i < data.length; i++) {
+        PaymentModel med = PaymentModel();
+        med.planname = data[i]["Plans"]["plan"][0]["planName"].toString();
+        med.price = data[i]["selectplan"][0]["typeprice"].toString();
+        med.hour = data[i]["Plans"]["hours"].toString();
+        med.month = data[i]["Plans"]["month"].toString();
+        med.plotStreet = data[i]["bookingdata"]["houseNo"].toString() +
+            " " +
+            data[i]["bookingdata"]["Street"].toString();
+        med.cityCode = data[i]["bookingdata"]["state"].toString() +
+            " - " +
+            data[i]["bookingdata"]["pincode"].toString();
+        med.option = data[i]["bookingdata"]["optional"].toString();
+        med.contect = data[i]["bookingdata"]["contect"].toString();
+        med.name = data[i]["bookingdata"]["name"].toString();
+        med.carno = data[i]["bookingdata"]["carno"].toString();
+        med.carname = data[i]["cars"]["cars"].toString();
+        totalvalue(double.parse(med.price));
+        list.add(med);
+        setState(() {});
+        // print(list);
+      }
+      data.addAll(value);
+    });
+    setState(() {
+      
+    });
+
   }
 }

@@ -273,7 +273,8 @@ class _CommonServicesState extends State<CommonServices> {
                                                                     Center(
                                                                       child: ListView
                                                                           .builder(
-                                                                        itemCount: plans[index].includes.length >
+                                                                        itemCount: 
+                                                                        plans[index].includes.length >
                                                                                 3
                                                                             ? 3
                                                                             : plans[index].includes.length,
@@ -286,15 +287,18 @@ class _CommonServicesState extends State<CommonServices> {
                                                                         itemBuilder:
                                                                             (context,
                                                                                 indexx) {
-                                                                          return Padding(
+                                                                          return Container(
+                                                                            width:plans[index].includes.length > 3?w*0.14: w*0.16,
                                                                             padding:
                                                                                 EdgeInsets.symmetric(horizontal: w * 0.02),
                                                                             child:
                                                                                 Column(
+                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                                               children: [
                                                                                 CachedNetworkImage(
-                                                                                  fit: BoxFit.fill,
-                                                                                  height: h * 0.03,
+                                                                                  // fit: BoxFit.fill,
+                                                                                  height: h * 0.022,
+                                                                                  // width: w*0.07,
                                                                                   imageUrl: plans[index].includes[indexx].image.toString(),
                                                                                   placeholder: (context, url) => Container(),
                                                                                   errorWidget: (context, url, error) => Image.network("https://i.gifer.com/DKke.gif"),
@@ -307,7 +311,8 @@ class _CommonServicesState extends State<CommonServices> {
                                                                                   plans[index].includes[indexx].name,
                                                                                   // "Engine Oil ",
                                                                                   // textScaleFactor: 0.7,
-                                                                                  style: GoogleFonts.montserrat(fontSize: 8, fontWeight: FontWeight.w600, color: kTextInputPlaceholderColor.withOpacity(0.6)),
+                                                                                  overflow: TextOverflow.ellipsis,
+                                                                                  style: GoogleFonts.montserrat(fontSize: 8,height: 2, fontWeight: FontWeight.w600, color: kTextInputPlaceholderColor.withOpacity(0.6)),
                                                                                 ),
                                                                               ],
                                                                             ),
@@ -431,8 +436,8 @@ class _CommonServicesState extends State<CommonServices> {
                                         return Column(
                                           children: [
                                             CachedNetworkImage(
-                                              fit: BoxFit.fill,
-                                              height: h * 0.03,
+                                              // fit: BoxFit.fill,
+                                              height: h * 0.022,
                                               imageUrl: plans[index]
                                                   .includes[indexx]
                                                   .image
