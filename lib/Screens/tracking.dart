@@ -67,7 +67,7 @@ class _TrackingState extends State<Tracking> {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return Scaffold(
-      // extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: kTransparent,
         foregroundColor: kTextInputPlaceholderColor,
@@ -95,15 +95,20 @@ class _TrackingState extends State<Tracking> {
                   ),
                 )
               : Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       // image: DecorationImage(
-                      //     image: AssetImage("assets/images/bg-map.png"),
+                      //     image: AssetImage("assets/images/trackingback.png"),
                       //     fit: BoxFit.fill)
                       ),
-                  // height: h,
+                  height: h,
+                  // height: h*0.3,
                   width: w,
                   child: Stack(
                     children: [
+                      Align(
+                        alignment: Alignment.topCenter,
+                        child: Image.asset("assets/images/trackingback.png"),
+                      ),
                       SingleChildScrollView(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -118,7 +123,7 @@ class _TrackingState extends State<Tracking> {
                             //   ),
                             // ),
                             SizedBox(
-                              height: h * 0.03,
+                              height: h * 0.3,
                             ),
                             Visibility(
                               visible: widget.time != "null" ||
