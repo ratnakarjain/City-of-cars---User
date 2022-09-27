@@ -236,7 +236,7 @@ class _ProfileState extends State<Profile> {
                                         textAlign: TextAlign.center,
                                         text: TextSpan(
                                             text:
-                                                "${modellist[currentCar + index].carname}\n",
+                                                "${modellist[currentCar + index].carname} (${modellist[currentCar + index].carfuel})\n",
                                             style: GoogleFonts.montserrat(
                                               fontSize: 9,
                                               color: kTextInputPlaceholderColor,
