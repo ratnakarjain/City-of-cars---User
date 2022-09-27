@@ -178,6 +178,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => Tracking(
+                                          ordertime: datalist.first.ordertime!,
                                             orderid: datalist.first.id,
                                             date: datalist[currentPage]
                                                 .deliverydate,
@@ -614,6 +615,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) => Tracking(
+                                              ordertime: datalist[index].ordertime!,
                                                 orderid: datalist[index].id,
                                                 date: datalist[currentPage]
                                                     .deliverydate,

@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:cityofcars/Screens/Service%20Main/orderSuccessfull.dart';
 import 'package:cityofcars/Screens/Service%20Main/serviceMain.dart';
 import 'package:cityofcars/Screens/jobCard.dart';
 import 'package:cityofcars/Services/models/carHealthModel.dart';
@@ -711,6 +712,7 @@ Future ordersuccess(String id) async {
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       print(data);
+      OrderSuccessful.ordertime = DateTime.parse(data["data"]["createdAt"]);
       return data["data"];
     }
     //  if (response.statusCode == 201) {
@@ -813,6 +815,7 @@ Future getOrderhistory() async {
           model.paystatus = list["paymentStatus"].toString();
 
           model.status = list["status"].toString();
+          model.ordertime = DateTime.parse(list["createdAt"]);
           modellist.add(model);
         }
         // print(data["data"].toString());

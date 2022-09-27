@@ -12,6 +12,7 @@ import '../tracking.dart';
 
 class OrderSuccessful extends StatefulWidget {
   String id;
+  static DateTime? ordertime;
   OrderSuccessful({Key? key, required this.id}) : super(key: key);
 
   @override
@@ -466,6 +467,7 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => Tracking(
+                                ordertime: OrderSuccessful.ordertime!,
                                 orderid: data["_id"],
                                 time: data["time"],
                                 date: data["date"],

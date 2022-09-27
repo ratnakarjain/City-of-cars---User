@@ -15,6 +15,7 @@ class OrderHistoryModel{
   String details = "";
   String status = "";
   String invoice = "";
+  DateTime? ordertime;
   List<OrdersPlans> ordersPlans = [];
 }
 List<OrdersPlans> ordersPlanModelFromJson(String str) => List<OrdersPlans>.from(json.decode(str).map((x) => OrdersPlans.fromJson(x)));
