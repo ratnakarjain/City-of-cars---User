@@ -34,6 +34,29 @@ class _VideoAppState extends State<VideoApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kblackcolor,
+      appBar: AppBar(
+          backgroundColor: kTransparent,
+          foregroundColor: kblackcolor,
+          elevation: 0,
+          automaticallyImplyLeading: false,
+          actions: [
+            Padding(
+    
+              padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+              child: InkWell(
+                onTap: (){
+                  Navigator.pop(context);
+                },
+                child: const CircleAvatar(
+                  backgroundColor: kblackcolor,
+                  foregroundColor: kwhitecolor,
+                  radius: 15,
+                  child: Icon(Icons.close)),
+              ),
+            )
+          ],
+        ),
+      extendBodyBehindAppBar: true,
       body: Hero(
         tag:"video",
         child: Center(

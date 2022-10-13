@@ -9,17 +9,46 @@ class Images extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Hero(
-      tag:"image",
-      transitionOnUserGestures: true,
-      child: CachedNetworkImage(
-          fit: BoxFit.fill,
-          imageUrl: image,
-          placeholder: (context, url) => loder,
-          errorWidget: (context, url, error) => const Center(child: Icon(Icons.error))
-          // Image.network(
-          //     "https://i.gifer.com/DKke.gif"),
-          ),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: kTransparent,
+          foregroundColor: kblackcolor,
+          elevation: 0,
+          automaticallyImplyLeading: false,
+          actions: [
+            Padding(
+    
+              padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+              child: InkWell(
+                onTap: (){
+                  Navigator.pop(context);
+                },
+                child: const CircleAvatar(
+                  backgroundColor: kblackcolor,
+                  foregroundColor: kwhitecolor,
+                  radius: 15,
+                  child: Icon(Icons.close)),
+              ),
+            )
+          ],
+        ),
+        extendBodyBehindAppBar: true,
+        body: Center(
+          child: Hero(
+          tag:"image",
+          transitionOnUserGestures: true,
+          child: CachedNetworkImage(
+              fit: BoxFit.contain,
+              imageUrl: image,
+              placeholder: (context, url) => loder,
+              errorWidget: (context, url, error) => const Center(child: Icon(Icons.error))
+              // Image.network(
+              //     "https://i.gifer.com/DKke.gif"),
+              ),
+      ),
+        ),
+      ),
     );
-  }
+       }
 }

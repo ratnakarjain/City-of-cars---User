@@ -176,6 +176,7 @@ Future editProfile(
   File? file,
   String image,
   File? document,
+  String? doc,
   BuildContext context,
 ) async {
   var url = Uri.parse(editprofileUrl);
@@ -210,6 +211,8 @@ Future editProfile(
           File(document.path).readAsBytes().asStream(),
           File(document.path).lengthSync(),
           filename: document.path.split('/').last));
+    }else{
+    request.fields['document'] = doc.toString();
     }
 
     await request.send().then((response) async {

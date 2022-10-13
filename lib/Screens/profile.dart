@@ -245,7 +245,7 @@ class _ProfileState extends State<Profile> {
                                             children: [
                                               TextSpan(
                                                 text:
-                                                    "${modellist[currentCar + index].carbrand}",
+                                                    modellist[currentCar + index].carbrand,
                                                 style: GoogleFonts.montserrat(
                                                   fontSize: 9,
                                                   color:
@@ -317,13 +317,21 @@ class _ProfileState extends State<Profile> {
                                               child: CircleAvatar(
                                                 radius: h * 0.06,
                                                 backgroundColor: kwhitecolor,
-                                                backgroundImage: NetworkImage(
-                                                    modellist[
-                                                            index + currentCar]
-                                                        .carimage),
-                                                child: const Center(
-                                                    // child: Image.network(
-                                                    //     "${modellist[index + currentCar].carimage}"),
+                                                // backgroundImage: NetworkImage(
+                                                //     modellist[
+                                                //             index + currentCar]
+                                                //         .carimage),
+                                                child:  Center(
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.all(8.0),
+                                                      child: Image.network(
+                                                          modellist[index + currentCar].carimage,
+                                                          errorBuilder: ((context, error, stackTrace) {
+                                                            return Container();
+                                                          }),
+                                                          
+                                                          ),
+                                                    ),
                                                     ),
                                               ),
                                             ),

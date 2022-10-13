@@ -49,12 +49,14 @@ class _TrackingState extends State<Tracking> {
 
     getapproveddetails(widget.orderid.toString()).then((value) {
       apprvallist.addAll(value);
+      apprvallist = apprvallist.reversed.toList();
       setState(() {
         print(apprvallist);
       });
     });
     getrecentUpdates(widget.orderid.toString()).then((value) {
       recent.addAll(value);
+     recent= recent.reversed.toList();
 
       setState(() {
         print(recent);
@@ -118,6 +120,7 @@ class _TrackingState extends State<Tracking> {
                         child: Image.asset("assets/images/trackingback.png"),
                       ),
                       SingleChildScrollView(
+                        // physics: const BouncingScrollPhysics(),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.end,
@@ -131,7 +134,7 @@ class _TrackingState extends State<Tracking> {
                             //   ),
                             // ),
                             SizedBox(
-                              height: h * 0.3,
+                              height: h * 0.45,
                             ),
                             Visibility(
                               visible: widget.time != "null" ||
@@ -434,6 +437,7 @@ class _TrackingState extends State<Tracking> {
                                                                   width:
                                                                       w * 0.2,
                                                                   decoration: BoxDecoration(
+                                                                    color: kblackcolor.withOpacity(0.2),
                                                                       borderRadius:
                                                                           BorderRadius.circular(h *
                                                                               0.01),
@@ -441,7 +445,7 @@ class _TrackingState extends State<Tracking> {
                                                                           image: NetworkImage(mod
                                                                               .image),
                                                                           fit: BoxFit
-                                                                              .fill)),
+                                                                              .cover)),
                                                                 ),
                                                               )
                                                             : Container()
@@ -725,7 +729,7 @@ class _TrackingState extends State<Tracking> {
                                       itemCount: recent.length,
                                       shrinkWrap: true,
                                       padding:
-                                          EdgeInsets.only(bottom: h * 0.01),
+                                          EdgeInsets.only(bottom: h * 0.02),
                                       physics:
                                           const NeverScrollableScrollPhysics(),
                                       itemBuilder: (context, index) {

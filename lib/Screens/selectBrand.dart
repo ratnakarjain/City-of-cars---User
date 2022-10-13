@@ -570,6 +570,7 @@ class _SelectBrandState extends State<SelectBrand> {
                                       // }
                                     },
                                     child: RRectCard(
+                                      // color: kbg2,
                                       h: h * 0.18,
                                       w: h * 0.18,
                                       borderRadius: 30,
@@ -577,16 +578,22 @@ class _SelectBrandState extends State<SelectBrand> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
+                                            SizedBox(
+                                              height: h*0.005,
+                                            ),
                                             Expanded(
-                                              child: CachedNetworkImage(
-                                                imageUrl: snapshot.data[index]
-                                                    ["image"],
-                                                placeholder: (context, url) =>
-                                                    // loder,
-                                                    Container(),
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        const Icon(Icons.error),
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: CachedNetworkImage(
+                                                  imageUrl: snapshot.data[index]
+                                                      ["image"],
+                                                  placeholder: (context, url) =>
+                                                      // loder,
+                                                      Container(),
+                                                  errorWidget:
+                                                      (context, url, error) =>
+                                                          const Icon(Icons.error),
+                                                ),
                                               ),
                                               // Image.network(
                                               //     "${snapshot.data[index]["image"]}"),

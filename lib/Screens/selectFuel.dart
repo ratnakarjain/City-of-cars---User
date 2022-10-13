@@ -88,7 +88,7 @@ class _SelectFuelState extends State<SelectFuel> {
               h: h * 0.12,
               w: h * 0.12,
               borderRadius: 25,
-              padding: EdgeInsets.all(h * 0.01),
+              padding: EdgeInsets.all(h * 0.012),
               color: kwhitecolor,
               widget: CachedNetworkImage(
                 fit: BoxFit.fill,
@@ -108,7 +108,7 @@ class _SelectFuelState extends State<SelectFuel> {
                 ),
                 boxShadow: [
                   BoxShadow(
-                      offset: Offset(0, -5),
+                      offset: const Offset(0, -5),
                       blurRadius: 5,
                       spreadRadius: 3,
                       color: kblackcolor.withOpacity(0.1))
@@ -137,6 +137,9 @@ class _SelectFuelState extends State<SelectFuel> {
                     widget: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          SizedBox(
+                            height: h*0.005,
+                          ),
                           Expanded(
                             child: CachedNetworkImage(
                               fit: BoxFit.fill,

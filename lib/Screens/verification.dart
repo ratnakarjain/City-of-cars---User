@@ -60,7 +60,6 @@ class _VerficationState extends State<Verfication> {
     // timer();
     startTimeout();
     print(widget.mobile);
-    token() {
     var messaging = FirebaseMessaging.instance;
     messaging.getToken().then((value) {
       print("token: " + value.toString());
@@ -69,7 +68,6 @@ class _VerficationState extends State<Verfication> {
 
       print("new token: " + Prefernece.pref!.getString("fcmtoken").toString());
     });
-  }
     super.initState();
     
   }

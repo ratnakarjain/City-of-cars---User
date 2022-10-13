@@ -29,6 +29,7 @@ class _EditProfileState extends State<EditProfile> {
   String? file;
   String image = "";
   String id = "";
+  String doc = "";
   var prefs = Prefernece.pref;
   var name = TextEditingController();
   var mobile = TextEditingController();
@@ -74,6 +75,9 @@ class _EditProfileState extends State<EditProfile> {
     image = prefs!.getString("image").toString() == "null"
         ? ""
         : prefs!.getString("image").toString();
+        doc = prefs!.getString("doc").toString() == "null"
+        ? ""
+        : prefs!.getString("doc").toString();
         mobile.text ="+91 "+ number.split("91").last;
     print(image);
     token();
@@ -594,6 +598,7 @@ class _EditProfileState extends State<EditProfile> {
                         file == null ? null : File(file!),
                         image,
                         file2,
+                        doc,
                         context,
                       ).whenComplete(() {
                         savingChanges = false;

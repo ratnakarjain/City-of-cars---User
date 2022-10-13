@@ -770,6 +770,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
         prefs!.setString('state', jsonResponse["data"]["State"].toString());
         prefs!.setString('pincode', jsonResponse["data"]["PinCode"].toString());
         prefs!.setString('email', jsonResponse["data"]["email"].toString());
+        prefs!.setString('doc', jsonResponse["data"]["document"].toString());
         print("$token");
         print(Ids.userid);
 

@@ -269,6 +269,7 @@ class _SlotState extends State<Slot> {
                             }
                             return null;
                           },
+                          textCapitalization:TextCapitalization.words,
                           decoration: InputDecoration(
                               hintText: "Street / City*",
                               hintStyle: GoogleFonts.montserrat(
@@ -307,6 +308,7 @@ class _SlotState extends State<Slot> {
                                   }
                                   return null;
                                 },
+                          textCapitalization:TextCapitalization.words,
                                 decoration: InputDecoration(
                                     hintText: "State*",
                                     hintStyle: GoogleFonts.montserrat(
