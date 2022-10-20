@@ -43,7 +43,6 @@ class _CartState extends State<Cart> {
     if (!widget.getcart) {
       fecthdata().whenComplete(() {
         if (data.isNotEmpty) {
-          
           for (int i = 0; i < data.length; i++) {
             print("typeprice " +
                 data[i]["selectplan"][0]["typeprice"].toString() +
@@ -56,30 +55,29 @@ class _CartState extends State<Cart> {
       });
     } else {
       getcartitems().then((value) {
-        
-          print("done"+value.toString());
-          
-          data.addAll(value);
-          print("entering");
-          if (data.isEmpty) {
-            _null = "You have nothing in Cart. Please add...";
-            print(_null);
-            setState(() {});
-          } else {
-            _null = "";
-            setState(() {});
-          }
-          print(data.toString() + "============");
-          // for(int i=0; i<data.length; i++){
-          //   plan=data[i]["Plans"];
-          //   print(plan.toString()+"+++++++++++=====");
-          // }
-          //       service.addAll(value);
-          //            print("================="+service.toString());
-          // print("================="+service[0]["title"].toString());
-        }).whenComplete(() {
-          if (data.isNotEmpty) {
-          
+        print("done" + value.toString());
+
+        data.addAll(value);
+        print("entering");
+        if (data.isEmpty) {
+          // _null = "You have nothing in Cart. Please add...";
+          _null = "Your cart is empty.";
+          print(_null);
+          setState(() {});
+        } else {
+          _null = "";
+          setState(() {});
+        }
+        print(data.toString() + "============");
+        // for(int i=0; i<data.length; i++){
+        //   plan=data[i]["Plans"];
+        //   print(plan.toString()+"+++++++++++=====");
+        // }
+        //       service.addAll(value);
+        //            print("================="+service.toString());
+        // print("================="+service[0]["title"].toString());
+      }).whenComplete(() {
+        if (data.isNotEmpty) {
           for (int i = 0; i < data.length; i++) {
             print("typeprice " +
                 data[i]["selectplan"][0]["typeprice"].toString() +
@@ -89,8 +87,7 @@ class _CartState extends State<Cart> {
           }
           setState(() {});
         }
-        });
-      
+      });
     }
 
     super.initState();
@@ -101,10 +98,20 @@ class _CartState extends State<Cart> {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return WillPopScope(
-      onWillPop:widget.getcart?()async{return true;}: ()async{
-        await Navigator.pushAndRemoveUntil(context,  MaterialPageRoute(builder: (builder)=>  BottomNavBar(index: 0,)), (route) => false);
-        return true;
-      },
+      onWillPop: widget.getcart
+          ? () async {
+              return true;
+            }
+          : () async {
+              await Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                      builder: (builder) => BottomNavBar(
+                            index: 0,
+                          )),
+                  (route) => false);
+              return true;
+            },
       child: Scaffold(
         backgroundColor: kLightOrangeBgColor,
         appBar: AppBar(
@@ -155,8 +162,8 @@ class _CartState extends State<Cart> {
                                           decoration: BoxDecoration(
                                               color: kwhitecolor,
                                               borderRadius: BorderRadius.only(
-                                                  topLeft:
-                                                      Radius.circular(h * 0.015),
+                                                  topLeft: Radius.circular(
+                                                      h * 0.015),
                                                   bottomLeft: Radius.circular(
                                                       h * 0.015))),
                                           margin: EdgeInsets.only(
@@ -182,9 +189,9 @@ class _CartState extends State<Cart> {
                                                               .start,
                                                       children: [
                                                         Text(
-                                                          data[index]
-                                                                  ["Plans"]["plan"]
-                                                              [0]["planName"],
+                                                          data[index]["Plans"]
+                                                                  ["plan"][0]
+                                                              ["planName"],
                                                           style: GoogleFonts
                                                               .montserrat(
                                                             fontSize: 20,
@@ -194,15 +201,16 @@ class _CartState extends State<Cart> {
                                                         ),
                                                         Text(
                                                           // "Service Pack",
-                                                          data[index]
-                                                                  ["Plans"]["plan"]
-                                                              [1]["planName"],
-                                                          style: GoogleFonts.montserrat(
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight.w600,
-                                                              color:
-                                                                  kTextInputPlaceholderColor
+                                                          data[index]["Plans"]
+                                                                  ["plan"][1]
+                                                              ["planName"],
+                                                          style: GoogleFonts
+                                                              .montserrat(
+                                                                  fontSize: 12,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  color: kTextInputPlaceholderColor
                                                                       .withOpacity(
                                                                           0.6)),
                                                         ),
@@ -210,7 +218,8 @@ class _CartState extends State<Cart> {
                                                     ),
                                                     Column(
                                                       crossAxisAlignment:
-                                                          CrossAxisAlignment.end,
+                                                          CrossAxisAlignment
+                                                              .end,
                                                       children: [
                                                         Text(
                                                           "₹" +
@@ -230,11 +239,11 @@ class _CartState extends State<Cart> {
                                                           style: GoogleFonts.montserrat(
                                                               fontSize: 7,
                                                               fontWeight:
-                                                                  FontWeight.w600,
-                                                              color:
-                                                                  kTextInputPlaceholderColor
-                                                                      .withOpacity(
-                                                                          0.48)),
+                                                                  FontWeight
+                                                                      .w600,
+                                                              color: kTextInputPlaceholderColor
+                                                                  .withOpacity(
+                                                                      0.48)),
                                                         ),
                                                       ],
                                                     )
@@ -246,13 +255,15 @@ class _CartState extends State<Cart> {
                                                     left: w * 0.08,
                                                     bottom: h * 0.01),
                                                 child: Text(
-                                                  "Takes ${data[index]["Plans"]["hours"]} Hrs / Every ${data[index]["Plans"]["month"]??""} Months",
+                                                  "Takes ${data[index]["Plans"]["hours"]} Hrs / Every ${data[index]["Plans"]["month"] ?? ""} Months",
                                                   style: GoogleFonts.montserrat(
-                                                      fontWeight: FontWeight.w600,
+                                                      fontWeight:
+                                                          FontWeight.w600,
                                                       fontSize: 7,
                                                       color:
                                                           kTextInputPlaceholderColor
-                                                              .withOpacity(0.6)),
+                                                              .withOpacity(
+                                                                  0.6)),
                                                 ),
                                               ),
                                               Padding(
@@ -576,15 +587,19 @@ class _CartState extends State<Cart> {
                                                               kLightOrangeBgColor,
                                                           height: h * 0.055,
                                                           width: w * 0.6,
-                                                          margin: EdgeInsets.only(
-                                                              right: w * 0.03),
-                                                          padding: EdgeInsets.all(
-                                                              h * 0.005),
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                                  right:
+                                                                      w * 0.03),
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  h * 0.005),
                                                           child: Row(
                                                             children: [
                                                               SizedBox(
                                                                   // key: keys[index],
-                                                                  width: w * 0.55,
+                                                                  width:
+                                                                      w * 0.55,
                                                                   child: Row(
                                                                     children: [
                                                                       Expanded(
@@ -592,15 +607,14 @@ class _CartState extends State<Cart> {
                                                                             Row(
                                                                           children: [
                                                                             Center(
-                                                                              child:
-                                                                                  ListView.builder(
+                                                                              child: ListView.builder(
                                                                                 itemCount: data[index]["Plans"]["services_id"].length > 3 ? 3 : data[index]["Plans"]["services_id"].length,
                                                                                 scrollDirection: Axis.horizontal,
                                                                                 shrinkWrap: true,
                                                                                 physics: const NeverScrollableScrollPhysics(),
                                                                                 itemBuilder: (context, indexx) {
                                                                                   return Container(
-                                                                                    width:data[index]["Plans"]["services_id"].length > 3 ? w*0.14 : w*0.16, 
+                                                                                    width: data[index]["Plans"]["services_id"].length > 3 ? w * 0.14 : w * 0.16,
                                                                                     padding: EdgeInsets.symmetric(horizontal: w * 0.02),
                                                                                     child: Column(
                                                                                       children: [
@@ -629,12 +643,10 @@ class _CartState extends State<Cart> {
                                                                               ),
                                                                             ),
                                                                             SizedBox(
-                                                                              width:
-                                                                                  w * 0.02,
+                                                                              width: w * 0.02,
                                                                             ),
                                                                             Visibility(
-                                                                              visible:
-                                                                                  data[index]["Plans"]["services_id"].length > 3,
+                                                                              visible: data[index]["Plans"]["services_id"].length > 3,
                                                                               child: Text("+${data[index]["Plans"]["services_id"].length - 3} more",
                                                                                   style: GoogleFonts.montserrat(
                                                                                     fontSize: 7,
@@ -665,13 +677,13 @@ class _CartState extends State<Cart> {
                                                                   ["_id"])
                                                               .whenComplete(() {
                                                             isloading = false;
-                                                            if (data.isNotEmpty) {
+                                                            if (data
+                                                                .isNotEmpty) {
                                                               subtotal = 0;
                                                               for (int i = 0;
                                                                   i < data.length;
                                                                   i++) {
-                                                                totalvalue(double.parse(data[
-                                                                                i]
+                                                                totalvalue(double.parse(data[i]
                                                                             [
                                                                             "selectplan"][0]
                                                                         [
@@ -726,8 +738,7 @@ class _CartState extends State<Cart> {
                                                   childAspectRatio: 1.6,
                                                   shrinkWrap: true,
                                                   padding: EdgeInsets.only(
-                                                    top: h*0.01
-                                                  ),
+                                                      top: h * 0.01),
                                                   children: List.generate(
                                                       data[index]["Plans"]
                                                               ["services_id"]
@@ -764,12 +775,13 @@ class _CartState extends State<Cart> {
                                                               .toString(),
                                                           // "Engine Oil ",
                                                           // textScaleFactor: 0.7,
-                                                          style: GoogleFonts.montserrat(
-                                                              fontSize: 8,
-                                                              fontWeight:
-                                                                  FontWeight.w600,
-                                                              color:
-                                                                  kTextInputPlaceholderColor
+                                                          style: GoogleFonts
+                                                              .montserrat(
+                                                                  fontSize: 8,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  color: kTextInputPlaceholderColor
                                                                       .withOpacity(
                                                                           0.6)),
                                                         ),
@@ -866,7 +878,7 @@ class _CartState extends State<Cart> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text( data.isEmpty?"₹ 0": "₹ $subtotal",
+                            Text(data.isEmpty ? "₹ 0" : "₹ $subtotal",
                                 style: GoogleFonts.montserrat(
                                   fontSize: 19,
                                   fontWeight: FontWeight.bold,
@@ -887,15 +899,17 @@ class _CartState extends State<Cart> {
               SizedBox(
                 height: h * 0.03,
               ),
-               Visibility(
+              Visibility(
                 visible: data.isNotEmpty,
-                 child: Center(
+                child: Center(
                   child: RRecctButton(
                     onTap: () {
                       // proceed();
-                      
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const Payment()));
+
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Payment()));
                     },
                     buttonColor: korangecolor,
                     text: "Proceed".toUpperCase(),
@@ -906,8 +920,8 @@ class _CartState extends State<Cart> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+                ),
               ),
-               ),
               SizedBox(
                 height: h * 0.04,
               ),

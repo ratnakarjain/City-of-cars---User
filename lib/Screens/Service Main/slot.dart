@@ -237,6 +237,11 @@ class _SlotState extends State<Slot> {
                             }
                             return null;
                           },
+                          style: GoogleFonts.montserrat(
+                              textStyle: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 13)),
                           decoration: InputDecoration(
                               hintText: "House No.. & Floor*",
                               hintStyle: GoogleFonts.montserrat(
@@ -269,7 +274,12 @@ class _SlotState extends State<Slot> {
                             }
                             return null;
                           },
-                          textCapitalization:TextCapitalization.words,
+                          style: GoogleFonts.montserrat(
+                              textStyle: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 13)),
+                          textCapitalization: TextCapitalization.words,
                           decoration: InputDecoration(
                               hintText: "Street / City*",
                               hintStyle: GoogleFonts.montserrat(
@@ -308,7 +318,12 @@ class _SlotState extends State<Slot> {
                                   }
                                   return null;
                                 },
-                          textCapitalization:TextCapitalization.words,
+                                style: GoogleFonts.montserrat(
+                                    textStyle: const TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 13)),
+                                textCapitalization: TextCapitalization.words,
                                 decoration: InputDecoration(
                                     hintText: "State*",
                                     hintStyle: GoogleFonts.montserrat(
@@ -347,6 +362,11 @@ class _SlotState extends State<Slot> {
                                   }
                                   return null;
                                 },
+                                style: GoogleFonts.montserrat(
+                                    textStyle: const TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 13)),
                                 inputFormatters: [
                                   FilteringTextInputFormatter.allow(
                                       RegExp("[0-9]")),
@@ -396,6 +416,12 @@ class _SlotState extends State<Slot> {
                             }
                             return null;
                           },
+                          style: GoogleFonts.montserrat(
+                              textStyle: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 13)),
+                          textCapitalization: TextCapitalization.words,
                           decoration: InputDecoration(
                               hintText: "Name*",
                               hintStyle: GoogleFonts.montserrat(
@@ -431,6 +457,11 @@ class _SlotState extends State<Slot> {
                             }
                             return null;
                           },
+                          style: GoogleFonts.montserrat(
+                              textStyle: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 13)),
                           cursorColor: korangecolor,
                           maxLength: 10,
                           inputFormatters: [
@@ -469,6 +500,11 @@ class _SlotState extends State<Slot> {
                           keyboardType: TextInputType.emailAddress,
                           controller: mail,
                           cursorColor: korangecolor,
+                          style: GoogleFonts.montserrat(
+                              textStyle: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 13)),
                           validator: (value) {
                             if (value!.isEmpty) {
                               return null;
@@ -509,6 +545,11 @@ class _SlotState extends State<Slot> {
                           inputFormatters: [
                             UpperCaseTextFormatter(),
                           ],
+                          style: GoogleFonts.montserrat(
+                              textStyle: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 13)),
 
                           // inputFormatters: [FilteringTextInputFormatter.allow(RegExp("^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}\$"))],
                           validator: (value) {
@@ -574,7 +615,13 @@ class _SlotState extends State<Slot> {
                             child: TextFormField(
                               minLines: 1,
                               maxLines: 5,
+                              style: GoogleFonts.montserrat(
+                                  textStyle: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 13)),
                               controller: option,
+                              textCapitalization: TextCapitalization.sentences,
                               decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: "Optional",
@@ -600,6 +647,7 @@ class _SlotState extends State<Slot> {
                                 h: h * 0.06,
                                 buttonColor: korangecolor,
                                 onTap: () async {
+                                  FocusScope.of(context).unfocus();
                                   if (currentlocation) {
                                     print("done");
                                     istaped = true;
@@ -619,8 +667,8 @@ class _SlotState extends State<Slot> {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(SnackBar(
                                           content: Text(date.isEmpty
-                                              ? "Pick date please"
-                                              : "Choose time slot"),
+                                              ? "Please select date to proceed."
+                                              : "Please choose time slot to proceed."),
                                         ));
                                       } else {
                                         if (_formKey.currentState!.validate()) {
@@ -645,8 +693,8 @@ class _SlotState extends State<Slot> {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(
                                         content: Text(date.isEmpty
-                                            ? "Pick date please"
-                                            : "Choose time slot"),
+                                            ? "Please select date to proceed"
+                                            : "Please select the time slot to proceed."),
                                       ));
                                     } else {
                                       if (_formKey.currentState!.validate()) {
@@ -695,6 +743,9 @@ class _SlotState extends State<Slot> {
       istaped = false;
       date = "";
       time = "";
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              "You are just a few steps away to complete your booking and have a great experience.")));
       Navigator.push(
           context,
           MaterialPageRoute(

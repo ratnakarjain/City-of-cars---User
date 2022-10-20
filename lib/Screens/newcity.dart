@@ -139,8 +139,7 @@ class _NewCityState extends State<NewCity> {
                                 BorderRadius.circular(size.height * 0.02)),
                         border: OutlineInputBorder(
                             borderSide: const BorderSide(
-                                color: kTextInputPlaceholderColor,
-                                width: 1.0),
+                                color: kTextInputPlaceholderColor, width: 1.0),
                             borderRadius:
                                 BorderRadius.circular(size.height * 0.02))),
                   ),
@@ -160,8 +159,7 @@ class _NewCityState extends State<NewCity> {
                           ? getcities()
                           : searchCity(_search.text.toString()),
                       builder: (context, AsyncSnapshot snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.done) {
+                        if (snapshot.connectionState == ConnectionState.done) {
                           if (snapshot.hasData) {
                             print("===========++++++++++" +
                                 snapshot.hasData.toString());
@@ -187,56 +185,74 @@ class _NewCityState extends State<NewCity> {
                               mainAxisSpacing: size.height * 0.02,
                               crossAxisSpacing: size.width * 0.02,
                               crossAxisCount: 2,
-                              children: List.generate(snapshot.data.length,
-                                  (index) {
+                              children:
+                                  List.generate(snapshot.data.length, (index) {
                                 return Center(
                                   child: GestureDetector(
-                                    onTap:Ids.cityid ==
+                                    onTap: Ids.cityid ==
                                             snapshot.data[index]["_id"]
                                         ? () {
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(const SnackBar(
-                                              content:
-                                                  Text("This is your privious city"),
+                                              content: Text(
+                                                  "You have already selected this city."),
                                             ));
                                           }
                                         : () {
-                                      CarsData.city =
-                                          snapshot.data[index]["city"];
-                                      CarsData.cityimage =
-                                          snapshot.data[index]["image"];
-                                      Ids.cityid =
-                                          snapshot.data[index]["_id"];
-                                      pref!.setString("cityId", Ids.cityid);
-                                      pref!.setString("cityname",snapshot.data[index]["city"]);
-                                      print("=======" + Ids.cityid);
-                                      print(CarsData.city);
-                                      print(CarsData.cityimage);
-                                      // Navigator.push(
-                                      //     context,
-                                      //     MaterialPageRoute(
-                                      //       builder: (context) =>
-                                      //           const SelectBrand(),
-                                      //     ));
-                                      Navigator.pop(context);
-                                    },
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "You have selected a new city."),
+                                            ));
+                                            CarsData.city =
+                                                snapshot.data[index]["city"];
+                                            CarsData.cityimage =
+                                                snapshot.data[index]["image"];
+                                            Ids.cityid =
+                                                snapshot.data[index]["_id"];
+                                            pref!.setString(
+                                                "cityId", Ids.cityid);
+                                            pref!.setString("cityname",
+                                                snapshot.data[index]["city"]);
+                                            print("=======" + Ids.cityid);
+                                            print(CarsData.city);
+                                            print(CarsData.cityimage);
+                                            // Navigator.push(
+                                            //     context,
+                                            //     MaterialPageRoute(
+                                            //       builder: (context) =>
+                                            //           const SelectBrand(),
+                                            //     ));
+                                            addusercitycardata().then((value) {
+                                              value != "Error"
+                                                  ? null
+                                                  : ScaffoldMessenger.of(
+                                                          context)
+                                                      .showSnackBar(
+                                                          const SnackBar(
+                                                      content: Text("Error"),
+                                                    ));
+                                            });
+                                            Navigator.pop(context);
+                                          },
                                     child: Card(
                                       shape: RoundedRectangleBorder(
-                                        side: BorderSide(
-                                          color: Ids.cityid ==
-                                            snapshot.data[index]["_id"]? kbluecolor:kwhitecolor,
-                                            width: 2
-                                        ),
+                                          side: BorderSide(
+                                              color: Ids.cityid ==
+                                                      snapshot.data[index]
+                                                          ["_id"]
+                                                  ? kbluecolor
+                                                  : kwhitecolor,
+                                              width: 2),
                                           borderRadius:
                                               BorderRadius.circular(30)),
                                       elevation: 8,
-                                      shadowColor:
-                                          Colors.grey.withOpacity(0.2),
+                                      shadowColor: Colors.grey.withOpacity(0.2),
                                       child: Container(
                                         height: size.height * 0.19,
                                         width: size.height * 0.19,
-                                        padding: EdgeInsets.all(
-                                            size.height * 0.008),
+                                        padding:
+                                            EdgeInsets.all(size.height * 0.008),
                                         child: Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
@@ -259,10 +275,9 @@ class _NewCityState extends State<NewCity> {
                                                             Container(),
                                                     // loder,
 
-                                                    errorWidget: (context,
-                                                            url, error) =>
-                                                        const Icon(
-                                                            Icons.error),
+                                                    errorWidget: (context, url,
+                                                            error) =>
+                                                        const Icon(Icons.error),
                                                   ),
                                                 ),
                                                 // Image.network(
@@ -274,14 +289,11 @@ class _NewCityState extends State<NewCity> {
                                               Text(
                                                 snapshot.data[index]["city"],
                                                 style: GoogleFonts.montserrat(
-                                                    textStyle:
-                                                        const TextStyle(
-                                                            color:
-                                                                Colors.black,
-                                                            fontSize: 12,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold)),
+                                                    textStyle: const TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
                                               )
                                             ]),
                                       ),
@@ -312,8 +324,8 @@ class _NewCityState extends State<NewCity> {
                               mainAxisSpacing: size.height * 0.02,
                               crossAxisSpacing: size.width * 0.02,
                               crossAxisCount: 2,
-                              children: List.generate(snapshot.data.length,
-                                  (index) {
+                              children:
+                                  List.generate(snapshot.data.length, (index) {
                                 return Center(
                                   child: GestureDetector(
                                     onTap: Ids.cityid ==
@@ -332,9 +344,9 @@ class _NewCityState extends State<NewCity> {
                                                 snapshot.data[index]["image"];
                                             Ids.cityid =
                                                 snapshot.data[index]["_id"];
-                                            pref!.setString(
-                                                "CarId", Ids.carid);
-                                      pref!.setString("cityname",snapshot.data[index]["city"]);
+                                            pref!.setString("CarId", Ids.carid);
+                                            pref!.setString("cityname",
+                                                snapshot.data[index]["city"]);
 
                                             print(CarsData.city);
                                             print(CarsData.cityimage);
@@ -347,21 +359,22 @@ class _NewCityState extends State<NewCity> {
                                           },
                                     child: Card(
                                       shape: RoundedRectangleBorder(
-                                        side: BorderSide(
-                                          color: Ids.cityid ==
-                                            snapshot.data[index]["_id"]? kbluecolor:kwhitecolor,
-                                            width: 2
-                                        ),
+                                          side: BorderSide(
+                                              color: Ids.cityid ==
+                                                      snapshot.data[index]
+                                                          ["_id"]
+                                                  ? kbluecolor
+                                                  : kwhitecolor,
+                                              width: 2),
                                           borderRadius:
                                               BorderRadius.circular(30)),
                                       elevation: 8,
-                                      shadowColor:
-                                          Colors.grey.withOpacity(0.2),
+                                      shadowColor: Colors.grey.withOpacity(0.2),
                                       child: Container(
                                         height: size.height * 0.19,
                                         width: size.height * 0.19,
-                                        padding: EdgeInsets.all(
-                                            size.height * 0.008),
+                                        padding:
+                                            EdgeInsets.all(size.height * 0.008),
                                         child: Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
@@ -384,10 +397,9 @@ class _NewCityState extends State<NewCity> {
                                                             Container(),
                                                     // loder,
 
-                                                    errorWidget: (context,
-                                                            url, error) =>
-                                                        const Icon(
-                                                            Icons.error),
+                                                    errorWidget: (context, url,
+                                                            error) =>
+                                                        const Icon(Icons.error),
                                                   ),
                                                 ),
                                                 // Image.network(
@@ -399,14 +411,11 @@ class _NewCityState extends State<NewCity> {
                                               Text(
                                                 snapshot.data[index]["city"],
                                                 style: GoogleFonts.montserrat(
-                                                    textStyle:
-                                                        const TextStyle(
-                                                            color:
-                                                                Colors.black,
-                                                            fontSize: 12,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold)),
+                                                    textStyle: const TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
                                               )
                                             ]),
                                       ),

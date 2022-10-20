@@ -17,7 +17,9 @@ class Tracking extends StatefulWidget {
   String? time;
   String? date;
   final DateTime ordertime;
-  Tracking({Key? key, this.orderid, this.date, this.time, required this.ordertime}) : super(key: key);
+  Tracking(
+      {Key? key, this.orderid, this.date, this.time, required this.ordertime})
+      : super(key: key);
 
   @override
   State<Tracking> createState() => _TrackingState();
@@ -56,7 +58,7 @@ class _TrackingState extends State<Tracking> {
     });
     getrecentUpdates(widget.orderid.toString()).then((value) {
       recent.addAll(value);
-     recent= recent.reversed.toList();
+      recent = recent.reversed.toList();
 
       setState(() {
         print(recent);
@@ -89,8 +91,7 @@ class _TrackingState extends State<Tracking> {
           ? loder
           : apprvallist.isEmpty && recent.isEmpty
               ? Center(
-                  child:
-                  Dummy(
+                  child: Dummy(
                     time: widget.ordertime,
                     h: h,
                     w: w,
@@ -437,7 +438,9 @@ class _TrackingState extends State<Tracking> {
                                                                   width:
                                                                       w * 0.2,
                                                                   decoration: BoxDecoration(
-                                                                    color: kblackcolor.withOpacity(0.2),
+                                                                      color: kblackcolor
+                                                                          .withOpacity(
+                                                                              0.2),
                                                                       borderRadius:
                                                                           BorderRadius.circular(h *
                                                                               0.01),
@@ -622,109 +625,6 @@ class _TrackingState extends State<Tracking> {
                                 padding: EdgeInsets.all(h * 0.02),
                                 child: Column(
                                   children: [
-                                    Padding(
-                                                padding:
-                                                    EdgeInsets.only(top: h * 0.01),
-                                                child: RRecctButton2(
-                                                  onTap: () {
-                                
-                                                  },
-                                                  widget: Padding(
-                                                    padding: EdgeInsets.all(h * 0.01),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceAround,
-                                                      children: [
-                                                        Expanded(
-                                                          child: Column(
-                                                            children: [
-                                                              CircleAvatar(
-                                                                  backgroundColor:
-                                                                      kdarkpurple,
-                                                                  child: Image.asset(
-                                                                      "assets/images/heart.png")),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        Expanded(
-                                                          flex: 4,
-                                                          child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              RichText(
-                                                                text: TextSpan(
-                                                                    text: DateFormat('MMMM dd').add_Hm().format(widget.ordertime.toLocal()) 
-                                                                    + " (" +  (DateTime.now().difference(widget.ordertime.toLocal()).inMinutes < 60 ? DateTime.now().difference(widget.ordertime.toLocal()).inMinutes.toString()+" mins" :DateTime.now().difference(widget.ordertime.toLocal()).inHours.toString()+" hours")+")",
-                                                                     
-                                                                    // " Hrs",
-                                                                    //       "${resmdl.time}\n",
-                                                                    style: GoogleFonts.montserrat(
-                                                                        fontSize: 9,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w600,
-                                                                       
-                                                                        color:
-                                                                            kTextInputPlaceholderColor),
-                                                                    children: [
-                                                                      TextSpan(
-                                                                          text:
-                                                                              "\nYour Order has been placed",
-                                                                          // "Scout reached your location",
-                                                                          style: GoogleFonts.montserrat(
-                                                                              fontSize:
-                                                                                  11,
-                                                                              fontWeight:
-                                                                                  FontWeight
-                                                                                      .bold,
-                                                                              color:
-                                                                                  kTextInputPlaceholderColor,
-                                                                              height:
-                                                                                  1.3)),
-                                                                      
-                                                                    ]),
-                                                              ),
-                                                              
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        Expanded(
-                                                          child: SizedBox(
-                                                            height: h * 0.045,
-                                                            width: w * 0.15,
-                                                            child: Stack(
-                                                              children: [
-                                                                Positioned(
-                                                                  right: 0,
-                                                                  child:  Center(
-                                                                                child:
-                                                                    CircleAvatar(
-                                                                    radius: h * 0.022,
-                                                                    backgroundColor: kTransparent,
-                                                                    backgroundImage: const AssetImage(
-                                                                    "assets/images/mask2.png",
-                                                                    ),
-                                                                    // child: Image.asset(
-                                                                    //     "assets/images/mask2.png"),
-                                                                  ),
-                                                                              ),
-                                                                ),
-                                                                
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  radius: h * 0.04,
-                                                  buttonColor: kwhitecolor,
-                                                ),
-                                              ),
-
                                     ListView.builder(
                                       itemCount: recent.length,
                                       shrinkWrap: true,
@@ -771,17 +671,19 @@ class _TrackingState extends State<Tracking> {
                                                       children: [
                                                         RichText(
                                                           text: TextSpan(
-                                                              text: DateFormat.MMMMd().format(DateTime.parse(resmdl.time.toString())) +
-                                                                  " - " +
-                                                                  DateTime.parse(resmdl
+                                                              text: DateFormat.MMMMd().format(
+                                                                      DateTime.parse(resmdl
                                                                           .time
-                                                                          .toString())
+                                                                          .toString())) +
+                                                                  " - " +
+                                                                  DateTime.parse(resmdl.time.toString())
                                                                       .hour
                                                                       .toString() +
                                                                   ":" +
-                                                                  DateTime.parse(resmdl
-                                                                          .time
-                                                                          .toString())
+                                                                  DateTime.parse(
+                                                                          resmdl
+                                                                              .time
+                                                                              .toString())
                                                                       .minute
                                                                       .toString() +
                                                                   " Hrs\n",
@@ -793,12 +695,10 @@ class _TrackingState extends State<Tracking> {
                                                                       FontWeight
                                                                           .w600,
                                                                   height:
-                                                                      resmdl.time ==
-                                                                              ""
+                                                                      resmdl.time == ""
                                                                           ? 0
                                                                           : 1,
-                                                                  color:
-                                                                      kTextInputPlaceholderColor),
+                                                                  color: kTextInputPlaceholderColor),
                                                               children: [
                                                                 TextSpan(
                                                                     text:
@@ -925,9 +825,9 @@ class _TrackingState extends State<Tracking> {
                                                                               Center(
                                                                             child:
                                                                                 Image.asset(
-                                                                                  "assets/images/video.png",
-                                                                                  height: h * 0.03,
-                                                                                ),
+                                                                              "assets/images/video.png",
+                                                                              height: h * 0.03,
+                                                                            ),
                                                                           ),
                                                                         ),
                                                                       )
@@ -944,14 +844,17 @@ class _TrackingState extends State<Tracking> {
                                                                             Center(
                                                                           child:
                                                                               CircleAvatar(
-                                                                              radius: h * 0.022,
-                                                                              backgroundColor: kTransparent,
-                                                                              backgroundImage: NetworkImage(
+                                                                            radius:
+                                                                                h * 0.022,
+                                                                            backgroundColor:
+                                                                                kTransparent,
+                                                                            backgroundImage:
+                                                                                NetworkImage(
                                                                               resmdl.file,
-                                                                              ),
-                                                                              // child: Image.asset(
-                                                                              //     "assets/images/mask2.png"),
                                                                             ),
+                                                                            // child: Image.asset(
+                                                                            //     "assets/images/mask2.png"),
+                                                                          ),
                                                                         )),
                                                           ),
                                                           // Positioned(
@@ -1087,6 +990,116 @@ class _TrackingState extends State<Tracking> {
                                         );
                                       },
                                     ),
+
+                                    Padding(
+                                      padding: EdgeInsets.only(top: h * 0.00),
+                                      child: RRecctButton2(
+                                        onTap: () {},
+                                        widget: Padding(
+                                          padding: EdgeInsets.all(h * 0.01),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Expanded(
+                                                child: Column(
+                                                  children: [
+                                                    CircleAvatar(
+                                                        backgroundColor:
+                                                            kdarkpurple,
+                                                        child: Image.asset(
+                                                            "assets/images/heart.png")),
+                                                  ],
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 4,
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    RichText(
+                                                      text: TextSpan(
+                                                          text: DateFormat('MMMM dd')
+                                                                  .add_Hm()
+                                                                  .format(widget
+                                                                      .ordertime
+                                                                      .toLocal()) +
+                                                              " (" +
+                                                              (DateTime.now().difference(widget.ordertime.toLocal()).inMinutes <
+                                                                      60
+                                                                  ? DateTime.now().difference(widget.ordertime.toLocal()).inMinutes.toString() +
+                                                                      " mins"
+                                                                  : DateTime.now()
+                                                                          .difference(widget
+                                                                              .ordertime
+                                                                              .toLocal())
+                                                                          .inHours
+                                                                          .toString() +
+                                                                      " hours") +
+                                                              ")",
+
+                                                          // " Hrs",
+                                                          //       "${resmdl.time}\n",
+                                                          style: GoogleFonts.montserrat(
+                                                              fontSize: 9,
+                                                              fontWeight:
+                                                                  FontWeight.w600,
+                                                              color: kTextInputPlaceholderColor),
+                                                          children: [
+                                                            TextSpan(
+                                                                text:
+                                                                    "\nYour Order has been placed",
+                                                                // "Scout reached your location",
+                                                                style: GoogleFonts.montserrat(
+                                                                    fontSize:
+                                                                        11,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color:
+                                                                        kTextInputPlaceholderColor,
+                                                                    height:
+                                                                        1.3)),
+                                                          ]),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: SizedBox(
+                                                  height: h * 0.045,
+                                                  width: w * 0.15,
+                                                  child: Stack(
+                                                    children: [
+                                                      Positioned(
+                                                        right: 0,
+                                                        child: Center(
+                                                          child: CircleAvatar(
+                                                            radius: h * 0.022,
+                                                            backgroundColor:
+                                                                kTransparent,
+                                                            backgroundImage:
+                                                                const AssetImage(
+                                                              "assets/images/mask2.png",
+                                                            ),
+                                                            // child: Image.asset(
+                                                            //     "assets/images/mask2.png"),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        radius: h * 0.04,
+                                        buttonColor: kwhitecolor,
+                                      ),
+                                    ),
+
                                     // RRecctButton2(
                                     //   widget: Padding(
                                     //     padding: EdgeInsets.all(h * 0.01),
@@ -1247,8 +1260,6 @@ class _TrackingState extends State<Tracking> {
   }
 }
 
-
-
 class Dummy extends StatelessWidget {
   final DateTime time;
   final h;
@@ -1262,132 +1273,131 @@ class Dummy extends StatelessWidget {
       width: w,
       child: Column(
         children: [
-          Image.asset("assets/images/trackingback.png",width: w,),
+          Image.asset(
+            "assets/images/trackingback.png",
+            width: w,
+          ),
           // SizedBox(
           //   height: h*0.1,
           // ),
           Expanded(
             child: Container(
-                                  decoration: BoxDecoration(
-                                      color: kbg2,
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(h * 0.05),
-                                          topRight: Radius.circular(h * 0.05))),
-                                  margin: EdgeInsets.only(top: h * 0.01),
-                                  padding: EdgeInsets.all(h * 0.02),
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                                padding:
-                                                    EdgeInsets.only(top: h * 0.01),
-                                                child: RRecctButton2(
-                                                  onTap: () {
-                                
-                                                  },
-                                                  widget: Padding(
-                                                    padding: EdgeInsets.all(h * 0.01),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceAround,
-                                                      children: [
-                                                        Expanded(
-                                                          child: Column(
-                                                            children: [
-                                                              CircleAvatar(
-                                                                  backgroundColor:
-                                                                      kdarkpurple,
-                                                                  child: Image.asset(
-                                                                      "assets/images/heart.png")),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        Expanded(
-                                                          flex: 4,
-                                                          child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              RichText(
-                                                                text: TextSpan(
-                                                                    text: DateFormat('MMMM dd').add_Hm().format(time.toLocal()) 
-                                                                    + " (" +  (DateTime.now().difference(time.toLocal()).inMinutes < 60 ? DateTime.now().difference(time.toLocal()).inMinutes.toString()+" mins" :DateTime.now().difference(time.toLocal()).inHours.toString()+" hours")+")",
-                                                                    // " Hrs",
-                                                                    //       "${resmdl.time}\n",
-                                                                    style: GoogleFonts.montserrat(
-                                                                        fontSize: 9,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w600,
-                                                                       
-                                                                        color:
-                                                                            kTextInputPlaceholderColor),
-                                                                    children: [
-                                                                      TextSpan(
-                                                                          text:
-                                                                              "\nYour Order has been placed",
-                                                                          // "Scout reached your location",
-                                                                          style: GoogleFonts.montserrat(
-                                                                              fontSize:
-                                                                                  11,
-                                                                              fontWeight:
-                                                                                  FontWeight
-                                                                                      .bold,
-                                                                              color:
-                                                                                  kTextInputPlaceholderColor,
-                                                                              height:
-                                                                                  1.3)),
-                                                                      
-                                                                    ]),
-                                                              ),
-                                                              
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        Expanded(
-                                                          child: SizedBox(
-                                                            height: h * 0.045,
-                                                            width: w * 0.15,
-                                                            child: Stack(
-                                                              children: [
-                                                                Positioned(
-                                                                  right: 0,
-                                                                  child:  Center(
-                                                                                child:
-                                                                    CircleAvatar(
-                                                                    radius: h * 0.022,
-                                                                    backgroundColor: kTransparent,
-                                                                    backgroundImage: const AssetImage(
-                                                                    "assets/images/mask2.png",
-                                                                    ),
-                                                                    // child: Image.asset(
-                                                                    //     "assets/images/mask2.png"),
-                                                                  ),
-                                                                              ),
-                                                                ),
-                                                                
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  radius: h * 0.04,
-                                                  buttonColor: kwhitecolor,
-                                                ),
-                                              ),
-                                    ],
-                                  )
-          
+                decoration: BoxDecoration(
+                    color: kbg2,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(h * 0.05),
+                        topRight: Radius.circular(h * 0.05))),
+                margin: EdgeInsets.only(top: h * 0.01),
+                padding: EdgeInsets.all(h * 0.02),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(top: h * 0.01),
+                      child: RRecctButton2(
+                        onTap: () {},
+                        widget: Padding(
+                          padding: EdgeInsets.all(h * 0.01),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    CircleAvatar(
+                                        backgroundColor: kdarkpurple,
+                                        child: Image.asset(
+                                            "assets/images/heart.png")),
+                                  ],
                                 ),
+                              ),
+                              Expanded(
+                                flex: 4,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    RichText(
+                                      text: TextSpan(
+                                          text: DateFormat('MMMM dd')
+                                                  .add_Hm()
+                                                  .format(time.toLocal()) +
+                                              " (" +
+                                              (DateTime.now()
+                                                          .difference(
+                                                              time.toLocal())
+                                                          .inMinutes <
+                                                      60
+                                                  ? DateTime.now()
+                                                          .difference(
+                                                              time.toLocal())
+                                                          .inMinutes
+                                                          .toString() +
+                                                      " mins"
+                                                  : DateTime.now()
+                                                          .difference(
+                                                              time.toLocal())
+                                                          .inHours
+                                                          .toString() +
+                                                      " hours") +
+                                              ")",
+                                          // " Hrs",
+                                          //       "${resmdl.time}\n",
+                                          style: GoogleFonts.montserrat(
+                                              fontSize: 9,
+                                              fontWeight: FontWeight.w600,
+                                              color:
+                                                  kTextInputPlaceholderColor),
+                                          children: [
+                                            TextSpan(
+                                                text:
+                                                    "\nYour Order has been placed",
+                                                // "Scout reached your location",
+                                                style: GoogleFonts.montserrat(
+                                                    fontSize: 11,
+                                                    fontWeight: FontWeight.bold,
+                                                    color:
+                                                        kTextInputPlaceholderColor,
+                                                    height: 1.3)),
+                                          ]),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: SizedBox(
+                                  height: h * 0.045,
+                                  width: w * 0.15,
+                                  child: Stack(
+                                    children: [
+                                      Positioned(
+                                        right: 0,
+                                        child: Center(
+                                          child: CircleAvatar(
+                                            radius: h * 0.022,
+                                            backgroundColor: kTransparent,
+                                            backgroundImage: const AssetImage(
+                                              "assets/images/mask2.png",
+                                            ),
+                                            // child: Image.asset(
+                                            //     "assets/images/mask2.png"),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        radius: h * 0.04,
+                        buttonColor: kwhitecolor,
+                      ),
+                    ),
+                  ],
+                )),
           ),
-
         ],
       ),
-
     );
   }
-  
 }

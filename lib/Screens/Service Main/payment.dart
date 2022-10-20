@@ -86,7 +86,7 @@ class _PaymentState extends State<Payment> {
     print('Success Response: $response');
 
     Fluttertoast.showToast(
-        msg: "Payment Successfull", toastLength: Toast.LENGTH_SHORT);
+        msg: "Payment Successful", toastLength: Toast.LENGTH_SHORT);
     istaped = true;
     addorder(response.paymentId!, "Deposited", "", "online").then((value) {
       if (value == false) {
@@ -676,7 +676,7 @@ class _PaymentState extends State<Payment> {
     );
   }
 
-  Future go ()async{
+  Future go() async {
     proceed().then((value) {
       List data = [];
       data.addAll(value);
@@ -704,9 +704,6 @@ class _PaymentState extends State<Payment> {
       }
       data.addAll(value);
     });
-    setState(() {
-      
-    });
-
+    setState(() {});
   }
 }

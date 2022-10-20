@@ -2,12 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cityofcars/Screens/glance.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
+import 'package:cityofcars/Utils/preference.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../Services/servies.dart';
 import 'Service Main/serviceMain.dart';
 import 'bottomnavBar.dart';
+import 'profile.dart';
 
 class SelectFuel extends StatefulWidget {
   const SelectFuel({Key? key}) : super(key: key);
@@ -138,7 +140,7 @@ class _SelectFuelState extends State<SelectFuel> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(
-                            height: h*0.005,
+                            height: h * 0.005,
                           ),
                           Expanded(
                             child: CachedNetworkImage(
@@ -212,11 +214,18 @@ class _SelectFuelState extends State<SelectFuel> {
                                     child: GestureDetector(
                                       onTap: fuelselcting
                                           ? () {
-                                            print("tap");
-                                          }
+                                              print("tap");
+                                            }
                                           : () {
                                               fuelselcting = true;
-                                              setState(() {});
+                                              setState(() {
+                                                if (Profile.carslength > 0) {
+                                                  Profile.carslength++;
+                                                  Prefernece.pref!.setInt(
+                                                      "CCar",
+                                                      Profile.carslength);
+                                                }
+                                              });
                                               CarsData.fuel =
                                                   snapshot.data[index]["fuel"];
                                               CarsData.fuelimage =

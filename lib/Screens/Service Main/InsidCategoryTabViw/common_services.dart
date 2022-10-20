@@ -72,7 +72,8 @@ class _CommonServicesState extends State<CommonServices> {
           plans.isEmpty
               ? Center(
                   child: Text(
-                    "No data found",
+                    // "There are no service packs in this category.",
+                    "Please tap on profile to select a city or add a new car.",
                     style: GoogleFonts.montserrat(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -145,10 +146,7 @@ class _CommonServicesState extends State<CommonServices> {
                                               ),
                                               Text(
                                                 // "Services Pack",
-                                                plans[index]
-                                                    .packs
-                                                    [1]
-                                                    .planName,
+                                                plans[index].packs[1].planName,
                                                 style: GoogleFonts.montserrat(
                                                     fontSize: 8,
                                                     fontWeight: FontWeight.w600,
@@ -273,8 +271,7 @@ class _CommonServicesState extends State<CommonServices> {
                                                                     Center(
                                                                       child: ListView
                                                                           .builder(
-                                                                        itemCount: 
-                                                                        plans[index].includes.length >
+                                                                        itemCount: plans[index].includes.length >
                                                                                 3
                                                                             ? 3
                                                                             : plans[index].includes.length,
@@ -288,12 +285,14 @@ class _CommonServicesState extends State<CommonServices> {
                                                                             (context,
                                                                                 indexx) {
                                                                           return Container(
-                                                                            width:plans[index].includes.length > 3?w*0.14: w*0.16,
+                                                                            width: plans[index].includes.length > 3
+                                                                                ? w * 0.14
+                                                                                : w * 0.16,
                                                                             padding:
                                                                                 EdgeInsets.symmetric(horizontal: w * 0.02),
                                                                             child:
                                                                                 Column(
-                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                              crossAxisAlignment: CrossAxisAlignment.start,
                                                                               children: [
                                                                                 CachedNetworkImage(
                                                                                   // fit: BoxFit.fill,
@@ -312,7 +311,7 @@ class _CommonServicesState extends State<CommonServices> {
                                                                                   // "Engine Oil ",
                                                                                   // textScaleFactor: 0.7,
                                                                                   overflow: TextOverflow.ellipsis,
-                                                                                  style: GoogleFonts.montserrat(fontSize: 8,height: 2, fontWeight: FontWeight.w600, color: kTextInputPlaceholderColor.withOpacity(0.6)),
+                                                                                  style: GoogleFonts.montserrat(fontSize: 8, height: 2, fontWeight: FontWeight.w600, color: kTextInputPlaceholderColor.withOpacity(0.6)),
                                                                                 ),
                                                                               ],
                                                                             ),

@@ -180,6 +180,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
                                   name.clear();
                                 }
                               }),
+                              textCapitalization: TextCapitalization.words,
                               // autovalidateMode: AutovalidateMode.onUserInteraction,
                               controller: name,
                               decoration: InputDecoration(
@@ -708,6 +709,10 @@ class _LoginSignUpState extends State<LoginSignUp> {
               .setString('email', jsonResponse["sesdata"]["email"].toString());
           token = prefs!.getString("token")!;
           Ids.userid = jsonResponse["sesdata"]["_id"];
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text(
+                "OTP has been sent to your registered number successfully."),
+          ));
 
           print("$token");
           print(Ids.userid);
@@ -773,6 +778,10 @@ class _LoginSignUpState extends State<LoginSignUp> {
         prefs!.setString('doc', jsonResponse["data"]["document"].toString());
         print("$token");
         print(Ids.userid);
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content:
+              Text("OTP has been sent to your registered number successfully."),
+        ));
 
         istaped1 = false;
         setState(() {});

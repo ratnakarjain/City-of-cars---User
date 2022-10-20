@@ -201,9 +201,8 @@ Future editProfile(
           File(file.path).readAsBytes().asStream(),
           File(file.path).lengthSync(),
           filename: file.path.split('/').last));
-    }else{
-    request.fields['image'] = image.toString();
-
+    } else {
+      request.fields['image'] = image.toString();
     }
     if (document != null) {
       request.files.add(http.MultipartFile(
@@ -211,18 +210,18 @@ Future editProfile(
           File(document.path).readAsBytes().asStream(),
           File(document.path).lengthSync(),
           filename: document.path.split('/').last));
-    }else{
-    request.fields['document'] = doc.toString();
+    } else {
+      request.fields['document'] = doc.toString();
     }
 
     await request.send().then((response) async {
       var respone = await response.stream.bytesToString();
-        const JsonDecoder _decoder = JsonDecoder();
-        var jsonRes;
-        jsonRes = _decoder.convert(respone.toString());
+      const JsonDecoder _decoder = JsonDecoder();
+      var jsonRes;
+      jsonRes = _decoder.convert(respone.toString());
       if (response.statusCode == 200) {
         print("Uploaded!");
-        
+
         print("Response: " + jsonRes.toString() + "_");
         print(jsonRes["status"]);
         if (jsonRes["status"].toString() == "true") {
@@ -590,7 +589,7 @@ Future deletecartitem(String _id) async {
 }
 
 Future sos(String number, String problem) async {
-  var url = Uri.parse(sosUrl+"?userid="+prefs!.getString("id").toString());
+  var url = Uri.parse(sosUrl + "?userid=" + prefs!.getString("id").toString());
   try {
     var response = await http.post(url,
         body: {"text": problem, "MobileNo": number},
@@ -1047,8 +1046,8 @@ Future getcategoryBanner() async {
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
-      var data = jsonDecode(respnse.body);
-      ServiceMain.message =  data["message"]??"";
+    var data = jsonDecode(respnse.body);
+    ServiceMain.message = data["message"] ?? "";
     if (respnse.statusCode == 200) {
       List image = [];
       if (data["status"]) {
@@ -1131,8 +1130,8 @@ Future getrecmostPlans() async {
       var data = jsonDecode(respnse.body);
       List<PlanModel> plans = [];
       if (data["state"]) {
-            mostdata = false;
-            recdata = false;
+        mostdata = false;
+        recdata = false;
         for (int i = 0; i < data["data"].length; i++) {
           PlanModel pl = PlanModel();
           pl.planid = data["data"][i]["_id"].toString();
@@ -1496,7 +1495,7 @@ Future getCarHealth(String id) async {
     if (respnse.statusCode == 200) {
       var data = jsonDecode(respnse.body);
       if (data["status"]) {
-        var qwe = data["data"].first;
+        var qwe = data["data"].last;
         print(qwe);
         CarHealthModel carHealthModel = CarHealthModel();
         carHealthModel.overallhealth = qwe["overalcarhealth"];
@@ -1738,14 +1737,14 @@ Future deletecardata(String id) async {
   }
 }
 
-Future addbookmark(String id,BuildContext context) async {
-  var url = Uri.parse(addbookmarkUrl + "?blogs=" + id+"&userid="+Ids.userid);
+Future addbookmark(String id, BuildContext context) async {
+  var url =
+      Uri.parse(addbookmarkUrl + "?blogs=" + id + "&userid=" + Ids.userid);
   try {
     var respnse = await http.post(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
     if (respnse.statusCode == 200) {
       var data = jsonDecode(respnse.body);
-      
 
       print("Success");
       return data["status"];
@@ -1763,7 +1762,8 @@ Future resendotp(String mobile, BuildContext context) async {
         headers: {"Authorization": prefs!.getString('token').toString()});
     if (respnse.statusCode == 200) {
       var data = jsonDecode(respnse.body);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(data["message"])));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(data["message"])));
 
       print("Success");
       return data["status"];
@@ -1774,7 +1774,7 @@ Future resendotp(String mobile, BuildContext context) async {
 }
 
 Future getsavedblog() async {
-  var url = Uri.parse(savedblogUrl+"?userId="+Ids.userid);
+  var url = Uri.parse(savedblogUrl + "?userId=" + Ids.userid);
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -1795,7 +1795,7 @@ Future getsavedblog() async {
 }
 
 Future deleteaccount(BuildContext context) async {
-  var url = Uri.parse(deleteaccountUrl+"?userId="+Ids.userid);
+  var url = Uri.parse(deleteaccountUrl + "?userId=" + Ids.userid);
   try {
     var respnse = await http.post(url,
         headers: {"Authorization": prefs!.getString('token').toString()});

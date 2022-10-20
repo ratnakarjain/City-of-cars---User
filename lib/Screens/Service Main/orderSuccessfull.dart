@@ -29,7 +29,7 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
   void initState() {
     // TODO: implement initState
     Ids.orderid = widget.id;
-    print(Ids.orderid+" +++++++++++");
+    print(Ids.orderid + " +++++++++++");
     ordersuccess(widget.id).then((value) {
       data = value;
       print(data);
@@ -49,8 +49,14 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return WillPopScope(
-      onWillPop: ()async{
-        await Navigator.pushAndRemoveUntil(context,  MaterialPageRoute(builder: (builder)=>  BottomNavBar(index: 0,)), (route) => false);
+      onWillPop: () async {
+        await Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder: (builder) => BottomNavBar(
+                      index: 0,
+                    )),
+            (route) => false);
         return true;
       },
       child: Scaffold(
@@ -60,14 +66,18 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
           foregroundColor: kTextInputPlaceholderColor,
           elevation: 0,
           leading: BackButton(
-            onPressed: (){
-              Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (builder)=> BottomNavBar(index: 0)), (route) => false);
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                      builder: (builder) => BottomNavBar(index: 0)),
+                  (route) => false);
             },
           ),
           title: Text(
             "Order Successful",
-            style:
-                GoogleFonts.montserrat(fontSize: 21, fontWeight: FontWeight.w700),
+            style: GoogleFonts.montserrat(
+                fontSize: 21, fontWeight: FontWeight.w700),
           ),
         ),
         body: data == null
@@ -94,10 +104,10 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                         children: [
                           Image.asset(
                             "assets/images/right.png",
-                            height: h*0.08,
+                            height: h * 0.08,
                           ),
                           SizedBox(
-                            height: h*0.02,
+                            height: h * 0.02,
                           ),
                           RichText(
                             textAlign: TextAlign.center,
@@ -182,7 +192,8 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                         text: TextSpan(
                             text: "Confirmation will be sent on your mail\n",
                             style: GoogleFonts.montserrat(
-                                color: kTextInputPlaceholderColor, fontSize: 13),
+                                color: kTextInputPlaceholderColor,
+                                fontSize: 13),
                             children: [
                               TextSpan(
                                 text:
@@ -253,14 +264,15 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                                             child: Padding(
                                               padding: EdgeInsets.all(h * 0.01),
                                               child: Image.network(
-                                                
-                                                data["orderData"].first["cars"]["image"],
+                                                data["orderData"].first["cars"]
+                                                    ["image"],
                                               ),
                                             )))),
                                 RichText(
                                   textAlign: TextAlign.center,
                                   text: TextSpan(
-                                      text:   data["orderData"].first["cars"]["cars"],
+                                      text: data["orderData"].first["cars"]
+                                          ["cars"],
                                       style: GoogleFonts.montserrat(
                                           color: kTextInputPlaceholderColor,
                                           fontWeight: FontWeight.w700,
@@ -268,7 +280,8 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                                           fontSize: 8),
                                       children: [
                                         TextSpan(
-                                          text:   " ${data["orderData"].first["brands"]["brands"]}\n",
+                                          text:
+                                              " ${data["orderData"].first["brands"]["brands"]}\n",
                                           style: GoogleFonts.montserrat(
                                               color: kTextInputPlaceholderColor,
                                               fontWeight: FontWeight.w400,
@@ -276,7 +289,9 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                                               fontSize: 8),
                                         ),
                                         TextSpan(
-                                          text: data["orderData"].first["bookingdata"]["carno"].toUpperCase(),
+                                          text: data["orderData"]
+                                              .first["bookingdata"]["carno"]
+                                              .toUpperCase(),
                                           style: GoogleFonts.montserrat(
                                               color: kTextInputPlaceholderColor,
                                               fontWeight: FontWeight.w400,
@@ -353,16 +368,22 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                                       child: RichText(
                                         textAlign: TextAlign.center,
                                         text: TextSpan(
-                                            text: data["orderData"].first["category"]["title"]+ "\n",
+                                            text: data["orderData"]
+                                                        .first["category"]
+                                                    ["title"] +
+                                                "\n",
                                             style: GoogleFonts.montserrat(
-                                                color: kTextInputPlaceholderColor
-                                                    .withOpacity(0.5),
+                                                color:
+                                                    kTextInputPlaceholderColor
+                                                        .withOpacity(0.5),
                                                 fontWeight: FontWeight.w700,
                                                 height: 1.5,
                                                 fontSize: 7),
                                             children: [
                                               TextSpan(
-                                                text: data["orderData"].first["category"]["discreption"],
+                                                text: data["orderData"]
+                                                        .first["category"]
+                                                    ["discreption"],
                                                 style: GoogleFonts.montserrat(
                                                     color:
                                                         kTextInputPlaceholderColor
@@ -378,16 +399,20 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                                       child: RichText(
                                         textAlign: TextAlign.center,
                                         text: TextSpan(
-                                            text: "${data["orderData"].first["subcategory"]["title"] }\n",
+                                            text:
+                                                "${data["orderData"].first["subcategory"]["title"]}\n",
                                             style: GoogleFonts.montserrat(
-                                                color: kTextInputPlaceholderColor
-                                                    .withOpacity(0.5),
+                                                color:
+                                                    kTextInputPlaceholderColor
+                                                        .withOpacity(0.5),
                                                 fontWeight: FontWeight.w700,
                                                 height: 1.5,
                                                 fontSize: 7),
                                             children: [
                                               TextSpan(
-                                                text: data["orderData"].first["subcategory"]["discreption"],
+                                                text: data["orderData"]
+                                                        .first["subcategory"]
+                                                    ["discreption"],
                                                 style: GoogleFonts.montserrat(
                                                     color:
                                                         kTextInputPlaceholderColor
@@ -404,16 +429,20 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                                         textAlign: TextAlign.center,
                                         // maxLines: 2,
                                         text: TextSpan(
-                                            text: "${data["orderData"].first["selectplan"].first["planName"]}\n",
+                                            text:
+                                                "${data["orderData"].first["selectplan"].first["planName"]}\n",
                                             style: GoogleFonts.montserrat(
-                                                color: kTextInputPlaceholderColor
-                                                    .withOpacity(0.5),
+                                                color:
+                                                    kTextInputPlaceholderColor
+                                                        .withOpacity(0.5),
                                                 fontWeight: FontWeight.w700,
                                                 height: 1.5,
                                                 fontSize: 7),
                                             children: [
                                               TextSpan(
-                                                text: data["orderData"].first["selectplan"].first["subPlanName"],
+                                                text: data["orderData"]
+                                                    .first["selectplan"]
+                                                    .first["subPlanName"],
                                                 style: GoogleFonts.montserrat(
                                                     color:
                                                         kTextInputPlaceholderColor
@@ -439,7 +468,7 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                       height: h * 0.05,
                     ),
                     RRecctButton(
-                      text: "CONTINUE SHOPPING",
+                      text: "CONTINUE",
                       onTap: () {
                         Navigator.pushAndRemoveUntil<dynamic>(
                           context,
