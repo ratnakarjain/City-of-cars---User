@@ -27,6 +27,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+// This is for testing purpose only
 final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
@@ -278,7 +279,7 @@ class _MyAppState extends State<MyApp> {
             case "approvel":
               navigatorKey.currentState!.pushNamed("/orderassign");
               break;
-              case "presets":
+            case "presets":
               navigatorKey.currentState!.pushNamed("/orderassign");
               break;
             // case "feedback":
@@ -462,33 +463,31 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return 
-      
-     MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'City of Cars',
-          navigatorKey: navigatorKey,
-          routes: <String, WidgetBuilder>{
-            "/notification": (_) => const Notifications(),
-            "/editprofile": (_) => const EditProfile(),
-            "/home": (_) => BottomNavBar(index: 0),
-            "/blog": (_) => BottomNavBar(index: 1),
-            "/orderassign": (_) => BottomNavBar(index: 2),
-            "/support": (_) => const Messages(),
-          },
-          theme: ThemeData().copyWith(
-            colorScheme: ThemeData().colorScheme.copyWith(
-                  primary: korangecolor,
-                ),
-          ),
-          home: const Splash()
-          // const Glance(),
-          // OrderDetails()
-          //  id == "" || id == "null"
-          //     ? const MyHomePage()
-          //     : BottomNavBar(index: 0),
-        
-    );
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'City of Cars',
+        navigatorKey: navigatorKey,
+        routes: <String, WidgetBuilder>{
+          "/notification": (_) => const Notifications(),
+          "/editprofile": (_) => const EditProfile(),
+          "/home": (_) => BottomNavBar(index: 0),
+          "/blog": (_) => BottomNavBar(index: 1),
+          "/orderassign": (_) => BottomNavBar(index: 2),
+          "/support": (_) => const Messages(),
+        },
+        theme: ThemeData().copyWith(
+          colorScheme: ThemeData().colorScheme.copyWith(
+                primary: korangecolor,
+              ),
+        ),
+        home: const Splash()
+        // const Glance(),
+        // OrderDetails()
+        //  id == "" || id == "null"
+        //     ? const MyHomePage()
+        //     : BottomNavBar(index: 0),
+
+        );
   }
 
   token() {
