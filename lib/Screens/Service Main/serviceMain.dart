@@ -14,6 +14,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../Services/models/usercardetailsmodel.dart';
 import '../bottomnavBar.dart';
 import '../editProfile.dart';
 import '../loginSignup.dart';
@@ -147,7 +148,7 @@ class _ServiceMainState extends State<ServiceMain> {
         });
       }
     });
-    
+
     getoffers().then((value) {
       if (value != null) {
         offerslist.addAll(value);
@@ -163,12 +164,10 @@ class _ServiceMainState extends State<ServiceMain> {
     }).whenComplete(() {
       userexistensecheck();
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
-    
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -238,8 +237,8 @@ class _ServiceMainState extends State<ServiceMain> {
       body: processing
           ? loder
           : SingleChildScrollView(
-            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-            physics: const BouncingScrollPhysics(),
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              physics: const BouncingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -329,55 +328,32 @@ class _ServiceMainState extends State<ServiceMain> {
                       borderRadius: BorderRadius.circular(h * 0.05),
                       child: TextField(
                         controller: search,
-
+                        style:
+                            GoogleFonts.montserrat(fontWeight: FontWeight.w700),
                         // focusNode: FocusNode(canRequestFocus: true),
-
-                        onChanged: (value) {
-                          if (value.isNotEmpty) {
-                            show = false;
-                            searchGloble(search.text).then((value) {
-                                        print("done");
-                                        if (value) {
-                                          show = true;
-                                          print("condition");
-                                          pls1.clear();
-                                          cats1.clear();
-                                          pls1.addAll(Searchdata.plans);
-                                          cats1.addAll(Searchdata.cats);
-
-                                          // pls=value.plans;
-
-                                          setState(() {
-                                            // if (pls1.isEmpty) {
-                                            //   setState(() {});
-                                            //   ScaffoldMessenger.of(context)
-                                            //       .showSnackBar(const SnackBar(
-                                            //     content: Text("No Plans found"),
-                                            //   ));
-                                            // }
-                                            // if (cats1.isEmpty) {
-                                            //   setState(() {});
-                                            //   ScaffoldMessenger.of(context)
-                                            //       .showSnackBar(const SnackBar(
-                                            //     content:
-                                            //         Text("No Category found"),
-                                            //   ));
-                                            // }
-                                            if (cats1.isEmpty && pls1.isEmpty) {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(const SnackBar(
-                                                content: Text("No Data found"),
-                                              ));
-                                            }
-                                          });
-                                        }
-                                      });
-
-                          }
-
-                          setState(() {});
-                          if (value == " ") {
-                            search.clear();
+                        onSubmitted: (value) {
+                          if (search.text.isEmpty) {
+                            getcategaries().then((value) {
+                              if (value != null) {
+                                cats1 = value;
+                                setState(() {
+                                  catlod = true;
+                                });
+                              }
+                            });
+                            getrecmostPlans().then((value) {
+                              if (value != null) {
+                                pls1 = value;
+                                // pls1.addAll(value);
+                                setState(() {
+                                  savemost = mostdata;
+                                  saverec = recdata;
+                                  print("+++++" + savemost.toString());
+                                  print("++++" + saverec.toString());
+                                });
+                              }
+                            });
+                            return;
                           }
                           if (value.isEmpty) {
                             getcategaries().then((value) {
@@ -390,7 +366,8 @@ class _ServiceMainState extends State<ServiceMain> {
                             });
                             getrecmostPlans().then((value) {
                               if (value != null) {
-                                pls1.addAll(value);
+                                pls1 = value;
+                                // pls1.addAll(value);
                                 setState(() {
                                   savemost = mostdata;
                                   saverec = recdata;
@@ -401,7 +378,151 @@ class _ServiceMainState extends State<ServiceMain> {
                             });
                             recdata = saverec;
                             mostdata = savemost;
+                            return;
                           }
+                          if (value.isNotEmpty) {
+                            show = false;
+                            searchGloble(search.text).then((value) {
+                              print("done");
+                              if (value) {
+                                show = true;
+                                print("condition");
+                                pls1.clear();
+                                cats1.clear();
+                                pls1.addAll(Searchdata.plans);
+                                cats1.addAll(Searchdata.cats);
+
+                                // pls=value.plans;
+
+                                setState(() {
+                                  // if (pls1.isEmpty) {
+                                  //   setState(() {});
+                                  //   ScaffoldMessenger.of(context)
+                                  //       .showSnackBar(const SnackBar(
+                                  //     content: Text("No Plans found"),
+                                  //   ));
+                                  // }
+                                  // if (cats1.isEmpty) {
+                                  //   setState(() {});
+                                  //   ScaffoldMessenger.of(context)
+                                  //       .showSnackBar(const SnackBar(
+                                  //     content:
+                                  //         Text("No Category found"),
+                                  //   ));
+                                  // }
+                                  if (cats1.isEmpty && pls1.isEmpty) {
+                                    // ScaffoldMessenger.of(context)
+                                    //     .showSnackBar(const SnackBar(
+                                    //   content: Text("No Data found"),
+                                    // ));
+                                  }
+                                });
+                              }
+                            });
+                          }
+
+                          setState(() {});
+                          if (value == " ") {
+                            search.clear();
+                          }
+
+                          print("changeqetyu");
+                        },
+                        onChanged: (value) {
+                          if (search.text.isEmpty) {
+                            getcategaries().then((value) {
+                              if (value != null) {
+                                cats1 = value;
+                                setState(() {
+                                  catlod = true;
+                                });
+                              }
+                            });
+                            getrecmostPlans().then((value) {
+                              if (value != null) {
+                                // pls1.addAll(value);
+                                pls1 = value;
+                                setState(() {
+                                  savemost = mostdata;
+                                  saverec = recdata;
+                                  print("+++++" + savemost.toString());
+                                  print("++++" + saverec.toString());
+                                });
+                              }
+                            });
+                            return;
+                          }
+                          if (value.isEmpty) {
+                            getcategaries().then((value) {
+                              if (value != null) {
+                                cats1 = value;
+                                setState(() {
+                                  catlod = true;
+                                });
+                              }
+                            });
+                            getrecmostPlans().then((value) {
+                              if (value != null) {
+                                pls1 = value;
+                                // pls1.addAll(value);
+                                setState(() {
+                                  savemost = mostdata;
+                                  saverec = recdata;
+                                  print("+++++" + savemost.toString());
+                                  print("++++" + saverec.toString());
+                                });
+                              }
+                            });
+                            recdata = saverec;
+                            mostdata = savemost;
+                            return;
+                          }
+                          if (value.isNotEmpty) {
+                            show = false;
+                            searchGloble(search.text).then((value) {
+                              print("done");
+                              if (value) {
+                                show = true;
+                                print("condition");
+                                pls1.clear();
+                                cats1.clear();
+                                pls1.addAll(Searchdata.plans);
+                                cats1.addAll(Searchdata.cats);
+
+                                // pls=value.plans;
+
+                                setState(() {
+                                  // if (pls1.isEmpty) {
+                                  //   setState(() {});
+                                  //   ScaffoldMessenger.of(context)
+                                  //       .showSnackBar(const SnackBar(
+                                  //     content: Text("No Plans found"),
+                                  //   ));
+                                  // }
+                                  // if (cats1.isEmpty) {
+                                  //   setState(() {});
+                                  //   ScaffoldMessenger.of(context)
+                                  //       .showSnackBar(const SnackBar(
+                                  //     content:
+                                  //         Text("No Category found"),
+                                  //   ));
+                                  // }
+                                  if (cats1.isEmpty && pls1.isEmpty) {
+                                    // ScaffoldMessenger.of(context)
+                                    //     .showSnackBar(const SnackBar(
+                                    //   content: Text("No Data found"),
+                                    // ));
+                                  }
+                                });
+                              }
+                            });
+                          }
+
+                          setState(() {});
+                          if (value == " ") {
+                            search.clear();
+                          }
+
                           print("changeqetyu");
                         },
 
@@ -456,10 +577,10 @@ class _ServiceMainState extends State<ServiceMain> {
                                             //   ));
                                             // }
                                             if (cats1.isEmpty && pls1.isEmpty) {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(const SnackBar(
-                                                content: Text("No Data found"),
-                                              ));
+                                              // ScaffoldMessenger.of(context)
+                                              //     .showSnackBar(const SnackBar(
+                                              //   content: Text("No Data found"),
+                                              // ));
                                             }
                                           });
                                         }
@@ -1568,14 +1689,12 @@ class _ServiceMainState extends State<ServiceMain> {
               );
               break;
             case "conversation":
-            Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: ((context) => const Messages())));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: ((context) => const Messages())));
 
               break;
             case "presets":
- Navigator.push(
+              Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: ((context) => (BottomNavBar(
@@ -1634,17 +1753,18 @@ class _ServiceMainState extends State<ServiceMain> {
       }
     });
   }
-  userexistensecheck(){
-  if(ServiceMain.message=="Invalid Token"){
-    Prefernece.pref!.clear();
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Your account has been deleted.")));
-    Navigator.pushAndRemoveUntil<dynamic>(
+
+  userexistensecheck() {
+    if (ServiceMain.message == "Invalid Token") {
+      Prefernece.pref!.clear();
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Your account has been deleted.")));
+      Navigator.pushAndRemoveUntil<dynamic>(
         context,
         MaterialPageRoute<dynamic>(
-          builder: (BuildContext context) => LoginSignUp(isSignIn: false)
-        ),
+            builder: (BuildContext context) => LoginSignUp(isSignIn: false)),
         (route) => false, //if you want to disable back feature set to false
       );
+    }
   }
- }
 }

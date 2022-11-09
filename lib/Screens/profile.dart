@@ -375,7 +375,7 @@ class _ProfileState extends State<Profile> {
                                                     right: 0,
                                                     top: 0,
                                                     child: InkWell(
-                                                        onTap: () {
+                                                        onTap: () async {
                                                           print(
                                                               "dvkhsdvudhvbcuw");
 
@@ -386,8 +386,9 @@ class _ProfileState extends State<Profile> {
 
                                                           //   },
                                                           // );
-                                                          deletecar(currentCar +
-                                                              index);
+                                                          await deletecar(
+                                                              currentCar +
+                                                                  index);
                                                         },
                                                         child:
                                                             const CircleAvatar(
@@ -1303,6 +1304,14 @@ class _ProfileState extends State<Profile> {
                               Navigator.pop(context);
                               currentCar = currentCar - 1;
                               isLoading = true;
+                              if (modellist.length == 1) {
+                                Ids.brandid = "";
+                                Ids.carid = "";
+                                Ids.fuelid = "";
+                                Prefernece.pref!.remove("brandId");
+                                Prefernece.pref!.remove("CarId");
+                                Prefernece.pref!.remove("fuelId");
+                              }
                               Navigator.pushAndRemoveUntil<dynamic>(
                                 context,
                                 MaterialPageRoute<dynamic>(

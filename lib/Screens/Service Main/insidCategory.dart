@@ -244,27 +244,23 @@ class _InsideCategoryState extends State<InsideCategory>
                           borderRadius: BorderRadius.circular(h * 0.05),
                           child: TextFormField(
                             controller: search1,
-                            
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w700),
                             onChanged: (value) {
-                          if (value.isNotEmpty) {
+                              if (value.isNotEmpty) {}
 
-                          }
-
-                          setState(() {});
-                          if (value == " ") {
-                            search1.clear();
-                          }
-                          if (value.isEmpty) {
-                              setState(() {
-                                  
-                                });
+                              setState(() {});
+                              if (value == " ") {
+                                search1.clear();
+                              }
+                              if (value.isEmpty) {
+                                setState(() {});
                                 _tabController.dispose();
                                 keys.clear();
                                 fecthdata();
-                          }
-                          print("changeqetyu");
-                        },
-
+                              }
+                              print("changeqetyu");
+                            },
                             decoration: InputDecoration(
                                 contentPadding: EdgeInsets.only(
                                     top: h * 0.01, left: w * 0.05),
@@ -277,14 +273,14 @@ class _InsideCategoryState extends State<InsideCategory>
                                 suffixIcon: InkWell(
                                   onTap: search1.text.isEmpty
                                       ? () {
-                                        print("4321");
+                                          print("4321");
 
                                           setState(() {});
                                         }
                                       : () {
-                                        print("1234");
+                                          print("1234");
                                           _tabController.dispose();
-                                          
+
                                           keys.clear();
                                           search();
 
@@ -1015,7 +1011,6 @@ class _InsideCategoryState extends State<InsideCategory>
         service.addAll(value);
       });
     }).whenComplete(() {
-      
       _tabController = TabController(length: service.length, vsync: this);
       for (int i = 0; i < service.length; i++) {
         keys.add(i);

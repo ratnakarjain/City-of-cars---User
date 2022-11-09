@@ -82,7 +82,7 @@ class _SosState extends State<Sos> {
                   maxLines: 8,
                   style: GoogleFonts.montserrat(
                     fontSize: 14,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w700,
                     height: 2,
                   ),
                   decoration: const InputDecoration(
@@ -150,6 +150,7 @@ class _SosState extends State<Sos> {
                       }
                     },
                     maxLength: 10,
+                    style: GoogleFonts.montserrat(fontWeight: FontWeight.w700),
                     decoration: InputDecoration(
                         contentPadding:
                             EdgeInsets.symmetric(horizontal: w * 0.09),
@@ -159,7 +160,7 @@ class _SosState extends State<Sos> {
                           fontWeight: FontWeight.w400,
                           height: 2,
                         ),
-                        counterText:"" ,
+                        counterText: "",
                         border: InputBorder.none),
                   ),
                 ),
@@ -171,19 +172,28 @@ class _SosState extends State<Sos> {
                         h: h * 0.06,
                         w: w * 0.88,
                         onTap: () {
-                          if (_controller.text.length==10 &&
+                          if (_controller.text.length == 10 &&
                               prob.text.isNotEmpty) {
                             istaped = true;
                             tosos();
                             setState(() {});
-                          }else if (_controller.text.length<10&&prob.text.isNotEmpty){
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Mobile number should be 10 digit")));
-                            
-                          }else if (prob.text.isEmpty&&_controller.text.length==10){
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please enter your problem")));
-                            
-                          }else{
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please enter complete details")));
+                          } else if (_controller.text.length < 10 &&
+                              prob.text.isNotEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text(
+                                        "Mobile number should be 10 digit")));
+                          } else if (prob.text.isEmpty &&
+                              _controller.text.length == 10) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content:
+                                        Text("Please enter your problem")));
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content:
+                                        Text("Please enter complete details")));
                           }
                         },
                         buttonColor: korangecolor,

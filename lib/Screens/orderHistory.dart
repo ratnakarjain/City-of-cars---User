@@ -86,26 +86,29 @@ class _OrderHistoryState extends State<OrderHistory> {
         ),
         actions: [
           Padding(
-            padding:  EdgeInsets.only(right: w*0.03,bottom: h*0.01,top: h*0.01),
+            padding: EdgeInsets.only(
+                right: w * 0.03, bottom: h * 0.01, top: h * 0.01),
             // height: h*0.02,
             // width: w*0.2,
             child: ElevatedButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(kwhitecolor)
-              ),
-              onPressed: (){
+                  backgroundColor: MaterialStateProperty.all(kwhitecolor)),
+              onPressed: () {
                 Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Cart(
-                          getcart: true,
-                        ),
-                      ));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Cart(
+                        getcart: true,
+                      ),
+                    ));
               },
               child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: w*0.05),
-              child: const Icon(Icons.shopping_cart,color: kTextInputPlaceholderColor,),
-            ),
+                padding: EdgeInsets.symmetric(horizontal: w * 0.05),
+                child: const Icon(
+                  Icons.shopping_cart,
+                  color: kTextInputPlaceholderColor,
+                ),
+              ),
             ),
           )
         ],
@@ -178,7 +181,8 @@ class _OrderHistoryState extends State<OrderHistory> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => Tracking(
-                                          ordertime: datalist.first.ordertime!,
+                                            ordertime:
+                                                datalist.first.ordertime!,
                                             orderid: datalist.first.id,
                                             date: datalist[currentPage]
                                                 .deliverydate,
@@ -401,12 +405,18 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                                     color:
                                                                         kTextInputPlaceholderColor)),
                                                         RRecctButton(
-                                                          text:  datalist.first
+                                                          text: datalist.first
                                                                       .paystatus ==
                                                                   "Deposited"
-                                                              ? "Paid":datalist.first
-                                                                      .paystatus =="Failed"?"Failed"
-                                                              :datalist.first.paystatus.toUpperCase(),//  "Pay Later",
+                                                              ? "Paid"
+                                                              : datalist.first
+                                                                          .paystatus ==
+                                                                      "Failed"
+                                                                  ? "Failed"
+                                                                  : datalist
+                                                                      .first
+                                                                      .paystatus
+                                                                      .toUpperCase(), //  "Pay Later",
                                                           style: GoogleFonts
                                                               .montserrat(
                                                                   fontSize: 9,
@@ -503,86 +513,88 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                   children: [
                                                     Text(
                                                       datalist[0]
-                                                                          
-                                                                      .ordersPlans[0].planName.toString() +
+                                                              .ordersPlans[0]
+                                                              .planName
+                                                              .toString() +
+                                                          "\n",
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      maxLines: 1,
+                                                      style: GoogleFonts.montserrat(
+                                                          fontSize: 32,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          color:
+                                                              kTextInputPlaceholderColor),
+                                                    ),
+                                                    Text(
+                                                        datalist[0]
+                                                                .ordersPlans[0]
+                                                                .plansubName
+                                                                .toString() +
                                                             "\n",
-                                                            textAlign: TextAlign.center,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    maxLines: 1,
-                                                        style: GoogleFonts.montserrat(
-                                                            fontSize: 32,
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                            color:
-                                                                kTextInputPlaceholderColor),
-                                                    ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        // maxLines: 2,
+                                                        style: GoogleFonts
+                                                            .montserrat(
+                                                                fontSize: 11,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                color:
+                                                                    kTextInputPlaceholderColor)),
                                                     Text(
-                                                      datalist[0]
-                                                                          
-                                                                      .ordersPlans[0].plansubName.toString() +
-                                                                  "\n",
-                                                                  textAlign: TextAlign.center,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    // maxLines: 2,
-                                                              style: GoogleFonts
-                                                                  .montserrat(
-                                                                      fontSize:
-                                                                          11,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400,
-                                                                      color:
-                                                                          kTextInputPlaceholderColor)
-                                                    ),
-                                                    Text(
-                                                      "The package includes the use of 3M products and services",
-                                                      textAlign: TextAlign.center,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    // maxLines: 2,
-                                                              style: GoogleFonts.montserrat(
-                                                                  fontSize: 12,
-                                                                  // height: 2,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  color: kTextInputPlaceholderColor
-                                                                      .withOpacity(
-                                                                          0.49))
-                                                    ),
+                                                        "The package includes the use of 3M products and services",
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        // maxLines: 2,
+                                                        style: GoogleFonts
+                                                            .montserrat(
+                                                                fontSize: 12,
+                                                                // height: 2,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                color: kTextInputPlaceholderColor
+                                                                    .withOpacity(
+                                                                        0.49))),
                                                   ],
                                                 ),
                                               ),
                                             ],
                                           ),
-                                        
-                                         Positioned(
-                                                bottom: -h * 0.018,
-                                                right: 0,
-                                                child: TextButton(
-                                                  onPressed: () {
-                                                    Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder:
-                                                                (context) =>
-                                                                    OrderDetails(
-                                                                      ordersPlans:
-                                                                          datalist.first
-                                                                              .ordersPlans,
-                                                                    )));
-                                                  },
-                                                  child: Text(
-                                                    "Order Details",
-                                                    style: GoogleFonts.montserrat(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        color:
-                                                            kTextInputPlaceholderColor),
-                                                  ),
-                                                ),
+                                          Positioned(
+                                            bottom: -h * 0.018,
+                                            right: 0,
+                                            child: TextButton(
+                                              onPressed: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            OrderDetails(
+                                                              ordersPlans: datalist
+                                                                  .first
+                                                                  .ordersPlans,
+                                                            )));
+                                              },
+                                              child: Text(
+                                                "Order Details",
+                                                style: GoogleFonts.montserrat(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w500,
+                                                    color:
+                                                        kTextInputPlaceholderColor),
                                               ),
-                                        
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -615,7 +627,8 @@ class _OrderHistoryState extends State<OrderHistory> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) => Tracking(
-                                              ordertime: datalist[index].ordertime!,
+                                                ordertime:
+                                                    datalist[index].ordertime!,
                                                 orderid: datalist[index].id,
                                                 date: datalist[currentPage]
                                                     .deliverydate,
@@ -772,12 +785,17 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                                         kTextInputPlaceholderColor)),
                                                             RRecctButton(
                                                               text: datalist[index]
-                                                                      .paystatus ==
-                                                                  "Deposited"
-                                                              ? "Paid":datalist[index]
-                                                                      .paystatus =="Failed"?"Failed"
-                                                              :datalist[index]
-                                                                      .paystatus.toUpperCase(),// "Pay Later",
+                                                                          .paystatus ==
+                                                                      "Deposited"
+                                                                  ? "Paid"
+                                                                  : datalist[index]
+                                                                              .paystatus ==
+                                                                          "Failed"
+                                                                      ? "Failed"
+                                                                      : datalist[
+                                                                              index]
+                                                                          .paystatus
+                                                                          .toUpperCase(), // "Pay Later",
                                                               style: GoogleFonts.montserrat(
                                                                   fontSize: 9,
                                                                   fontWeight:
@@ -879,66 +897,80 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                     height: h * 0.15,
                                                   ),
                                                   FittedBox(
-                                                child: Column(
-                                                  children: [
-                                                    Text(
-                                                      datalist[index]
-                                                                          
-                                                                      .ordersPlans[0].planName.toString() +
-                                                            "\n",
-                                                            textAlign: TextAlign.center,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    maxLines: 1,
-                                                        style: GoogleFonts.montserrat(
-                                                            fontSize: 32,
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                            color:
-                                                                kTextInputPlaceholderColor),
-                                                    ),
-                                                    Text(
-                                                      datalist[index]
-                                                                          
-                                                                      .ordersPlans[0].plansubName.toString() +
-                                                                  "\n",
-                                                                  textAlign: TextAlign.center,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    // maxLines: 2,
-                                                              style: GoogleFonts
-                                                                  .montserrat(
-                                                                      fontSize:
-                                                                          11,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400,
-                                                                      color:
-                                                                          kTextInputPlaceholderColor)
-                                                    ),
-                                                    Text(
-                                                      "The package includes the use of 3M products and services",
-                                                      textAlign: TextAlign.center,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    // maxLines: 2,
-                                                              style: GoogleFonts.montserrat(
-                                                                  fontSize: 12,
-                                                                  // height: 2,
+                                                    child: Column(
+                                                      children: [
+                                                        Text(
+                                                          datalist[index]
+                                                                  .ordersPlans[
+                                                                      0]
+                                                                  .planName
+                                                                  .toString() +
+                                                              "\n",
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          maxLines: 1,
+                                                          style: GoogleFonts
+                                                              .montserrat(
+                                                                  fontSize: 32,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w400,
-                                                                  color: kTextInputPlaceholderColor
-                                                                      .withOpacity(
-                                                                          0.49))
+                                                                          .w700,
+                                                                  color:
+                                                                      kTextInputPlaceholderColor),
+                                                        ),
+                                                        Text(
+                                                            datalist[index]
+                                                                    .ordersPlans[
+                                                                        0]
+                                                                    .plansubName
+                                                                    .toString() +
+                                                                "\n",
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            // maxLines: 2,
+                                                            style: GoogleFonts
+                                                                .montserrat(
+                                                                    fontSize:
+                                                                        11,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400,
+                                                                    color:
+                                                                        kTextInputPlaceholderColor)),
+                                                        Text(
+                                                            "The package includes the use of 3M products and services",
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            // maxLines: 2,
+                                                            style: GoogleFonts
+                                                                .montserrat(
+                                                                    fontSize:
+                                                                        12,
+                                                                    // height: 2,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400,
+                                                                    color: kTextInputPlaceholderColor
+                                                                        .withOpacity(
+                                                                            0.49))),
+                                                      ],
                                                     ),
-                                                  ],
-                                                ),
-                                              ),
+                                                  ),
 
                                                   // RichText(
                                                   //     textAlign: TextAlign
                                                   //         .center,
                                                   //     text: TextSpan(
                                                   //         text: datalist[index]
-                                                                        
+
                                                   //                   .ordersPlans[0].planName.toString() +
                                                   //             "\n",
                                                   //         style: GoogleFonts
@@ -952,7 +984,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                   //         children: [
                                                   //           TextSpan(
                                                   //               text: datalist[index]
-                                                                        
+
                                                   //                   .ordersPlans[0].plansubName.toString() +
                                                   //                   "\n",
                                                   //               style: GoogleFonts.montserrat(
@@ -1526,5 +1558,4 @@ class _OrderHistoryState extends State<OrderHistory> {
                   ),
     );
   }
-  
 }

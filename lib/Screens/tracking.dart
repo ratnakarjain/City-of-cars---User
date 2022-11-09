@@ -38,10 +38,10 @@ class _TrackingState extends State<Tracking> {
   @override
   void initState() {
     super.initState();
-    print(widget.date);
-    print(widget.time);
-    print(widget.orderid);
-    print(widget.ordertime);
+    print("=" + widget.date!);
+    print("==" + widget.time!);
+    print("===" + widget.orderid!);
+    print("====" + widget.ordertime.toIso8601String());
     // getestimateTime(widget.orderid.toString()).then((value) {}).whenComplete(() {
     //   esti = true;
     //   setState(() {
@@ -89,7 +89,10 @@ class _TrackingState extends State<Tracking> {
       ),
       body: isloading
           ? loder
-          : apprvallist.isEmpty && recent.isEmpty
+          : widget.date == "null" &&
+                  widget.time == "null" &&
+                  apprvallist.isEmpty &&
+                  recent.isEmpty
               ? Center(
                   child: Dummy(
                     time: widget.ordertime,
@@ -613,291 +616,52 @@ class _TrackingState extends State<Tracking> {
                               ),
                             ),
 
-                            Visibility(
-                              visible: recent.isNotEmpty,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: kbg2,
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(h * 0.05),
-                                        topRight: Radius.circular(h * 0.05))),
-                                margin: EdgeInsets.only(top: h * 0.01),
-                                padding: EdgeInsets.all(h * 0.02),
-                                child: Column(
-                                  children: [
-                                    ListView.builder(
-                                      itemCount: recent.length,
-                                      shrinkWrap: true,
-                                      padding:
-                                          EdgeInsets.only(bottom: h * 0.02),
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      itemBuilder: (context, index) {
-                                        RecentModel resmdl = RecentModel();
-                                        resmdl = recent[index];
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: kbg2,
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(h * 0.05),
+                                      topRight: Radius.circular(h * 0.05))),
+                              margin: EdgeInsets.only(top: h * 0.01),
+                              padding: EdgeInsets.all(h * 0.02),
+                              child: Column(
+                                children: [
+                                  ListView.builder(
+                                    itemCount: recent.length,
+                                    shrinkWrap: true,
+                                    padding: EdgeInsets.only(bottom: h * 0.02),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemBuilder: (context, index) {
+                                      RecentModel resmdl = RecentModel();
+                                      resmdl = recent[index];
 
-                                        return Padding(
-                                          padding:
-                                              EdgeInsets.only(top: h * 0.01),
-                                          child: RRecctButton2(
-                                            onTap: () {
-                                              resmdl.visible = !resmdl.visible;
-                                              setState(() {});
-                                            },
-                                            widget: Padding(
-                                              padding: EdgeInsets.all(h * 0.01),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceAround,
-                                                children: [
-                                                  Expanded(
-                                                    child: Column(
-                                                      children: [
-                                                        CircleAvatar(
-                                                            backgroundColor:
-                                                                kdarkpurple,
-                                                            child: Image.asset(
-                                                                "assets/images/heart.png")),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    flex: 4,
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        RichText(
-                                                          text: TextSpan(
-                                                              text: DateFormat.MMMMd().format(
-                                                                      DateTime.parse(resmdl
-                                                                          .time
-                                                                          .toString())) +
-                                                                  " - " +
-                                                                  DateTime.parse(resmdl.time.toString())
-                                                                      .hour
-                                                                      .toString() +
-                                                                  ":" +
-                                                                  DateTime.parse(
-                                                                          resmdl
-                                                                              .time
-                                                                              .toString())
-                                                                      .minute
-                                                                      .toString() +
-                                                                  " Hrs\n",
-                                                              // " Hrs",
-                                                              //       "${resmdl.time}\n",
-                                                              style: GoogleFonts.montserrat(
-                                                                  fontSize: 9,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                  height:
-                                                                      resmdl.time == ""
-                                                                          ? 0
-                                                                          : 1,
-                                                                  color: kTextInputPlaceholderColor),
-                                                              children: [
-                                                                TextSpan(
-                                                                    text:
-                                                                        resmdl.heading +
-                                                                            "\n",
-                                                                    // "Scout reached your location",
-                                                                    style: GoogleFonts.montserrat(
-                                                                        fontSize:
-                                                                            11,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .bold,
-                                                                        color:
-                                                                            kTextInputPlaceholderColor,
-                                                                        height:
-                                                                            1.3)),
-                                                                TextSpan(
-                                                                    text: resmdl
-                                                                        .subheading,
-                                                                    // "Scout reached your location",
-                                                                    style: GoogleFonts.montserrat(
-                                                                        fontSize:
-                                                                            10,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w400,
-                                                                        color:
-                                                                            kTextInputPlaceholderColor,
-                                                                        height:
-                                                                            1)),
-                                                              ]),
-                                                        ),
-                                                        Visibility(
-                                                          visible:
-                                                              resmdl.visible,
-                                                          child: Text(
-                                                              resmdl
-                                                                  .description,
-                                                              // "New to Yoga, or looking to take your mat to practice in new places? Get to know your local community and neighbours better by joining our Yoga family.",
-                                                              style: GoogleFonts.montserrat(
-                                                                  fontSize: 9,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  color:
-                                                                      kTextInputPlaceholderColor,
-                                                                  height:
-                                                                      resmdl.description ==
-                                                                              ""
-                                                                          ? 0
-                                                                          : 1.5)),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: SizedBox(
-                                                      height: h * 0.045,
-                                                      width: w * 0.15,
-                                                      child: Stack(
-                                                        children: [
-                                                          Positioned(
-                                                            right: 0,
-                                                            child: resmdl
-                                                                        .type ==
-                                                                    "pdf"
-                                                                ? GestureDetector(
-                                                                    onTap:
-                                                                        () async {
-                                                                      print(
-                                                                          "object");
-                                                                      // Navigator.push(
-                                                                      //     context,
-                                                                      //     MaterialPageRoute(
-                                                                      //         builder:
-                                                                      //             (context) =>
-                                                                      //                 WebVIEW(
-                                                                      //                   url: mod
-                                                                      //                       .image,
-                                                                      //                 )));
-
-                                                                      // launchURL(mod.image);
-                                                                      await launchURL(
-                                                                          resmdl
-                                                                              .file);
-                                                                      // getFileFromUrl(
-                                                                      //         mod.image)
-                                                                      //     .then(
-                                                                      //         (value) async {
-                                                                      //          await pdflauncher(value.path);
-                                                                      //   // launchURL(value.path);
-
-                                                                      //   // await launchUrl(
-                                                                      //   //     Uri.parse(
-                                                                      //   //         value.path),
-                                                                      //   //         mode: LaunchMode.externalApplication
-                                                                      //   //         );
-                                                                      // });
-                                                                    },
-                                                                    child: Image
-                                                                        .asset(
-                                                                      "assets/images/pdf.png",
-                                                                      height: h *
-                                                                          0.03,
-                                                                    ))
-                                                                : resmdl.type ==
-                                                                        "video"
-                                                                    ? GestureDetector(
-                                                                        onTap:
-                                                                            () async {
-                                                                          //  await launchURL(mod.image);
-                                                                          Navigator.push(
-                                                                              context,
-                                                                              MaterialPageRoute(
-                                                                                  builder: (context) => VideoApp(
-                                                                                        video: resmdl.file,
-                                                                                      )));
-                                                                        },
-                                                                        child:
-                                                                            Padding(
-                                                                          padding:
-                                                                              EdgeInsets.all(h * 0.005),
-                                                                          child:
-                                                                              Center(
-                                                                            child:
-                                                                                Image.asset(
-                                                                              "assets/images/video.png",
-                                                                              height: h * 0.03,
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      )
-                                                                    : InkWell(
-                                                                        onTap: resmdl
-                                                                                .file.isNotEmpty
-                                                                            ? () {
-                                                                                Navigator.push(context, MaterialPageRoute(builder: (context) => Images(image: resmdl.file)));
-                                                                              }
-                                                                            : () {
-                                                                                print(resmdl.file);
-                                                                              },
-                                                                        child:
-                                                                            Center(
-                                                                          child:
-                                                                              CircleAvatar(
-                                                                            radius:
-                                                                                h * 0.022,
-                                                                            backgroundColor:
-                                                                                kTransparent,
-                                                                            backgroundImage:
-                                                                                NetworkImage(
-                                                                              resmdl.file,
-                                                                            ),
-                                                                            // child: Image.asset(
-                                                                            //     "assets/images/mask2.png"),
-                                                                          ),
-                                                                        )),
-                                                          ),
-                                                          // Positioned(
-                                                          //   left: 0,
-                                                          //   child: InkWell(
-                                                          //       onTap: () {},
-                                                          //       child: Center(
-                                                          //         child: Image.asset(
-                                                          //             "assets/images/mask1.png"),
-                                                          //       )),
-                                                          // ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            radius: h * 0.04,
-                                            buttonColor: kwhitecolor,
-                                          ),
-                                        );
-                                        RRecctButton2(
+                                      return Padding(
+                                        padding: EdgeInsets.only(top: h * 0.01),
+                                        child: RRecctButton2(
+                                          onTap: () {
+                                            resmdl.visible = !resmdl.visible;
+                                            setState(() {});
+                                          },
                                           widget: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: h * 0.01,
-                                                horizontal: h * 0.01),
+                                            padding: EdgeInsets.all(h * 0.01),
                                             child: Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceAround,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
                                               children: [
                                                 Expanded(
-                                                  flex: 1,
-                                                  child: CircleAvatar(
-                                                      backgroundColor:
-                                                          kCursorColor,
-                                                      child: Image.asset(
-                                                          "assets/images/activity.png")),
+                                                  child: Column(
+                                                    children: [
+                                                      CircleAvatar(
+                                                          backgroundColor:
+                                                              kdarkpurple,
+                                                          child: Image.asset(
+                                                              "assets/images/heart.png")),
+                                                    ],
+                                                  ),
                                                 ),
                                                 Expanded(
-                                                  flex: 5,
+                                                  flex: 4,
                                                   child: Column(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
@@ -905,21 +669,39 @@ class _TrackingState extends State<Tracking> {
                                                     children: [
                                                       RichText(
                                                         text: TextSpan(
-                                                            text:
-                                                                "10:02 (1:16 hr)\n",
-                                                            style: GoogleFonts
-                                                                .montserrat(
-                                                                    fontSize:
-                                                                        11,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    color:
-                                                                        kTextInputPlaceholderColor),
+                                                            text: DateFormat.MMMMd().format(
+                                                                    DateTime.parse(
+                                                                        resmdl.time
+                                                                            .toString())) +
+                                                                " - " +
+                                                                DateTime.parse(resmdl.time.toString())
+                                                                    .hour
+                                                                    .toString() +
+                                                                ":" +
+                                                                DateTime.parse(resmdl
+                                                                        .time
+                                                                        .toString())
+                                                                    .minute
+                                                                    .toString() +
+                                                                " Hrs\n",
+                                                            // " Hrs",
+                                                            //       "${resmdl.time}\n",
+                                                            style: GoogleFonts.montserrat(
+                                                                fontSize: 9,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                height:
+                                                                    resmdl.time == ""
+                                                                        ? 0
+                                                                        : 1,
+                                                                color: kTextInputPlaceholderColor),
                                                             children: [
                                                               TextSpan(
-                                                                  text:
-                                                                      "Spare parts Installed\n",
+                                                                  text: resmdl
+                                                                          .heading +
+                                                                      "\n",
+                                                                  // "Scout reached your location",
                                                                   style: GoogleFonts.montserrat(
                                                                       fontSize:
                                                                           11,
@@ -929,28 +711,41 @@ class _TrackingState extends State<Tracking> {
                                                                       color:
                                                                           kTextInputPlaceholderColor,
                                                                       height:
-                                                                          2)),
+                                                                          1.3)),
+                                                              TextSpan(
+                                                                  text: resmdl
+                                                                      .subheading,
+                                                                  // "Scout reached your location",
+                                                                  style: GoogleFonts.montserrat(
+                                                                      fontSize:
+                                                                          10,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      color:
+                                                                          kTextInputPlaceholderColor,
+                                                                      height:
+                                                                          1)),
                                                             ]),
                                                       ),
                                                       Visibility(
-                                                        visible: false,
-                                                        child: Text("",
+                                                        visible: resmdl.visible,
+                                                        child: Text(
+                                                            resmdl.description,
                                                             // "New to Yoga, or looking to take your mat to practice in new places? Get to know your local community and neighbours better by joining our Yoga family.",
-                                                            style: GoogleFonts
-                                                                .montserrat(
-                                                                    fontSize: 9,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    color:
-                                                                        kTextInputPlaceholderColor,
-                                                                    height: 0)),
+                                                            style: GoogleFonts.montserrat(
+                                                                fontSize: 9,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                color:
+                                                                    kTextInputPlaceholderColor,
+                                                                height:
+                                                                    resmdl.description ==
+                                                                            ""
+                                                                        ? 0
+                                                                        : 1.5)),
                                                       ),
-
-                                                      // SizedBox(
-                                                      //   height: h * 0.01,
-                                                      // ),
-                                                      // Image.asset("assets/images/images.png")
                                                     ],
                                                   ),
                                                 ),
@@ -962,22 +757,112 @@ class _TrackingState extends State<Tracking> {
                                                       children: [
                                                         Positioned(
                                                           right: 0,
-                                                          child: InkWell(
-                                                              onTap: () {},
-                                                              child: Center(
-                                                                child: Image.asset(
-                                                                    "assets/images/mask2.png"),
-                                                              )),
+                                                          child: resmdl.type ==
+                                                                  "pdf"
+                                                              ? GestureDetector(
+                                                                  onTap:
+                                                                      () async {
+                                                                    print(
+                                                                        "object");
+                                                                    // Navigator.push(
+                                                                    //     context,
+                                                                    //     MaterialPageRoute(
+                                                                    //         builder:
+                                                                    //             (context) =>
+                                                                    //                 WebVIEW(
+                                                                    //                   url: mod
+                                                                    //                       .image,
+                                                                    //                 )));
+
+                                                                    // launchURL(mod.image);
+                                                                    await launchURL(
+                                                                        resmdl
+                                                                            .file);
+                                                                    // getFileFromUrl(
+                                                                    //         mod.image)
+                                                                    //     .then(
+                                                                    //         (value) async {
+                                                                    //          await pdflauncher(value.path);
+                                                                    //   // launchURL(value.path);
+
+                                                                    //   // await launchUrl(
+                                                                    //   //     Uri.parse(
+                                                                    //   //         value.path),
+                                                                    //   //         mode: LaunchMode.externalApplication
+                                                                    //   //         );
+                                                                    // });
+                                                                  },
+                                                                  child: Image
+                                                                      .asset(
+                                                                    "assets/images/pdf.png",
+                                                                    height: h *
+                                                                        0.03,
+                                                                  ))
+                                                              : resmdl.type ==
+                                                                      "video"
+                                                                  ? GestureDetector(
+                                                                      onTap:
+                                                                          () async {
+                                                                        //  await launchURL(mod.image);
+                                                                        Navigator.push(
+                                                                            context,
+                                                                            MaterialPageRoute(
+                                                                                builder: (context) => VideoApp(
+                                                                                      video: resmdl.file,
+                                                                                    )));
+                                                                      },
+                                                                      child:
+                                                                          Padding(
+                                                                        padding:
+                                                                            EdgeInsets.all(h *
+                                                                                0.005),
+                                                                        child:
+                                                                            Center(
+                                                                          child:
+                                                                              Image.asset(
+                                                                            "assets/images/video.png",
+                                                                            height:
+                                                                                h * 0.03,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  : InkWell(
+                                                                      onTap: resmdl
+                                                                              .file
+                                                                              .isNotEmpty
+                                                                          ? () {
+                                                                              Navigator.push(context, MaterialPageRoute(builder: (context) => Images(image: resmdl.file)));
+                                                                            }
+                                                                          : () {
+                                                                              print(resmdl.file);
+                                                                            },
+                                                                      child:
+                                                                          Center(
+                                                                        child:
+                                                                            CircleAvatar(
+                                                                          radius:
+                                                                              h * 0.022,
+                                                                          backgroundColor:
+                                                                              kTransparent,
+                                                                          backgroundImage:
+                                                                              NetworkImage(
+                                                                            resmdl.file,
+                                                                          ),
+                                                                          // child: Image.asset(
+                                                                          //     "assets/images/mask2.png"),
+                                                                        ),
+                                                                      )),
                                                         ),
-                                                        Positioned(
-                                                          left: 0,
-                                                          child: InkWell(
-                                                              onTap: () {},
-                                                              child: Center(
-                                                                child: Image.asset(
-                                                                    "assets/images/mask1.png"),
-                                                              )),
-                                                        ),
+                                                        // Positioned(
+                                                        //   left: 0,
+                                                        //   child: InkWell(
+                                                        //       onTap: () {},
+                                                        //       child: Center(
+                                                        //         child: Image.asset(
+                                                        //             "assets/images/mask1.png"),
+                                                        //       )),
+                                                        // ),
                                                       ],
                                                     ),
                                                   ),
@@ -987,70 +872,49 @@ class _TrackingState extends State<Tracking> {
                                           ),
                                           radius: h * 0.04,
                                           buttonColor: kwhitecolor,
-                                        );
-                                      },
-                                    ),
-
-                                    Padding(
-                                      padding: EdgeInsets.only(top: h * 0.00),
-                                      child: RRecctButton2(
-                                        onTap: () {},
+                                        ),
+                                      );
+                                      RRecctButton2(
                                         widget: Padding(
-                                          padding: EdgeInsets.all(h * 0.01),
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: h * 0.01,
+                                              horizontal: h * 0.01),
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceAround,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Expanded(
-                                                child: Column(
-                                                  children: [
-                                                    CircleAvatar(
-                                                        backgroundColor:
-                                                            kdarkpurple,
-                                                        child: Image.asset(
-                                                            "assets/images/heart.png")),
-                                                  ],
-                                                ),
+                                                flex: 1,
+                                                child: CircleAvatar(
+                                                    backgroundColor:
+                                                        kCursorColor,
+                                                    child: Image.asset(
+                                                        "assets/images/activity.png")),
                                               ),
                                               Expanded(
-                                                flex: 4,
+                                                flex: 5,
                                                 child: Column(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     RichText(
                                                       text: TextSpan(
-                                                          text: DateFormat('MMMM dd')
-                                                                  .add_Hm()
-                                                                  .format(widget
-                                                                      .ordertime
-                                                                      .toLocal()) +
-                                                              " (" +
-                                                              (DateTime.now().difference(widget.ordertime.toLocal()).inMinutes <
-                                                                      60
-                                                                  ? DateTime.now().difference(widget.ordertime.toLocal()).inMinutes.toString() +
-                                                                      " mins"
-                                                                  : DateTime.now()
-                                                                          .difference(widget
-                                                                              .ordertime
-                                                                              .toLocal())
-                                                                          .inHours
-                                                                          .toString() +
-                                                                      " hours") +
-                                                              ")",
-
-                                                          // " Hrs",
-                                                          //       "${resmdl.time}\n",
-                                                          style: GoogleFonts.montserrat(
-                                                              fontSize: 9,
-                                                              fontWeight:
-                                                                  FontWeight.w600,
-                                                              color: kTextInputPlaceholderColor),
+                                                          text:
+                                                              "10:02 (1:16 hr)\n",
+                                                          style: GoogleFonts
+                                                              .montserrat(
+                                                                  fontSize: 11,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  color:
+                                                                      kTextInputPlaceholderColor),
                                                           children: [
                                                             TextSpan(
                                                                 text:
-                                                                    "\nYour Order has been placed",
-                                                                // "Scout reached your location",
+                                                                    "Spare parts Installed\n",
                                                                 style: GoogleFonts.montserrat(
                                                                     fontSize:
                                                                         11,
@@ -1059,10 +923,28 @@ class _TrackingState extends State<Tracking> {
                                                                             .bold,
                                                                     color:
                                                                         kTextInputPlaceholderColor,
-                                                                    height:
-                                                                        1.3)),
+                                                                    height: 2)),
                                                           ]),
                                                     ),
+                                                    Visibility(
+                                                      visible: false,
+                                                      child: Text("",
+                                                          // "New to Yoga, or looking to take your mat to practice in new places? Get to know your local community and neighbours better by joining our Yoga family.",
+                                                          style: GoogleFonts
+                                                              .montserrat(
+                                                                  fontSize: 9,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color:
+                                                                      kTextInputPlaceholderColor,
+                                                                  height: 0)),
+                                                    ),
+
+                                                    // SizedBox(
+                                                    //   height: h * 0.01,
+                                                    // ),
+                                                    // Image.asset("assets/images/images.png")
                                                   ],
                                                 ),
                                               ),
@@ -1074,19 +956,21 @@ class _TrackingState extends State<Tracking> {
                                                     children: [
                                                       Positioned(
                                                         right: 0,
-                                                        child: Center(
-                                                          child: CircleAvatar(
-                                                            radius: h * 0.022,
-                                                            backgroundColor:
-                                                                kTransparent,
-                                                            backgroundImage:
-                                                                const AssetImage(
-                                                              "assets/images/mask2.png",
-                                                            ),
-                                                            // child: Image.asset(
-                                                            //     "assets/images/mask2.png"),
-                                                          ),
-                                                        ),
+                                                        child: InkWell(
+                                                            onTap: () {},
+                                                            child: Center(
+                                                              child: Image.asset(
+                                                                  "assets/images/mask2.png"),
+                                                            )),
+                                                      ),
+                                                      Positioned(
+                                                        left: 0,
+                                                        child: InkWell(
+                                                            onTap: () {},
+                                                            child: Center(
+                                                              child: Image.asset(
+                                                                  "assets/images/mask1.png"),
+                                                            )),
                                                       ),
                                                     ],
                                                   ),
@@ -1097,157 +981,264 @@ class _TrackingState extends State<Tracking> {
                                         ),
                                         radius: h * 0.04,
                                         buttonColor: kwhitecolor,
+                                      );
+                                    },
+                                  ),
+
+                                  Padding(
+                                    padding: EdgeInsets.only(top: h * 0.00),
+                                    child: RRecctButton2(
+                                      onTap: () {},
+                                      widget: Padding(
+                                        padding: EdgeInsets.all(h * 0.01),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            Expanded(
+                                              child: Column(
+                                                children: [
+                                                  CircleAvatar(
+                                                      backgroundColor:
+                                                          kdarkpurple,
+                                                      child: Image.asset(
+                                                          "assets/images/heart.png")),
+                                                ],
+                                              ),
+                                            ),
+                                            Expanded(
+                                              flex: 4,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  RichText(
+                                                    text: TextSpan(
+                                                        text: DateFormat('MMMM dd')
+                                                                .add_Hm()
+                                                                .format(widget
+                                                                    .ordertime
+                                                                    .toLocal()) +
+                                                            " (" +
+                                                            (DateTime.now().difference(widget.ordertime.toLocal()).inMinutes < 60
+                                                                ? DateTime.now().difference(widget.ordertime.toLocal()).inMinutes.toString() +
+                                                                    " mins"
+                                                                : DateTime.now()
+                                                                        .difference(widget
+                                                                            .ordertime
+                                                                            .toLocal())
+                                                                        .inHours
+                                                                        .toString() +
+                                                                    " hours") +
+                                                            ")",
+
+                                                        // " Hrs",
+                                                        //       "${resmdl.time}\n",
+                                                        style: GoogleFonts.montserrat(
+                                                            fontSize: 9,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            color:
+                                                                kTextInputPlaceholderColor),
+                                                        children: [
+                                                          TextSpan(
+                                                              text:
+                                                                  "\nYour Order has been placed",
+                                                              // "Scout reached your location",
+                                                              style: GoogleFonts.montserrat(
+                                                                  fontSize: 11,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  color:
+                                                                      kTextInputPlaceholderColor,
+                                                                  height: 1.3)),
+                                                        ]),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: SizedBox(
+                                                height: h * 0.045,
+                                                width: w * 0.15,
+                                                child: Stack(
+                                                  children: [
+                                                    Positioned(
+                                                      right: 0,
+                                                      child: Center(
+                                                        child: CircleAvatar(
+                                                          radius: h * 0.022,
+                                                          backgroundColor:
+                                                              kTransparent,
+                                                          backgroundImage:
+                                                              const AssetImage(
+                                                            "assets/images/mask2.png",
+                                                          ),
+                                                          // child: Image.asset(
+                                                          //     "assets/images/mask2.png"),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
+                                      radius: h * 0.04,
+                                      buttonColor: kwhitecolor,
                                     ),
+                                  ),
 
-                                    // RRecctButton2(
-                                    //   widget: Padding(
-                                    //     padding: EdgeInsets.all(h * 0.01),
-                                    //     child: Row(
-                                    //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    //       children: [
-                                    //         Expanded(
-                                    //           child: CircleAvatar(
-                                    //               backgroundColor: kdarkpurple,
-                                    //               child:
-                                    //                   Image.asset("assets/images/heart.png")),
-                                    //         ),
-                                    //         Expanded(
-                                    //           flex: 4,
-                                    //           child: RichText(
-                                    //             text: TextSpan(
-                                    //                 text: "9:00 (25 min)\n",
-                                    //                 style: GoogleFonts.montserrat(
-                                    //                     fontSize: 12,
-                                    //                     fontWeight: FontWeight.w600,
-                                    //                     color: kTextInputPlaceholderColor),
-                                    //                 children: [
-                                    //                   TextSpan(
-                                    //                       text: "Scout reached your location",
-                                    //                       style: GoogleFonts.montserrat(
-                                    //                           fontSize: 10,
-                                    //                           fontWeight: FontWeight.bold,
-                                    //                           color:
-                                    //                               kTextInputPlaceholderColor,
-                                    //                           height: 2)),
-                                    //                 ]),
-                                    //           ),
-                                    //         ),
-                                    //         Expanded(
-                                    //           child: SizedBox(
-                                    //             height: h * 0.045,
-                                    //             width: w * 0.15,
-                                    //             child: Stack(
-                                    //               children: [
-                                    //                 Positioned(
-                                    //                   right: 0,
-                                    //                   child: InkWell(
-                                    //                       onTap: () {},
-                                    //                       child: Center(
-                                    //                         child: Image.asset(
-                                    //                             "assets/images/mask2.png"),
-                                    //                       )),
-                                    //                 ),
-                                    //                 Positioned(
-                                    //                   left: 0,
-                                    //                   child: InkWell(
-                                    //                       onTap: () {},
-                                    //                       child: Center(
-                                    //                         child: Image.asset(
-                                    //                             "assets/images/mask1.png"),
-                                    //                       )),
-                                    //                 ),
-                                    //               ],
-                                    //             ),
-                                    //           ),
-                                    //         ),
-                                    //       ],
-                                    //     ),
-                                    //   ),
-                                    //   radius: h * 0.04,
-                                    //   buttonColor: kwhitecolor,
-                                    // ),
-                                    // SizedBox(
-                                    //   height: h * 0.02,
-                                    // ),
-                                    // RRecctButton2(
-                                    //   widget: Padding(
-                                    //     padding: EdgeInsets.all(h * 0.01),
-                                    //     child: Row(
-                                    //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    //       children: [
-                                    //         Expanded(
-                                    //           flex: 1,
-                                    //           child: CircleAvatar(
-                                    //               backgroundColor: kdarkpurple,
-                                    //               child:
-                                    //                   Image.asset("assets/images/heart.png")),
-                                    //         ),
-                                    //         Expanded(
-                                    //           flex: 4,
-                                    //           child: RichText(
-                                    //             text: TextSpan(
-                                    //                 text: "9:25 (47 min)\n",
-                                    //                 style: GoogleFonts.montserrat(
-                                    //                     fontSize: 12,
-                                    //                     fontWeight: FontWeight.w600,
-                                    //                     color: kTextInputPlaceholderColor),
-                                    //                 children: [
-                                    //                   TextSpan(
-                                    //                       text:
-                                    //                           "Post Inspection scanning done",
-                                    //                       style: GoogleFonts.montserrat(
-                                    //                           fontSize: 10,
-                                    //                           fontWeight: FontWeight.bold,
-                                    //                           color:
-                                    //                               kTextInputPlaceholderColor,
-                                    //                           height: 2)),
-                                    //                 ]),
-                                    //           ),
-                                    //         ),
-                                    //         Expanded(
-                                    //           child: SizedBox(
-                                    //             height: h * 0.045,
-                                    //             width: w * 0.15,
-                                    //             child: Stack(
-                                    //               children: [
-                                    //                 Positioned(
-                                    //                   right: 0,
-                                    //                   child: InkWell(
-                                    //                       onTap: () {},
-                                    //                       child: Center(
-                                    //                         child: Image.asset(
-                                    //                             "assets/images/mask3.png"),
-                                    //                       )),
-                                    //                 ),
-                                    //                 Positioned(
-                                    //                   left: 0,
-                                    //                   child: InkWell(
-                                    //                       onTap: () {},
-                                    //                       child: Center(
-                                    //                         child: Image.asset(
-                                    //                             "assets/images/mask4.png"),
-                                    //                       )),
-                                    //                 ),
-                                    //               ],
-                                    //             ),
-                                    //           ),
-                                    //         ),
-                                    //       ],
-                                    //     ),
-                                    //   ),
-                                    //   radius: h * 0.04,
-                                    //   buttonColor: kwhitecolor,
-                                    // ),
-                                    // SizedBox(
-                                    //   height: h * 0.02,
-                                    // ),
+                                  // RRecctButton2(
+                                  //   widget: Padding(
+                                  //     padding: EdgeInsets.all(h * 0.01),
+                                  //     child: Row(
+                                  //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  //       children: [
+                                  //         Expanded(
+                                  //           child: CircleAvatar(
+                                  //               backgroundColor: kdarkpurple,
+                                  //               child:
+                                  //                   Image.asset("assets/images/heart.png")),
+                                  //         ),
+                                  //         Expanded(
+                                  //           flex: 4,
+                                  //           child: RichText(
+                                  //             text: TextSpan(
+                                  //                 text: "9:00 (25 min)\n",
+                                  //                 style: GoogleFonts.montserrat(
+                                  //                     fontSize: 12,
+                                  //                     fontWeight: FontWeight.w600,
+                                  //                     color: kTextInputPlaceholderColor),
+                                  //                 children: [
+                                  //                   TextSpan(
+                                  //                       text: "Scout reached your location",
+                                  //                       style: GoogleFonts.montserrat(
+                                  //                           fontSize: 10,
+                                  //                           fontWeight: FontWeight.bold,
+                                  //                           color:
+                                  //                               kTextInputPlaceholderColor,
+                                  //                           height: 2)),
+                                  //                 ]),
+                                  //           ),
+                                  //         ),
+                                  //         Expanded(
+                                  //           child: SizedBox(
+                                  //             height: h * 0.045,
+                                  //             width: w * 0.15,
+                                  //             child: Stack(
+                                  //               children: [
+                                  //                 Positioned(
+                                  //                   right: 0,
+                                  //                   child: InkWell(
+                                  //                       onTap: () {},
+                                  //                       child: Center(
+                                  //                         child: Image.asset(
+                                  //                             "assets/images/mask2.png"),
+                                  //                       )),
+                                  //                 ),
+                                  //                 Positioned(
+                                  //                   left: 0,
+                                  //                   child: InkWell(
+                                  //                       onTap: () {},
+                                  //                       child: Center(
+                                  //                         child: Image.asset(
+                                  //                             "assets/images/mask1.png"),
+                                  //                       )),
+                                  //                 ),
+                                  //               ],
+                                  //             ),
+                                  //           ),
+                                  //         ),
+                                  //       ],
+                                  //     ),
+                                  //   ),
+                                  //   radius: h * 0.04,
+                                  //   buttonColor: kwhitecolor,
+                                  // ),
+                                  // SizedBox(
+                                  //   height: h * 0.02,
+                                  // ),
+                                  // RRecctButton2(
+                                  //   widget: Padding(
+                                  //     padding: EdgeInsets.all(h * 0.01),
+                                  //     child: Row(
+                                  //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  //       children: [
+                                  //         Expanded(
+                                  //           flex: 1,
+                                  //           child: CircleAvatar(
+                                  //               backgroundColor: kdarkpurple,
+                                  //               child:
+                                  //                   Image.asset("assets/images/heart.png")),
+                                  //         ),
+                                  //         Expanded(
+                                  //           flex: 4,
+                                  //           child: RichText(
+                                  //             text: TextSpan(
+                                  //                 text: "9:25 (47 min)\n",
+                                  //                 style: GoogleFonts.montserrat(
+                                  //                     fontSize: 12,
+                                  //                     fontWeight: FontWeight.w600,
+                                  //                     color: kTextInputPlaceholderColor),
+                                  //                 children: [
+                                  //                   TextSpan(
+                                  //                       text:
+                                  //                           "Post Inspection scanning done",
+                                  //                       style: GoogleFonts.montserrat(
+                                  //                           fontSize: 10,
+                                  //                           fontWeight: FontWeight.bold,
+                                  //                           color:
+                                  //                               kTextInputPlaceholderColor,
+                                  //                           height: 2)),
+                                  //                 ]),
+                                  //           ),
+                                  //         ),
+                                  //         Expanded(
+                                  //           child: SizedBox(
+                                  //             height: h * 0.045,
+                                  //             width: w * 0.15,
+                                  //             child: Stack(
+                                  //               children: [
+                                  //                 Positioned(
+                                  //                   right: 0,
+                                  //                   child: InkWell(
+                                  //                       onTap: () {},
+                                  //                       child: Center(
+                                  //                         child: Image.asset(
+                                  //                             "assets/images/mask3.png"),
+                                  //                       )),
+                                  //                 ),
+                                  //                 Positioned(
+                                  //                   left: 0,
+                                  //                   child: InkWell(
+                                  //                       onTap: () {},
+                                  //                       child: Center(
+                                  //                         child: Image.asset(
+                                  //                             "assets/images/mask4.png"),
+                                  //                       )),
+                                  //                 ),
+                                  //               ],
+                                  //             ),
+                                  //           ),
+                                  //         ),
+                                  //       ],
+                                  //     ),
+                                  //   ),
+                                  //   radius: h * 0.04,
+                                  //   buttonColor: kwhitecolor,
+                                  // ),
+                                  // SizedBox(
+                                  //   height: h * 0.02,
+                                  // ),
 
-                                    // SizedBox(
-                                    //   height: h * 0.05,
-                                    // )
-                                  ],
-                                ),
+                                  // SizedBox(
+                                  //   height: h * 0.05,
+                                  // )
+                                ],
                               ),
                             )
                           ],

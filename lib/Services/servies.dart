@@ -519,6 +519,7 @@ Future addcartitem(Packes packes) async {
       "user": prefs!.getString("userId").toString(),
       "cars": prefs!.getString("CarId").toString(),
       "brand": prefs!.getString("brandId").toString(),
+      "fuel": prefs!.getString("fuelId").toString(),
       "planName": packes.planName,
       "subPlanName": packes.subPlanName,
       "typeprice": packes.planPrice
@@ -1122,7 +1123,12 @@ Future getusercars() async {
 Future getrecmostPlans() async {
   print("CAr Id " + prefs!.getString("CarId").toString() + "^");
   var url = Uri.parse(
-      getpoprecUrl + "?carid=" + prefs!.getString("CarId").toString());
+    getpoprecUrl +
+        "?carid=" +
+        prefs!.getString("CarId").toString() +
+        "&cityid=" +
+        prefs!.getString("cityId").toString(),
+  );
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -1132,6 +1138,10 @@ Future getrecmostPlans() async {
       if (data["state"]) {
         mostdata = false;
         recdata = false;
+        if (data["data"].length == 0) {
+          mostdata = false;
+          recdata = false;
+        }
         for (int i = 0; i < data["data"].length; i++) {
           PlanModel pl = PlanModel();
           pl.planid = data["data"][i]["_id"].toString();
