@@ -23,7 +23,8 @@ import 'bottomnavBar.dart';
 class Verfication extends StatefulWidget {
   bool toLogin;
   String mobile;
-  Verfication({Key? key, required this.toLogin,required this.mobile}) : super(key: key);
+  Verfication({Key? key, required this.toLogin, required this.mobile})
+      : super(key: key);
 
   @override
   State<Verfication> createState() => _VerficationState();
@@ -55,7 +56,7 @@ class _VerficationState extends State<Verfication> {
       borderRadius: BorderRadius.circular(20),
     ),
   );
-@override
+  @override
   void initState() {
     // timer();
     startTimeout();
@@ -69,8 +70,8 @@ class _VerficationState extends State<Verfication> {
       print("new token: " + Prefernece.pref!.getString("fcmtoken").toString());
     });
     super.initState();
-    
   }
+
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
@@ -111,10 +112,9 @@ class _VerficationState extends State<Verfication> {
             ),
             GestureDetector(
               onTap: () {
-                if(istimeroff){
-               
-                resendotp("91"+widget.mobile,context);
-                startTimeout();
+                if (istimeroff) {
+                  resendotp("91" + widget.mobile, context);
+                  startTimeout();
                 }
                 // _scaffoldKey.currentState!.showSnackBar(
                 //     const SnackBar(content: Text("OTP resent successfully")));
@@ -122,16 +122,15 @@ class _VerficationState extends State<Verfication> {
               child: Text(
                 "Resend code",
                 style: GoogleFonts.montserrat(
-                    color:istimeroff? kbluecolor:kbluecolor.withOpacity(0.5), fontWeight: FontWeight.w500),
+                    color:
+                        istimeroff ? kbluecolor : kbluecolor.withOpacity(0.5),
+                    fontWeight: FontWeight.w500),
               ),
             ),
-
             SizedBox(
               height: h * 0.05,
             ),
-            Visibility(
-              visible: !istimeroff,
-              child: Text(timerText)),
+            Visibility(visible: !istimeroff, child: Text(timerText)),
             SizedBox(
               height: h * 0.05,
             ),
@@ -159,9 +158,7 @@ class _VerficationState extends State<Verfication> {
                                   "usercarsData", jsonEncode(modellist));
                               // print(jsonEncode(modellist));
                               // print(modellist);
-                              if (isSelected == 0) {
-                                isSelected = 1;
-                              }
+
                               Prefernece.pref!.setString("brandId",
                                   modellist[0].carbrandid.toString());
                               Prefernece.pref!.setString(
@@ -246,21 +243,20 @@ class _VerficationState extends State<Verfication> {
 //         print("error $e");
 //       });
   }
+
   String get timerText =>
       '${((timerMaxSeconds - currentSeconds) ~/ 60).toString().padLeft(2, '0')}: ${((timerMaxSeconds - currentSeconds) % 60).toString().padLeft(2, '0')}';
 
-  
   startTimeout([int? milliseconds]) {
     var duration = interval;
     Timer.periodic(duration, (timer) {
       setState(() {
         print(timer.tick);
         currentSeconds = timer.tick;
-        if (timer.tick >= timerMaxSeconds){
-         timer.cancel();
-         istimeroff = true;
-         
-        } 
+        if (timer.tick >= timerMaxSeconds) {
+          timer.cancel();
+          istimeroff = true;
+        }
       });
     });
   }

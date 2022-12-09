@@ -38,10 +38,6 @@ class _TrackingState extends State<Tracking> {
   @override
   void initState() {
     super.initState();
-    print("=" + widget.date!);
-    print("==" + widget.time!);
-    print("===" + widget.orderid!);
-    print("====" + widget.ordertime.toIso8601String());
     // getestimateTime(widget.orderid.toString()).then((value) {}).whenComplete(() {
     //   esti = true;
     //   setState(() {
@@ -154,7 +150,8 @@ class _TrackingState extends State<Tracking> {
                                     ]),
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: w * 0.03, vertical: h * 0.01),
+                                      horizontal: w * 0.03,
+                                      vertical: h * 0.015),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -180,7 +177,7 @@ class _TrackingState extends State<Tracking> {
                                                                 .toString() ==
                                                             "null"
                                                         ? " "
-                                                        : DateFormat.MMMMd()
+                                                        : DateFormat(" d MMMM")
                                                             .format(DateTime
                                                                 .parse(widget
                                                                     .date
@@ -242,21 +239,21 @@ class _TrackingState extends State<Tracking> {
                                                       )
                                                     ])
                                               ])),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Text("reports & analytics ",
-                                                  style: GoogleFonts.montserrat(
-                                                      fontSize: 9,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color:
-                                                          kTextInputPlaceholderColor)),
-                                              Image.asset(
-                                                  "assets/images/network.png")
-                                            ],
-                                          )
+                                          // Row(
+                                          //   mainAxisAlignment:
+                                          //       MainAxisAlignment.start,
+                                          //   children: [
+                                          //     Text("reports & analytics ",
+                                          //         style: GoogleFonts.montserrat(
+                                          //             fontSize: 9,
+                                          //             fontWeight:
+                                          //                 FontWeight.w400,
+                                          //             color:
+                                          //                 kTextInputPlaceholderColor)),
+                                          //     Image.asset(
+                                          //         "assets/images/network.png")
+                                          //   ],
+                                          // )
                                         ],
                                       ),
                                       SizedBox(

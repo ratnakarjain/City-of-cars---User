@@ -10,10 +10,10 @@ import 'package:cityofcars/Utils/preference.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 import '../Services/models/usercardetailsmodel.dart';
 import '../Services/servies.dart';
 import 'bottomnavBar.dart';
+import 'glance.dart';
 import 'selectFuel.dart';
 
 class SelectBrand extends StatefulWidget {
@@ -28,6 +28,8 @@ class _SelectBrandState extends State<SelectBrand> {
   ScrollController _controller2 = ScrollController();
   var h;
   var w;
+  bool fuelselcting = false;
+  ScrollController _controller = ScrollController();
   List carLogoList = [
     "BMW_logo.png",
     "Kia_logo.png",
@@ -493,140 +495,256 @@ class _SelectBrandState extends State<SelectBrand> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  // Text(
+                  //   "Select Car",
+                  //   textScaleFactor: 1.3,
+                  //   style: GoogleFonts.montserrat(
+                  //       height: 2, fontWeight: FontWeight.w600),
+                  // ),
+                  // // Text(
+                  // //   "245 shots",
+                  // //   textScaleFactor: 0.8,
+                  // //   style: GoogleFonts.montserrat(
+                  // //     fontWeight: FontWeight.w600,
+                  // //     height: 1.5,
+                  // //     color: kblackcolor.withOpacity(0.6),
+                  // //   ),
+                  // // ),
+                  // FutureBuilder(
+                  //   future: getCarData().whenComplete(() {
+                  //     loading = false;
+                  //   }),
+                  //   initialData: const Center(
+                  //     child: CircularProgressIndicator(),
+                  //   ),
+                  //   builder: (context, AsyncSnapshot snapshot) {
+                  //     // print(snapshot.data.length);
+                  //     if (loading) {
+                  //       return const Padding(
+                  //         padding: EdgeInsets.all(8.0),
+                  //         child: loder,
+                  //       );
+                  //     } else {
+                  //       if (snapshot.hasError) {
+                  //         return const Center(
+                  //           child: Icon(Icons.error),
+                  //         );
+                  //       }
+                  //       if (snapshot.connectionState ==
+                  //           ConnectionState.waiting) {
+                  //         return loder;
+                  //       }
+                  //       if (snapshot.connectionState == ConnectionState.done) {
+                  //         if (snapshot.data != null) {
+                  //           return Container(
+                  //             padding: EdgeInsets.symmetric(
+                  //                 horizontal: w * 0.05, vertical: 10),
+                  //             child: GridView.count(
+                  //               shrinkWrap: true,
+                  //               controller: _controller2,
+                  //               crossAxisCount: 3,
+                  //               crossAxisSpacing: 10,
+                  //               mainAxisSpacing: 10,
+                  //               children: List.generate(snapshot.data.length,
+                  //                   (index) {
+                  //                 // abc.SetTotalPrice(
+                  //                 //   snapshot.data.length
+                  //                 // );
+                  //                 shots = snapshot.data.length;
+                  //                 return GestureDetector(
+                  //                   onTap: () {
+                  //                     // if (chack(snapshot.data[index]["_id"])) {
+                  //                       CarsData.name =
+                  //                           snapshot.data[index]["cars"];
+                  //                       CarsData.carimage =
+                  //                           snapshot.data[index]["image"];
+                  //                       Ids.carid = snapshot.data[index]["_id"];
+                  //                       prefs!.setString("CarId", Ids.carid);
+                  //                       print(CarsData.brand);
+                  //                       print(CarsData.brandimage);
+                  //                       Navigator.push(
+                  //                           context,
+                  //                           MaterialPageRoute(
+                  //                             builder: (context) =>
+                  //                                 const SelectFuel(),
+                  //                           ));
+                  //                       setState(() {});
+                  //                     // }
+                  //                   },
+                  //                   child: RRectCard(
+                  //                     // color: kbg2,
+                  //                     h: h * 0.18,
+                  //                     w: h * 0.18,
+                  //                     borderRadius: 30,
+                  //                     widget: Column(
+                  //                         mainAxisAlignment:
+                  //                             MainAxisAlignment.center,
+                  //                         children: [
+                  //                           SizedBox(
+                  //                             height: h*0.005,
+                  //                           ),
+                  //                           Expanded(
+                  //                             child: Padding(
+                  //                               padding: const EdgeInsets.all(8.0),
+                  //                               child: CachedNetworkImage(
+                  //                                 imageUrl: snapshot.data[index]
+                  //                                     ["image"],
+                  //                                 placeholder: (context, url) =>
+                  //                                     // loder,
+                  //                                     Container(),
+                  //                                 errorWidget:
+                  //                                     (context, url, error) =>
+                  //                                         const Icon(Icons.error),
+                  //                               ),
+                  //                             ),
+                  //                             // Image.network(
+                  //                             //     "${snapshot.data[index]["image"]}"),
+                  //                           ),
+                  //                           const SizedBox(
+                  //                             height: 5,
+                  //                           ),
+                  //                           FittedBox(
+                  //                             child: Text(
+                  //                               snapshot.data[index]["cars"],
+                  //                               style: GoogleFonts.montserrat(
+                  //                                 fontWeight: FontWeight.w600,
+                  //                                 height: 1.5,
+                  //                               ),
+                  //                             ),
+                  //                           ),
+                  //                           SizedBox(
+                  //                             height: h * 0.01,
+                  //                           )
+                  //                         ]),
+                  //                   ),
+                  //                 );
+                  //               }),
+                  //             ),
+                  //           );
+                  //         } else {
+                  //           return loder;
+                  //         }
+                  //       }
+                  //       return loder;
+                  //     }
+                  //   },
+                  // )
                   Text(
-                    "Select Car",
-                    textScaleFactor: 1.3,
+                    "Select Fuel",
+                    textScaleFactor: 1.1,
                     style: GoogleFonts.montserrat(
                         height: 2, fontWeight: FontWeight.w600),
                   ),
-                  // Text(
-                  //   "245 shots",
-                  //   textScaleFactor: 0.8,
-                  //   style: GoogleFonts.montserrat(
-                  //     fontWeight: FontWeight.w600,
-                  //     height: 1.5,
-                  //     color: kblackcolor.withOpacity(0.6),
-                  //   ),
-                  // ),
                   FutureBuilder(
-                    future: getCarData().whenComplete(() {
+                    future: getfuel().whenComplete(() {
                       loading = false;
                     }),
-                    initialData: const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                    builder: (context, AsyncSnapshot snapshot) {
-                      // print(snapshot.data.length);
+                    initialData: loder,
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (loading) {
-                        return const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: loder,
-                        );
+                        return loder;
                       } else {
-                        if (snapshot.hasError) {
-                          return const Center(
-                            child: Icon(Icons.error),
-                          );
-                        }
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return loder;
-                        }
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          if (snapshot.data != null) {
-                            return Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: w * 0.05, vertical: 10),
-                              child: GridView.count(
-                                shrinkWrap: true,
-                                controller: _controller2,
-                                crossAxisCount: 3,
-                                crossAxisSpacing: 10,
-                                mainAxisSpacing: 10,
-                                children: List.generate(snapshot.data.length,
-                                    (index) {
-                                  // abc.SetTotalPrice(
-                                  //   snapshot.data.length
-                                  // );
-                                  shots = snapshot.data.length;
-                                  return GestureDetector(
-                                    onTap: () {
-                                      // if (chack(snapshot.data[index]["_id"])) {
-                                        CarsData.name =
-                                            snapshot.data[index]["cars"];
-                                        CarsData.carimage =
+                        print(snapshot.data.length);
+                        return GridView.count(
+                          shrinkWrap: true,
+                          controller: _controller,
+                          scrollDirection: Axis.vertical,
+                          crossAxisCount: 3,
+                          children:
+                              List.generate(snapshot.data.length, (index) {
+                            return Center(
+                              child: GestureDetector(
+                                onTap: fuelselcting
+                                    ? () {
+                                        print("tap");
+                                      }
+                                    : () {
+                                        fuelselcting = true;
+                                        setState(() {});
+                                        CarsData.fuel =
+                                            snapshot.data[index]["fuel"];
+                                        CarsData.fuelimage =
                                             snapshot.data[index]["image"];
-                                        Ids.carid = snapshot.data[index]["_id"];
-                                        prefs!.setString("CarId", Ids.carid);
-                                        print(CarsData.brand);
-                                        print(CarsData.brandimage);
+                                        Ids.fuelid =
+                                            snapshot.data[index]["_id"];
+                                        prefs!.setString("fuelId", Ids.fuelid);
+                                        // addusercitycardata().then((value) {
+                                        //   value != "Error"
+                                        //       ?
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
                                                   const SelectFuel(),
-                                            ));
-                                        setState(() {});
-                                      // }
-                                    },
-                                    child: RRectCard(
-                                      // color: kbg2,
-                                      h: h * 0.18,
-                                      w: h * 0.18,
-                                      borderRadius: 30,
-                                      widget: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            SizedBox(
-                                              height: h*0.005,
+                                            )).whenComplete(() {
+                                          fuelselcting = false;
+                                          setState(() {});
+                                        });
+                                        // }
+                                        //  Navigator.push(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //       builder: (context) =>
+                                        //           const Glance(),
+                                        //     )).whenComplete(() {
+                                        //     fuelselcting = false;
+                                        //     setState(() {});
+                                        //   })
+                                        // : ScaffoldMessenger.of(context)
+                                        //     .showSnackBar(const SnackBar(
+                                        //     content: Text("Error"),
+                                        //   ));
+                                        // }).whenComplete(() {
+                                        //   fuelselcting = false;
+                                        //   setState(() {});
+                                        // });
+                                      },
+                                child: RRectCard(
+                                  h: h * 0.12,
+                                  w: h * 0.12,
+                                  borderRadius: 30,
+                                  padding: EdgeInsets.all(h * 0.01),
+                                  widget: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          child: CachedNetworkImage(
+                                            fit: BoxFit.fill,
+                                            imageUrl: snapshot.data[index]
+                                                    ["image"] ??
+                                                "",
+                                            placeholder: (context, url) =>
+                                                Container(),
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    const Icon(Icons.error),
+                                          ),
+                                        ),
+                                        // Image.asset(
+                                        //     "assets/images/${fueltype[index]["image"]}"),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        FittedBox(
+                                          child: Text(
+                                            "${snapshot.data[index]["fuel"]}",
+                                            style: GoogleFonts.montserrat(
+                                              fontWeight: FontWeight.w600,
+                                              height: 1.5,
                                             ),
-                                            Expanded(
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: CachedNetworkImage(
-                                                  imageUrl: snapshot.data[index]
-                                                      ["image"],
-                                                  placeholder: (context, url) =>
-                                                      // loder,
-                                                      Container(),
-                                                  errorWidget:
-                                                      (context, url, error) =>
-                                                          const Icon(Icons.error),
-                                                ),
-                                              ),
-                                              // Image.network(
-                                              //     "${snapshot.data[index]["image"]}"),
-                                            ),
-                                            const SizedBox(
-                                              height: 5,
-                                            ),
-                                            FittedBox(
-                                              child: Text(
-                                                snapshot.data[index]["cars"],
-                                                style: GoogleFonts.montserrat(
-                                                  fontWeight: FontWeight.w600,
-                                                  height: 1.5,
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: h * 0.01,
-                                            )
-                                          ]),
-                                    ),
-                                  );
-                                }),
+                                          ),
+                                        )
+                                      ]),
+                                ),
                               ),
                             );
-                          } else {
-                            return loder;
-                          }
-                        }
-                        return loder;
+                          }),
+                        );
+                        ;
                       }
                     },
-                  )
+                  ),
                 ],
               ),
             ),

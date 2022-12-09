@@ -189,7 +189,7 @@ class _NewCityState extends State<NewCity> {
                                   List.generate(snapshot.data.length, (index) {
                                 return Center(
                                   child: GestureDetector(
-                                    onTap: Ids.cityid ==
+                                    onTap: prefs!.getString("cityId") ==
                                             snapshot.data[index]["_id"]
                                         ? () {
                                             ScaffoldMessenger.of(context)
@@ -199,21 +199,16 @@ class _NewCityState extends State<NewCity> {
                                             ));
                                           }
                                         : () {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(const SnackBar(
-                                              content: Text(
-                                                  "You have selected a new city."),
-                                            ));
                                             CarsData.city =
                                                 snapshot.data[index]["city"];
                                             CarsData.cityimage =
                                                 snapshot.data[index]["image"];
                                             Ids.cityid =
                                                 snapshot.data[index]["_id"];
-                                            pref!.setString(
-                                                "cityId", Ids.cityid);
-                                            pref!.setString("cityname",
-                                                snapshot.data[index]["city"]);
+                                            // pref!.setString(
+                                            //     "cityId", Ids.cityid);
+                                            // pref!.setString("cityname",
+                                            //     snapshot.data[index]["city"]);
                                             print("=======" + Ids.cityid);
                                             print(CarsData.city);
                                             print(CarsData.cityimage);
@@ -223,17 +218,43 @@ class _NewCityState extends State<NewCity> {
                                             //       builder: (context) =>
                                             //           const SelectBrand(),
                                             //     ));
-                                            addusercitycardata().then((value) {
-                                              value != "Error"
-                                                  ? null
-                                                  : ScaffoldMessenger.of(
-                                                          context)
-                                                      .showSnackBar(
-                                                          const SnackBar(
-                                                      content: Text("Error"),
-                                                    ));
+                                            changeCity(context,
+                                                    snapshot.data[index]["_id"])
+                                                .then((value) {
+                                              if (value) {
+                                                pref!.setString(
+                                                    "cityId", Ids.cityid);
+                                                pref!.setString(
+                                                    "cityname",
+                                                    snapshot.data[index]
+                                                        ["city"]);
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                        const SnackBar(
+                                                  content: Text(
+                                                      "You have selected a new city."),
+                                                ));
+                                                Navigator.pushAndRemoveUntil<
+                                                    dynamic>(
+                                                  context,
+                                                  MaterialPageRoute<dynamic>(
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        BottomNavBar(
+                                                      index: 3,
+                                                    ),
+                                                  ),
+                                                  (route) =>
+                                                      false, //if you want to disable back feature set to false
+                                                );
+                                              } else {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                        const SnackBar(
+                                                  content: Text("Error"),
+                                                ));
+                                              }
                                             });
-                                            Navigator.pop(context);
                                           },
                                     child: Card(
                                       shape: RoundedRectangleBorder(

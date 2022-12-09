@@ -108,7 +108,9 @@ Future getBrandss() async {
 }
 
 Future getfuel() async {
-  var url = Uri.parse(getFuel + "?_id=" + Ids.carid);
+  var url = Uri.parse(
+    getFuel + "?_id=" + Ids.carid,
+  );
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -372,7 +374,14 @@ Future getSubcategory(String _id) async {
   } else {
     car = "?";
   }
-  var url = Uri.parse(getSubcategoryUrl + car + "cateory_id=" + _id);
+  var url = Uri.parse(getSubcategoryUrl +
+      car +
+      "cateory_id=" +
+      _id +
+      "&cityid=" +
+      Prefernece.pref!.getString("cityId").toString() +
+      "&fuelid=" +
+      prefs!.getString("fuelId").toString());
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -1127,7 +1136,9 @@ Future getrecmostPlans() async {
         "?carid=" +
         prefs!.getString("CarId").toString() +
         "&cityid=" +
-        prefs!.getString("cityId").toString(),
+        prefs!.getString("cityId").toString() +
+        "&fuelid=" +
+        prefs!.getString("fuelId").toString(),
   );
   try {
     var respnse = await http.get(url,
@@ -1285,6 +1296,7 @@ Future postMess(String msg) async {
     user["sender_id"] = Ids.userid;
     user["resive_id"] = "626259f89d1ec3425360af89";
     user["conversation"] = resBody;
+    user["type"] = "user";
     user["fcmToken"] = "1223e412131asccwe";
 
     str = json.encode(user);
@@ -1817,5 +1829,28 @@ Future deleteaccount(BuildContext context) async {
     } else {}
   } catch (e) {
     print("error $e");
+  }
+}
+
+Future changeCity(BuildContext context, String newcityId) async {
+  var url = Uri.parse(changeCityUrl);
+  try {
+    var respnse = await http.post(url, body: {
+      "id": prefs!.getString("cityId"),
+      "city": newcityId,
+    }, headers: {
+      "Authorization": prefs!.getString('token').toString()
+    });
+    if (respnse.statusCode == 200) {
+      var data = jsonDecode(respnse.body);
+
+      print("Success");
+      return data["status"];
+    } else {
+      return false;
+    }
+  } catch (e) {
+    print("error $e");
+    return false;
   }
 }

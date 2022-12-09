@@ -181,69 +181,77 @@ class _ProductDetailsState extends State<ProductDetails> {
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
-                              return Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                    child: SizedBox(
-                                      height: h * 0.01,
-                                      child: Checkbox(
-                                        value: index == selceted,
-                                        side: const BorderSide(
-                                            color: kGreenColor, width: 2),
-                                        activeColor: kGreenColor,
-                                        onChanged: (value) {
-                                          selceted = index;
-                                          setState(() {
-                                            service = false;
-                                            ProductDetails.selctedprice =
-                                                details.planprice.toString();
-                                          });
-                                        },
+                              return Visibility(
+                                visible:
+                                    details.packs[index].planPrice != "NaN",
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: SizedBox(
+                                        height: h * 0.01,
+                                        child: Checkbox(
+                                          value: index == selceted,
+                                          side: const BorderSide(
+                                              color: kGreenColor, width: 2),
+                                          activeColor: kGreenColor,
+                                          onChanged: (value) {
+                                            selceted = index;
+                                            setState(() {
+                                              service = false;
+                                              ProductDetails.selctedprice =
+                                                  details.planprice.toString();
+                                            });
+                                          },
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        FittedBox(
-                                          child: Text(
-                                            "₹" +
-                                                details.packs[index].planPrice,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: GoogleFonts.montserrat(
-                                                fontSize:
-                                                    index == selceted ? 21 : 12,
-                                                textStyle: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: index == selceted
-                                                        ? kTextInputPlaceholderColor
-                                                        : kTextInputPlaceholderColor
-                                                            .withOpacity(0.5))),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          FittedBox(
+                                            child: Text(
+                                              "₹" +
+                                                  details
+                                                      .packs[index].planPrice,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: GoogleFonts.montserrat(
+                                                  fontSize: index == selceted
+                                                      ? 21
+                                                      : 12,
+                                                  textStyle: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: index == selceted
+                                                          ? kTextInputPlaceholderColor
+                                                          : kTextInputPlaceholderColor
+                                                              .withOpacity(
+                                                                  0.5))),
+                                            ),
                                           ),
-                                        ),
-                                        Text(
-                                          details.packs[index].pricedes,
-                                          // "multi-brand price",
-                                          maxLines: 1,
-                                          style: GoogleFonts.montserrat(
-                                              fontSize: 6,
-                                              textStyle: TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  color: kblackcolor
-                                                      .withOpacity(0.50))),
-                                        ),
-                                      ],
+                                          Text(
+                                            details.packs[index].pricedes,
+                                            // "multi-brand price",
+                                            maxLines: 1,
+                                            style: GoogleFonts.montserrat(
+                                                fontSize: 6,
+                                                textStyle: TextStyle(
+                                                    fontWeight: FontWeight.w400,
+                                                    color: kblackcolor
+                                                        .withOpacity(0.50))),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               );
                             },
                           ),
@@ -623,7 +631,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   widget: Center(
                                     child: GridView.count(
                                       crossAxisCount: 3,
-                                      childAspectRatio: 1.35,
+                                      childAspectRatio: 1,
                                       physics:
                                           const NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
@@ -667,6 +675,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                 details.includes[index].name,
                                                 // "Engine Oil ",
                                                 // textScaleFactor: 0.7,
+                                                textAlign: TextAlign.center,
                                                 style: GoogleFonts.montserrat(
                                                     fontSize: 8,
                                                     fontWeight: FontWeight.w600,
@@ -830,42 +839,46 @@ class _ProductDetailsState extends State<ProductDetails> {
                           ],
                         ),
                       ),
-                      Center(
-                        child: RRectCard(
-                            h: h * 0.06,
-                            w: w * 0.7,
-                            padding: EdgeInsets.symmetric(horizontal: w * 0.01),
-                            widget: FittedBox(
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  FittedBox(
-                                    child: Text("Takes ${details.hour} hrs",
-                                        style: GoogleFonts.montserrat(
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w500,
-                                        )),
-                                  ),
-                                  FittedBox(
-                                    child: Text(
-                                        "    Every ${details.months} months    ",
-                                        style: GoogleFonts.montserrat(
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w500,
-                                        )),
-                                  ),
-                                  FittedBox(
-                                    child: Text("Rate Card",
-                                        style: GoogleFonts.montserrat(
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w500,
-                                        )),
-                                  ),
-                                ],
+                      Visibility(
+                        visible: details.months.isNotEmpty,
+                        child: Center(
+                          child: RRectCard(
+                              h: h * 0.06,
+                              w: w * 0.7,
+                              padding:
+                                  EdgeInsets.symmetric(horizontal: w * 0.01),
+                              widget: FittedBox(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    FittedBox(
+                                      child: Text("Takes ${details.hour} hrs",
+                                          style: GoogleFonts.montserrat(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w500,
+                                          )),
+                                    ),
+                                    FittedBox(
+                                      child: Text(
+                                          "    Every ${details.months} months    ",
+                                          style: GoogleFonts.montserrat(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w500,
+                                          )),
+                                    ),
+                                    FittedBox(
+                                      child: Text("Rate Card",
+                                          style: GoogleFonts.montserrat(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w500,
+                                          )),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            borderRadius: h * 0.01),
+                              borderRadius: h * 0.01),
+                        ),
                       )
                     ],
                   ),

@@ -6,7 +6,7 @@ import '../../Utils/constants.dart';
 import '../servies.dart';
 
 List<CarsModel> modellist = [];
-int isSelected = 0;
+
 Future getusercarsdata(bool set) async {
   await getusercars().then((value) {
     modellist.clear();
@@ -14,9 +14,7 @@ Future getusercarsdata(bool set) async {
     Prefernece.pref!.setString("usercarsData", jsonEncode(modellist));
     // print(jsonEncode(modellist));
     // print(modellist);
-    if (isSelected == 0) {
-      isSelected = 1;
-    }
+
     if (set) {
       Prefernece.pref!.setString("brandId", modellist[0].carbrandid.toString());
       Prefernece.pref!.setString("CarId", modellist[0].carid.toString());

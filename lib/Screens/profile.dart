@@ -30,7 +30,6 @@ import 'Service Main/cart.dart';
 import 'faq.dart';
 
 class Profile extends StatefulWidget {
-  static int carslength = 0;
   const Profile({Key? key}) : super(key: key);
 
   @override
@@ -107,16 +106,7 @@ class _ProfileState extends State<Profile> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    if (pref?.getInt("CCar") != null) {
-      isSelected = pref!.getInt("CCar")!;
 
-      print(isSelected.toString() + "======");
-      setState(() {});
-    }
-    if (Profile.carslength > 0) {
-      isSelected = Profile.carslength;
-      setState(() {});
-    }
     getusercarsdata();
   }
 
@@ -163,7 +153,6 @@ class _ProfileState extends State<Profile> {
                       children: [
                         InkWell(
                           onTap: () {
-                            Profile.carslength = modellist.length;
                             if (Ids.cityid == "" ||
                                 Ids.cityid == "null" ||
                                 Prefernece.pref!.getString("cityId") == null) {
@@ -283,38 +272,54 @@ class _ProfileState extends State<Profile> {
                                               children: [
                                                 CircleAvatar(
                                                   radius: h * 0.07,
-                                                  backgroundColor: index +
-                                                              currentCar +
-                                                              1 ==
-                                                          isSelected
+                                                  backgroundColor: Prefernece
+                                                                  .pref!
+                                                                  .getString(
+                                                                      "CarId") ==
+                                                              modellist[index +
+                                                                      currentCar]
+                                                                  .carid &&
+                                                          Prefernece.pref!
+                                                                  .getString(
+                                                                      "fuelId") ==
+                                                              modellist[index +
+                                                                      currentCar]
+                                                                  .carfuelid &&
+                                                          Prefernece.pref!
+                                                                  .getString(
+                                                                      "cityId") ==
+                                                              modellist[index +
+                                                                      currentCar]
+                                                                  .cityid
                                                       ? korangecolor
                                                       : kgrey.withOpacity(0.5),
                                                   child: InkWell(
                                                     onTap: () {
-                                                      isSelected = index +
-                                                          currentCar +
-                                                          1;
                                                       String js = jsonEncode(
-                                                          modellist[
-                                                              isSelected - 1]);
+                                                          modellist[index +
+                                                              currentCar]);
                                                       pref!.setString(
                                                           "usercar", js);
-                                                      pref!.setInt(
-                                                          "CCar", isSelected);
+                                                      pref!.setInt("CCar",
+                                                          index + currentCar);
                                                       Ids.brandid = modellist[
-                                                              isSelected - 1]
+                                                              index +
+                                                                  currentCar]
                                                           .carbrandid
                                                           .toString();
                                                       Ids.carid = modellist[
-                                                              isSelected - 1]
+                                                              index +
+                                                                  currentCar]
                                                           .carid
                                                           .toString();
                                                       Ids.cityid = modellist[
-                                                              isSelected - 1]
+                                                              index +
+                                                                  currentCar]
                                                           .cityid
                                                           .toString();
                                                       Ids.fuelid = modellist[
-                                                              isSelected - 1]
+                                                              index +
+                                                                  currentCar]
                                                           .carfuelid
                                                           .toString();
                                                       print(Ids.cityid +
@@ -333,6 +338,11 @@ class _ProfileState extends State<Profile> {
                                                           "fuelId", Ids.fuelid);
                                                       pref!.setString("brandId",
                                                           Ids.brandid);
+                                                      pref!.setString(
+                                                          "cityname",
+                                                          modellist[index +
+                                                                  currentCar]
+                                                              .city);
 
                                                       print(pref?.getString(
                                                           "usercar"));
@@ -355,16 +365,23 @@ class _ProfileState extends State<Profile> {
                                                           padding:
                                                               const EdgeInsets
                                                                   .all(8.0),
-                                                          child: Image.network(
-                                                            modellist[index +
-                                                                    currentCar]
-                                                                .carimage,
-                                                            errorBuilder:
-                                                                ((context,
-                                                                    error,
-                                                                    stackTrace) {
-                                                              return Container();
-                                                            }),
+                                                          child: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(h *
+                                                                        0.03),
+                                                            child:
+                                                                Image.network(
+                                                              modellist[index +
+                                                                      currentCar]
+                                                                  .carimage,
+                                                              errorBuilder:
+                                                                  ((context,
+                                                                      error,
+                                                                      stackTrace) {
+                                                                return Container();
+                                                              }),
+                                                            ),
                                                           ),
                                                         ),
                                                       ),

@@ -1,5 +1,3 @@
-
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cityofcars/Services/models/blogModel.dart';
 import 'package:cityofcars/Services/servies.dart';
@@ -31,7 +29,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
   void initState() {
     // TODO: implement initState
     super.initState();
-    
+
     getblog().then((value) {
       blogs.addAll(value);
       setState(() {
@@ -66,14 +64,14 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: InkWell(
-              onTap: (){
-                Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SavedBlogs(),
-                        ));
-              },
-              child: const Icon(Icons.favorite_border)),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SavedBlogs(),
+                      ));
+                },
+                child: const Icon(Icons.favorite_border)),
           )
         ],
       ),
@@ -299,7 +297,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
                                                   bottomLeft: Radius.circular(
                                                       h * 0.06)),
                                               child: CachedNetworkImage(
-                                                  fit: BoxFit.fill,
+                                                  fit: BoxFit.cover,
                                                   height: h * 0.14,
                                                   imageUrl: blogs[index]
                                                       .image
@@ -437,7 +435,6 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
                               ),
                             );
                           }),
-                      
                     ],
                   ),
                 ),

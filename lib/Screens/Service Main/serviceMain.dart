@@ -181,13 +181,28 @@ class _ServiceMainState extends State<ServiceMain> {
           elevation: 0,
           foregroundColor: kwhitecolor,
           centerTitle: false,
-          title: Text(
-            prefs!.getString("cityname").toString() == "null"
-                ? "Delhi"
-                : prefs!.getString("cityname").toString(),
-            style: GoogleFonts.montserrat(
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.bold, color: kwhitecolor)),
+          title: Container(
+            // padding:
+            //     EdgeInsets.symmetric(vertical: h * 0.005, horizontal: w * 0.03),
+            // decoration: BoxDecoration(
+            //     color: korangecolor,
+            //     borderRadius: BorderRadius.circular(h * 0.02),
+            //     border: Border.all(color: kbluecolor, width: 3)),
+            child: Text(
+              prefs!.getString("cityname").toString() == "null"
+                  ? "Delhi"
+                  : prefs!.getString("cityname").toString(),
+              style: GoogleFonts.montserrat(
+                  textStyle: const TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: korangecolor,
+                      shadows: [
+                    Shadow(
+                      color: kwhitecolor,
+                      blurRadius: 8,
+                    )
+                  ])),
+            ),
           ),
           flexibleSpace: Container(
             height: h * 0.25,
@@ -647,7 +662,7 @@ class _ServiceMainState extends State<ServiceMain> {
                                           left: w * 0.06,
                                           right: w * 0.06),
                                       child: CachedNetworkImage(
-                                          fit: BoxFit.fill,
+                                          fit: BoxFit.cover,
                                           imageUrl:
                                               data[index]["image"].toString(),
                                           placeholder: (context, url) =>
@@ -660,22 +675,30 @@ class _ServiceMainState extends State<ServiceMain> {
                                     ),
                                   ),
                                   SizedBox(
-                                    height: h * 0.005,
+                                    height: h * 0.01,
                                   ),
-                                  FittedBox(
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: w * 0.01),
                                     child: Text(
                                       data[index]["title"] == null ||
                                               data[index]["title"] == ""
                                           ? ""
                                           : "${data[index]["title"]}"
                                               .toUpperCase(),
+                                      textAlign: TextAlign.center,
                                       style: GoogleFonts.montserrat(
                                           fontWeight: FontWeight.w500,
-                                          height: 3,
+                                          height: 1,
                                           fontSize: 11),
                                     ),
                                   ),
-                                  FittedBox(
+                                  SizedBox(
+                                    height: h * 0.005,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: w * 0.01),
                                     child: Text(
                                       data[index]["discreption"] == null ||
                                               data[index]["discreption"] == ""
@@ -867,7 +890,7 @@ class _ServiceMainState extends State<ServiceMain> {
                         SizedBox(
                           height: h * 0.01,
                         ),
-                        Container(
+                        SizedBox(
                           height: h * 0.18,
                           child: ListView.builder(
                             controller: _controller2,
