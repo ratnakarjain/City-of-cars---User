@@ -22,6 +22,7 @@ import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Utils/preference.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -30,6 +31,7 @@ import 'Service Main/cart.dart';
 import 'faq.dart';
 
 class Profile extends StatefulWidget {
+  static bool ischangeCity = false;
   const Profile({Key? key}) : super(key: key);
 
   @override
@@ -89,14 +91,34 @@ class _ProfileState extends State<Profile> {
   ];
   int currentCar = 0;
   bool isLoading = true;
+
   getusercarsdata() {
     getusercars().then((value) {
+      modellist.clear();
+      if (value.isNotEmpty) {
+        setState(() {
+          modellist.clear();
+          modellist.addAll(value);
+          pref!.setString("usercarsData", jsonEncode(modellist));
+          if (Profile.ischangeCity) {
+            Profile.ischangeCity = false;
+            Prefernece.pref!
+                .setString("brandId", modellist[0].carbrandid.toString());
+            Prefernece.pref!.setString("CarId", modellist[0].carid.toString());
+            Prefernece.pref!
+                .setString("cityId", modellist[0].cityid.toString());
+            Prefernece.pref!
+                .setString("fuelId", modellist[0].carfuelid.toString());
+            Prefernece.pref!
+                .setString("cityname", modellist[0].city.toString());
+          }
+
+          print(jsonEncode(modellist));
+          print(modellist);
+          isLoading = false;
+        });
+      }
       setState(() {
-        modellist.clear();
-        modellist.addAll(value);
-        pref!.setString("usercarsData", jsonEncode(modellist));
-        print(jsonEncode(modellist));
-        print(modellist);
         isLoading = false;
       });
     });
@@ -137,7 +159,7 @@ class _ProfileState extends State<Profile> {
             children: [
               Container(
                 decoration: BoxDecoration(
-                    color: kbg2,
+                    color: kbg3,
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(h * 0.08)),
                     boxShadow: [
@@ -329,7 +351,11 @@ class _ProfileState extends State<Profile> {
                                                           Ids.brandid +
                                                           "  " +
                                                           Ids.fuelid);
-
+                                                      pref!.setString(
+                                                          "cityname",
+                                                          modellist[index +
+                                                                  currentCar]
+                                                              .city);
                                                       pref!.setString(
                                                           "CarId", Ids.carid);
                                                       pref!.setString(
@@ -389,39 +415,44 @@ class _ProfileState extends State<Profile> {
                                                   ),
                                                 ),
                                                 Positioned(
-                                                    right: 0,
-                                                    top: 0,
+                                                    right: 3,
+                                                    top: 3,
                                                     child: InkWell(
-                                                        onTap: () async {
-                                                          print(
-                                                              "dvkhsdvudhvbcuw");
+                                                      onTap: () async {
+                                                        print(
+                                                            "dvkhsdvudhvbcuw");
 
-                                                          // showDeleteDialog(
-                                                          //   context,
-                                                          //   "Are you sure you want to delete this car",
-                                                          //   () {
+                                                        // showDeleteDialog(
+                                                        //   context,
+                                                        //   "Are you sure you want to delete this car",
+                                                        //   () {
 
-                                                          //   },
-                                                          // );
-                                                          await deletecar(
-                                                              currentCar +
-                                                                  index);
-                                                        },
-                                                        child:
-                                                            const CircleAvatar(
-                                                          radius: 17,
-                                                          backgroundColor:
-                                                              korangecolor,
-                                                          child: CircleAvatar(
-                                                              radius: 15,
-                                                              backgroundColor:
-                                                                  kbg2,
-                                                              child: Icon(
-                                                                Icons.delete,
-                                                                color:
-                                                                    kTextInputPlaceholderColor,
-                                                              )),
-                                                        )))
+                                                        //   },
+                                                        // );
+                                                        await deletecar(
+                                                            currentCar + index);
+                                                      },
+                                                      child: SvgPicture.asset(
+                                                        "assets/svg/Delete.svg",
+                                                        height: h * 0.035,
+                                                      ),
+                                                      // child: CircleAvatar(
+                                                      //   radius: 17,
+                                                      //   backgroundColor:
+                                                      //       korangecolor,
+                                                      //   child:
+
+                                                      //   // child: CircleAvatar(
+                                                      //   //     radius: 15,
+                                                      //   //     backgroundColor:
+                                                      //   //         kbg2,
+                                                      //   //     child: Icon(
+                                                      //   //       Icons.delete,
+                                                      //   //       color:
+                                                      //   //           kTextInputPlaceholderColor,
+                                                      //   //     )),
+                                                      // )
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -487,11 +518,9 @@ class _ProfileState extends State<Profile> {
                                   builder: (context) => const EditProfile(),
                                 ));
                           },
-                          child: CircleAvatar(
-                            radius: h * 0.014,
-                            backgroundColor: kTextInputPlaceholderColor,
-                            foregroundColor: kwhitecolor,
-                            child: Image.asset("assets/images/edit-2.png"),
+                          child: SvgPicture.asset(
+                            "assets/svg/Edit.svg",
+                            height: h * 0.03,
                           ),
                         )
                       ],

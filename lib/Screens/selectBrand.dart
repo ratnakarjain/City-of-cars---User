@@ -103,7 +103,7 @@ class _SelectBrandState extends State<SelectBrand> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: kbg3,
+      backgroundColor: kcitybgcolor,
       appBar: AppBar(
         automaticallyImplyLeading: true,
         centerTitle: false,
@@ -481,7 +481,7 @@ class _SelectBrandState extends State<SelectBrand> {
           return Container(
             width: w,
             decoration: BoxDecoration(
-                color: kwhitecolor,
+                color: kwhitecolor.withOpacity(0.85),
                 boxShadow: [
                   BoxShadow(
                       blurRadius: 8,
@@ -641,6 +641,9 @@ class _SelectBrandState extends State<SelectBrand> {
                     }),
                     initialData: loder,
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return SizedBox(height: h * 0.1, child: loder);
+                      }
                       if (loading) {
                         return loder;
                       } else {

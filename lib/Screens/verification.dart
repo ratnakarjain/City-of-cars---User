@@ -167,6 +167,9 @@ class _VerficationState extends State<Verfication> {
                                   "cityId", modellist[0].cityid.toString());
                               Prefernece.pref!.setString(
                                   "fuelId", modellist[0].carfuelid.toString());
+                              Prefernece.pref!.setString(
+                                  "cityname", modellist[0].city.toString());
+
                               // Ids.brandid = ;
                               // Ids.carid = modellist[0].carid.toString();
                               // Ids.cityid = modellist[0].cityid.toString();

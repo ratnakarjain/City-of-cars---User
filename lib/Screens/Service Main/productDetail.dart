@@ -65,7 +65,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: kLightOrangeBgColor,
+      backgroundColor: kbg3,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: kTransparent,
@@ -386,17 +386,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     content: Text("Please select price"),
                                   ));
                                 } else {
-                                  print(Ids.brandid + "vsdv");
-                                  print(Ids.carid + "dvsdvsd");
-                                  print(Ids.cityid + "vsv");
-                                  print(Ids.fuelid + "dsdvs");
-                                  print(Ids.categoryid + "dsdvs");
-                                  print(Ids.subcategoryid + "dsdvs");
-                                  print(Ids.planid + "dsdvs");
-                                  if (Ids.brandid == "" &&
-                                      Ids.carid == "" &&
-                                      Ids.cityid == "" &&
-                                      Ids.fuelid == "") {
+                                  if ((Ids.brandid == "" ||
+                                          Ids.brandid == "null") ||
+                                      (Ids.carid == "" ||
+                                              Ids.carid == "null") &&
+                                          (Ids.cityid == "" ||
+                                              Ids.cityid == "null") ||
+                                      (Ids.fuelid == "" ||
+                                          Ids.fuelid == "null")) {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(const SnackBar(
                                       content: Text("Please select car first"),
@@ -447,10 +444,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                             SizedBox(
                               width: w * 0.04,
                             ),
-                            Image.asset(
-                              "assets/images/doublArrow.png",
-                              scale: 0.8,
-                            ),
+                            SvgPicture.asset(
+                              "assets/svg/Book Now.svg",
+                              height: h * 0.02,
+                            )
+                            // Image.asset(
+                            //   "assets/images/doublArrow.png",
+                            //   scale: 0.8,
+                            // ),
                           ],
                         ),
                       ),
@@ -839,27 +840,31 @@ class _ProductDetailsState extends State<ProductDetails> {
                           ],
                         ),
                       ),
-                      Visibility(
-                        visible: details.months.isNotEmpty,
-                        child: Center(
-                          child: RRectCard(
-                              h: h * 0.06,
-                              w: w * 0.7,
-                              padding:
-                                  EdgeInsets.symmetric(horizontal: w * 0.01),
-                              widget: FittedBox(
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    FittedBox(
+                      Center(
+                        child: RRectCard(
+                            h: h * 0.06,
+                            w: w * 0.7,
+                            padding: EdgeInsets.symmetric(horizontal: w * 0.01),
+                            widget: Row(
+                              // mainAxisAlignment:
+                              // MainAxisAlignment.spaceAround,
+                              children: [
+                                Visibility(
+                                  visible: details.hour.isNotEmpty,
+                                  child: Expanded(
+                                    child: Center(
                                       child: Text("Takes ${details.hour} hrs",
                                           style: GoogleFonts.montserrat(
                                             fontSize: 11,
                                             fontWeight: FontWeight.w500,
                                           )),
                                     ),
-                                    FittedBox(
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: details.months.isNotEmpty,
+                                  child: Expanded(
+                                    child: Center(
                                       child: Text(
                                           "    Every ${details.months} months    ",
                                           style: GoogleFonts.montserrat(
@@ -867,18 +872,20 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             fontWeight: FontWeight.w500,
                                           )),
                                     ),
-                                    FittedBox(
-                                      child: Text("Rate Card",
-                                          style: GoogleFonts.montserrat(
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.w500,
-                                          )),
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                              borderRadius: h * 0.01),
-                        ),
+                                Expanded(
+                                  child: Center(
+                                    child: Text("Rate Card",
+                                        style: GoogleFonts.montserrat(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w500,
+                                        )),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            borderRadius: h * 0.01),
                       )
                     ],
                   ),

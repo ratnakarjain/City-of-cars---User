@@ -44,7 +44,7 @@ class _SavedBlogsState extends State<SavedBlogs> {
     w = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: kwhitecolor,
+      backgroundColor: kbg3,
       appBar: AppBar(
         elevation: 0,
         // automaticallyImplyLeading: false,
@@ -60,12 +60,12 @@ class _SavedBlogsState extends State<SavedBlogs> {
           ? loder
           : blogs.isEmpty
               ? Center(
-                child: Text(
+                  child: Text(
                     "No data",
                     style: GoogleFonts.montserrat(
                         fontSize: 14, fontWeight: FontWeight.w400),
                   ),
-              )
+                )
               : Container(
                   height: h,
                   width: w,
@@ -261,7 +261,7 @@ class _SavedBlogsState extends State<SavedBlogs> {
                                               bottomLeft:
                                                   Radius.circular(h * 0.06)),
                                           child: CachedNetworkImage(
-                                              fit: BoxFit.fill,
+                                              fit: BoxFit.cover,
                                               height: h * 0.14,
                                               imageUrl:
                                                   blogs[index].image.toString(),

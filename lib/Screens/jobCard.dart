@@ -211,20 +211,20 @@ class _JobCardState extends State<JobCard> {
                                                 fontWeight: FontWeight.w400,
                                                 color: ksubHading),
                                           ),
-                                          TextSpan(
-                                            text: "GST: ",
-                                            style: GoogleFonts.montserrat(
-                                                fontSize: 10,
-                                                fontWeight: FontWeight.w700,
-                                                color: ksubHading),
-                                          ),
-                                          TextSpan(
-                                            text: data["Gst"], //"07ABBCS0227P",
-                                            style: GoogleFonts.montserrat(
-                                                fontSize: 10,
-                                                fontWeight: FontWeight.w400,
-                                                color: ksubHading),
-                                          )
+                                          // TextSpan(
+                                          //   text: "GST: ",
+                                          //   style: GoogleFonts.montserrat(
+                                          //       fontSize: 10,
+                                          //       fontWeight: FontWeight.w700,
+                                          //       color: ksubHading),
+                                          // ),
+                                          // TextSpan(
+                                          //   text: data["Gst"], //"07ABBCS0227P",
+                                          //   style: GoogleFonts.montserrat(
+                                          //       fontSize: 10,
+                                          //       fontWeight: FontWeight.w400,
+                                          //       color: ksubHading),
+                                          // )
                                         ]),
                                   ),
                                   borderRadius: h * 0.05,
@@ -243,7 +243,7 @@ class _JobCardState extends State<JobCard> {
                                               image: NetworkImage(
                                                   data["orderid"]["orderData"]
                                                       [0]["cars"]["image"]),
-                                              fit: BoxFit.fill)),
+                                              fit: BoxFit.contain)),
                                     ),
                                     // Image.asset("assets/images/Uber1.png"),
                                     RichText(
@@ -344,7 +344,8 @@ class _JobCardState extends State<JobCard> {
                                           height: h * 0.2,
                                           child: Center(
                                             child: ListView.builder(
-                                              physics: const BouncingScrollPhysics(),
+                                              physics:
+                                                  const BouncingScrollPhysics(),
                                               controller: _controller1,
                                               shrinkWrap: true,
                                               padding: EdgeInsets.symmetric(

@@ -108,7 +108,7 @@ class _SelectFuelState extends State<SelectFuel> {
             child: Container(
               width: w,
               decoration: BoxDecoration(
-                  color: kwhitecolor,
+                  color: kwhitecolor.withOpacity(0.85),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(h * 0.05),
                     topRight: Radius.circular(h * 0.05),
@@ -180,7 +180,7 @@ class _SelectFuelState extends State<SelectFuel> {
                       width: w,
                       // height: h * 0.4,
                       decoration: BoxDecoration(
-                          color: kwhitecolor,
+                          color: kwhitecolor.withOpacity(0.85),
                           borderRadius: BorderRadius.circular(h * 0.05),
                           boxShadow: [
                             BoxShadow(

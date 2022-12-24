@@ -149,7 +149,7 @@ class _InsideCategoryState extends State<InsideCategory>
     w = MediaQuery.of(context).size.width;
     return Scaffold(
       // key: _scaffoldkey,
-      backgroundColor: kLightOrangeBgColor,
+      backgroundColor: kbg3,
       extendBody: true,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(h * 0.18),
@@ -247,6 +247,7 @@ class _InsideCategoryState extends State<InsideCategory>
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.w700),
                             onChanged: (value) {
+                              setState(() {});
                               if (value.isNotEmpty) {}
 
                               setState(() {});
@@ -282,7 +283,7 @@ class _InsideCategoryState extends State<InsideCategory>
                                           _tabController.dispose();
 
                                           keys.clear();
-                                          search();
+                                          // search();
 
                                           _scrollController.addListener(() {
                                             check();
@@ -598,6 +599,7 @@ class _InsideCategoryState extends State<InsideCategory>
                                   data: service[index].plans,
                                   key: keys[index],
                                   label: service[index].name,
+                                  search: search1.text,
                                 );
                               },
                             ),
@@ -642,7 +644,7 @@ class _InsideCategoryState extends State<InsideCategory>
                                   SizedBox(
                                     height: h * 0.005,
                                   ),
-                                  Container(
+                                  SizedBox(
                                       height: h * 0.18,
                                       child: FutureBuilder(
                                         future: getrecmostPlans(),
@@ -666,8 +668,13 @@ class _InsideCategoryState extends State<InsideCategory>
                                                   PlanModel model = PlanModel();
                                                   model = snapshot.data[index];
                                                   return Visibility(
-                                                    visible:
-                                                        model.isrec == "true",
+                                                    visible: model.isrec ==
+                                                            "true" &&
+                                                        model.packs.first
+                                                            .planName
+                                                            .toLowerCase()
+                                                            .contains(
+                                                                search1.text),
                                                     child: GestureDetector(
                                                       onTap: () {
                                                         print("Cat " +
@@ -779,8 +786,13 @@ class _InsideCategoryState extends State<InsideCategory>
                                                   PlanModel model = PlanModel();
                                                   model = snapshot.data[index];
                                                   return Visibility(
-                                                    visible:
-                                                        model.isrec == "true",
+                                                    visible: model.isrec ==
+                                                            "true" &&
+                                                        model.packs.first
+                                                            .planName
+                                                            .toLowerCase()
+                                                            .contains(
+                                                                search1.text),
                                                     child: GestureDetector(
                                                       onTap: () {
                                                         print("Cat " +
@@ -1021,27 +1033,27 @@ class _InsideCategoryState extends State<InsideCategory>
     });
   }
 
-  search() {
-    searchGloble(search1.text).then((value) {
-      print("done");
-      if (value) {
-        service.clear();
-        service.addAll(Searchdata.subcat);
+  // search() {
+  //   searchGloble(search1.text).then((value) {
+  //     print("done");
+  //     if (value) {
+  //       service.clear();
+  //       service.addAll(Searchdata.subcat);
 
-        print("condition");
+  //       print("condition");
 
-        // pls=value.plans;
+  //       // pls=value.plans;
 
-        setState(() {});
-      }
-    }).whenComplete(() {
-      _tabController = TabController(length: service.length, vsync: this);
-      for (int i = 0; i < service.length; i++) {
-        keys.add(i);
-        keys[i] = GlobalKey();
-      }
-      isLoading = false;
-      setState(() {});
-    });
-  }
+  //       setState(() {});
+  //     }
+  //   }).whenComplete(() {
+  //     _tabController = TabController(length: service.length, vsync: this);
+  //     for (int i = 0; i < service.length; i++) {
+  //       keys.add(i);
+  //       keys[i] = GlobalKey();
+  //     }
+  //     isLoading = false;
+  //     setState(() {});
+  //   });
+  // }
 }

@@ -37,7 +37,6 @@ class _SelectCityState extends State<SelectCity> {
   final _search = TextEditingController();
   @override
   void initState() {
-
     getcities().then((value) {
       citydata = value;
     });
@@ -183,7 +182,7 @@ class _SelectCityState extends State<SelectCity> {
                 Container(
                   padding: EdgeInsets.symmetric(
                       horizontal: size.width * 0.07, vertical: 50),
-                  color: kLightOrangeBgColor,
+                  color: kcitybgcolor,
                   child: Center(
                     child: FutureBuilder(
                         future: _search.text.isEmpty
@@ -229,7 +228,8 @@ class _SelectCityState extends State<SelectCity> {
                                         Ids.cityid =
                                             snapshot.data[index]["_id"];
                                         pref!.setString("cityId", Ids.cityid);
-                                      pref!.setString("cityname",snapshot.data[index]["city"]);
+                                        pref!.setString("cityname",
+                                            snapshot.data[index]["city"]);
 
                                         print("=======" + Ids.cityid);
                                         print(CarsData.city);
@@ -340,7 +340,8 @@ class _SelectCityState extends State<SelectCity> {
                                         Ids.cityid =
                                             snapshot.data[index]["_id"];
                                         pref!.setString("CarId", Ids.carid);
-                                      pref!.setString("cityname",snapshot.data[index]["city"]);
+                                        pref!.setString("cityname",
+                                            snapshot.data[index]["city"]);
 
                                         print(CarsData.city);
                                         print(CarsData.cityimage);
@@ -418,14 +419,14 @@ class _SelectCityState extends State<SelectCity> {
                               );
                             }
                             return Padding(
-                                    padding:  EdgeInsets.only(top: h*0.25),
-                                    child: loder,
-                                  );
+                              padding: EdgeInsets.only(top: h * 0.25),
+                              child: loder,
+                            );
                           }
                           return Padding(
-                                    padding:  EdgeInsets.only(top: h*0.25),
-                                    child: loder,
-                                  );
+                            padding: EdgeInsets.only(top: h * 0.25),
+                            child: loder,
+                          );
                           // print(snapshot.data.length);
                         }),
                   ),
@@ -437,6 +438,4 @@ class _SelectCityState extends State<SelectCity> {
       ),
     );
   }
-
-
 }

@@ -77,7 +77,7 @@ class _FAQSState extends State<FAQS> {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: kbg2,
+      backgroundColor: kbg3,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: kwhitecolor,
@@ -94,11 +94,12 @@ class _FAQSState extends State<FAQS> {
               shrinkWrap: true,
               controller: _controller,
               itemCount: faqList.length,
-              padding: EdgeInsets.only(top:h*0.02),
+              padding: EdgeInsets.only(top: h * 0.02),
               itemBuilder: (BuildContext context, int index) {
                 //  var abc = faqList[index];
                 return Visibility(
-                  visible: faqList[index].question!=null||faqList[index].answer !=null,
+                  visible: faqList[index].question != null ||
+                      faqList[index].answer != null,
                   child: ExpandableNotifier(
                       initialExpanded: false,
                       child: Padding(
@@ -117,8 +118,7 @@ class _FAQSState extends State<FAQS> {
                                     iconColor: korangecolor,
                                     iconSize: 30,
                                     headerAlignment:
-                                        ExpandablePanelHeaderAlignment
-                                            .center,
+                                        ExpandablePanelHeaderAlignment.center,
                                     tapBodyToCollapse: true,
                                   ),
                                   header: Padding(
@@ -129,8 +129,7 @@ class _FAQSState extends State<FAQS> {
                                         style: GoogleFonts.montserrat(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w400,
-                                            color:
-                                                kTextInputPlaceholderColor),
+                                            color: kTextInputPlaceholderColor),
                                       )),
                                   collapsed: Text(
                                     //  "Frequently Asked Questions — page on their website. This page includes a series of questions that are commonly asked by customers and cover topics including product or service usage, business hours, prices, and more.",
@@ -149,14 +148,11 @@ class _FAQSState extends State<FAQS> {
                                     children: <Widget>[
                                       // for (var _ in Iterable.generate(5))
                                       Padding(
-                                          padding:
-                                              EdgeInsets.only(bottom: 10),
+                                          padding: EdgeInsets.only(bottom: 10),
                                           child: Text(
                                             //  "Frequently Asked Questions — page on their website. This page includes a series of questions that are commonly asked by customers and cover topics including product or service usage, business hours, prices, and more.",
 
-                                            faqList[index]
-                                                .answer
-                                                .toString(),
+                                            faqList[index].answer.toString(),
                                             softWrap: true,
                                             overflow: TextOverflow.fade,
                                             style: GoogleFonts.montserrat(

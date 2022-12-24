@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cityofcars/Screens/profile.dart';
 import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Services/url.dart';
 import 'package:cityofcars/Utils/constants.dart';
@@ -49,6 +50,7 @@ class _NewCityState extends State<NewCity> {
     h = size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      // backgroundColor: kcitybgcolor,
       appBar: AppBar(
         automaticallyImplyLeading: true,
         foregroundColor: kTextInputPlaceholderColor,
@@ -152,7 +154,7 @@ class _NewCityState extends State<NewCity> {
               Container(
                 padding: EdgeInsets.symmetric(
                     horizontal: size.width * 0.07, vertical: 50),
-                color: kLightOrangeBgColor,
+                color: kcitybgcolor,
                 child: Center(
                   child: FutureBuilder(
                       future: _search.text.isEmpty
@@ -218,6 +220,7 @@ class _NewCityState extends State<NewCity> {
                                             //       builder: (context) =>
                                             //           const SelectBrand(),
                                             //     ));
+                                            Profile.ischangeCity = true;
                                             changeCity(context,
                                                     snapshot.data[index]["_id"])
                                                 .then((value) {

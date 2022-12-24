@@ -8,6 +8,7 @@ import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Utils/preference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:intl/intl.dart';
@@ -73,7 +74,7 @@ class _OrderHistoryState extends State<OrderHistory> {
 
     // });
     return Scaffold(
-      backgroundColor: kbg2,
+      backgroundColor: kbg3,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: kwhitecolor,
@@ -382,7 +383,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                             style: GoogleFonts
                                                                 .montserrat(
                                                                     fontSize:
-                                                                        14,
+                                                                        18,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w500,
@@ -549,8 +550,10 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                                 .carbrand +
                                                             " (" +
                                                             datalist.first
-                                                                .carbrand +
-                                                            ")",
+                                                                .fuelname +
+                                                            ") " +
+                                                            datalist
+                                                                .first.cityname,
                                                         style: GoogleFonts
                                                             .montserrat(
                                                                 fontSize: 12,
@@ -560,8 +563,8 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                                 color:
                                                                     kTextInputPlaceholderColor)),
                                                   ])),
-                                              Image.asset(
-                                                "assets/images/map.png",
+                                              SvgPicture.asset(
+                                                "assets/svg/Order.svg",
                                                 height: h * 0.15,
                                               ),
                                               FittedBox(
@@ -853,7 +856,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                             style: GoogleFonts
                                                                 .montserrat(
                                                                     fontSize:
-                                                                        14,
+                                                                        18,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w500,
@@ -1003,6 +1006,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                         fit: BoxFit.fill)),
                                               ),
                                               RichText(
+                                                  textAlign: TextAlign.center,
                                                   text: TextSpan(
                                                       text:
                                                           model.carname + "  ",
@@ -1014,21 +1018,30 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                           color:
                                                               kTextInputPlaceholderColor),
                                                       children: [
-                                                    TextSpan(
-                                                        text: datalist[index]
-                                                            .carbrand,
-                                                        // "Hyundai",
-                                                        style: GoogleFonts
-                                                            .montserrat(
-                                                                fontSize: 12,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                color:
-                                                                    kTextInputPlaceholderColor)),
-                                                  ])),
+                                                        TextSpan(
+                                                            text: datalist[
+                                                                        index]
+                                                                    .carbrand +
+                                                                " (" +
+                                                                datalist[index]
+                                                                    .fuelname +
+                                                                ") \n" +
+                                                                // "Venkatanarasimharajuvaripeta"
+                                                                datalist[index]
+                                                                    .cityname,
+                                                            // "Hyundai",
+                                                            style: GoogleFonts
+                                                                .montserrat(
+                                                                    fontSize:
+                                                                        12,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400,
+                                                                    color:
+                                                                        kTextInputPlaceholderColor)),
+                                                      ])),
                                               Image.asset(
-                                                "assets/images/map.png",
+                                                "assets/images/Order.png",
                                                 height: h * 0.15,
                                               ),
                                               FittedBox(

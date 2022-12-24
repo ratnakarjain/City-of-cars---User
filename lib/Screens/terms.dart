@@ -20,14 +20,15 @@ class _TermsState extends State<Terms> {
   @override
   void initState() {
     super.initState();
-    des = Prefernece.pref!.getString("terms")??"";
+    des = Prefernece.pref!.getString("terms") ?? "";
   }
+
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: kbg2,
+      backgroundColor: kbg3,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: kwhitecolor,
@@ -43,32 +44,26 @@ class _TermsState extends State<Terms> {
         width: w,
         child: SingleChildScrollView(
           child: Column(
-
             children: [
               Container(
-                margin: EdgeInsets.only(
-                  top: h * 0.01,
-                  bottom: h*0.02
-                ),
-                padding: EdgeInsets.all(h * 0.03),
-                decoration: BoxDecoration(
-                    color: kwhitecolor,
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(
-                          h * 0.05,
-                        ),
-                        bottomLeft: Radius.circular(h * 0.05)),
-                    boxShadow: const [
-                      BoxShadow(
-                          blurRadius: 5, offset: Offset(0, 3), color: Colors.grey)
-                    ]),
-                child:
-                Html(
-                  data: des.toString(),
-
-                )
-                 
-              ),
+                  margin: EdgeInsets.only(top: h * 0.01, bottom: h * 0.02),
+                  padding: EdgeInsets.all(h * 0.03),
+                  decoration: BoxDecoration(
+                      color: kwhitecolor,
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(
+                            h * 0.05,
+                          ),
+                          bottomLeft: Radius.circular(h * 0.05)),
+                      boxShadow: const [
+                        BoxShadow(
+                            blurRadius: 5,
+                            offset: Offset(0, 3),
+                            color: Colors.grey)
+                      ]),
+                  child: Html(
+                    data: des.toString(),
+                  )),
               // RRecctButton(
               //   h: h * 0.06,
               //   w: w * 0.9,

@@ -56,7 +56,15 @@ Future getcities() async {
 }
 
 Future getCarData() async {
-  var url = Uri.parse(getcarData + "?brand_id=" + Ids.brandid);
+  var url = Uri.parse(
+    getcarData +
+        "?brand_id=" +
+        Ids.brandid +
+        "&city_id=" +
+        Ids.cityid +
+        "&fuel_id=" +
+        Ids.fuelid,
+  );
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -108,16 +116,17 @@ Future getBrandss() async {
 }
 
 Future getfuel() async {
-  var url = Uri.parse(
-    getFuel + "?_id=" + Ids.carid,
-  );
+  var url = Uri.parse(getFuel
+      // + "?_id=" + Ids.carid,
+      );
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
     if (respnse.statusCode == 200) {
       var data = jsonDecode(respnse.body);
       if (data["status"]) {
-        var list = data["data"][0]["fuel"];
+        // var list = data["data"][0]["fuel"];
+        var list = data["data"];
         print(list);
 
         return list;
@@ -374,14 +383,16 @@ Future getSubcategory(String _id) async {
   } else {
     car = "?";
   }
-  var url = Uri.parse(getSubcategoryUrl +
-      car +
-      "cateory_id=" +
-      _id +
-      "&cityid=" +
-      Prefernece.pref!.getString("cityId").toString() +
-      "&fuelid=" +
-      prefs!.getString("fuelId").toString());
+  var url = Uri.parse(
+    getSubcategoryUrl +
+        car +
+        "cateory_id=" +
+        _id +
+        "&cityid=" +
+        (Prefernece.pref!.getString("cityId") ?? "") +
+        "&fuelid=" +
+        (prefs!.getString("fuelId") ?? ""),
+  );
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -695,6 +706,7 @@ Future addorder(String paymentid, String paymentstatus, String status1,
       "paymentid": paymentid,
       "status1": status1,
       "status2": status2,
+      "city_id": Ids.cityid,
       "fcmToken": prefs!.getString("fcmtoken").toString()
     }, headers: {
       "Authorization": prefs!.getString('token').toString()
@@ -809,6 +821,8 @@ Future getOrderhistory() async {
           model.carimage = list["orderData"][0]["cars"]["image"].toString();
           model.carname = list["orderData"][0]["cars"]["cars"].toString();
           model.carbrand = list["orderData"][0]["brands"]["brands"].toString();
+          model.fuelname = list["orderData"][0]["fuel"]["fuel"] ?? "";
+          model.cityname = list["city"]["city"] ?? "";
           model.deliverydate = list["date"].toString();
           model.deliverytime = list["time"].toString();
           // model.details=list["_id"];
@@ -1497,7 +1511,7 @@ Future getblog() async {
       List<BlogsModel> blogs = [];
       var data = jsonDecode(respnse.body);
       if (data["status"]) {
-        blogs = blogsModelFromJson(jsonEncode(data["data"]));
+        blogs = blogsModelFromJson2(jsonEncode(data["data"]));
         return blogs;
       }
       return <BlogsModel>[];
@@ -1559,7 +1573,15 @@ Future searchGloble(String text) async {
   // } else {
   //   car = "?";
   // }
-  var url = Uri.parse(globalsearchUrl + "?text=" + text);
+  var url = Uri.parse(
+    globalsearchUrl +
+        "?text=" +
+        text +
+        "&city_id=" +
+        prefs!.getString("cityId").toString() +
+        "&car_id=" +
+        prefs!.getString("CarId").toString(),
+  );
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -1570,9 +1592,9 @@ Future searchGloble(String text) async {
       List<PlanModel> plans = [];
       List<SubcatModel> subcats = [];
       if (data["status"]) {
-        var categotry = data["searchData"][0]["category"];
-        for (int i = 0; i < data["searchData"][2]["plan"].length; i++) {
-          var qwe = data["searchData"][2]["plan"][i];
+        var categotry = data["category"];
+        for (int i = 0; i < data["getplan"].length; i++) {
+          var qwe = data["getplan"][i];
           PlanModel pl = PlanModel();
           pl.planid = qwe["_id"].toString();
           pl.componyprice = qwe["servicepackprice"].toString();
@@ -1616,10 +1638,8 @@ Future searchGloble(String text) async {
           }
           plans.add(pl);
         }
-        for (int i = 0;
-            i < data["searchData"][1]["getsubcategory"].length;
-            i++) {
-          var qwe = data["searchData"][1]["getsubcategory"][i];
+        for (int i = 0; i < data["getsubcategory"].length; i++) {
+          var qwe = data["getsubcategory"][i];
           SubcatModel mod = SubcatModel();
           mod.id = qwe["_id"];
           mod.name = qwe["title"];
@@ -1760,19 +1780,24 @@ Future deletecardata(String id) async {
 }
 
 Future addbookmark(String id, BuildContext context) async {
-  var url =
-      Uri.parse(addbookmarkUrl + "?blogs=" + id + "&userid=" + Ids.userid);
+  var url = Uri.parse(addbookmarkUrl + "?blogs=" + id);
   try {
     var respnse = await http.post(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
+    var data = jsonDecode(respnse.body);
     if (respnse.statusCode == 200) {
-      var data = jsonDecode(respnse.body);
+      data["status"];
 
       print("Success");
       return data["status"];
-    } else {}
+    } else if (respnse.statusCode == 201) {
+      return data["status"];
+    } else {
+      return null;
+    }
   } catch (e) {
     print("error $e");
+    return null;
   }
 }
 
@@ -1796,7 +1821,7 @@ Future resendotp(String mobile, BuildContext context) async {
 }
 
 Future getsavedblog() async {
-  var url = Uri.parse(savedblogUrl + "?userId=" + Ids.userid);
+  var url = Uri.parse(savedblogUrl);
   try {
     var respnse = await http.get(url,
         headers: {"Authorization": prefs!.getString('token').toString()});
@@ -1836,7 +1861,7 @@ Future changeCity(BuildContext context, String newcityId) async {
   var url = Uri.parse(changeCityUrl);
   try {
     var respnse = await http.post(url, body: {
-      "id": prefs!.getString("cityId"),
+      // "id": prefs!.getString("cityId") ?? "",
       "city": newcityId,
     }, headers: {
       "Authorization": prefs!.getString('token').toString()

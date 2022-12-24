@@ -2,6 +2,7 @@ import 'package:cityofcars/Utils/Buttons/button.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Screens/loginSignup.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../Services/servies.dart';
@@ -19,16 +20,30 @@ class _MyHomePageState extends State<MyHomePage> {
   int currentPage = 0;
 
   List cardData = [
-    {"image": "assets/images/man_with_car.png"},
-    {"image": "assets/images/man_with_car.png"},
-    {"image": "assets/images/man_with_car.png"},
-    {"image": "assets/images/man_with_car.png"},
+    {
+      "image": "assets/svg/Get_Started.svg",
+      "heading": "Get started",
+      "subheading":
+          "We aims to solve all your problems related to cars. Let’s start with the services first."
+    },
+    {
+      "image": "assets/svg/Book.svg",
+      "heading": "Book",
+      "subheading":
+          "Select services, book your time slot and pay as per your convenience through multiple payment modes.",
+    },
+    {
+      "image": "assets/svg/Track.svg",
+      "heading": "Track & Analyse",
+      "subheading":
+          "We provide excellent customer experience and provide real-time updates and analytics.",
+    },
   ];
   @override
   void initState() {
     super.initState();
-    
   }
+
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
@@ -36,9 +51,11 @@ class _MyHomePageState extends State<MyHomePage> {
     @override
     void initState() {
       super.initState();
-    getcmsdata();
+      getcmsdata();
     }
+
     return Scaffold(
+      backgroundColor: kscaffoldcolor,
       body: SizedBox(
         height: h,
         width: w,
@@ -46,69 +63,6 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // CarouselSlider.builder(
-            //   carouselController: _controller,
-            //   itemCount: 1,
-            //   itemBuilder: (context, index, pageViewIndex){
-            //     return
-            // Card(
-            //   elevation: 10,
-            //   shape: RoundedRectangleBorder(
-            //     borderRadius: BorderRadius.circular(h*0.08)
-            //   ),
-            //   child: Container(
-            //     height: h*0.6,
-            //     width: w*0.9,
-            //     child: Column(
-            //       mainAxisAlignment: MainAxisAlignment.center,
-            //       children: [
-            //         Image.asset("assets/images/man_with_car.png"),
-            //         Padding(
-            //           padding: EdgeInsets.only(top: h*0.02),
-            //           child: Center(
-            //             child: Text(
-            //               "Get Started",
-            //               textScaleFactor: 2,
-            //               style: GoogleFonts.montserrat(
-            //                 fontWeight: FontWeight.w700
-            //               ),
-
-            //               ),
-            //           ),
-            //         ),
-            //         Container(
-            //           width: w*0.8,
-            //           padding: EdgeInsets.only(top: h*0.015),
-            //           child: Center(
-            //             child: Text(
-            //               "   If you're offered a seat on a rocket\n ship, don't ask what seat! Just get on.",
-            //               textScaleFactor: 1,
-            //               style: GoogleFonts.montserrat(
-            //                 color: kblacklightshadecolor,
-            //                 fontWeight: FontWeight.w500
-            //               ),
-
-            //               ),
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // );
-
-            //   },
-            //   options: CarouselOptions(
-            //    height: h*0.6,
-            //    aspectRatio: 2.0,
-            //     enlargeCenterPage: true,
-            //     viewportFraction: 0.9,
-            //      onPageChanged: (index, reason) {
-            //       setState(() {
-            //         _current = index;
-            //       });
-            //     }),
-
-            // ),
             Expanded(
               child: PageView.builder(
                   onPageChanged: (value) {
@@ -128,17 +82,25 @@ class _MyHomePageState extends State<MyHomePage> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(h * 0.08)),
                           child: Container(
+                            padding: EdgeInsets.all(h * 0.02),
                             height: h * 0.6,
                             width: w * 0.9,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
                               children: [
-                                Image.asset(cardData[index]["image"]!),
+                                // Image.asset(cardData[index]["image"]!),
+                                Expanded(
+                                    child: SvgPicture.asset(
+                                        cardData[index]["image"])),
                                 Padding(
-                                  padding: EdgeInsets.only(top: h * 0.02),
+                                  padding: EdgeInsets.only(
+                                    top: h * 0.02,
+                                  ),
                                   child: Center(
                                     child: Text(
-                                      "Get Started",
+                                      cardData[index]["heading"],
+                                      textAlign: TextAlign.center,
                                       textScaleFactor: 2,
                                       style: GoogleFonts.montserrat(
                                           fontWeight: FontWeight.w700),
@@ -147,10 +109,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                                 Container(
                                   width: w * 0.8,
-                                  padding: EdgeInsets.only(top: h * 0.015),
+                                  padding: EdgeInsets.only(
+                                      top: h * 0.015, bottom: h * 0.04),
                                   child: Center(
                                     child: Text(
-                                      "   If you're offered a seat on a rocket\n ship, don't ask what seat! Just get on.",
+                                      cardData[index]["subheading"],
+                                      textAlign: TextAlign.center,
                                       textScaleFactor: 1,
                                       style: GoogleFonts.montserrat(
                                           color: kblacklightshadecolor,
@@ -174,8 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 4.0),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: currentPage == index
-                        ? kdarkpurple : ksubHading,
+                    color: currentPage == index ? kdarkpurple : ksubHading,
                   ),
                 );
               }).toList(),
@@ -189,7 +152,10 @@ class _MyHomePageState extends State<MyHomePage> {
               w: w * 0.88,
               buttonColor: kbluecolor,
               style: GoogleFonts.montserrat(
-                  color: kwhitecolor, fontWeight: FontWeight.w600,fontSize: 14,),
+                color: kwhitecolor,
+                fontWeight: FontWeight.w600,
+                fontSize: 14,
+              ),
               onTap: () {
                 Navigator.push(
                     context,
@@ -209,7 +175,9 @@ class _MyHomePageState extends State<MyHomePage> {
               w: w * 0.88,
               buttonColor: korangecolor,
               style: GoogleFonts.montserrat(
-                  color: kwhitecolor, fontWeight: FontWeight.w600,fontSize: 14),
+                  color: kwhitecolor,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14),
               onTap: () {
                 Navigator.push(
                     context,

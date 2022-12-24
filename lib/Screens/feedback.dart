@@ -53,7 +53,7 @@ class _FeedBackState extends State<FeedBack> {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: kbg2,
+      backgroundColor: kbg3,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: kwhitecolor,
@@ -149,7 +149,9 @@ class _FeedBackState extends State<FeedBack> {
                             },
                             child: Icon(
                               Icons.star,
-                              color: rating > index ? korangecolor : ksubHading,
+                              color: rating > index
+                                  ? korangecolor
+                                  : const Color(0xffdbd0bf),
                               size: h * 0.04,
                             ),
                           );
@@ -190,7 +192,7 @@ class _FeedBackState extends State<FeedBack> {
                                   w: w * 0.45,
                                   color: isSelected == index + 1
                                       ? kGreenColor
-                                      : kLightOrangeBgColor,
+                                      : kbg2,
                                   widget: Center(
                                     child: RichText(
                                         textAlign: TextAlign.center,

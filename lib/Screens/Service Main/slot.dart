@@ -674,9 +674,8 @@ class _SlotState extends State<Slot> {
                                         if (_formKey.currentState!.validate()) {
                                           istaped = true;
                                           bookSlot();
-                                          setState(() {
-                                            currentlocation = false;
-                                          });
+
+                                          currentlocation = false;
                                         } else {
                                           istaped = false;
                                           setState(() {});

@@ -5,6 +5,7 @@ import 'package:cityofcars/Screens/bottomnavBar.dart';
 import 'package:cityofcars/Services/models/plansModel.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../Services/servies.dart';
@@ -113,7 +114,7 @@ class _CartState extends State<Cart> {
               return true;
             },
       child: Scaffold(
-        backgroundColor: kLightOrangeBgColor,
+        backgroundColor: kbg3,
         appBar: AppBar(
           elevation: 0,
           backgroundColor: kwhitecolor,
@@ -695,18 +696,22 @@ class _CartState extends State<Cart> {
 
                                                           setState(() {});
                                                         },
-                                                        child: CircleAvatar(
-                                                          radius: h * 0.02,
-                                                          backgroundColor:
-                                                              kbluecolor,
-                                                          foregroundColor:
-                                                              kwhitecolor,
-                                                          child: FittedBox(
-                                                              child: Icon(
-                                                            Icons.delete,
-                                                            size: h * 0.022,
-                                                          )),
+                                                        child: SvgPicture.asset(
+                                                          "assets/svg/Delete.svg",
+                                                          height: h * 0.035,
                                                         ),
+                                                        //  CircleAvatar(
+                                                        //   radius: h * 0.02,
+                                                        //   backgroundColor:
+                                                        //       kbluecolor,
+                                                        //   foregroundColor:
+                                                        //       kwhitecolor,
+                                                        //   child: FittedBox(
+                                                        //       child: Icon(
+                                                        //     Icons.delete,
+                                                        //     size: h * 0.022,
+                                                        //   )),
+                                                        // ),
                                                       )
                                                     ]),
                                               ),
@@ -817,7 +822,7 @@ class _CartState extends State<Cart> {
                     radius: h * 0.025,
                     backgroundColor: kblackcolor,
                     foregroundColor: kwhitecolor,
-                    child: Icon(Icons.add),
+                    child: const Icon(Icons.add),
                   ),
                 ),
               ),

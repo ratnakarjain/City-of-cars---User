@@ -2,6 +2,7 @@ import 'package:cityofcars/Screens/Service%20Main/slot.dart';
 import 'package:cityofcars/Services/servies.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../Utils/Buttons/button.dart';
@@ -230,8 +231,12 @@ class _SosState extends State<Sos> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      "assets/images/call.png",
+                    // Image.asset(
+                    //   "assets/images/call.png",
+                    //   height: h * 0.03,
+                    // ),
+                    SvgPicture.asset(
+                      "assets/svg/Call US.svg",
                       height: h * 0.03,
                     ),
                     RichText(

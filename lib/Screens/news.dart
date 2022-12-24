@@ -49,7 +49,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
     w = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: kwhitecolor,
+      backgroundColor: kbg3,
       appBar: AppBar(
         elevation: 0,
         automaticallyImplyLeading: false,
@@ -401,20 +401,15 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
                                                             .id
                                                             .toString(),
                                                         context)
-                                                    .whenComplete(() {
-                                                  getblog().then((value) {
-                                                    blogs.clear();
-                                                    blogs.addAll(value);
+                                                    .then((value) {
+                                                  print(value);
+                                                  if (value != null) {
+                                                    print("in condition");
                                                     setState(() {
-                                                      length1 =
-                                                          blogs.length + 1;
-                                                      length2 =
-                                                          blogs.length + 1;
-                                                      blogs = blogs.reversed
-                                                          .toList();
+                                                      blogs[index]
+                                                          .profileBlogs = value;
                                                     });
-                                                  });
-                                                  setState(() {});
+                                                  }
                                                 });
                                               },
                                               child: !blogs[index].profileBlogs!

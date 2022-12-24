@@ -10,6 +10,7 @@ import 'package:circular_bottom_navigation/tab_item.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../Services/models/usercardetailsmodel.dart';
+import '../Services/servies.dart';
 import '../Utils/functions.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -43,7 +44,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    
+    getcmsdata();
     selectedPos = widget.index;
     _navigationController = CircularBottomNavigationController(selectedPos);
   }

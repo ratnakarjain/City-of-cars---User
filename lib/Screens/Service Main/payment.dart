@@ -162,7 +162,7 @@ class _PaymentState extends State<Payment> {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: kLightOrangeBgColor,
+      backgroundColor: kbg3,
       appBar: AppBar(
         backgroundColor: kwhitecolor,
         elevation: 0,

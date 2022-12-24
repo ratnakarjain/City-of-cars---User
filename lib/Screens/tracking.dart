@@ -6,6 +6,7 @@ import 'package:cityofcars/Services/models/recentsModel.dart';
 import 'package:cityofcars/Utils/Buttons/button.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../Services/servies.dart';
@@ -117,7 +118,12 @@ class _TrackingState extends State<Tracking> {
                     children: [
                       Align(
                         alignment: Alignment.topCenter,
-                        child: Image.asset("assets/images/trackingback.png"),
+                        child:
+                            //  SvgPicture.asset(
+                            //   "assets/svg/trackingback.svg",
+                            //   width: w,
+                            // )
+                            Image.asset("assets/images/trackingback.png"),
                       ),
                       SingleChildScrollView(
                         // physics: const BouncingScrollPhysics(),
@@ -487,8 +493,14 @@ class _TrackingState extends State<Tracking> {
                                                                   MainAxisAlignment
                                                                       .spaceAround,
                                                               children: [
-                                                                Image.asset(
-                                                                    "assets/images/edit.png"),
+                                                                // Image.asset(
+                                                                //     "assets/images/edit.png"),
+                                                                SvgPicture
+                                                                    .asset(
+                                                                  "assets/svg/Edit-2.svg",
+                                                                  height:
+                                                                      h * 0.03,
+                                                                ),
                                                                 RichText(
                                                                   text: TextSpan(
                                                                       text:
@@ -1265,6 +1277,10 @@ class Dummy extends StatelessWidget {
             "assets/images/trackingback.png",
             width: w,
           ),
+          // SvgPicture.asset(
+          //   "assets/svg/trackingback.svg",
+          //   width: w,
+          // ),
           // SizedBox(
           //   height: h*0.1,
           // ),

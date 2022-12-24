@@ -183,7 +183,13 @@ class _CarHealthState extends State<CarHealth> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(
                                 bottomLeft: Radius.circular(h * 0.07)),
-                            color: kredcolor,
+                            color: carHealthModel.overallhealth == "A"
+                                ? const Color(0xffd9c31d)
+                                : carHealthModel.overallhealth == "P"
+                                    ? const Color(0xffd91d49)
+                                    : carHealthModel.overallhealth == "G"
+                                        ? const Color(0xff48d91d)
+                                        : const Color(0xffd91d49),
                           ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.end,

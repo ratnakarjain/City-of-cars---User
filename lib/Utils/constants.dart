@@ -13,6 +13,7 @@ const kwhitecolor = Color(0XFFFFFFFF);
 const kbg3 = Color(0xFFFFF7F7);
 const kSinginTextColor = Color(0XFF5C6E98);
 const kLightOrangeBgColor = Color(0XFFFAF7F7);
+const kcitybgcolor = Color(0XFFFAF2F2);
 // const kShadowColor = Color(0XFF00001F);
 const kshadowColor = Color(0xff000029);
 const kTextInputPlaceholderColor = Color(0XFF241332);
@@ -34,20 +35,23 @@ const carhealthColor3 = Color(0xFF5F4591);
 const carhealthColor4 = Color(0xFF9599B3);
 const kgrey = Color(0xFF4B516B);
 const knewstextbrif = Color(0xff817889);
+const kscaffoldcolor = Color(0xFFFBF9F9);
 
+const Widget loder = Center(
+  child: CircularProgressIndicator.adaptive(),
+);
 
+Widget loder2 = Expanded(
+    child: Container(
+        color: kTransparent,
+        child: Padding(
+          padding: Platform.isIOS
+              ? const EdgeInsets.only(bottom: 100.0)
+              : const EdgeInsets.only(bottom: 150.0),
+          child: loder,
+        )));
 
-const Widget loder = Center(child: CircularProgressIndicator.adaptive(),);
-
-
- Widget loder2 = Expanded(child: Container(
-                                    color: kTransparent,
-                                    child:Padding(
-                                      padding: Platform.isIOS? const EdgeInsets.only(bottom:  100.0):const EdgeInsets.only(bottom:  150.0),
-                                      child: loder,
-                                    )));
-
-class CarsData{
+class CarsData {
   static String city = "";
   static String name = "";
   static String brand = "";
@@ -56,19 +60,18 @@ class CarsData{
   static String cityimage = "";
   static String fuel = "";
   static String fuelimage = "";
-
 }
 
-class Ids{
-  static String categoryid="";
-  static String subcategoryid="";
-  static String planid="";
-  static String slotid="";
-  static String fuelid="";
-  static String cartid="";
-  static String userid="";
-  static String orderid="";
-  static String cityid="";
-  static String carid="";
-  static String brandid="";
+class Ids {
+  static String categoryid = "";
+  static String subcategoryid = "";
+  static String planid = "";
+  static String slotid = "";
+  static String fuelid = "";
+  static String cartid = "";
+  static String userid = "";
+  static String orderid = "";
+  static String cityid = "";
+  static String carid = "";
+  static String brandid = "";
 }

@@ -13,6 +13,7 @@ import 'package:cityofcars/Utils/preference.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../Services/models/usercardetailsmodel.dart';
 import '../bottomnavBar.dart';
@@ -171,7 +172,7 @@ class _ServiceMainState extends State<ServiceMain> {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: kLightOrangeBgColor,
+      backgroundColor: kbg3,
       extendBody: true,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(h * 0.18),
@@ -189,9 +190,7 @@ class _ServiceMainState extends State<ServiceMain> {
             //     borderRadius: BorderRadius.circular(h * 0.02),
             //     border: Border.all(color: kbluecolor, width: 3)),
             child: Text(
-              prefs!.getString("cityname").toString() == "null"
-                  ? "Delhi"
-                  : prefs!.getString("cityname").toString(),
+              prefs!.getString("cityname") ?? "",
               style: GoogleFonts.montserrat(
                   textStyle: const TextStyle(
                       fontWeight: FontWeight.w400,
@@ -204,7 +203,7 @@ class _ServiceMainState extends State<ServiceMain> {
                   ])),
             ),
           ),
-          flexibleSpace: Container(
+          flexibleSpace: SizedBox(
             height: h * 0.25,
             child: Stack(
               children: [
@@ -621,6 +620,112 @@ class _ServiceMainState extends State<ServiceMain> {
                     height: h * 0.015,
                   ),
                   Visibility(
+                    // visible: showmost,
+                    visible: search.text.isNotEmpty && pls1.isNotEmpty,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Label(
+                          color: kbluecolor,
+                          text: "Plans",
+                          textStyle: GoogleFonts.montserrat(
+                            textStyle: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: kwhitecolor),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
+                        ),
+                        SizedBox(
+                          height: h * 0.01,
+                        ),
+                        SizedBox(
+                          height: h * 0.18,
+                          child: ListView.builder(
+                            controller: _controller2,
+                            physics: const BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            padding: EdgeInsets.symmetric(
+                                vertical: h * 0.01, horizontal: h * 0.025),
+                            itemCount: pls1.length,
+                            itemBuilder: (context, index) {
+                              PlanModel model = PlanModel();
+
+                              model = pls1[index];
+                              print("====" + model.isMost);
+                              return GestureDetector(
+                                onTap: () {
+                                  print("Cat " +
+                                      model.categoryId.toString() +
+                                      "^^");
+                                  Ids.categoryid = model.categoryId.toString();
+                                  Ids.subcategoryid = model.subcatid.toString();
+                                  Ids.planid = model.planid.toString();
+                                  print("===" + Ids.categoryid);
+                                  print("===" + Ids.subcategoryid);
+                                  print("===" + Ids.planid);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ProductDetails(
+                                              planDetails: model)));
+                                },
+                                child: RRectCard(
+                                  h: h * 0.1,
+                                  w: w * 0.25,
+                                  borderRadius: 15,
+                                  widget: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Image.network(
+                                          model.planimage,
+                                          height: h * 0.04,
+                                        ),
+                                        // Image.asset(
+                                        //     "assets/images/${reccomendedPackes[0]["image"]}"),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        FittedBox(
+                                          child: Text(
+                                            model.packs.first.planName,
+                                            style: GoogleFonts.montserrat(
+                                              fontWeight: FontWeight.w600,
+                                              height: 2,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: h * 0.01),
+                                          child: FittedBox(
+                                            child: Text(
+                                              model.packs.first.subPlanName,
+                                              textScaleFactor: 0.6,
+                                              style: GoogleFonts.montserrat(
+                                                fontWeight: FontWeight.w600,
+                                                color:
+                                                    kTextInputPlaceholderColor
+                                                        .withOpacity(0.6),
+                                                height: 2,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ]),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          height: h * 0.01,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Visibility(
                     visible: cats1.isNotEmpty,
                     child: GridView.count(
                       // physics:  const ScrollPhysics(),
@@ -872,7 +977,7 @@ class _ServiceMainState extends State<ServiceMain> {
                   ),
                   Visibility(
                     // visible: showmost,
-                    visible: mostdata,
+                    visible: mostdata && pls1.isNotEmpty,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -1188,7 +1293,7 @@ class _ServiceMainState extends State<ServiceMain> {
                     ),
                   ),
                   Visibility(
-                    visible: recdata,
+                    visible: recdata && pls1.isNotEmpty,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -1483,8 +1588,8 @@ class _ServiceMainState extends State<ServiceMain> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          "assets/images/call.png",
+                        SvgPicture.asset(
+                          "assets/svg/Call US.svg",
                           height: h * 0.03,
                         ),
                         RichText(

@@ -11,6 +11,7 @@ class OrderHistoryModel {
   String carname = "";
   String carbrand = "";
   String fuelname = "";
+  String cityname = "";
   String packname = "";
   String servicename = "";
   String details = "";

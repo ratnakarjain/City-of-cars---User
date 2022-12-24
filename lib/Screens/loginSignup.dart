@@ -741,7 +741,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
         istaped2 = false;
         setState(() {});
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(jsonResponse["message"]),
+          content: Text(jsonResponse["msg"]),
         ));
       }
     } catch (e) {
