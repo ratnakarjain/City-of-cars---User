@@ -711,10 +711,11 @@ class _ProfileState extends State<Profile> {
                     children: [
                       Expanded(
                         child: CircleAvatar(
-                          backgroundColor: kbluecolor,
-                          foregroundColor: kwhitecolor,
-                          child: Image.asset("assets/images/sunrise.png"),
-                        ),
+                            backgroundColor: const Color(0xffFD440D),
+                            foregroundColor: kwhitecolor,
+                            child: SvgPicture.asset("assets/svg/SOS.svg")
+                            // Image.asset("assets/images/sunrise.png"),
+                            ),
                       ),
                       Expanded(
                         flex: 3,
@@ -789,9 +790,9 @@ class _ProfileState extends State<Profile> {
                     children: [
                       Expanded(
                         child: CircleAvatar(
-                          backgroundColor: kbluecolor,
+                          backgroundColor: const Color(0xff3B71A2),
                           foregroundColor: kwhitecolor,
-                          child: Image.asset("assets/images/sunrise.png"),
+                          child: SvgPicture.asset("assets/svg/Support.svg"),
                         ),
                       ),
                       Expanded(
@@ -865,9 +866,9 @@ class _ProfileState extends State<Profile> {
                     children: [
                       Expanded(
                         child: CircleAvatar(
-                          backgroundColor: kbluecolor,
+                          backgroundColor: const Color(0xffFDC533),
                           foregroundColor: kwhitecolor,
-                          child: Image.asset("assets/images/sunrise.png"),
+                          child: SvgPicture.asset("assets/svg/City.svg"),
                         ),
                       ),
                       Expanded(
@@ -903,9 +904,9 @@ class _ProfileState extends State<Profile> {
                     children: [
                       Expanded(
                         child: CircleAvatar(
-                          backgroundColor: kbluecolor,
+                          backgroundColor: const Color(0xff45515C),
                           foregroundColor: kwhitecolor,
-                          child: Image.asset("assets/images/sunrise.png"),
+                          child: SvgPicture.asset("assets/svg/About Us.svg"),
                         ),
                       ),
                       Expanded(
@@ -941,9 +942,9 @@ class _ProfileState extends State<Profile> {
                     children: [
                       Expanded(
                         child: CircleAvatar(
-                          backgroundColor: kbluecolor,
+                          backgroundColor: const Color(0xffEDAC44),
                           foregroundColor: kwhitecolor,
-                          child: Image.asset("assets/images/sunrise.png"),
+                          child: SvgPicture.asset("assets/svg/T&C.svg"),
                         ),
                       ),
                       Expanded(
@@ -978,9 +979,9 @@ class _ProfileState extends State<Profile> {
                     children: [
                       Expanded(
                         child: CircleAvatar(
-                          backgroundColor: kbluecolor,
+                          backgroundColor: const Color(0xff45515C),
                           foregroundColor: kwhitecolor,
-                          child: Image.asset("assets/images/sunrise.png"),
+                          child: SvgPicture.asset("assets/svg/Privacy.svg"),
                         ),
                       ),
                       Expanded(
@@ -1013,9 +1014,12 @@ class _ProfileState extends State<Profile> {
                     children: [
                       Expanded(
                         child: CircleAvatar(
-                          backgroundColor: kbluecolor,
+                          backgroundColor: Color(0xff45515C),
                           foregroundColor: kwhitecolor,
-                          child: Image.asset("assets/images/sunrise.png"),
+                          child: SvgPicture.asset(
+                            "assets/svg/FAQ.svg",
+                            height: h * 0.03,
+                          ),
                         ),
                       ),
                       Expanded(
@@ -1049,12 +1053,13 @@ class _ProfileState extends State<Profile> {
                         w: w * 0.9,
                         widget: Row(
                           children: [
-                            Expanded(
+                            const Expanded(
                               child: CircleAvatar(
-                                backgroundColor: korangecolor,
-                                foregroundColor: kwhitecolor,
-                                child: Image.asset("assets/images/heart.png"),
-                              ),
+                                  backgroundColor: Color(0xffFD440D),
+                                  foregroundColor: kwhitecolor,
+                                  child: Icon(Icons.delete)
+                                  // SvgPicture.asset("assets/svg/Logout.svg"),
+                                  ),
                             ),
                             Expanded(
                               flex: 3,
@@ -1089,9 +1094,9 @@ class _ProfileState extends State<Profile> {
                     children: [
                       Expanded(
                         child: CircleAvatar(
-                          backgroundColor: korangecolor,
+                          backgroundColor: const Color(0xffFD440D),
                           foregroundColor: kwhitecolor,
-                          child: Image.asset("assets/images/heart.png"),
+                          child: SvgPicture.asset("assets/svg/Logout.svg"),
                         ),
                       ),
                       Expanded(

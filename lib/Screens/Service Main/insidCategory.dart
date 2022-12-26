@@ -629,22 +629,34 @@ class _InsideCategoryState extends State<InsideCategory>
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Label(
-                                    color: korangecolor,
-                                    text: "RECOMMEND packes",
-                                    textStyle: GoogleFonts.montserrat(
-                                      textStyle: const TextStyle(
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.bold,
-                                          color: kwhitecolor),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: h * 0.025),
+                                    child: Text(
+                                      "Recommended Services",
+                                      style: GoogleFonts.montserrat(
+                                        textStyle: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: kTextInputPlaceholderColor),
+                                      ),
                                     ),
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 5),
                                   ),
+                                  // Label(
+                                  //   color: korangecolor,
+                                  //   text: "RECOMMEND packes",
+                                  //   textStyle: GoogleFonts.montserrat(
+                                  //     textStyle: const TextStyle(
+                                  //         fontSize: 11,
+                                  //         fontWeight: FontWeight.bold,
+                                  //         color: kwhitecolor),
+                                  //   ),
+                                  //   padding: EdgeInsets.symmetric(
+                                  //       horizontal: 10, vertical: 5),
+                                  // ),
                                   SizedBox(
-                                    height: h * 0.005,
+                                    height: h * 0.01,
                                   ),
-                                  SizedBox(
+                                  Container(
+                                      color: kwhitecolor,
                                       height: h * 0.18,
                                       child: FutureBuilder(
                                         future: getrecmostPlans(),
@@ -702,6 +714,7 @@ class _InsideCategoryState extends State<InsideCategory>
                                                         h: h * 0.1,
                                                         w: w * 0.25,
                                                         borderRadius: 15,
+                                                        color: kcardColor,
                                                         widget: Column(
                                                             mainAxisAlignment:
                                                                 MainAxisAlignment

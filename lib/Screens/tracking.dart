@@ -1009,9 +1009,9 @@ class _TrackingState extends State<Tracking> {
                                                 children: [
                                                   CircleAvatar(
                                                       backgroundColor:
-                                                          kdarkpurple,
-                                                      child: Image.asset(
-                                                          "assets/images/heart.png")),
+                                                          korangecolor,
+                                                      child: SvgPicture.asset(
+                                                          "assets/svg/City.svg")),
                                                 ],
                                               ),
                                             ),
@@ -1274,7 +1274,7 @@ class Dummy extends StatelessWidget {
       child: Column(
         children: [
           Image.asset(
-            "assets/images/trackingback.png",
+            "assets/images/Tracking.png",
             width: w,
           ),
           // SvgPicture.asset(
@@ -1308,9 +1308,9 @@ class Dummy extends StatelessWidget {
                                 child: Column(
                                   children: [
                                     CircleAvatar(
-                                        backgroundColor: kdarkpurple,
-                                        child: Image.asset(
-                                            "assets/images/heart.png")),
+                                        backgroundColor: korangecolor,
+                                        child: SvgPicture.asset(
+                                            "assets/svg/City.svg")),
                                   ],
                                 ),
                               ),

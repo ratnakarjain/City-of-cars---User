@@ -126,14 +126,35 @@ class _SlotState extends State<Slot> {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Text(
+                          "Enter Booking Details",
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w700, color: kblackcolor),
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          // crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text(
-                              "Get current location:",
-                              style: GoogleFonts.montserrat(
-                                  fontWeight: FontWeight.w700,
-                                  color: kGreenColor),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    // "Get current location:",
+                                    "Current location as pick-up",
+                                    style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.w700,
+                                        color: kGreenColor),
+                                  ),
+                                  Text(
+                                    "location services need to be turned on",
+                                    style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 9,
+                                        color: kGreenColor),
+                                  ),
+                                ],
+                              ),
                             ),
                             Checkbox(
                               focusColor: kGreenColor,
@@ -146,11 +167,7 @@ class _SlotState extends State<Slot> {
                             )
                           ],
                         ),
-                        Text(
-                          "Enter Booking Details",
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w700),
-                        ),
+
                         // Container(
                         //   height: h * 0.06,
                         //   margin: EdgeInsets.only(top: h * 0.02, bottom: 0.01),
@@ -591,7 +608,8 @@ class _SlotState extends State<Slot> {
                           height: h * 0.03,
                         ),
                         Text(
-                          "Special Remarks / Preferences",
+                          // "Special Remarks / Preferences",
+                          "Additional Requests",
                           style: GoogleFonts.montserrat(
                               color: kTextInputPlaceholderColor),
                         ),
@@ -624,7 +642,7 @@ class _SlotState extends State<Slot> {
                               textCapitalization: TextCapitalization.sentences,
                               decoration: InputDecoration(
                                   border: InputBorder.none,
-                                  hintText: "Optional",
+                                  hintText: "Anything to add or specify",
                                   hintStyle: GoogleFonts.montserrat(
                                     fontSize: 13,
                                     color: kTextInputPlaceholderColor
@@ -852,7 +870,7 @@ class _CalendarState extends State<Calendar> {
                   color:
                       //  _rangeEnd == null
                       //     ? _rangeStart == null
-                      kbluecolor),
+                      kGreenColor),
               todayTextStyle: GoogleFonts.montserrat(
                 color:
                     //  _rangeEnd == null

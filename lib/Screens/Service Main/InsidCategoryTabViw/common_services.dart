@@ -61,19 +61,30 @@ class _CommonServicesState extends State<CommonServices> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Label(
-            color: kbluecolor,
-            text: widget.label.toString(),
-            textStyle: GoogleFonts.montserrat(
-              textStyle: const TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold,
-                  color: kwhitecolor),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          Row(
+            children: [
+              Expanded(
+                child: Label(
+                  color: kblackcolor,
+                  text: widget.label.toString(),
+                  textStyle: GoogleFonts.montserrat(
+                    textStyle: const TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                        color: kwhitecolor),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                ),
+              ),
+            ],
           ),
           plans.isEmpty
-              ? Center(
+              ? Container(
+                  padding: EdgeInsets.symmetric(
+                      vertical: h * 0.05, horizontal: w * 0.02),
+                  width: w,
+                  alignment: Alignment.center,
                   child: Text(
                     // "There are no service packs in this category.",
                     "Please tap on profile to select a city or add a new car.",

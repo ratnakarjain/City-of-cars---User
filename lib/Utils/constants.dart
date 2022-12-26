@@ -36,6 +36,7 @@ const carhealthColor4 = Color(0xFF9599B3);
 const kgrey = Color(0xFF4B516B);
 const knewstextbrif = Color(0xff817889);
 const kscaffoldcolor = Color(0xFFFBF9F9);
+const kcardColor = Color(0xffF5EAEA);
 
 const Widget loder = Center(
   child: CircularProgressIndicator.adaptive(),

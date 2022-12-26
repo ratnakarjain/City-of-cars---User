@@ -940,39 +940,6 @@ class _ServiceMainState extends State<ServiceMain> {
                   // ),
 
                   SizedBox(
-                    height: h * 0.01,
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: w * 0.06,
-                      ),
-                      Text(
-                        "Not sure about the problem? ",
-                        style: GoogleFonts.montserrat(
-                          fontSize: 12,
-                          color: kTextInputPlaceholderColor,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Sos()));
-                        },
-                        child: Text(
-                          "Click here",
-                          style: GoogleFonts.montserrat(
-                            fontSize: 12,
-                            color: kbluecolor,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(
                     height: h * 0.02,
                   ),
                   Visibility(
@@ -981,22 +948,34 @@ class _ServiceMainState extends State<ServiceMain> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Label(
-                          color: kbluecolor,
-                          text: "most populer packs",
-                          textStyle: GoogleFonts.montserrat(
-                            textStyle: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: kwhitecolor),
+                        Padding(
+                          padding: EdgeInsets.only(left: h * 0.025),
+                          child: Text(
+                            "Most Populer Services",
+                            style: GoogleFonts.montserrat(
+                              textStyle: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: kTextInputPlaceholderColor),
+                            ),
                           ),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5),
                         ),
+                        // Label(
+                        //   color: kbluecolor,
+                        //   text: "most populer packs",
+                        //   textStyle: GoogleFonts.montserrat(
+                        //     textStyle: const TextStyle(
+                        //         fontWeight: FontWeight.bold,
+                        //         color: kwhitecolor),
+                        //   ),
+                        //   padding: const EdgeInsets.symmetric(
+                        //       horizontal: 10, vertical: 5),
+                        // ),
                         SizedBox(
                           height: h * 0.01,
                         ),
-                        SizedBox(
+                        Container(
                           height: h * 0.18,
+                          color: kwhitecolor,
                           child: ListView.builder(
                             controller: _controller2,
                             physics: const BouncingScrollPhysics(),
@@ -1035,6 +1014,7 @@ class _ServiceMainState extends State<ServiceMain> {
                                     h: h * 0.1,
                                     w: w * 0.25,
                                     borderRadius: 15,
+                                    color: kcardColor,
                                     widget: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
@@ -1297,21 +1277,33 @@ class _ServiceMainState extends State<ServiceMain> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Label(
-                          color: korangecolor,
-                          text: "recommended",
-                          textStyle: GoogleFonts.montserrat(
-                            textStyle: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: kwhitecolor),
+                        Padding(
+                          padding: EdgeInsets.only(left: h * 0.025),
+                          child: Text(
+                            "Recommended Services",
+                            style: GoogleFonts.montserrat(
+                              textStyle: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: kTextInputPlaceholderColor),
+                            ),
                           ),
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         ),
+                        // Label(
+                        //   color: korangecolor,
+                        //   text: "recommended",
+                        //   textStyle: GoogleFonts.montserrat(
+                        //     textStyle: const TextStyle(
+                        //         fontWeight: FontWeight.bold,
+                        //         color: kwhitecolor),
+                        //   ),
+                        //   padding:
+                        //       EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        // ),
                         SizedBox(
                           height: h * 0.01,
                         ),
                         Container(
+                            color: kwhitecolor,
                             height: h * 0.18,
                             child: ListView.builder(
                               controller: _controller2,
@@ -1346,6 +1338,7 @@ class _ServiceMainState extends State<ServiceMain> {
                                     child: RRectCard(
                                       h: h * 0.1,
                                       w: w * 0.25,
+                                      color: kcardColor,
                                       borderRadius: 15,
                                       widget: Column(
                                           mainAxisAlignment:
@@ -1580,80 +1573,30 @@ class _ServiceMainState extends State<ServiceMain> {
                   SizedBox(
                     height: h * 0.01,
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      makePhoneCall("9999955555");
-                      setState(() {});
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                          "assets/svg/Call US.svg",
-                          height: h * 0.03,
-                        ),
-                        RichText(
-                          text: TextSpan(
-                              text: "Call us ",
-                              style: GoogleFonts.montserrat(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w700,
-                                color: kbluecolor,
-                                height: 2,
-                              ),
-                              children: [
-                                TextSpan(
-                                  text: "at",
-                                  style: GoogleFonts.montserrat(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w400,
-                                    color: kTextInputPlaceholderColor,
-                                    height: 2,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: " 99999",
-                                  style: GoogleFonts.montserrat(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w700,
-                                    color: kbluecolor,
-                                    height: 2,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: "55555",
-                                  style: GoogleFonts.montserrat(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w700,
-                                    color: kGreenColor,
-                                    height: 2,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: "?",
-                                  style: GoogleFonts.montserrat(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w700,
-                                    color: kTextInputPlaceholderColor,
-                                    height: 2,
-                                  ),
-                                ),
-                              ]),
-                        )
-                      ],
+                  Padding(
+                    padding: EdgeInsets.only(left: h * 0.025),
+                    child: Text(
+                      "Offers & Promotions",
+                      style: GoogleFonts.montserrat(
+                        textStyle: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: kTextInputPlaceholderColor),
+                      ),
                     ),
                   ),
-                  Label(
-                    color: kbluecolor,
-                    text: "offers & discounts",
-                    textStyle: GoogleFonts.montserrat(
-                      textStyle: const TextStyle(
-                          fontWeight: FontWeight.bold, color: kwhitecolor),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  ),
+                  // Label(
+                  //   color: kbluecolor,
+                  //   text: "offers & discounts",
+                  //   textStyle: GoogleFonts.montserrat(
+                  //     textStyle: const TextStyle(
+                  //         fontWeight: FontWeight.bold, color: kwhitecolor),
+                  //   ),
+                  //   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  // ),
                   Container(
                     height: h * 0.2,
+                    color: kwhitecolor,
+                    margin: EdgeInsets.only(top: h * 0.01),
                     child: ListView.builder(
                       physics: const BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
@@ -1721,7 +1664,109 @@ class _ServiceMainState extends State<ServiceMain> {
                     ),
                   ),
                   SizedBox(
-                    height: h * 0.1,
+                    height: h * 0.01,
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: w * 0.06,
+                      ),
+                      Text(
+                        "Not sure about the problem? ",
+                        style: GoogleFonts.montserrat(
+                          fontSize: 12,
+                          color: kTextInputPlaceholderColor,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Sos()));
+                        },
+                        child: Text(
+                          "Click here",
+                          style: GoogleFonts.montserrat(
+                            fontSize: 12,
+                            color: kbluecolor,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: h * 0.01,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      makePhoneCall("9999955555");
+                      setState(() {});
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        // SvgPicture.asset(
+                        //   "assets/svg/Call US.svg",
+                        //   height: h * 0.03,
+                        // ),
+                        SizedBox(
+                          width: h * 0.025,
+                        ),
+                        RichText(
+                          text: TextSpan(
+                              text: "Call us ",
+                              style: GoogleFonts.montserrat(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: kbluecolor,
+                                height: 1,
+                              ),
+                              children: [
+                                TextSpan(
+                                  text: "at",
+                                  style: GoogleFonts.montserrat(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: kTextInputPlaceholderColor,
+                                    height: 1,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: " 9953777777",
+                                  style: GoogleFonts.montserrat(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: kbluecolor,
+                                    height: 1,
+                                  ),
+                                ),
+                                // TextSpan(
+                                //   text: "777777",
+                                //   style: GoogleFonts.montserrat(
+                                //     fontSize: 14,
+                                //     fontWeight: FontWeight.w400,
+                                //     color: kGreenColor,
+                                //     height: 1,
+                                //   ),
+                                // ),
+                                // TextSpan(
+                                //   text: "?",
+                                //   style: GoogleFonts.montserrat(
+                                //     fontSize: 15,
+                                //     fontWeight: FontWeight.w700,
+                                //     color: kTextInputPlaceholderColor,
+                                //     height: 1,
+                                //   ),
+                                // ),
+                              ]),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: h * 0.12,
                   ),
                 ],
               ),

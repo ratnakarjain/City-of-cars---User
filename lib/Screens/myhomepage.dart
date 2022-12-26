@@ -91,6 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               children: [
                                 // Image.asset(cardData[index]["image"]!),
                                 Expanded(
+                                    flex: 3,
                                     child: SvgPicture.asset(
                                         cardData[index]["image"])),
                                 Padding(
@@ -107,18 +108,20 @@ class _MyHomePageState extends State<MyHomePage> {
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  width: w * 0.8,
-                                  padding: EdgeInsets.only(
-                                      top: h * 0.015, bottom: h * 0.04),
-                                  child: Center(
-                                    child: Text(
-                                      cardData[index]["subheading"],
-                                      textAlign: TextAlign.center,
-                                      textScaleFactor: 1,
-                                      style: GoogleFonts.montserrat(
-                                          color: kblacklightshadecolor,
-                                          fontWeight: FontWeight.w500),
+                                Expanded(
+                                  child: Container(
+                                    width: w * 0.8,
+                                    padding: EdgeInsets.only(
+                                        top: h * 0.015, bottom: h * 0.04),
+                                    child: Center(
+                                      child: Text(
+                                        cardData[index]["subheading"],
+                                        textAlign: TextAlign.center,
+                                        textScaleFactor: 1,
+                                        style: GoogleFonts.montserrat(
+                                            color: kblacklightshadecolor,
+                                            fontWeight: FontWeight.w500),
+                                      ),
                                     ),
                                   ),
                                 ),
