@@ -9,6 +9,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -75,10 +76,10 @@ class _EditProfileState extends State<EditProfile> {
     image = prefs!.getString("image").toString() == "null"
         ? ""
         : prefs!.getString("image").toString();
-        doc = prefs!.getString("doc").toString() == "null"
+    doc = prefs!.getString("doc").toString() == "null"
         ? ""
         : prefs!.getString("doc").toString();
-        mobile.text ="+91 "+ number.split("91").last;
+    mobile.text = "+91 " + number.split("91").last;
     print(image);
     token();
     // TODO: implement initState
@@ -132,11 +133,15 @@ class _EditProfileState extends State<EditProfile> {
                                 style: GoogleFonts.montserrat(
                                     fontSize: 9, fontWeight: FontWeight.w700),
                               ),
-                              Icon(
-                                Icons.file_upload_outlined,
-                                color: kbluecolor,
-                                size: h * 0.02,
+                              SvgPicture.asset(
+                                "assets/svg/cloud upload.svg",
+                                height: h * 0.025,
                               )
+                              // Icon(
+                              //   Icons.file_upload_outlined,
+                              //   color: kbluecolor,
+                              //   size: h * 0.02,
+                              // )
                             ],
                           ),
                           RichText(
@@ -159,7 +164,7 @@ class _EditProfileState extends State<EditProfile> {
                           Visibility(
                             visible: filepath != "",
                             child: SizedBox(
-                              width: w*0.65,
+                              width: w * 0.65,
                               child: Text(
                                 filepath,
                                 style: GoogleFonts.montserrat(
@@ -300,12 +305,11 @@ class _EditProfileState extends State<EditProfile> {
                             name.clear();
                           }
                         },
-                        
                         decoration: InputDecoration(
                             hintText: "Name*",
                             hintStyle: GoogleFonts.montserrat(
-                                color:
-                                    kTextInputPlaceholderColor.withOpacity(0.25),
+                                color: kTextInputPlaceholderColor
+                                    .withOpacity(0.25),
                                 fontSize: 13),
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
@@ -335,8 +339,8 @@ class _EditProfileState extends State<EditProfile> {
                         decoration: InputDecoration(
                             hintText: "Mobile No.*",
                             hintStyle: GoogleFonts.montserrat(
-                                color:
-                                    kTextInputPlaceholderColor.withOpacity(0.25),
+                                color: kTextInputPlaceholderColor
+                                    .withOpacity(0.25),
                                 fontSize: 13),
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
@@ -368,20 +372,20 @@ class _EditProfileState extends State<EditProfile> {
                           FilteringTextInputFormatter.deny(RegExp('[ ]')),
                         ],
                         validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Please Enter Email";
-                            } else if (!RegExp(
-                                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                .hasMatch(value)) {
-                              return "Please Enter Valid Email";
-                            }
-                            return null;
-                          },
+                          if (value!.isEmpty) {
+                            return "Please Enter Email";
+                          } else if (!RegExp(
+                                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                              .hasMatch(value)) {
+                            return "Please Enter Valid Email";
+                          }
+                          return null;
+                        },
                         decoration: InputDecoration(
                             hintText: "Email*",
                             hintStyle: GoogleFonts.montserrat(
-                                color:
-                                    kTextInputPlaceholderColor.withOpacity(0.25),
+                                color: kTextInputPlaceholderColor
+                                    .withOpacity(0.25),
                                 fontSize: 13),
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
@@ -408,16 +412,16 @@ class _EditProfileState extends State<EditProfile> {
                           }
                         },
                         validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Please Enter House No.";
-                            }
-                            return null;
-                          },
+                          if (value!.isEmpty) {
+                            return "Please Enter House No.";
+                          }
+                          return null;
+                        },
                         decoration: InputDecoration(
                             hintText: "House No.. & Floor*",
                             hintStyle: GoogleFonts.montserrat(
-                                color:
-                                    kTextInputPlaceholderColor.withOpacity(0.25),
+                                color: kTextInputPlaceholderColor
+                                    .withOpacity(0.25),
                                 fontSize: 13),
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
@@ -443,17 +447,17 @@ class _EditProfileState extends State<EditProfile> {
                             street.clear();
                           }
                         },
-                         validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Please Enter Street";
-                            }
-                            return null;
-                          },
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Please Enter Street";
+                          }
+                          return null;
+                        },
                         decoration: InputDecoration(
                             hintText: "Street*",
                             hintStyle: GoogleFonts.montserrat(
-                                color:
-                                    kTextInputPlaceholderColor.withOpacity(0.25),
+                                color: kTextInputPlaceholderColor
+                                    .withOpacity(0.25),
                                 fontSize: 13),
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
@@ -483,11 +487,11 @@ class _EditProfileState extends State<EditProfile> {
                                 }
                               },
                               validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "Please Enter State";
-                                  }
-                                  return null;
-                                },
+                                if (value!.isEmpty) {
+                                  return "Please Enter State";
+                                }
+                                return null;
+                              },
                               decoration: InputDecoration(
                                   hintText: "State*",
                                   hintStyle: GoogleFonts.montserrat(
@@ -521,15 +525,15 @@ class _EditProfileState extends State<EditProfile> {
                                   pinCode.clear();
                                 }
                               },
-                               validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "Please Enter Pin Code";
-                                  } else if (value.length != 6) {
-                                    return "Pin Code should be enter 6 digit";
-                                  } else {
-                                    return null;
-                                  }
-                                },
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please Enter Pin Code";
+                                } else if (value.length != 6) {
+                                  return "Pin Code should be enter 6 digit";
+                                } else {
+                                  return null;
+                                }
+                              },
                               keyboardType: TextInputType.number,
                               maxLength: 6,
                               decoration: InputDecoration(
@@ -568,61 +572,64 @@ class _EditProfileState extends State<EditProfile> {
                 height: h * 0.04,
               ),
               // Container(
-                    //   height: h*0.06,
-                    //   width: w*0.9,
-                    //   decoration: BoxDecoration(
-                    //     color: kwhitecolor.withOpacity(0.3)
-                    //   ),
-                    //   padding: EdgeInsets.all(h*0.01),
-                    //   child: loder,
-                    // ),
+              //   height: h*0.06,
+              //   width: w*0.9,
+              //   decoration: BoxDecoration(
+              //     color: kwhitecolor.withOpacity(0.3)
+              //   ),
+              //   padding: EdgeInsets.all(h*0.01),
+              //   child: loder,
+              // ),
               Center(
-                child:savingChanges?loder: RRecctButton(
-                  onTap: () {
-                    bool validate = isValidation();
-                    if (true
-                      // _formKey.currentState!.validate()
-                      ) {
-                      savingChanges = true;
-                      setState(() {});
-                      editProfile(
-                        id,
-                        name.text,
-                        email.text,
-                        "91"+mobile.text.split("+91 ").last,
-                        houseNo.text,
-                        street.text,
-                        state.text,
-                        pinCode.text,
-                        fcm,
-                        file == null ? null : File(file!),
-                        image,
-                        file2,
-                        doc,
-                        context,
-                      ).whenComplete(() {
-                        savingChanges = false;
-                        setState(() {});
-                        Navigator.pushAndRemoveUntil<dynamic>(
-                          context,
-                          MaterialPageRoute<dynamic>(
-                            builder: (BuildContext context) => BottomNavBar(
-                              index: 3,
-                            ),
-                          ),
-                          (route) =>
-                              false, //if you want to disable back feature set to false
-                        );
-                      });
-                    }
-                  },
-                  h: h * 0.06,
-                  w: w * 0.9,
-                  buttonColor: kbluecolor,
-                  text: "SAVE CHANGES",
-                  style: GoogleFonts.montserrat(
-                      color: kwhitecolor, fontWeight: FontWeight.w600),
-                ),
+                child: savingChanges
+                    ? loder
+                    : RRecctButton(
+                        onTap: () {
+                          bool validate = isValidation();
+                          if (true
+                              // _formKey.currentState!.validate()
+                              ) {
+                            savingChanges = true;
+                            setState(() {});
+                            editProfile(
+                              id,
+                              name.text,
+                              email.text,
+                              "91" + mobile.text.split("+91 ").last,
+                              houseNo.text,
+                              street.text,
+                              state.text,
+                              pinCode.text,
+                              fcm,
+                              file == null ? null : File(file!),
+                              image,
+                              file2,
+                              doc,
+                              context,
+                            ).whenComplete(() {
+                              savingChanges = false;
+                              setState(() {});
+                              Navigator.pushAndRemoveUntil<dynamic>(
+                                context,
+                                MaterialPageRoute<dynamic>(
+                                  builder: (BuildContext context) =>
+                                      BottomNavBar(
+                                    index: 3,
+                                  ),
+                                ),
+                                (route) =>
+                                    false, //if you want to disable back feature set to false
+                              );
+                            });
+                          }
+                        },
+                        h: h * 0.06,
+                        w: w * 0.9,
+                        buttonColor: kbluecolor,
+                        text: "SAVE CHANGES",
+                        style: GoogleFonts.montserrat(
+                            color: kwhitecolor, fontWeight: FontWeight.w600),
+                      ),
               ),
             ],
           ),

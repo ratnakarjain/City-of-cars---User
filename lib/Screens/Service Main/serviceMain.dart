@@ -625,28 +625,41 @@ class _ServiceMainState extends State<ServiceMain> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Label(
-                          color: kbluecolor,
-                          text: "Plans",
-                          textStyle: GoogleFonts.montserrat(
-                            textStyle: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: kwhitecolor),
+                        // Label(
+                        //   color: kbluecolor,
+                        //   text: "Plans",
+                        //   textStyle: GoogleFonts.montserrat(
+                        //     textStyle: const TextStyle(
+                        //         fontWeight: FontWeight.bold,
+                        //         color: kwhitecolor),
+                        //   ),
+                        //   padding: const EdgeInsets.symmetric(
+                        //       horizontal: 10, vertical: 5),
+                        // ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: h * 0.025, bottom: h * 0.01),
+                          child: Text(
+                            "Plans",
+                            style: GoogleFonts.montserrat(
+                              textStyle: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: kTextInputPlaceholderColor),
+                            ),
                           ),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5),
                         ),
                         SizedBox(
                           height: h * 0.01,
                         ),
-                        SizedBox(
-                          height: h * 0.18,
+                        Container(
+                          color: kwhitecolor,
+                          height: h * 0.2,
                           child: ListView.builder(
                             controller: _controller2,
                             physics: const BouncingScrollPhysics(),
                             scrollDirection: Axis.horizontal,
                             padding: EdgeInsets.symmetric(
-                                vertical: h * 0.01, horizontal: h * 0.025),
+                                vertical: h * 0.02, horizontal: h * 0.025),
                             itemCount: pls1.length,
                             itemBuilder: (context, index) {
                               PlanModel model = PlanModel();
@@ -674,6 +687,8 @@ class _ServiceMainState extends State<ServiceMain> {
                                   h: h * 0.1,
                                   w: w * 0.25,
                                   borderRadius: 15,
+                                  color: kcardColor,
+                                  shadowColor: kTransparent,
                                   widget: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -789,8 +804,7 @@ class _ServiceMainState extends State<ServiceMain> {
                                       data[index]["title"] == null ||
                                               data[index]["title"] == ""
                                           ? ""
-                                          : "${data[index]["title"]}"
-                                              .toUpperCase(),
+                                          : "${data[index]["title"]}",
                                       textAlign: TextAlign.center,
                                       style: GoogleFonts.montserrat(
                                           fontWeight: FontWeight.w500,
@@ -808,8 +822,7 @@ class _ServiceMainState extends State<ServiceMain> {
                                       data[index]["discreption"] == null ||
                                               data[index]["discreption"] == ""
                                           ? ""
-                                          : "${data[index]["discreption"]}"
-                                              .toUpperCase(),
+                                          : "${data[index]["discreption"]}",
                                       textAlign: TextAlign.center,
                                       style: GoogleFonts.montserrat(
                                           fontWeight: FontWeight.w400,
@@ -949,7 +962,8 @@ class _ServiceMainState extends State<ServiceMain> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(left: h * 0.025),
+                          padding: EdgeInsets.only(
+                              left: h * 0.025, bottom: h * 0.01),
                           child: Text(
                             "Most Populer Services",
                             style: GoogleFonts.montserrat(
@@ -974,14 +988,14 @@ class _ServiceMainState extends State<ServiceMain> {
                           height: h * 0.01,
                         ),
                         Container(
-                          height: h * 0.18,
+                          height: h * 0.2,
                           color: kwhitecolor,
                           child: ListView.builder(
                             controller: _controller2,
                             physics: const BouncingScrollPhysics(),
                             scrollDirection: Axis.horizontal,
                             padding: EdgeInsets.symmetric(
-                                vertical: h * 0.01, horizontal: h * 0.025),
+                                vertical: h * 0.02, horizontal: h * 0.025),
                             itemCount: pls1.length,
                             itemBuilder: (context, index) {
                               PlanModel model = PlanModel();
@@ -1013,6 +1027,7 @@ class _ServiceMainState extends State<ServiceMain> {
                                   child: RRectCard(
                                     h: h * 0.1,
                                     w: w * 0.25,
+                                    shadowColor: kTransparent,
                                     borderRadius: 15,
                                     color: kcardColor,
                                     widget: Column(
@@ -1278,7 +1293,8 @@ class _ServiceMainState extends State<ServiceMain> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(left: h * 0.025),
+                          padding: EdgeInsets.only(
+                              left: h * 0.025, top: h * 0.01, bottom: h * 0.01),
                           child: Text(
                             "Recommended Services",
                             style: GoogleFonts.montserrat(
@@ -1304,13 +1320,13 @@ class _ServiceMainState extends State<ServiceMain> {
                         ),
                         Container(
                             color: kwhitecolor,
-                            height: h * 0.18,
+                            height: h * 0.2,
                             child: ListView.builder(
                               controller: _controller2,
                               physics: const BouncingScrollPhysics(),
                               scrollDirection: Axis.horizontal,
                               padding: EdgeInsets.symmetric(
-                                  vertical: h * 0.01, horizontal: h * 0.025),
+                                  vertical: h * 0.02, horizontal: h * 0.025),
                               itemCount: pls1.length,
                               itemBuilder: (context, index) {
                                 PlanModel model = PlanModel();
@@ -1339,6 +1355,7 @@ class _ServiceMainState extends State<ServiceMain> {
                                       h: h * 0.1,
                                       w: w * 0.25,
                                       color: kcardColor,
+                                      shadowColor: kTransparent,
                                       borderRadius: 15,
                                       widget: Column(
                                           mainAxisAlignment:
@@ -1574,7 +1591,8 @@ class _ServiceMainState extends State<ServiceMain> {
                     height: h * 0.01,
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: h * 0.025),
+                    padding: EdgeInsets.only(
+                        left: h * 0.025, top: h * 0.01, bottom: h * 0.01),
                     child: Text(
                       "Offers & Promotions",
                       style: GoogleFonts.montserrat(
@@ -1601,7 +1619,7 @@ class _ServiceMainState extends State<ServiceMain> {
                       physics: const BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       padding: EdgeInsets.symmetric(
-                          horizontal: h * 0.023, vertical: h * 0.01),
+                          horizontal: h * 0.023, vertical: h * 0.02),
                       itemCount: offerslist.length,
                       itemBuilder: (context, index) {
                         return Visibility(
@@ -1621,6 +1639,8 @@ class _ServiceMainState extends State<ServiceMain> {
                               h: h * 0.1,
                               w: w * 0.28,
                               borderRadius: 15,
+                              color: kcardColor,
+                              shadowColor: kTransparent,
                               widget: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [

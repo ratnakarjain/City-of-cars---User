@@ -6,6 +6,7 @@ import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Utils/functions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'image.dart';
@@ -274,115 +275,294 @@ class _JobCardState extends State<JobCard> {
                             ],
                           ),
                         ),
-
-                        data["type"] == "pdf"
-                            ? GestureDetector(
-                                onTap: () async {
-                                  await launchURL(data["image"]);
-                                },
-                                child: Container(
-                                  height: h * 0.04,
-                                  child: Center(
-                                      child: Image.asset(
-                                    "assets/images/pdf.png",
-                                    height: h * 0.03,
-                                  )),
-                                ),
-                              )
-                            : data["type"] == "video"
-                                ? Center(
-                                    child: GestureDetector(
-                                        onTap: () async {
-                                          // await launchURL(data["image"]);
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      VideoApp(
-                                                        video: data["image"],
-                                                      )));
-                                        },
-                                        child: Container(
+                        // Visibility(
+                        //   visible: data["image"].length != 0 ||
+                        //       data["video"].length != 0 ||
+                        //       data["document"].length != 0,
+                        //   child: Padding(
+                        //     padding: EdgeInsets.only(left: w * 0.09),
+                        //     child: Text(
+                        //       "Images / Videos / Document",
+                        //       style: GoogleFonts.montserrat(
+                        //         fontSize: 13,
+                        //         fontWeight: FontWeight.w700,
+                        //         color: kTextInputPlaceholderColor,
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                        Visibility(
+                          visible: data["image"].length != 0 ||
+                              data["video"].length != 0 ||
+                              data["document"].length != 0,
+                          child: SizedBox(
+                            height: h * 0.2,
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: [
+                                  ListView.builder(
+                                    itemCount: data["image"].length,
+                                    scrollDirection: Axis.horizontal,
+                                    shrinkWrap: true,
+                                    padding: EdgeInsets.only(top: h * 0.01),
+                                    itemBuilder: (context, index) {
+                                      return GestureDetector(
+                                          onTap: () async {
+                                            // await launchURL(data["image"]);
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Images(
+                                                          image: data["image"]
+                                                              [index],
+                                                        )));
+                                          },
+                                          child: Container(
                                             height: h * 0.1,
                                             width: w * 0.27,
                                             margin: EdgeInsets.symmetric(
                                                 horizontal: w * 0.02),
                                             decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      h * 0.03),
-                                            ),
-                                            child: Stack(
-                                              children: [
-                                                Center(
-                                                    child: Videophoto(
-                                                  video: data["image"],
-                                                )),
-                                                const Center(
-                                                    child:
-                                                        Icon(Icons.play_arrow))
-                                              ],
-                                            )
+                                                // gradient: LinearGradient(
+                                                //     begin: Alignment.bottomCenter,
+                                                //     end: Alignment.center,
+                                                //     colors: [
+                                                //       kblackcolor.withOpacity(0.5),
+                                                //       kTransparent
+                                                //     ]),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        h * 0.03),
+                                                image: DecorationImage(
+                                                    image: NetworkImage(
+                                                        data["image"][index]),
+                                                    fit: BoxFit.fill)),
                                             // child: Image.asset(
                                             //     "assets/images/${images[index]}")
-                                            )),
-                                  )
-                                : Visibility(
-                                    visible: data["image"] != null,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => Images(
-                                                      image: data["image"],
-                                                    )));
-                                      },
-                                      child: Hero(
-                                        tag: "image",
-                                        child: SizedBox(
-                                          height: h * 0.2,
-                                          child: Center(
-                                            child: ListView.builder(
-                                              physics:
-                                                  const BouncingScrollPhysics(),
-                                              controller: _controller1,
-                                              shrinkWrap: true,
-                                              padding: EdgeInsets.symmetric(
-                                                  vertical: h * 0.015),
-                                              scrollDirection: Axis.horizontal,
-                                              itemCount: 1,
-                                              itemBuilder: (context, index) {
-                                                return Container(
-                                                  height: h * 0.1,
-                                                  width: w * 0.27,
-                                                  margin: EdgeInsets.symmetric(
-                                                      horizontal: w * 0.02),
-                                                  decoration: BoxDecoration(
-                                                      // gradient: LinearGradient(
-                                                      //     begin: Alignment.bottomCenter,
-                                                      //     end: Alignment.center,
-                                                      //     colors: [
-                                                      //       kblackcolor.withOpacity(0.5),
-                                                      //       kTransparent
-                                                      //     ]),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              h * 0.03),
-                                                      image: DecorationImage(
-                                                          image: NetworkImage(
-                                                              data["image"]),
-                                                          fit: BoxFit.fill)),
-                                                  // child: Image.asset(
-                                                  //     "assets/images/${images[index]}")
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+                                          ));
+                                    },
                                   ),
+                                  ListView.builder(
+                                    itemCount: data["video"].length,
+                                    padding: EdgeInsets.only(top: h * 0.01),
+                                    scrollDirection: Axis.horizontal,
+                                    shrinkWrap: true,
+                                    itemBuilder: (context, index) {
+                                      return GestureDetector(
+                                          onTap: () async {
+                                            // await launchURL(data["image"]);
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        VideoApp(
+                                                          video: data["video"]
+                                                              [index],
+                                                        )));
+                                          },
+                                          child: Container(
+                                              height: h * 0.1,
+                                              width: w * 0.27,
+                                              margin: EdgeInsets.symmetric(
+                                                  horizontal: w * 0.02),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        h * 0.03),
+                                              ),
+                                              child: Stack(
+                                                children: [
+                                                  Center(
+                                                      child: Videophoto(
+                                                    video: data["video"][index],
+                                                  )),
+                                                  const Center(
+                                                      child: Icon(
+                                                          Icons.play_arrow))
+                                                ],
+                                              )
+                                              // child: Image.asset(
+                                              //     "assets/images/${images[index]}")
+                                              ));
+                                    },
+                                  ),
+                                  ListView.builder(
+                                    itemCount: data["document"].length,
+                                    padding: EdgeInsets.only(top: h * 0.01),
+                                    scrollDirection: Axis.horizontal,
+                                    shrinkWrap: true,
+                                    itemBuilder: (context, index) {
+                                      return GestureDetector(
+                                          onTap: () async {
+                                            await launchURL(
+                                                data["document"][index]);
+                                            // Navigator.push(
+                                            //     context,
+                                            //     MaterialPageRoute(
+                                            //         builder: (context) =>
+                                            //             VideoApp(
+                                            //               video: data["video"]
+                                            //                   [index],
+                                            //             )));
+                                          },
+                                          child: Container(
+                                              height: h * 0.1,
+                                              width: w * 0.27,
+                                              margin: EdgeInsets.symmetric(
+                                                  horizontal: w * 0.02),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        h * 0.03),
+                                              ),
+                                              child: SvgPicture.asset(
+                                                "assets/svg/document.svg",
+                                              )
+                                              // child: Image.asset(
+                                              //     "assets/images/${images[index]}")
+                                              ));
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        // Visibility(
+                        //   visible: data["image"].length != 0,
+                        //   child: Padding(
+                        //     padding: EdgeInsets.only(left: w * 0.09),
+                        //     child: Text(
+                        //       "Images",
+                        //       style: GoogleFonts.montserrat(
+                        //         fontSize: 13,
+                        //         fontWeight: FontWeight.w700,
+                        //         color: kTextInputPlaceholderColor,
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+
+                        // Visibility(
+                        //   visible: data["image"].length != 0,
+                        //   child: SizedBox(
+                        //     height: h * 0.2,
+                        //     child:                           ),
+                        // ),
+                        SizedBox(
+                          height: h * 0.01,
+                        ),
+                        // data["type"] == "pdf"
+                        //     ? GestureDetector(
+                        //         onTap: () async {
+                        //           await launchURL(data["image"]);
+                        //         },
+                        //         child: Container(
+                        //           height: h * 0.04,
+                        //           child: Center(
+                        //               child: Image.asset(
+                        //             "assets/images/pdf.png",
+                        //             height: h * 0.03,
+                        //           )),
+                        //         ),
+                        //       )
+                        //     : data["type"] == "video"
+                        //         ? Center(
+                        //             child: GestureDetector(
+                        //                 onTap: () async {
+                        //                   // await launchURL(data["image"]);
+                        //                   Navigator.push(
+                        //                       context,
+                        //                       MaterialPageRoute(
+                        //                           builder: (context) =>
+                        //                               VideoApp(
+                        //                                 video: data["image"],
+                        //                               )));
+                        //                 },
+                        //                 child: Container(
+                        //                     height: h * 0.1,
+                        //                     width: w * 0.27,
+                        //                     margin: EdgeInsets.symmetric(
+                        //                         horizontal: w * 0.02),
+                        //                     decoration: BoxDecoration(
+                        //                       borderRadius:
+                        //                           BorderRadius.circular(
+                        //                               h * 0.03),
+                        //                     ),
+                        //                     child: Stack(
+                        //                       children: [
+                        //                         Center(
+                        //                             child: Videophoto(
+                        //                           video: data["image"],
+                        //                         )),
+                        //                         const Center(
+                        //                             child:
+                        //                                 Icon(Icons.play_arrow))
+                        //                       ],
+                        //                     )
+                        //                     // child: Image.asset(
+                        //                     //     "assets/images/${images[index]}")
+                        //                     )),
+                        //           )
+                        //         : Visibility(
+                        //             visible: data["image"] != null,
+                        //             child: GestureDetector(
+                        //               onTap: () {
+                        //                 Navigator.push(
+                        //                     context,
+                        //                     MaterialPageRoute(
+                        //                         builder: (context) => Images(
+                        //                               image: data["image"],
+                        //                             )));
+                        //               },
+                        //               child: Hero(
+                        //                 tag: "image",
+                        //                 child: SizedBox(
+                        //                   height: h * 0.2,
+                        //                   child: Center(
+                        //                     child: ListView.builder(
+                        //                       physics:
+                        //                           const BouncingScrollPhysics(),
+                        //                       controller: _controller1,
+                        //                       shrinkWrap: true,
+                        //                       padding: EdgeInsets.symmetric(
+                        //                           vertical: h * 0.015),
+                        //                       scrollDirection: Axis.horizontal,
+                        //                       itemCount: 1,
+                        //                       itemBuilder: (context, index) {
+                        //                         return Container(
+                        //                           height: h * 0.1,
+                        //                           width: w * 0.27,
+                        //                           margin: EdgeInsets.symmetric(
+                        //                               horizontal: w * 0.02),
+                        //                           decoration: BoxDecoration(
+                        //                               // gradient: LinearGradient(
+                        //                               //     begin: Alignment.bottomCenter,
+                        //                               //     end: Alignment.center,
+                        //                               //     colors: [
+                        //                               //       kblackcolor.withOpacity(0.5),
+                        //                               //       kTransparent
+                        //                               //     ]),
+                        //                               borderRadius:
+                        //                                   BorderRadius.circular(
+                        //                                       h * 0.03),
+                        //                               image: DecorationImage(
+                        //                                   image: NetworkImage(
+                        //                                       data["image"]),
+                        //                                   fit: BoxFit.fill)),
+                        //                           // child: Image.asset(
+                        //                           //     "assets/images/${images[index]}")
+                        //                         );
+                        //                       },
+                        //                     ),
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //           ),
                         Padding(
                           padding: EdgeInsets.only(left: w * 0.09),
                           child: Text(
@@ -747,59 +927,59 @@ class _JobCardState extends State<JobCard> {
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(left: w * 0.09),
-                          child: Text(
-                            "Condition",
-                            style: GoogleFonts.montserrat(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w700,
-                              color: kTextInputPlaceholderColor,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(h * 0.01),
-                          child: RRectCard(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: w * 0.05, vertical: h * 0.02),
-                              widget: GridView.count(
-                                shrinkWrap: true,
-                                childAspectRatio: 1.6,
-                                controller: _controller3,
-                                scrollDirection: Axis.vertical,
-                                crossAxisCount: 3,
-                                crossAxisSpacing: w * 0.01,
-                                mainAxisSpacing: h * 0.01,
+                        // Padding(
+                        //   padding: EdgeInsets.only(left: w * 0.09),
+                        //   child: Text(
+                        //     "Condition",
+                        //     style: GoogleFonts.montserrat(
+                        //       fontSize: 13,
+                        //       fontWeight: FontWeight.w700,
+                        //       color: kTextInputPlaceholderColor,
+                        //     ),
+                        //   ),
+                        // ),
+                        // Padding(
+                        //   padding: EdgeInsets.all(h * 0.01),
+                        //   child: RRectCard(
+                        //       padding: EdgeInsets.symmetric(
+                        //           horizontal: w * 0.05, vertical: h * 0.02),
+                        //       widget: GridView.count(
+                        //         shrinkWrap: true,
+                        //         childAspectRatio: 1.6,
+                        //         controller: _controller3,
+                        //         scrollDirection: Axis.vertical,
+                        //         crossAxisCount: 3,
+                        //         crossAxisSpacing: w * 0.01,
+                        //         mainAxisSpacing: h * 0.01,
 
-                                // padding: EdgeInsets.all(10),
-                                children: List.generate(condi.length, (index) {
-                                  return RRectCard(
-                                    padding: EdgeInsets.all(h * 0.01),
-                                    color: condi[index]["x"] == 1
-                                        ? kGreenColor
-                                        : condi[index]["x"] == 2
-                                            ? korangecolor
-                                            : kredcolor,
-                                    h: 10,
-                                    borderRadius: h * 0.03,
-                                    shadowColor: kTransparent,
-                                    widget: Center(
-                                      child: Text(
-                                        condi[index]["heading"],
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.montserrat(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w700,
-                                          color: kwhitecolor,
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }),
-                              ),
-                              borderRadius: h * 0.02),
-                        ),
+                        //         // padding: EdgeInsets.all(10),
+                        //         children: List.generate(condi.length, (index) {
+                        //           return RRectCard(
+                        //             padding: EdgeInsets.all(h * 0.01),
+                        //             color: condi[index]["x"] == 1
+                        //                 ? kGreenColor
+                        //                 : condi[index]["x"] == 2
+                        //                     ? korangecolor
+                        //                     : kredcolor,
+                        //             h: 10,
+                        //             borderRadius: h * 0.03,
+                        //             shadowColor: kTransparent,
+                        //             widget: Center(
+                        //               child: Text(
+                        //                 condi[index]["heading"],
+                        //                 textAlign: TextAlign.center,
+                        //                 style: GoogleFonts.montserrat(
+                        //                   fontSize: 10,
+                        //                   fontWeight: FontWeight.w700,
+                        //                   color: kwhitecolor,
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //           );
+                        //         }),
+                        //       ),
+                        //       borderRadius: h * 0.02),
+                        // ),
                         Padding(
                           padding: EdgeInsets.only(left: w * 0.09),
                           child: Text(

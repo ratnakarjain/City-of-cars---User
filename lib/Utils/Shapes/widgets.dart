@@ -2,8 +2,8 @@ import 'package:cityofcars/Utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class RRectCard extends StatelessWidget {
-   double? h;
-   double? w;
+  double? h;
+  double? w;
   double borderRadius;
   Color? color;
   Widget widget;
@@ -12,8 +12,8 @@ class RRectCard extends StatelessWidget {
 
   RRectCard(
       {Key? key,
-       this.h,
-       this.w,
+      this.h,
+      this.w,
       required this.widget,
       required this.borderRadius,
       this.padding,
@@ -29,7 +29,7 @@ class RRectCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(borderRadius)),
       elevation: 8,
       shadowColor: shadowColor ?? Colors.grey.withOpacity(0.2),
-      child: Container( padding: padding , height: h, width: w, child: widget),
+      child: Container(padding: padding, height: h, width: w, child: widget),
     );
   }
 }
@@ -39,12 +39,14 @@ class Label extends StatelessWidget {
   TextStyle textStyle;
   Color color;
   EdgeInsetsGeometry padding;
+  final isupper;
   Label(
       {Key? key,
       required this.text,
       required this.textStyle,
       required this.padding,
-      required this.color})
+      required this.color,
+      this.isupper = true})
       : super(key: key);
 
   @override
@@ -53,7 +55,7 @@ class Label extends StatelessWidget {
       color: color,
       padding: padding,
       child: Text(
-        text.toUpperCase(),
+        isupper ? text.toUpperCase() : text,
         style: textStyle,
       ),
     );

@@ -715,6 +715,8 @@ class _InsideCategoryState extends State<InsideCategory>
                                                         w: w * 0.25,
                                                         borderRadius: 15,
                                                         color: kcardColor,
+                                                        shadowColor:
+                                                            kTransparent,
                                                         widget: Column(
                                                             mainAxisAlignment:
                                                                 MainAxisAlignment
@@ -832,6 +834,9 @@ class _InsideCategoryState extends State<InsideCategory>
                                                       child: RRectCard(
                                                         h: h * 0.1,
                                                         w: w * 0.25,
+                                                        color: kcardColor,
+                                                        shadowColor:
+                                                            kTransparent,
                                                         borderRadius: 15,
                                                         widget: Column(
                                                             mainAxisAlignment:

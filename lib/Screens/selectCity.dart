@@ -129,22 +129,26 @@ class _SelectCityState extends State<SelectCity> {
                 // ),
                 Container(
                   height: size.height * 0.11,
-                  color: kwhitecolor,
+                  // color: kwhitecolor,
                   padding: EdgeInsets.only(
-                      left: size.width * 0.06,
-                      right: size.width * 0.06,
-                      bottom: size.width * 0.05,
-                      top: size.height * 0.02),
+                    left: size.width * 0.06,
+                    right: size.width * 0.06,
+                    bottom: size.width * 0.05,
+                    top: size.height * 0.02,
+                  ),
+
                   child: Material(
                     color: kwhitecolor,
-                    // elevation: 8,
+                    borderRadius: BorderRadius.circular(
+                      size.height * 0.028,
+                    ),
                     shadowColor: kTextInputPlaceholderColor.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(size.height * 0.025),
+                    elevation: 5,
                     child: TextFormField(
                       controller: _search,
                       decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(
-                              top: size.height * 0.01, left: size.width * 0.05),
+                          // contentPadding: EdgeInsets.only(
+                          //     top: size.height * 0.01, left: size.width * 0.05),
                           hintText: "Search",
                           hintStyle: GoogleFonts.montserrat(
                             fontSize: 15,
@@ -165,13 +169,13 @@ class _SelectCityState extends State<SelectCity> {
                               borderSide: const BorderSide(
                                   color: korangecolor, width: 1.0),
                               borderRadius:
-                                  BorderRadius.circular(size.height * 0.02)),
+                                  BorderRadius.circular(size.height * 0.025)),
                           border: OutlineInputBorder(
                               borderSide: const BorderSide(
                                   color: kTextInputPlaceholderColor,
                                   width: 1.0),
                               borderRadius:
-                                  BorderRadius.circular(size.height * 0.02))),
+                                  BorderRadius.circular(size.height * 0.025))),
                     ),
                   ),
                 ),

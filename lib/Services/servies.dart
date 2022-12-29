@@ -818,6 +818,7 @@ Future getOrderhistory() async {
           var list = data["data"][i];
           // model.carbrand=list["_id"] ;
           model.invoice = list["invoice"] ?? "";
+          model.otp = list["otp"] ?? "";
           model.carimage = list["orderData"][0]["cars"]["image"].toString();
           model.carname = list["orderData"][0]["cars"]["cars"].toString();
           model.carbrand = list["orderData"][0]["brands"]["brands"].toString();

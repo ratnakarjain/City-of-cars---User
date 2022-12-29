@@ -113,7 +113,7 @@ class _CarHealthState extends State<CarHealth> {
                                 child: Text(
                                   "Numbers",
                                   style: GoogleFonts.montserrat(
-                                      fontSize: 21,
+                                      fontSize: 14,
                                       color: kwhitecolor,
                                       fontWeight: FontWeight.w700),
                                 ),
@@ -230,7 +230,7 @@ class _CarHealthState extends State<CarHealth> {
                                                           .toString() +
                                                       " ",
                                                   style: GoogleFonts.montserrat(
-                                                      fontSize: 22,
+                                                      fontSize: 24,
                                                       fontWeight:
                                                           FontWeight.w700,
                                                       color: kwhitecolor),
@@ -241,7 +241,7 @@ class _CarHealthState extends State<CarHealth> {
                                                             .toString(),
                                                         style: GoogleFonts
                                                             .montserrat(
-                                                                fontSize: 22,
+                                                                fontSize: 24,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w400,
@@ -268,7 +268,7 @@ class _CarHealthState extends State<CarHealth> {
                                                               ? "Good\n"
                                                               : "\n",
                                                   style: GoogleFonts.montserrat(
-                                                      fontSize: 22,
+                                                      fontSize: 23,
                                                       fontWeight:
                                                           FontWeight.w700,
                                                       color: kwhitecolor),

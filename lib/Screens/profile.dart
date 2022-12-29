@@ -156,7 +156,21 @@ class _ProfileState extends State<Profile> {
         width: w,
         child: SingleChildScrollView(
           child: Column(
+            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Row(
+                children: [
+                  Text(
+                    "       My Cars",
+                    style: GoogleFonts.montserrat(
+                      fontSize: 14,
+                      color: kTextInputPlaceholderColor,
+                      height: 2,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
               Container(
                 decoration: BoxDecoration(
                     color: kbg3,
@@ -170,315 +184,281 @@ class _ProfileState extends State<Profile> {
                     ]),
                 padding: EdgeInsets.symmetric(horizontal: w * 0.05),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Row(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            if (Ids.cityid == "" ||
-                                Ids.cityid == "null" ||
-                                Prefernece.pref!.getString("cityId") == null) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content:
-                                          Text("Please select city first")));
-                            } else {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const SelectBrand(),
-                                  ));
-                            }
-                          },
-                          child: Icon(
-                            Icons.add,
-                            color: kbluecolor,
-                            size: h * 0.035,
-                          ),
-                        ),
-                        RichText(
-                          text: TextSpan(
-                              text: "You can",
-                              style: GoogleFonts.montserrat(
-                                fontSize: 11,
-                                color: kTextInputPlaceholderColor,
-                                fontWeight: FontWeight.w400,
-                              ),
-                              children: [
-                                TextSpan(
-                                  text: " change or add a new car ",
-                                  style: GoogleFonts.montserrat(
-                                    fontSize: 11,
-                                    color: kTextInputPlaceholderColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: "here",
-                                  style: GoogleFonts.montserrat(
-                                    fontSize: 11,
-                                    color: kTextInputPlaceholderColor,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ]),
-                        ),
-                      ],
+                    Text(
+                      prefs!.getString("cityname") ?? "",
+                      style: GoogleFonts.montserrat(
+                        fontSize: 11,
+                        color: kTextInputPlaceholderColor,
+                        height: 2,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                     isLoading
                         ? loder
                         : Visibility(
                             visible: modellist.isNotEmpty,
-                            child: SizedBox(
-                              height: h * 0.2,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: modellist.length <= 2
-                                    ? modellist.length
-                                    : 2,
-                                shrinkWrap: true,
-                                // padding: EdgeInsets.only(left: w*0.1),
-                                itemBuilder: (context, index) {
-                                  return Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      index == 0
-                                          ? Visibility(
-                                              visible: modellist.length > 2,
-                                              child: InkWell(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      if (currentCar > 0) {
-                                                        currentCar--;
-                                                        print(currentCar);
-                                                      }
-                                                    });
-                                                  },
-                                                  child: const Icon(
-                                                      Icons.arrow_back_ios)),
-                                            )
-                                          : Container(),
-                                      Column(
-                                        children: [
-                                          RichText(
-                                              textAlign: TextAlign.center,
-                                              text: TextSpan(
-                                                  text:
-                                                      "${modellist[currentCar + index].carname} (${modellist[currentCar + index].carfuel})\n",
-                                                  style: GoogleFonts.montserrat(
-                                                    fontSize: 9,
-                                                    color:
-                                                        kTextInputPlaceholderColor,
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
-                                                  children: [
-                                                    TextSpan(
-                                                      text: modellist[
-                                                              currentCar +
-                                                                  index]
-                                                          .carbrand,
-                                                      style: GoogleFonts
-                                                          .montserrat(
-                                                        fontSize: 9,
-                                                        color:
-                                                            kTextInputPlaceholderColor,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                      ),
-                                                    ),
-                                                  ])),
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Stack(
-                                              children: [
-                                                CircleAvatar(
-                                                  radius: h * 0.07,
-                                                  backgroundColor: Prefernece
-                                                                  .pref!
-                                                                  .getString(
-                                                                      "CarId") ==
-                                                              modellist[index +
-                                                                      currentCar]
-                                                                  .carid &&
-                                                          Prefernece.pref!
-                                                                  .getString(
-                                                                      "fuelId") ==
-                                                              modellist[index +
-                                                                      currentCar]
-                                                                  .carfuelid &&
-                                                          Prefernece.pref!
-                                                                  .getString(
-                                                                      "cityId") ==
-                                                              modellist[index +
-                                                                      currentCar]
-                                                                  .cityid
-                                                      ? korangecolor
-                                                      : kgrey.withOpacity(0.5),
-                                                  child: InkWell(
+                            child: Center(
+                              child: SizedBox(
+                                height: h * 0.2,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: modellist.length <= 2
+                                      ? modellist.length
+                                      : 2,
+                                  shrinkWrap: true,
+                                  // padding: EdgeInsets.only(left: w*0.1),
+                                  itemBuilder: (context, index) {
+                                    return Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        index == 0
+                                            ? Visibility(
+                                                visible: modellist.length > 2,
+                                                child: InkWell(
                                                     onTap: () {
-                                                      String js = jsonEncode(
-                                                          modellist[index +
-                                                              currentCar]);
-                                                      pref!.setString(
-                                                          "usercar", js);
-                                                      pref!.setInt("CCar",
-                                                          index + currentCar);
-                                                      Ids.brandid = modellist[
-                                                              index +
-                                                                  currentCar]
-                                                          .carbrandid
-                                                          .toString();
-                                                      Ids.carid = modellist[
-                                                              index +
-                                                                  currentCar]
-                                                          .carid
-                                                          .toString();
-                                                      Ids.cityid = modellist[
-                                                              index +
-                                                                  currentCar]
-                                                          .cityid
-                                                          .toString();
-                                                      Ids.fuelid = modellist[
-                                                              index +
-                                                                  currentCar]
-                                                          .carfuelid
-                                                          .toString();
-                                                      print(Ids.cityid +
-                                                          "  " +
-                                                          Ids.carid +
-                                                          "  " +
-                                                          Ids.brandid +
-                                                          "  " +
-                                                          Ids.fuelid);
-                                                      pref!.setString(
-                                                          "cityname",
-                                                          modellist[index +
-                                                                  currentCar]
-                                                              .city);
-                                                      pref!.setString(
-                                                          "CarId", Ids.carid);
-                                                      pref!.setString(
-                                                          "cityId", Ids.cityid);
-                                                      pref!.setString(
-                                                          "fuelId", Ids.fuelid);
-                                                      pref!.setString("brandId",
-                                                          Ids.brandid);
-                                                      pref!.setString(
-                                                          "cityname",
-                                                          modellist[index +
-                                                                  currentCar]
-                                                              .city);
-
-                                                      print(pref?.getString(
-                                                          "usercar"));
-                                                      print(
-                                                          pref?.getInt("CCar"));
-
-                                                      // print(js);
-                                                      setState(() {});
+                                                      setState(() {
+                                                        if (currentCar > 0) {
+                                                          currentCar--;
+                                                          print(currentCar);
+                                                        }
+                                                      });
                                                     },
-                                                    child: CircleAvatar(
-                                                      radius: h * 0.06,
-                                                      backgroundColor:
-                                                          kwhitecolor,
-                                                      // backgroundImage: NetworkImage(
-                                                      //     modellist[
-                                                      //             index + currentCar]
-                                                      //         .carimage),
-                                                      child: Center(
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(h *
-                                                                        0.03),
-                                                            child:
-                                                                Image.network(
-                                                              modellist[index +
-                                                                      currentCar]
-                                                                  .carimage,
-                                                              errorBuilder:
-                                                                  ((context,
-                                                                      error,
-                                                                      stackTrace) {
-                                                                return Container();
-                                                              }),
+                                                    child: const Icon(
+                                                        Icons.arrow_back_ios)),
+                                              )
+                                            : Container(),
+                                        Column(
+                                          children: [
+                                            RichText(
+                                                textAlign: TextAlign.center,
+                                                text: TextSpan(
+                                                    text:
+                                                        "${modellist[currentCar + index].carname} (${modellist[currentCar + index].carfuel})\n",
+                                                    style:
+                                                        GoogleFonts.montserrat(
+                                                      fontSize: 9,
+                                                      color:
+                                                          kTextInputPlaceholderColor,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                    ),
+                                                    children: [
+                                                      TextSpan(
+                                                        text: modellist[
+                                                                currentCar +
+                                                                    index]
+                                                            .carbrand,
+                                                        style: GoogleFonts
+                                                            .montserrat(
+                                                          fontSize: 9,
+                                                          color:
+                                                              kTextInputPlaceholderColor,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                        ),
+                                                      ),
+                                                    ])),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Stack(
+                                                children: [
+                                                  CircleAvatar(
+                                                    radius: h * 0.07,
+                                                    backgroundColor: Prefernece
+                                                                    .pref!
+                                                                    .getString(
+                                                                        "CarId") ==
+                                                                modellist[index +
+                                                                        currentCar]
+                                                                    .carid &&
+                                                            Prefernece.pref!
+                                                                    .getString(
+                                                                        "fuelId") ==
+                                                                modellist[index +
+                                                                        currentCar]
+                                                                    .carfuelid &&
+                                                            Prefernece.pref!
+                                                                    .getString(
+                                                                        "cityId") ==
+                                                                modellist[index +
+                                                                        currentCar]
+                                                                    .cityid
+                                                        ? korangecolor
+                                                        : kgrey
+                                                            .withOpacity(0.5),
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        String js = jsonEncode(
+                                                            modellist[index +
+                                                                currentCar]);
+                                                        pref!.setString(
+                                                            "usercar", js);
+                                                        pref!.setInt("CCar",
+                                                            index + currentCar);
+                                                        Ids.brandid = modellist[
+                                                                index +
+                                                                    currentCar]
+                                                            .carbrandid
+                                                            .toString();
+                                                        Ids.carid = modellist[
+                                                                index +
+                                                                    currentCar]
+                                                            .carid
+                                                            .toString();
+                                                        Ids.cityid = modellist[
+                                                                index +
+                                                                    currentCar]
+                                                            .cityid
+                                                            .toString();
+                                                        Ids.fuelid = modellist[
+                                                                index +
+                                                                    currentCar]
+                                                            .carfuelid
+                                                            .toString();
+                                                        print(Ids.cityid +
+                                                            "  " +
+                                                            Ids.carid +
+                                                            "  " +
+                                                            Ids.brandid +
+                                                            "  " +
+                                                            Ids.fuelid);
+                                                        pref!.setString(
+                                                            "cityname",
+                                                            modellist[index +
+                                                                    currentCar]
+                                                                .city);
+                                                        pref!.setString(
+                                                            "CarId", Ids.carid);
+                                                        pref!.setString(
+                                                            "cityId",
+                                                            Ids.cityid);
+                                                        pref!.setString(
+                                                            "fuelId",
+                                                            Ids.fuelid);
+                                                        pref!.setString(
+                                                            "brandId",
+                                                            Ids.brandid);
+                                                        pref!.setString(
+                                                            "cityname",
+                                                            modellist[index +
+                                                                    currentCar]
+                                                                .city);
+
+                                                        print(pref?.getString(
+                                                            "usercar"));
+                                                        print(pref
+                                                            ?.getInt("CCar"));
+
+                                                        // print(js);
+                                                        setState(() {});
+                                                      },
+                                                      child: CircleAvatar(
+                                                        radius: h * 0.06,
+                                                        backgroundColor:
+                                                            kwhitecolor,
+                                                        // backgroundImage: NetworkImage(
+                                                        //     modellist[
+                                                        //             index + currentCar]
+                                                        //         .carimage),
+                                                        child: Center(
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(h *
+                                                                          0.03),
+                                                              child:
+                                                                  Image.network(
+                                                                modellist[index +
+                                                                        currentCar]
+                                                                    .carimage,
+                                                                errorBuilder:
+                                                                    ((context,
+                                                                        error,
+                                                                        stackTrace) {
+                                                                  return Container();
+                                                                }),
+                                                              ),
                                                             ),
                                                           ),
                                                         ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                                Positioned(
-                                                    right: 3,
-                                                    top: 3,
-                                                    child: InkWell(
-                                                      onTap: () async {
-                                                        print(
-                                                            "dvkhsdvudhvbcuw");
+                                                  Positioned(
+                                                      right: 3,
+                                                      top: 3,
+                                                      child: InkWell(
+                                                        onTap: () async {
+                                                          print(
+                                                              "dvkhsdvudhvbcuw");
 
-                                                        // showDeleteDialog(
-                                                        //   context,
-                                                        //   "Are you sure you want to delete this car",
-                                                        //   () {
+                                                          // showDeleteDialog(
+                                                          //   context,
+                                                          //   "Are you sure you want to delete this car",
+                                                          //   () {
 
-                                                        //   },
-                                                        // );
-                                                        await deletecar(
-                                                            currentCar + index);
-                                                      },
-                                                      child: SvgPicture.asset(
-                                                        "assets/svg/Delete.svg",
-                                                        height: h * 0.035,
-                                                      ),
-                                                      // child: CircleAvatar(
-                                                      //   radius: 17,
-                                                      //   backgroundColor:
-                                                      //       korangecolor,
-                                                      //   child:
+                                                          //   },
+                                                          // );
+                                                          await deletecar(
+                                                              currentCar +
+                                                                  index);
+                                                        },
+                                                        child: SvgPicture.asset(
+                                                          "assets/svg/Delete.svg",
+                                                          height: h * 0.035,
+                                                        ),
+                                                        // child: CircleAvatar(
+                                                        //   radius: 17,
+                                                        //   backgroundColor:
+                                                        //       korangecolor,
+                                                        //   child:
 
-                                                      //   // child: CircleAvatar(
-                                                      //   //     radius: 15,
-                                                      //   //     backgroundColor:
-                                                      //   //         kbg2,
-                                                      //   //     child: Icon(
-                                                      //   //       Icons.delete,
-                                                      //   //       color:
-                                                      //   //           kTextInputPlaceholderColor,
-                                                      //   //     )),
-                                                      // )
-                                                    ))
-                                              ],
+                                                        //   // child: CircleAvatar(
+                                                        //   //     radius: 15,
+                                                        //   //     backgroundColor:
+                                                        //   //         kbg2,
+                                                        //   //     child: Icon(
+                                                        //   //       Icons.delete,
+                                                        //   //       color:
+                                                        //   //           kTextInputPlaceholderColor,
+                                                        //   //     )),
+                                                        // )
+                                                      ))
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      index == 1
-                                          ? Visibility(
-                                              visible: modellist.length > 2,
-                                              child: InkWell(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      if (currentCar <
-                                                          modellist.length -
-                                                              2) {
-                                                        currentCar++;
-                                                        print(currentCar);
-                                                      }
-                                                    });
-                                                  },
-                                                  child: const Icon(
-                                                      Icons.arrow_forward_ios)),
-                                            )
-                                          : Container(),
-                                    ],
-                                  );
-                                },
+                                          ],
+                                        ),
+                                        index == 1
+                                            ? Visibility(
+                                                visible: modellist.length > 2,
+                                                child: InkWell(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        if (currentCar <
+                                                            modellist.length -
+                                                                2) {
+                                                          currentCar++;
+                                                          print(currentCar);
+                                                        }
+                                                      });
+                                                    },
+                                                    child: const Icon(Icons
+                                                        .arrow_forward_ios)),
+                                              )
+                                            : Container(),
+                                      ],
+                                    );
+                                  },
+                                ),
                               ),
                             ),
                           ),
@@ -486,43 +466,102 @@ class _ProfileState extends State<Profile> {
                       height: h * 0.01,
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(
-                          width: w * 0.06,
-                        ),
-                        RichText(
-                            textAlign: TextAlign.center,
-                            text: TextSpan(
-                                text: "Hi, ",
-                                style: GoogleFonts.montserrat(
-                                  fontSize: 19,
-                                  color: kTextInputPlaceholderColor,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                children: [
-                                  TextSpan(
-                                    text: prefs!.getString("name").toString() +
-                                        "  ",
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: w * 0.06,
+                            ),
+                            RichText(
+                                textAlign: TextAlign.center,
+                                text: TextSpan(
+                                    text: "Hi, ",
                                     style: GoogleFonts.montserrat(
                                       fontSize: 19,
                                       color: kTextInputPlaceholderColor,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w400,
                                     ),
+                                    children: [
+                                      TextSpan(
+                                        text: prefs!
+                                                .getString("name")
+                                                .toString() +
+                                            "  ",
+                                        style: GoogleFonts.montserrat(
+                                          fontSize: 19,
+                                          color: kTextInputPlaceholderColor,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ])),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const EditProfile(),
+                                    ));
+                              },
+                              child: SvgPicture.asset(
+                                "assets/svg/Edit.svg",
+                                height: h * 0.03,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                  text: "Select",
+                                  style: GoogleFonts.montserrat(
+                                    fontSize: 13,
+                                    color: kTextInputPlaceholderColor,
+                                    fontWeight: FontWeight.w400,
                                   ),
-                                ])),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const EditProfile(),
-                                ));
-                          },
-                          child: SvgPicture.asset(
-                            "assets/svg/Edit.svg",
-                            height: h * 0.03,
-                          ),
-                        )
+                                  children: [
+                                    TextSpan(
+                                      text: " New Car   ",
+                                      style: GoogleFonts.montserrat(
+                                        fontSize: 13,
+                                        color: kTextInputPlaceholderColor,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ]),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                if (Ids.cityid == "" ||
+                                    Ids.cityid == "null" ||
+                                    Prefernece.pref!.getString("cityId") ==
+                                        null) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text(
+                                              "Please select city first")));
+                                } else {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SelectBrand(),
+                                      ));
+                                }
+                              },
+                              child: CircleAvatar(
+                                backgroundColor: const Color(0xFF3b71A2),
+                                radius: h * 0.017,
+                                child: Icon(
+                                  Icons.add,
+                                  color: kwhitecolor,
+                                  size: h * 0.035,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                     SizedBox(

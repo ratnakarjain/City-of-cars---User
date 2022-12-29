@@ -78,292 +78,259 @@ class _OrderDetailsState extends State<OrderDetails> {
                     dropvalue = 0;
                     setState(() {});
                   },
-                  child: Stack(
-                    children: [
-                      Container(
-                        height: dropvalue == index + 1 ? h * 0.35 : h * 0.18,
-                        decoration: BoxDecoration(
-                            color: kwhitecolor,
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(h * 0.015),
-                                bottomLeft: Radius.circular(h * 0.015))),
-                        margin: EdgeInsets.only(
-                          top: h * 0.018,
-                          left: w * 0.02,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: w * 0.06, vertical: h * 0.01),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                  child: Container(
+                    // height: dropvalue == index + 1 ? h * 0.35 : h * 0.18,
+                    decoration: BoxDecoration(
+                        color: kwhitecolor,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(h * 0.015),
+                            bottomLeft: Radius.circular(h * 0.015))),
+                    margin: EdgeInsets.only(
+                      top: h * 0.018,
+                      left: w * 0.02,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: w * 0.06, vertical: h * 0.01),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        // "Basic Plan",
-                                        order.planName.toString(),
-                                        style: GoogleFonts.montserrat(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Text(
-                                        // "Service Pack",
-                                        order.plansubName.toString(),
-                                        style: GoogleFonts.montserrat(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w600,
-                                            color: kTextInputPlaceholderColor
-                                                .withOpacity(0.6)),
-                                      ),
-                                    ],
+                                  Text(
+                                    // "Basic Plan",
+                                    order.planName.toString(),
+                                    style: GoogleFonts.montserrat(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        "₹" + order.planPrice.toString(),
-                                        // data[index]["selectplan"]
-                                        //             [0][
-                                        //         "typeprice"]
-                                        //     .toString(),
-                                        style: GoogleFonts.montserrat(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Text(
-                                        "Incl. Taxes",
-                                        style: GoogleFonts.montserrat(
-                                            fontSize: 7,
-                                            fontWeight: FontWeight.w600,
-                                            color: kTextInputPlaceholderColor
-                                                .withOpacity(0.48)),
-                                      ),
-                                    ],
-                                  )
+                                  Text(
+                                    // "Service Pack",
+                                    order.plansubName.toString(),
+                                    style: GoogleFonts.montserrat(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: kTextInputPlaceholderColor
+                                            .withOpacity(0.6)),
+                                  ),
                                 ],
                               ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  left: w * 0.08, bottom: h * 0.01),
-                              child: Text(
-                                "Takes ${order.hour} Hrs / Every ${order.month} Months",
-                                style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 7,
-                                    color: kTextInputPlaceholderColor
-                                        .withOpacity(0.6)),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsets.symmetric(horizontal: w * 0.06),
-                              child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: widget.ordersPlans.length < 3
-                                          ? () {}
-                                          : () {
-                                              dropvalue = index + 1;
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    "₹" + order.planPrice.toString(),
+                                    // data[index]["selectplan"]
+                                    //             [0][
+                                    //         "typeprice"]
+                                    //     .toString(),
+                                    style: GoogleFonts.montserrat(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    "Incl. Taxes",
+                                    style: GoogleFonts.montserrat(
+                                        fontSize: 7,
+                                        fontWeight: FontWeight.w600,
+                                        color: kTextInputPlaceholderColor
+                                            .withOpacity(0.48)),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              EdgeInsets.only(left: w * 0.08, bottom: h * 0.01),
+                          child: Text(
+                            "Takes ${order.hour} Hrs / Every ${order.month} Months",
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 7,
+                                color: kTextInputPlaceholderColor
+                                    .withOpacity(0.6)),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: w * 0.06),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                // Visibility(
+                                //   visible: dropvalue != index + 1,
+                                //   child: Expanded(
+                                //     child: Container(
+                                //       color: kLightOrangeBgColor,
+                                //       height: h * 0.055,
+                                //       // width: w * 0.7,
+                                //       margin:
+                                //           EdgeInsets.only(right: w * 0.03),
+                                //       padding: EdgeInsets.all(h * 0.005),
+                                //       child: Row(
+                                //         children: [
+                                //           ListView.builder(
+                                //             itemCount:
+                                //                 // order
+                                //                 //     .list!
+                                //                 //     .length,
+                                //                 order.list!.length > 3
+                                //                     ? 3
+                                //                     : order.list!.length,
+                                //             scrollDirection: Axis.horizontal,
+                                //             shrinkWrap: true,
+                                //             physics:
+                                //                 const NeverScrollableScrollPhysics(),
+                                //             itemBuilder: (context, indexx) {
+                                //               return Container(
+                                //                 width: w * 0.16,
+                                //                 padding: EdgeInsets.symmetric(
+                                //                     horizontal: w * 0.02),
+                                //                 child: Column(
+                                //                   crossAxisAlignment:
+                                //                       CrossAxisAlignment
+                                //                           .start,
+                                //                   children: [
+                                //                     CachedNetworkImage(
+                                //                       fit: BoxFit.fill,
+                                //                       height: h * 0.03,
+                                //                       imageUrl: order
+                                //                           .list![indexx].image
+                                //                           .toString(), //data[index]["Plans"]["services_id"][indexx]["image"].toString(),
+                                //                       placeholder:
+                                //                           (context, url) =>
+                                //                               Container(),
+                                //                       errorWidget: (context,
+                                //                               url, error) =>
+                                //                           const Icon(Icons
+                                //                               .error_outline_rounded),
+                                //                     ),
+                                //                     Text(
+                                //                       // data[index]["Plans"]["services_id"][indexx]["title"] ?? "",
+                                //                       order.list![indexx].name
+                                //                           .toString(),
+                                //                       overflow: TextOverflow
+                                //                           .ellipsis,
+                                //                       // "Engine Oil ",
+                                //                       // textScaleFactor: 0.7,
+                                //                       style: GoogleFonts.montserrat(
+                                //                           fontSize: 8,
+                                //                           fontWeight:
+                                //                               FontWeight.w600,
+                                //                           color:
+                                //                               kTextInputPlaceholderColor
+                                //                                   .withOpacity(
+                                //                                       0.6)),
+                                //                     ),
+                                //                   ],
+                                //                 ),
+                                //               );
+                                //             },
+                                //           ),
+                                //           SizedBox(
+                                //             width: w * 0.02,
+                                //           ),
+                                //           Visibility(
+                                //             visible: order.list!.length > 3,
+                                //             child: Text(
+                                //                 "+${order.list!.length - 3} more",
+                                //                 style: GoogleFonts.montserrat(
+                                //                   fontSize: 7,
+                                //                   fontWeight: FontWeight.w600,
+                                //                 )),
+                                //           ),
+                                //           const Icon(Icons.arrow_forward_ios,
+                                //               size: 10),
+                                //         ],
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
+                                Visibility(
+                                  // visible: dropvalue == index + 1,
+                                  child: Expanded(
+                                    flex: 3,
+                                    child: GestureDetector(
+                                      onTap: (() {
+                                        dropvalue = 0;
 
-                                              setState(() {});
-                                            },
+                                        setState(() {});
+                                      }),
                                       child: Container(
                                         color: kLightOrangeBgColor,
-                                        height: h * 0.055,
-                                        width: w * 0.6,
+                                        // height: h * 0.055,
+                                        // width: w * 0.6,
                                         margin:
                                             EdgeInsets.only(right: w * 0.03),
                                         padding: EdgeInsets.all(h * 0.005),
-                                        child: Row(
-                                          children: [
-                                            SizedBox(
-                                                // key: keys[index],
-                                                width: w * 0.55,
-                                                child: Row(
-                                                  children: [
-                                                    Expanded(
-                                                      child: Row(
-                                                        children: [
-                                                          Center(
-                                                            child: ListView
-                                                                .builder(
-                                                              itemCount: order
-                                                                  .list!
-                                                                  .length, //data[index]["Plans"]["services_id"].length > 3 ? 3 : data[index]["Plans"]["services_id"].length,
-                                                              scrollDirection:
-                                                                  Axis.horizontal,
-                                                              shrinkWrap:
-                                                                  true,
-                                                              physics:
-                                                                  const NeverScrollableScrollPhysics(),
-                                                              itemBuilder:
-                                                                  (context,
-                                                                      indexx) {
-                                                                return Padding(
-                                                                  padding: EdgeInsets.symmetric(
-                                                                      horizontal:
-                                                                          w * 0.02),
-                                                                  child:
-                                                                      Column(
-                                                                    children: [
-                                                                      CachedNetworkImage(
-                                                                        fit: BoxFit
-                                                                            .fill,
-                                                                        height:
-                                                                            h * 0.03,
-                                                                        imageUrl: order
-                                                                            .list![indexx]
-                                                                            .image
-                                                                            .toString(), //data[index]["Plans"]["services_id"][indexx]["image"].toString(),
-                                                                        placeholder: (context, url) =>
-                                                                            Container(),
-                                                                        errorWidget: (context, url, error) =>
-                                                                            const Icon(Icons.error_outline_rounded),
-                                                                      ),
-                                                                      Text(
-                                                                        // data[index]["Plans"]["services_id"][indexx]["title"] ?? "",
-                                                                        order
-                                                                            .list![indexx]
-                                                                            .name
-                                                                            .toString(),
-                                                                        // "Engine Oil ",
-                                                                        // textScaleFactor: 0.7,
-                                                                        style: GoogleFonts.montserrat(
-                                                                            fontSize: 8,
-                                                                            fontWeight: FontWeight.w600,
-                                                                            color: kTextInputPlaceholderColor.withOpacity(0.6)),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                );
-                                                              },
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            width: w * 0.02,
-                                                          ),
-                                                          Visibility(
-                                                            visible: order
-                                                                    .list!
-                                                                    .length >
-                                                                3,
-                                                            child: Text(
-                                                                "+9 more",
-                                                                style: GoogleFonts
-                                                                    .montserrat(
-                                                                  fontSize: 7,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                )),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    const Icon(
-                                                        Icons
-                                                            .arrow_forward_ios,
-                                                        size: 10),
-                                                  ],
-                                                ))
-                                          ],
-                                        ),
+                                        child: GridView.count(
+                                            crossAxisSpacing: 1,
+                                            mainAxisSpacing: 2,
+                                            crossAxisCount: 4,
+                                            childAspectRatio: 1.6,
+                                            shrinkWrap: true,
+                                            padding:
+                                                EdgeInsets.only(top: h * 0.01),
+                                            children: List.generate(
+                                                order.list!.length, (indexx) {
+                                              return Column(
+                                                children: [
+                                                  CachedNetworkImage(
+                                                    fit: BoxFit.fill,
+                                                    height: h * 0.03,
+                                                    imageUrl: order
+                                                        .list![indexx].image
+                                                        .toString(),
+                                                    placeholder:
+                                                        (context, url) =>
+                                                            Container(),
+                                                    errorWidget: (context, url,
+                                                            error) =>
+                                                        Image.network(
+                                                            "https://i.gifer.com/DKke.gif"),
+                                                  ),
+                                                  // Image.asset(
+                                                  //   "assets/images/EngineOil.png",
+                                                  //   height: h * 0.03,
+                                                  // ),
+                                                  Text(
+                                                    order.list![indexx].name
+                                                        .toString(),
+                                                    // "Engine Oil ",
+                                                    // textScaleFactor: 0.7,
+                                                    style: GoogleFonts.montserrat(
+                                                        fontSize: 8,
+                                                        fontWeight: FontWeight
+                                                            .w600,
+                                                        color:
+                                                            kTextInputPlaceholderColor
+                                                                .withOpacity(
+                                                                    0.6)),
+                                                  ),
+                                                ],
+                                              );
+                                            })),
                                       ),
                                     ),
-                                  ]),
-                            ),
-                            SizedBox(
-                              height: h * 0.02,
-                            )
-                          ],
+                                  ),
+                                ),
+                                // SizedBox(
+                                //   width: w * 0.1,
+                                // )
+                              ]),
                         ),
-                      ),
-                      Visibility(
-                        visible: dropvalue == index + 1,
-                        child: Positioned(
-                          left: w * 0.08,
-                          top: h * 0.1,
-                          child: Container(
-                            width: w * 0.6,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                      blurRadius: 3,
-                                      color: kblackcolor.withOpacity(0.2))
-                                ]),
-                            child: GridView.count(
-                                crossAxisSpacing: 1,
-                                mainAxisSpacing: 2,
-                                crossAxisCount: 3,
-                                childAspectRatio: 1.6,
-                                shrinkWrap: true,
-                                padding: EdgeInsets.only(top: h * 0.01),
-                                children: List.generate(order.list!.length,
-                                    // data[index]["Plans"]
-                                    //         ["services_id"]
-                                    //     .length,
-                                    (indexx) {
-                                  return Column(
-                                    children: [
-                                      CachedNetworkImage(
-                                          fit: BoxFit.fill,
-                                          height: h * 0.03,
-                                          imageUrl: order.list![indexx].image
-                                              .toString(),
-                                          //  data[index][
-                                          //                 "Plans"]
-                                          //             [
-                                          //             "services_id"]
-                                          //         [
-                                          //         indexx]["image"]
-                                          //     .toString(),
-                                          placeholder: (context, url) =>
-                                              Container(),
-                                          errorWidget:
-                                              (context, url, error) =>
-                                                  Icon(Icons.error)
-                                          // Image.network(
-                                          //     "https://i.gifer.com/DKke.gif"),
-                                          ),
-                                      // Image.asset(
-                                      //   "assets/images/EngineOil.png",
-                                      //   height: h * 0.03,
-                                      // ),
-                                      Text(
-                                        order.list![indexx].name.toString(),
-                                        // data[index]["Plans"][
-                                        //             "services_id"]
-                                        //         [
-                                        //         indexx]["title"]
-                                        //     .toString(),
-                                        // "Engine Oil ",
-                                        // textScaleFactor: 0.7,
-                                        style: GoogleFonts.montserrat(
-                                            fontSize: 8,
-                                            fontWeight: FontWeight.w600,
-                                            color: kTextInputPlaceholderColor
-                                                .withOpacity(0.6)),
-                                      ),
-                                    ],
-                                  );
-                                })),
-                          ),
-                        ),
-                      )
-                    ],
+                        SizedBox(
+                          height: h * 0.02,
+                        )
+                      ],
+                    ),
                   ),
                 );
               },

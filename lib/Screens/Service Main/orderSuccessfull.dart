@@ -191,6 +191,7 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                         padding: EdgeInsets.all(h * 0.02),
                         child: RichText(
                           textAlign: TextAlign.start,
+                          // maxLines: 2,
                           text: TextSpan(
                               text: "Confirmation will be sent on your mail\n",
                               style: GoogleFonts.montserrat(
@@ -408,21 +409,21 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                                                           height: 1.5,
                                                           fontSize: 7),
                                                     ),
-                                                    TextSpan(
-                                                      text: data["orderData"]
-                                                                  [index]
-                                                              ["category"]
-                                                          ["discreption"],
-                                                      style: GoogleFonts.montserrat(
-                                                          color:
-                                                              kTextInputPlaceholderColor
-                                                                  .withOpacity(
-                                                                      0.5),
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          height: 1.5,
-                                                          fontSize: 5),
-                                                    ),
+                                                    // TextSpan(
+                                                    //   text: data["orderData"]
+                                                    //               [index]
+                                                    //           ["category"]
+                                                    //       ["discreption"],
+                                                    //   style: GoogleFonts.montserrat(
+                                                    //       color:
+                                                    //           kTextInputPlaceholderColor
+                                                    //               .withOpacity(
+                                                    //                   0.5),
+                                                    //       fontWeight:
+                                                    //           FontWeight.w400,
+                                                    //       height: 1.5,
+                                                    //       fontSize: 5),
+                                                    // ),
                                                   ]),
                                             ),
                                           ),
@@ -452,21 +453,21 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                                                           height: 1.5,
                                                           fontSize: 7),
                                                     ),
-                                                    TextSpan(
-                                                      text: data["orderData"]
-                                                                  [index]
-                                                              ["subcategory"]
-                                                          ["discreption"],
-                                                      style: GoogleFonts.montserrat(
-                                                          color:
-                                                              kTextInputPlaceholderColor
-                                                                  .withOpacity(
-                                                                      0.5),
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          height: 1.5,
-                                                          fontSize: 5),
-                                                    ),
+                                                    // TextSpan(
+                                                    //   text: data["orderData"]
+                                                    //               [index]
+                                                    //           ["subcategory"]
+                                                    //       ["discreption"],
+                                                    //   style: GoogleFonts.montserrat(
+                                                    //       color:
+                                                    //           kTextInputPlaceholderColor
+                                                    //               .withOpacity(
+                                                    //                   0.5),
+                                                    //       fontWeight:
+                                                    //           FontWeight.w400,
+                                                    //       height: 1.5,
+                                                    //       fontSize: 5),
+                                                    // ),
                                                   ]),
                                             ),
                                           ),
@@ -497,21 +498,21 @@ class _OrderSuccessfulState extends State<OrderSuccessful> {
                                                           height: 1.5,
                                                           fontSize: 7),
                                                     ),
-                                                    TextSpan(
-                                                      text: data["orderData"]
-                                                                  [index]
-                                                              ["selectplan"]
-                                                          .first["subPlanName"],
-                                                      style: GoogleFonts.montserrat(
-                                                          color:
-                                                              kTextInputPlaceholderColor
-                                                                  .withOpacity(
-                                                                      0.5),
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          height: 1.5,
-                                                          fontSize: 5),
-                                                    ),
+                                                    // TextSpan(
+                                                    //   text: data["orderData"]
+                                                    //               [index]
+                                                    //           ["selectplan"]
+                                                    //       .first["subPlanName"],
+                                                    //   style: GoogleFonts.montserrat(
+                                                    //       color:
+                                                    //           kTextInputPlaceholderColor
+                                                    //               .withOpacity(
+                                                    //                   0.5),
+                                                    //       fontWeight:
+                                                    //           FontWeight.w400,
+                                                    //       height: 1.5,
+                                                    //       fontSize: 5),
+                                                    // ),
                                                   ]),
                                             ),
                                           ),

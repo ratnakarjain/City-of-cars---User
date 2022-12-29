@@ -143,15 +143,15 @@ class _SlotState extends State<Slot> {
                                     // "Get current location:",
                                     "Current location as pick-up",
                                     style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.w700,
-                                        color: kGreenColor),
+                                        fontWeight: FontWeight.w400,
+                                        color: kblackcolor),
                                   ),
                                   Text(
                                     "location services need to be turned on",
                                     style: GoogleFonts.montserrat(
                                         fontWeight: FontWeight.w400,
                                         fontSize: 9,
-                                        color: kGreenColor),
+                                        color: kblackcolor),
                                   ),
                                 ],
                               ),

@@ -3,6 +3,7 @@ import 'dart:convert';
 class OrderHistoryModel {
   String id = "";
   String orderid = "";
+  String otp = "";
   String deliverydate = "";
   String deliverytime = "";
   String price = "";

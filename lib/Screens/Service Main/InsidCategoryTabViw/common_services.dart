@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cityofcars/Services/models/plansModel.dart';
 import 'package:cityofcars/Utils/Buttons/button.dart';
+import 'package:cityofcars/Utils/preference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -84,13 +85,18 @@ class _CommonServicesState extends State<CommonServices> {
                   padding: EdgeInsets.symmetric(
                       vertical: h * 0.05, horizontal: w * 0.02),
                   width: w,
+                  color: kwhitecolor,
+                  margin: EdgeInsets.only(top: h * 0.015),
                   alignment: Alignment.center,
                   child: Text(
                     // "There are no service packs in this category.",
-                    "Please tap on profile to select a city or add a new car.",
+                    Prefernece.pref!.getString("CarId") == null ||
+                            Prefernece.pref!.getString("CarId") == ""
+                        ? "Please select city and car for the packs to show."
+                        : "No plans available",
                     style: GoogleFonts.montserrat(
                       fontSize: 14,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
                 )
@@ -255,39 +261,39 @@ class _CommonServicesState extends State<CommonServices> {
                                           Expanded(
                                               flex: 2,
                                               child: GestureDetector(
-                                                onTap: plans[index]
-                                                            .includes
-                                                            .length <=
-                                                        3
-                                                    ? () {}
-                                                    : () {
-                                                        dropvalue = index + 1;
-                                                        // showGeneralDialog(context: keys[index].currentContext!, pageBuilder: pageBuilder)
-                                                        // showGeneralDialog(
-                                                        //   context: keys[index].currentContext!,
-                                                        //   pageBuilder: ( context,
-                                                        //       Animation<double> animation,
-                                                        //       Animation<double>
-                                                        //           secondaryAnimation) {
-                                                        //     return AlertDialog(
-                                                        //       content: Container(
-                                                        //         width: 200.0,
-                                                        //         height: 200.0,
-                                                        //         color: Colors.orange,
-                                                        //       ),
-                                                        //     );
-                                                        //   },
-                                                        //   barrierDismissible: true,
-                                                        //   barrierLabel:
-                                                        //       MaterialLocalizations.of(context)
-                                                        //           .modalBarrierDismissLabel,
-                                                        //   barrierColor: Colors.black,
-                                                        //   transitionDuration:
-                                                        //       const Duration(milliseconds: 200),
-                                                        // );
+                                                // onTap: plans[index]
+                                                //             .includes
+                                                //             .length <=
+                                                //         3
+                                                //     ? () {}
+                                                //     : () {
+                                                //         dropvalue = index + 1;
+                                                // showGeneralDialog(context: keys[index].currentContext!, pageBuilder: pageBuilder)
+                                                // showGeneralDialog(
+                                                //   context: keys[index].currentContext!,
+                                                //   pageBuilder: ( context,
+                                                //       Animation<double> animation,
+                                                //       Animation<double>
+                                                //           secondaryAnimation) {
+                                                //     return AlertDialog(
+                                                //       content: Container(
+                                                //         width: 200.0,
+                                                //         height: 200.0,
+                                                //         color: Colors.orange,
+                                                //       ),
+                                                //     );
+                                                //   },
+                                                //   barrierDismissible: true,
+                                                //   barrierLabel:
+                                                //       MaterialLocalizations.of(context)
+                                                //           .modalBarrierDismissLabel,
+                                                //   barrierColor: Colors.black,
+                                                //   transitionDuration:
+                                                //       const Duration(milliseconds: 200),
+                                                // );
 
-                                                        setState(() {});
-                                                      },
+                                                //   setState(() {});
+                                                // },
                                                 child: Container(
                                                   color: kLightOrangeBgColor,
                                                   height: h * 0.055,

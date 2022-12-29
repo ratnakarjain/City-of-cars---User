@@ -485,34 +485,18 @@ class _ProductDetailsState extends State<ProductDetails> {
                               child: Row(
                                 children: [
                                   Label(
-                                    text: "description",
-                                    color: korangecolor,
+                                    text: "Description",
+                                    isupper: false,
+                                    color: kTransparent,
                                     padding: EdgeInsets.symmetric(
                                         horizontal: w * 0.05,
                                         vertical: h * 0.005),
                                     textStyle: GoogleFonts.montserrat(
-                                        fontSize: 9,
-                                        fontWeight: FontWeight.w500,
-                                        color: kwhitecolor),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: kblackcolor,
+                                    ),
                                   ),
-                                  Spacer(),
-                                  GestureDetector(
-                                      onTap: () async {
-                                        if (details.document != "") {
-                                          await launchURL(details.document);
-                                        } else {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(const SnackBar(
-                                                  content:
-                                                      Text("No Document")));
-                                        }
-                                      },
-                                      child: SvgPicture.asset(
-                                          "assets/svg/doc.svg",
-                                          height: h * 0.04,
-                                          color: korangecolor)),
-
-                                  SizedBox(width: w * 0.1)
 
                                   // Icon(Icons.pages)
                                 ],
@@ -548,7 +532,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                 constraints: des
                                                     ? const BoxConstraints()
                                                     : BoxConstraints(
-                                                        maxHeight: h * 0.02),
+                                                        maxHeight: h * 0.1,
+                                                      ),
                                                 child: Text(
                                                   details.description,
                                                   // "sacjhavclavcahvcasvcuvkjdb cksdbvihdsbvisbcbdskv bsdhbvksdvbsdkvbhvsdbvksdbv kdfbvlkdfbvzdfkvbsdfklbv df;obhdsfb dfbh dfb hadf ubhadofbh dalfigbldifugblaidfubv difbgiadfugbviasfugv liasugvliasu vgadiugv adibvadilfubgliadfugbaldfibgadfiubgaidfubgaidfubg",
@@ -608,14 +593,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                               padding: EdgeInsets.only(
                                   top: h * 0.032, left: w * 0.051),
                               child: Label(
-                                text: "includes",
-                                color: kbluecolor,
+                                text: "Included Services",
+                                color: kTransparent,
+                                isupper: false,
                                 padding: EdgeInsets.symmetric(
                                     horizontal: w * 0.05, vertical: h * 0.005),
                                 textStyle: GoogleFonts.montserrat(
-                                    fontSize: 9,
+                                    fontSize: 14,
                                     fontWeight: FontWeight.w500,
-                                    color: kwhitecolor),
+                                    color: kblackcolor),
                               ),
                             ),
                             Padding(
@@ -644,10 +630,36 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       children: List.generate(
                                           details.includes.length, (index) {
                                         return Container(
-                                          margin: EdgeInsets.only(
-                                            top: h * 0.01,
-                                          ),
+                                          // margin:
+                                          //     EdgeInsets.only(top: h * 0.005),
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                              border: index <
+                                                      (details.includes.length %
+                                                                  3 ==
+                                                              0
+                                                          ? details.includes
+                                                                  .length -
+                                                              3
+                                                          : details.includes
+                                                                          .length %
+                                                                      3 ==
+                                                                  1
+                                                              ? details.includes
+                                                                      .length -
+                                                                  1
+                                                              : details.includes
+                                                                      .length -
+                                                                  2)
+                                                  ? Border(
+                                                      bottom: BorderSide(
+                                                      width: 1,
+                                                      color: kgrey
+                                                          .withOpacity(0.5),
+                                                    ))
+                                                  : null),
                                           child: Column(
+                                            mainAxisSize: MainAxisSize.min,
                                             children: [
                                               // CachedNetworkImage(
                                               //   fit: BoxFit.fill,
@@ -667,6 +679,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                 details.includes[index].image
                                                     .toString(),
                                                 height: h * 0.03,
+                                                errorBuilder: (context, error,
+                                                    stackTrace) {
+                                                  return Container();
+                                                },
                                               ),
                                               // Image.asset(
                                               //   "assets/images/EngineOil.png",
@@ -875,12 +891,24 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   ),
                                 ),
                                 Expanded(
-                                  child: Center(
-                                    child: Text("Rate Card",
-                                        style: GoogleFonts.montserrat(
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w500,
-                                        )),
+                                  child: GestureDetector(
+                                    onTap: () async {
+                                      if (details.document != "") {
+                                        await launchURL(details.document);
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(const SnackBar(
+                                                content: Text("No Document")));
+                                      }
+                                    },
+                                    child: Center(
+                                      child: Text("Rate Card",
+                                          style: GoogleFonts.montserrat(
+                                            fontSize: 11,
+                                            color: kbluecolor,
+                                            fontWeight: FontWeight.w500,
+                                          )),
+                                    ),
                                   ),
                                 ),
                               ],
@@ -899,14 +927,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                       width: w * 0.06,
                     ),
                     Label(
-                      text: "terms",
-                      color: kbluecolor,
+                      text: "Terms & Conditions",
+                      color: kTransparent,
+                      isupper: false,
                       padding: EdgeInsets.symmetric(
                           horizontal: w * 0.05, vertical: h * 0.005),
                       textStyle: GoogleFonts.montserrat(
-                          fontSize: 9,
-                          fontWeight: FontWeight.w500,
-                          color: kwhitecolor),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: kblackcolor,
+                      ),
                     ),
                     // const Icon(Icons.keyboard_arrow_down)
                   ],
