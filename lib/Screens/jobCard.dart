@@ -674,7 +674,7 @@ class _JobCardState extends State<JobCard> {
                                                     .toString()
                                                     .toUpperCase(),
                                                 style: GoogleFonts.montserrat(
-                                                    fontSize: 7,
+                                                    fontSize: 8,
                                                     color:
                                                         kTextInputPlaceholderColor
                                                             .withOpacity(0.48),
@@ -697,7 +697,7 @@ class _JobCardState extends State<JobCard> {
                                               child: Text(
                                                 data["OdometerKms"].toString(),
                                                 style: GoogleFonts.montserrat(
-                                                    fontSize: 7,
+                                                    fontSize: 8,
                                                     color:
                                                         kTextInputPlaceholderColor
                                                             .withOpacity(0.48),
@@ -721,7 +721,7 @@ class _JobCardState extends State<JobCard> {
                                               child: Text(
                                                 "${data["fuel"]} Points",
                                                 style: GoogleFonts.montserrat(
-                                                    fontSize: 7,
+                                                    fontSize: 8,
                                                     color:
                                                         kTextInputPlaceholderColor
                                                             .withOpacity(0.48),

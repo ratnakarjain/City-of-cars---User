@@ -213,83 +213,83 @@ class _SosState extends State<Sos> {
                   ),
                 ),
               ),
-              Center(
-                child: Text(
-                  "or",
-                  style: GoogleFonts.montserrat(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w400,
-                    height: 2,
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  makePhoneCall("9999955555");
-                  setState(() {});
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Image.asset(
-                    //   "assets/images/call.png",
-                    //   height: h * 0.03,
-                    // ),
-                    SvgPicture.asset(
-                      "assets/svg/Call US.svg",
-                      height: h * 0.03,
-                    ),
-                    RichText(
-                      text: TextSpan(
-                          text: "Call us ",
-                          style: GoogleFonts.montserrat(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w700,
-                            color: kbluecolor,
-                            height: 2,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: "at",
-                              style: GoogleFonts.montserrat(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
-                                color: kTextInputPlaceholderColor,
-                                height: 2,
-                              ),
-                            ),
-                            TextSpan(
-                              text: " 99999",
-                              style: GoogleFonts.montserrat(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w700,
-                                color: kbluecolor,
-                                height: 2,
-                              ),
-                            ),
-                            TextSpan(
-                              text: "55555",
-                              style: GoogleFonts.montserrat(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w700,
-                                color: kGreenColor,
-                                height: 2,
-                              ),
-                            ),
-                            TextSpan(
-                              text: "?",
-                              style: GoogleFonts.montserrat(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w700,
-                                color: kTextInputPlaceholderColor,
-                                height: 2,
-                              ),
-                            ),
-                          ]),
-                    )
-                  ],
-                ),
-              )
+              // Center(
+              //   child: Text(
+              //     "or",
+              //     style: GoogleFonts.montserrat(
+              //       fontSize: 13,
+              //       fontWeight: FontWeight.w400,
+              //       height: 2,
+              //     ),
+              //   ),
+              // ),
+              // GestureDetector(
+              //   onTap: () {
+              //     makePhoneCall("9999955555");
+              //     setState(() {});
+              //   },
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: [
+              //       // Image.asset(
+              //       //   "assets/images/call.png",
+              //       //   height: h * 0.03,
+              //       // ),
+              //       SvgPicture.asset(
+              //         "assets/svg/Call US.svg",
+              //         height: h * 0.03,
+              //       ),
+              //       RichText(
+              //         text: TextSpan(
+              //             text: "Call us ",
+              //             style: GoogleFonts.montserrat(
+              //               fontSize: 15,
+              //               fontWeight: FontWeight.w700,
+              //               color: kbluecolor,
+              //               height: 2,
+              //             ),
+              //             children: [
+              //               TextSpan(
+              //                 text: "at",
+              //                 style: GoogleFonts.montserrat(
+              //                   fontSize: 15,
+              //                   fontWeight: FontWeight.w400,
+              //                   color: kTextInputPlaceholderColor,
+              //                   height: 2,
+              //                 ),
+              //               ),
+              //               TextSpan(
+              //                 text: " 99999",
+              //                 style: GoogleFonts.montserrat(
+              //                   fontSize: 15,
+              //                   fontWeight: FontWeight.w700,
+              //                   color: kbluecolor,
+              //                   height: 2,
+              //                 ),
+              //               ),
+              //               TextSpan(
+              //                 text: "55555",
+              //                 style: GoogleFonts.montserrat(
+              //                   fontSize: 15,
+              //                   fontWeight: FontWeight.w700,
+              //                   color: kGreenColor,
+              //                   height: 2,
+              //                 ),
+              //               ),
+              //               TextSpan(
+              //                 text: "?",
+              //                 style: GoogleFonts.montserrat(
+              //                   fontSize: 15,
+              //                   fontWeight: FontWeight.w700,
+              //                   color: kTextInputPlaceholderColor,
+              //                   height: 2,
+              //                 ),
+              //               ),
+              //             ]),
+              //       )
+              //     ],
+              //   ),
+              // )
             ],
           ),
         ),

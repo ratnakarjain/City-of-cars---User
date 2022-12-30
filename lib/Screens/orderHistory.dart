@@ -167,39 +167,49 @@ class _OrderHistoryState extends State<OrderHistory> {
                             //   w: w * 0.4,
                             //   h: h * 0.04,
                             // ),
-                            RRecctButton2(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => FeedBack(
-                                        order: datalist[currentPage],
-                                      ),
-                                    ));
-                              },
-                              widget: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(
-                                    Icons.favorite_outline_sharp,
-                                    color: kwhitecolor,
-                                  ),
-                                  SizedBox(
-                                    width: w * 0.01,
-                                  ),
-                                  Text(
-                                    "Send Feedback",
-                                    style: GoogleFonts.montserrat(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w700,
-                                        color: kwhitecolor),
-                                  )
-                                ],
+                            Visibility(
+                              visible:
+                                  datalist[currentPage].status.toLowerCase() ==
+                                      "completed",
+                              child: RRecctButton2(
+                                onTap: datalist[currentPage]
+                                            .status
+                                            .toLowerCase() !=
+                                        "completed"
+                                    ? () {}
+                                    : () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => FeedBack(
+                                                order: datalist[currentPage],
+                                              ),
+                                            ));
+                                      },
+                                widget: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      Icons.favorite_outline_sharp,
+                                      color: kwhitecolor,
+                                    ),
+                                    SizedBox(
+                                      width: w * 0.01,
+                                    ),
+                                    Text(
+                                      "Send Feedback",
+                                      style: GoogleFonts.montserrat(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w700,
+                                          color: kwhitecolor),
+                                    )
+                                  ],
+                                ),
+                                radius: h * 0.02,
+                                buttonColor: kGreenColor,
+                                w: w * 0.4,
+                                h: h * 0.04,
                               ),
-                              radius: h * 0.02,
-                              buttonColor: kGreenColor,
-                              w: w * 0.4,
-                              h: h * 0.04,
                             ),
                           ],
                         ),

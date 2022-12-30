@@ -848,12 +848,19 @@ class _TrackingState extends State<Tracking> {
                                                         child: SizedBox(
                                                           height: h * 0.045,
                                                           width: w * 0.15,
-                                                          child: Stack(
-                                                            children: [
-                                                              Positioned(
-                                                                right: 0,
-                                                                child: resmdl
-                                                                            .type ==
+                                                          child: Positioned(
+                                                            right: 0,
+                                                            child: resmdl.type ==
+                                                                        "" ||
+                                                                    resmdl.type ==
+                                                                        "null"
+                                                                ? SvgPicture
+                                                                    .asset(
+                                                                    "assets/svg/4.svg",
+                                                                    height: h *
+                                                                        0.045,
+                                                                  )
+                                                                : resmdl.type ==
                                                                         "pdf"
                                                                     ? GestureDetector(
                                                                         onTap:
@@ -936,17 +943,6 @@ class _TrackingState extends State<Tracking> {
                                                                                 //     "assets/images/mask2.png"),
                                                                               ),
                                                                             )),
-                                                              ),
-                                                              // Positioned(
-                                                              //   left: 0,
-                                                              //   child: InkWell(
-                                                              //       onTap: () {},
-                                                              //       child: Center(
-                                                              //         child: Image.asset(
-                                                              //             "assets/images/mask1.png"),
-                                                              //       )),
-                                                              // ),
-                                                            ],
                                                           ),
                                                         ),
                                                       ),
@@ -1332,11 +1328,13 @@ class Dummy extends StatelessWidget {
                                           child: CircleAvatar(
                                             radius: h * 0.022,
                                             backgroundColor: kTransparent,
-                                            backgroundImage: const AssetImage(
-                                              "assets/images/mask2.png",
+                                            // backgroundImage: const AssetImage(
+                                            //   "assets/images/mask2.png",
+                                            // ),
+                                            child: SvgPicture.asset(
+                                              "assets/svg/4.svg",
+                                              height: h * 0.045,
                                             ),
-                                            // child: Image.asset(
-                                            //     "assets/images/mask2.png"),
                                           ),
                                         ),
                                       ),
