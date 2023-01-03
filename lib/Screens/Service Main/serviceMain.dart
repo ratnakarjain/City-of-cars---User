@@ -775,6 +775,7 @@ class _ServiceMainState extends State<ServiceMain> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Expanded(
+                                    flex: 5,
                                     child: Padding(
                                       padding: EdgeInsets.only(
                                           // vertical: h * 0.02,
@@ -797,41 +798,49 @@ class _ServiceMainState extends State<ServiceMain> {
                                   SizedBox(
                                     height: h * 0.01,
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: w * 0.01),
-                                    child: Text(
-                                      data[index]["title"] == null ||
-                                              data[index]["title"] == ""
-                                          ? ""
-                                          : "${data[index]["title"]}",
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.montserrat(
-                                          fontWeight: FontWeight.w500,
+                                  Expanded(
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: w * 0.01),
+                                      child: Text(
+                                        data[index]["title"] == null ||
+                                                data[index]["title"] == ""
+                                            ? ""
+                                            : "${data[index]["title"]}",
+                                        textAlign: TextAlign.center,
+                                        style: GoogleFonts.montserrat(
+                                            fontWeight: FontWeight.w500,
+                                            height: 1,
+                                            fontSize: 11),
+                                      ),
+                                    ),
+                                  ),
+                                  // SizedBox(
+                                  //   height: h * 0.005,
+                                  // ),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: w * 0.01),
+                                      child: Text(
+                                        data[index]["discreption"] == null ||
+                                                data[index]["discreption"] == ""
+                                            ? ""
+                                            : "${data[index]["discreption"]}",
+                                        textAlign: TextAlign.center,
+                                        // semanticsLabel: "+ more",
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.montserrat(
+                                          fontWeight: FontWeight.w400,
                                           height: 1,
-                                          fontSize: 11),
+                                          fontSize: 9,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                   SizedBox(
                                     height: h * 0.005,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: w * 0.01),
-                                    child: Text(
-                                      data[index]["discreption"] == null ||
-                                              data[index]["discreption"] == ""
-                                          ? ""
-                                          : "${data[index]["discreption"]}",
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.montserrat(
-                                          fontWeight: FontWeight.w400,
-                                          height: 1,
-                                          fontSize: 9),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: h * 0.015,
                                   ),
                                 ]),
                           ),
@@ -1037,6 +1046,9 @@ class _ServiceMainState extends State<ServiceMain> {
                                           Image.network(
                                             model.planimage,
                                             height: h * 0.04,
+                                            errorBuilder:
+                                                (context, error, stackTrace) =>
+                                                    Container(),
                                           ),
                                           // Image.asset(
                                           //     "assets/images/${reccomendedPackes[0]["image"]}"),
@@ -1364,6 +1376,9 @@ class _ServiceMainState extends State<ServiceMain> {
                                             Image.network(
                                               model.planimage,
                                               height: h * 0.04,
+                                              errorBuilder: (context, error,
+                                                      stackTrace) =>
+                                                  Container(),
                                             ),
                                             // Image.asset(
                                             //     "assets/images/${reccomendedPackes[0]["image"]}"),
@@ -1647,6 +1662,9 @@ class _ServiceMainState extends State<ServiceMain> {
                                     Image.network(
                                       offerslist[index].image.toString(),
                                       height: h * 0.03,
+                                      errorBuilder:
+                                          (context, error, stackTrace) =>
+                                              Container(),
                                     ),
                                     const SizedBox(
                                       height: 5,

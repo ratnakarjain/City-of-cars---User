@@ -485,7 +485,9 @@ class _ProfileState extends State<Profile> {
                                     children: [
                                       TextSpan(
                                         text: prefs!
-                                                .getString("name")
+                                                .getString("name")!
+                                                .split(" ")
+                                                .first
                                                 .toString() +
                                             "  ",
                                         style: GoogleFonts.montserrat(
@@ -1079,48 +1081,6 @@ class _ProfileState extends State<Profile> {
               SizedBox(
                 height: h * 0.005,
               ),
-              Visibility(
-                visible: Platform.isIOS,
-                child: Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        deleteAccount();
-                      },
-                      child: RRectCard(
-                        h: h * 0.08,
-                        w: w * 0.9,
-                        widget: Row(
-                          children: [
-                            const Expanded(
-                              child: CircleAvatar(
-                                  backgroundColor: Color(0xffFD440D),
-                                  foregroundColor: kwhitecolor,
-                                  child: Icon(Icons.delete)
-                                  // SvgPicture.asset("assets/svg/Logout.svg"),
-                                  ),
-                            ),
-                            Expanded(
-                              flex: 3,
-                              child: Text(
-                                "Delete Account",
-                                style: GoogleFonts.montserrat(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                        borderRadius: h * 0.04,
-                      ),
-                    ),
-                    SizedBox(
-                      height: h * 0.005,
-                    ),
-                  ],
-                ),
-              ),
               GestureDetector(
                 onTap: () {
                   confirm();
@@ -1156,6 +1116,52 @@ class _ProfileState extends State<Profile> {
               SizedBox(
                 height: h * 0.01,
               ),
+              Visibility(
+                visible: Platform.isIOS,
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        deleteAccount();
+                      },
+                      child: RRectCard(
+                        h: h * 0.08,
+                        w: w * 0.9,
+                        widget: Row(
+                          children: [
+                            Expanded(
+                              child: CircleAvatar(
+                                backgroundColor: const Color(0xffFD440D),
+                                foregroundColor: kwhitecolor,
+                                child: SvgPicture.asset(
+                                  "assets/svg/deletebox.svg",
+                                  height: h * 0.025,
+                                ),
+                                // SvgPicture.asset("assets/svg/Logout.svg"),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 3,
+                              child: Text(
+                                "Delete Account",
+                                style: GoogleFonts.montserrat(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        borderRadius: h * 0.04,
+                      ),
+                    ),
+                    SizedBox(
+                      height: h * 0.005,
+                    ),
+                  ],
+                ),
+              ),
+
               SizedBox(
                 height: h * 0.15,
               ),

@@ -1326,17 +1326,18 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                   // ),
                                                   Container(
                                                     height: h * 0.13,
-                                                    width: w * 0.3,
+                                                    // width: w * 0.3,
                                                     margin: EdgeInsets.only(
                                                         bottom: h * 0.01,
                                                         top: h * 0.01),
                                                     decoration: BoxDecoration(
-                                                        shape: BoxShape.circle,
+                                                        // shape: BoxShape.circle,
                                                         image: DecorationImage(
-                                                            image: NetworkImage(
-                                                                datalist[index]
-                                                                    .carimage),
-                                                            fit: BoxFit.fill)),
+                                                      image: NetworkImage(
+                                                          datalist[index]
+                                                              .carimage),
+                                                      fit: BoxFit.contain,
+                                                    )),
                                                   ),
                                                   RichText(
                                                       textAlign:

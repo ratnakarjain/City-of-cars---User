@@ -412,7 +412,7 @@ Future getSubcategory(String _id) async {
           pl.isrec = data["plans"][i]["status"].toString();
           pl.label = data["plans"][i]["label"].toString();
           pl.months = data["plans"][i]["month"].toString();
-          pl.document = data["plans"][i]["document"].toString();
+          pl.document = data["plans"][i]["document"] ?? "";
           pl.planimage = data["plans"][i]["image"].toString();
           // pl.planname=data["plans"][i]["planName"].toString();
           // pl.planpricdes=data["plans"][i]["typename"].toString();
@@ -1194,6 +1194,7 @@ Future getrecmostPlans() async {
           pl.subplanname = data["data"][i]["subPlanName"].toString();
           pl.termsdetails = data["data"][i]["textField"].toString();
           pl.termsheading = data["data"][i]["heading"].toString();
+          pl.document = data["data"][i]["document"] ?? "";
           // print("ASA" +
           //     data["data"][i]["services_id"][0]["category"][0].toString() +
           //     "^^");

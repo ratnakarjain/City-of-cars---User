@@ -598,13 +598,16 @@ class _TrackingState extends State<Tracking> {
                                                                             });
                                                                           },
                                                                           child:
-                                                                              CircleAvatar(
+                                                                              const CircleAvatar(
                                                                             backgroundColor:
                                                                                 kredcolor,
-                                                                            child:
-                                                                                Center(
-                                                                              child: Image.asset("assets/images/x.png"),
-                                                                            ),
+                                                                            child: Center(
+                                                                                child: Icon(
+                                                                              Icons.close_rounded,
+                                                                              color: kwhitecolor,
+                                                                            )
+                                                                                // Image.asset("assets/images/x.png"),
+                                                                                ),
                                                                           )),
                                                                       InkWell(
                                                                           onTap:
@@ -631,13 +634,17 @@ class _TrackingState extends State<Tracking> {
                                                                             });
                                                                           },
                                                                           child:
-                                                                              CircleAvatar(
+                                                                              const CircleAvatar(
                                                                             backgroundColor:
                                                                                 korangecolor,
-                                                                            child:
-                                                                                Center(
-                                                                              child: Image.asset("assets/images/check.png"),
-                                                                            ),
+                                                                            child: Center(
+                                                                                child: Icon(
+                                                                              Icons.check_rounded,
+                                                                              color: kwhitecolor,
+                                                                            )
+                                                                                // Image.asset("assets/images/check.png"),
+
+                                                                                ),
                                                                           )),
                                                                     ],
                                                                   ),
@@ -848,102 +855,104 @@ class _TrackingState extends State<Tracking> {
                                                         child: SizedBox(
                                                           height: h * 0.045,
                                                           width: w * 0.15,
-                                                          child: Positioned(
-                                                            right: 0,
-                                                            child: resmdl.type ==
-                                                                        "" ||
-                                                                    resmdl.type ==
-                                                                        "null"
-                                                                ? SvgPicture
-                                                                    .asset(
-                                                                    "assets/svg/4.svg",
-                                                                    height: h *
-                                                                        0.045,
-                                                                  )
-                                                                : resmdl.type ==
-                                                                        "pdf"
-                                                                    ? GestureDetector(
-                                                                        onTap:
-                                                                            () async {
-                                                                          print(
-                                                                              "object");
-                                                                          // Navigator.push(
-                                                                          //     context,
-                                                                          //     MaterialPageRoute(
-                                                                          //         builder:
-                                                                          //             (context) =>
-                                                                          //                 WebVIEW(
-                                                                          //                   url: mod
-                                                                          //                       .image,
-                                                                          //                 )));
+                                                          child: resmdl.type ==
+                                                                      "" ||
+                                                                  resmdl.type ==
+                                                                      "null"
+                                                              ? SvgPicture
+                                                                  .asset(
+                                                                  "assets/svg/4.svg",
+                                                                  height:
+                                                                      h * 0.045,
+                                                                )
+                                                              : resmdl.type ==
+                                                                      "pdf"
+                                                                  ? GestureDetector(
+                                                                      onTap:
+                                                                          () async {
+                                                                        print(
+                                                                            "object");
+                                                                        // Navigator.push(
+                                                                        //     context,
+                                                                        //     MaterialPageRoute(
+                                                                        //         builder:
+                                                                        //             (context) =>
+                                                                        //                 WebVIEW(
+                                                                        //                   url: mod
+                                                                        //                       .image,
+                                                                        //                 )));
 
-                                                                          // launchURL(mod.image);
-                                                                          await launchURL(
-                                                                              resmdl.file);
-                                                                          // getFileFromUrl(
-                                                                          //         mod.image)
-                                                                          //     .then(
-                                                                          //         (value) async {
-                                                                          //          await pdflauncher(value.path);
-                                                                          //   // launchURL(value.path);
+                                                                        // launchURL(mod.image);
+                                                                        await launchURL(
+                                                                            resmdl.file);
+                                                                        // getFileFromUrl(
+                                                                        //         mod.image)
+                                                                        //     .then(
+                                                                        //         (value) async {
+                                                                        //          await pdflauncher(value.path);
+                                                                        //   // launchURL(value.path);
 
-                                                                          //   // await launchUrl(
-                                                                          //   //     Uri.parse(
-                                                                          //   //         value.path),
-                                                                          //   //         mode: LaunchMode.externalApplication
-                                                                          //   //         );
-                                                                          // });
-                                                                        },
-                                                                        child: Image
-                                                                            .asset(
-                                                                          "assets/images/pdf.png",
-                                                                          height:
-                                                                              h * 0.03,
-                                                                        ))
-                                                                    : resmdl.type ==
-                                                                            "video"
-                                                                        ? GestureDetector(
-                                                                            onTap:
-                                                                                () async {
-                                                                              //  await launchURL(mod.image);
-                                                                              Navigator.push(
-                                                                                  context,
-                                                                                  MaterialPageRoute(
-                                                                                      builder: (context) => VideoApp(
-                                                                                            video: resmdl.file,
-                                                                                          )));
-                                                                            },
+                                                                        //   // await launchUrl(
+                                                                        //   //     Uri.parse(
+                                                                        //   //         value.path),
+                                                                        //   //         mode: LaunchMode.externalApplication
+                                                                        //   //         );
+                                                                        // });
+                                                                      },
+                                                                      child: Image
+                                                                          .asset(
+                                                                        "assets/images/pdf.png",
+                                                                        height: h *
+                                                                            0.03,
+                                                                      ))
+                                                                  : resmdl.type ==
+                                                                          "video"
+                                                                      ? GestureDetector(
+                                                                          onTap:
+                                                                              () async {
+                                                                            //  await launchURL(mod.image);
+                                                                            Navigator.push(
+                                                                                context,
+                                                                                MaterialPageRoute(
+                                                                                    builder: (context) => VideoApp(
+                                                                                          video: resmdl.file,
+                                                                                        )));
+                                                                          },
+                                                                          child:
+                                                                              Padding(
+                                                                            padding:
+                                                                                EdgeInsets.all(h * 0.005),
                                                                             child:
-                                                                                Padding(
-                                                                              padding: EdgeInsets.all(h * 0.005),
-                                                                              child: Center(
-                                                                                child: Image.asset(
-                                                                                  "assets/images/video.png",
-                                                                                  height: h * 0.03,
-                                                                                ),
+                                                                                Center(
+                                                                              child: Image.asset(
+                                                                                "assets/images/video.png",
+                                                                                height: h * 0.03,
                                                                               ),
                                                                             ),
-                                                                          )
-                                                                        : InkWell(
-                                                                            onTap: resmdl.file.isNotEmpty
-                                                                                ? () {
-                                                                                    Navigator.push(context, MaterialPageRoute(builder: (context) => Images(image: resmdl.file)));
-                                                                                  }
-                                                                                : () {
-                                                                                    print(resmdl.file);
-                                                                                  },
-                                                                            child: Center(
-                                                                              child: CircleAvatar(
-                                                                                radius: h * 0.022,
-                                                                                backgroundColor: kTransparent,
-                                                                                backgroundImage: NetworkImage(
-                                                                                  resmdl.file,
-                                                                                ),
-                                                                                // child: Image.asset(
-                                                                                //     "assets/images/mask2.png"),
+                                                                          ),
+                                                                        )
+                                                                      : InkWell(
+                                                                          onTap: resmdl
+                                                                                  .file.isNotEmpty
+                                                                              ? () {
+                                                                                  Navigator.push(context, MaterialPageRoute(builder: (context) => Images(image: resmdl.file)));
+                                                                                }
+                                                                              : () {
+                                                                                  print(resmdl.file);
+                                                                                },
+                                                                          child:
+                                                                              Center(
+                                                                            child:
+                                                                                CircleAvatar(
+                                                                              radius: h * 0.022,
+                                                                              backgroundColor: kTransparent,
+                                                                              backgroundImage: NetworkImage(
+                                                                                resmdl.file,
                                                                               ),
-                                                                            )),
-                                                          ),
+                                                                              // child: Image.asset(
+                                                                              //     "assets/images/mask2.png"),
+                                                                            ),
+                                                                          )),
                                                         ),
                                                       ),
                                                     ],
