@@ -172,81 +172,37 @@ class _ServiceMainState extends State<ServiceMain> {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
     return Scaffold(
+      extendBodyBehindAppBar: true,
       backgroundColor: kbg3,
       extendBody: true,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(h * 0.18),
-        child: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: kTransparent,
-          elevation: 0,
-          foregroundColor: kwhitecolor,
-          centerTitle: false,
-          title: Container(
-            // padding:
-            //     EdgeInsets.symmetric(vertical: h * 0.005, horizontal: w * 0.03),
-            // decoration: BoxDecoration(
-            //     color: korangecolor,
-            //     borderRadius: BorderRadius.circular(h * 0.02),
-            //     border: Border.all(color: kbluecolor, width: 3)),
-            child: Text(
-              prefs!.getString("cityname") ?? "",
-              style: GoogleFonts.montserrat(
-                  textStyle: const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      color: korangecolor,
-                      shadows: [
-                    Shadow(
-                      color: kwhitecolor,
-                      blurRadius: 8,
-                    )
-                  ])),
-            ),
-          ),
-          flexibleSpace: SizedBox(
-            height: h * 0.25,
-            child: Stack(
-              children: [
-                PageView.builder(
-                    onPageChanged: (value) {
-                      setState(() {
-                        currentPage = value;
-                      });
-                    },
-                    itemCount: images.length,
-                    itemBuilder: (context, index) => Container(
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: NetworkImage(images[index]),
-                                  fit: BoxFit.contain)),
-                        )),
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: images.map((url) {
-                      int index = images.indexOf(url);
-                      return Container(
-                        width: 8.0,
-                        height: 8.0,
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 4.0),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: currentPage == index
-                              ? kdarkpurple
-                              : ksubHading.withOpacity(0.32),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ),
-              ],
-            ),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: kTransparent,
+        elevation: 0,
+        foregroundColor: kwhitecolor,
+        centerTitle: false,
+        title: Container(
+          // padding:
+          //     EdgeInsets.symmetric(vertical: h * 0.005, horizontal: w * 0.03),
+          // decoration: BoxDecoration(
+          //     color: korangecolor,
+          //     borderRadius: BorderRadius.circular(h * 0.02),
+          //     border: Border.all(color: kbluecolor, width: 3)),
+          child: Text(
+            prefs!.getString("cityname") ?? "",
+            style: GoogleFonts.montserrat(
+                textStyle: const TextStyle(
+                    fontWeight: FontWeight.w400,
+                    color: korangecolor,
+                    shadows: [
+                  Shadow(
+                    color: kwhitecolor,
+                    blurRadius: 8,
+                  )
+                ])),
           ),
         ),
+        // flexibleSpace:         ),
       ),
       body: processing
           ? loder
@@ -256,6 +212,50 @@ class _ServiceMainState extends State<ServiceMain> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(
+                    height: h * 0.25,
+                    child: Stack(
+                      children: [
+                        PageView.builder(
+                            onPageChanged: (value) {
+                              setState(() {
+                                currentPage = value;
+                              });
+                            },
+                            itemCount: images.length,
+                            itemBuilder: (context, index) => Container(
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: NetworkImage(images[index]),
+                                          fit: BoxFit.contain)),
+                                )),
+                        Positioned(
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: images.map((url) {
+                              int index = images.indexOf(url);
+                              return Container(
+                                width: 8.0,
+                                height: 8.0,
+                                margin: const EdgeInsets.symmetric(
+                                    vertical: 10.0, horizontal: 4.0),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: currentPage == index
+                                      ? kdarkpurple
+                                      : ksubHading.withOpacity(0.32),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
                   // Container(
                   //   height: h*0.2,
                   //   child: Stack(

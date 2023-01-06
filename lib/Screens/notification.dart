@@ -25,6 +25,7 @@ class _NotificationsState extends State<Notifications> {
   List<String> isread = [];
   List<String> timeList = [];
   List<String> typeList = [];
+  List<bool> selectedList = [];
   // List<String> replyIdList = [];
   var preferences = Prefernece.pref;
   // List selected = [];
@@ -93,6 +94,9 @@ class _NotificationsState extends State<Notifications> {
                             onTap: () {
                               print("ontap====");
                               isread[index] = "true";
+                              // setState(() {
+
+                              // });
                               preferences!.setStringList("isRead", isread);
                               switch (
                                   typeList[index].toString().toLowerCase()) {
@@ -110,9 +114,8 @@ class _NotificationsState extends State<Notifications> {
                                         false, //if you want to disable back feature set to false
                                   );
 
-                                  
                                   break;
-                                  case "approvel":
+                                case "approvel":
                                   print("approvel");
                                   Navigator.pushAndRemoveUntil<dynamic>(
                                     context,
@@ -126,7 +129,7 @@ class _NotificationsState extends State<Notifications> {
                                         false, //if you want to disable back feature set to false
                                   );
                                   break;
-                                  
+
                                 // case "pendingcart":
 
                                 //   break;
@@ -206,54 +209,81 @@ class _NotificationsState extends State<Notifications> {
                                             .withOpacity(0.5))
                                   ]),
                               child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Expanded(
-                                      child: InkWell(
-                                          onTap: () {
-                                            // setState(() {
-                                            //   isread[index] = "false";
-                                            // });
-                                          },
-                                          child: CircleAvatar(
-                                            radius: h * 0.015,
-                                            backgroundColor:
-                                                isread[index] == "false"
-                                                    ? kGreenColor
-                                                    : carhealthColor4,
-                                          ))),
-                                  Expanded(
-                                    flex: 3,
-                                    child: RichText(
-                                      textAlign: TextAlign.start,
-                                      text: TextSpan(
-                                          text:
-                                              "${titleList[index]}:\n${bodyList[index]}\n",
-                                          style: GoogleFonts.montserrat(
-                                              fontSize: 14,
-                                              fontWeight:
-                                                  isread[index] == "false"
-                                                      ? FontWeight.bold
-                                                      : FontWeight.w500,
-                                              height: 1.5,
-                                              color: isread[index] == "false"
-                                                  ? kwhitecolor
-                                                  : kTextInputPlaceholderColor),
-                                          children: [
-                                            TextSpan(
-                                                text: timedifference(
-                                                        timeList[index])
-                                                    .toString(),
-                                                style: GoogleFonts.montserrat(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w400,
-                                                    height: 2,
-                                                    color: isread[index] ==
-                                                            "false"
-                                                        ? kwhitecolor
-                                                        : kTextInputPlaceholderColor)),
-                                          ]),
+                                      child: Padding(
+                                    padding: EdgeInsets.only(top: h * 0.025),
+                                    child: CircleAvatar(
+                                      radius: h * 0.015,
+                                      backgroundColor: isread[index] == "false"
+                                          ? kGreenColor
+                                          : carhealthColor4,
                                     ),
-                                  )
+                                  )),
+                                  Expanded(
+                                      flex: 3,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "${titleList[index]}:\n${bodyList[index]}\n",
+                                            maxLines:
+                                                selectedList[index] ? 200 : 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: GoogleFonts.montserrat(
+                                                fontSize: 14,
+                                                fontWeight:
+                                                    isread[index] == "false"
+                                                        ? FontWeight.bold
+                                                        : FontWeight.w500,
+                                                height: 1.5,
+                                                color: isread[index] == "false"
+                                                    ? kwhitecolor
+                                                    : kTextInputPlaceholderColor),
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                  timedifference(
+                                                          timeList[index])
+                                                      .toString(),
+                                                  style: GoogleFonts.montserrat(
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      height: 2,
+                                                      color: isread[index] ==
+                                                              "false"
+                                                          ? kwhitecolor
+                                                          : kTextInputPlaceholderColor)),
+                                              SizedBox(
+                                                height: h * 0.035,
+                                                child: IconButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        selectedList[index] =
+                                                            !selectedList[
+                                                                index];
+                                                      });
+                                                    },
+                                                    icon: Icon(
+                                                      selectedList[index]
+                                                          ? Icons
+                                                              .keyboard_arrow_up_rounded
+                                                          : Icons
+                                                              .keyboard_arrow_down_rounded,
+                                                      size: h * 0.04,
+                                                    )),
+                                              )
+                                            ],
+                                          ),
+                                        ],
+                                      ))
                                 ],
                               ),
                             ),
@@ -277,6 +307,8 @@ class _NotificationsState extends State<Notifications> {
       isread = preferences!.getStringList("isRead")!;
       timeList = preferences!.getStringList("timeList")!;
       typeList = preferences!.getStringList("typeList")!;
+      selectedList = List.generate(titleList.length, (index) => false);
+      print("========= $selectedList");
       // replyIdList = preferences.getStringList("replyIdList")!;
       // isread.forEach((element) {
       //   isRead.add("true");

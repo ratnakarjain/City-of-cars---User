@@ -555,10 +555,12 @@ class _ProfileState extends State<Profile> {
                               child: CircleAvatar(
                                 backgroundColor: const Color(0xFF3b71A2),
                                 radius: h * 0.017,
-                                child: Icon(
-                                  Icons.add,
-                                  color: kwhitecolor,
-                                  size: h * 0.035,
+                                child: FittedBox(
+                                  child: Icon(
+                                    Icons.add,
+                                    color: kwhitecolor,
+                                    size: h * 0.035,
+                                  ),
                                 ),
                               ),
                             ),
@@ -1055,7 +1057,7 @@ class _ProfileState extends State<Profile> {
                     children: [
                       Expanded(
                         child: CircleAvatar(
-                          backgroundColor: Color(0xff45515C),
+                          backgroundColor: const Color(0xfffdc533),
                           foregroundColor: kwhitecolor,
                           child: SvgPicture.asset(
                             "assets/svg/FAQ.svg",

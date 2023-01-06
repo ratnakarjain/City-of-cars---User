@@ -345,7 +345,7 @@ class _MyAppState extends State<MyApp> {
             map["type"] = message.data["type"];
           }
         }
-        print("type =" + map["type"]);
+        // print("type =" + map["type"]);
 
         createListMap(map);
       }
