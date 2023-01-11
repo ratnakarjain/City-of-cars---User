@@ -355,6 +355,9 @@ class _OrderHistoryState extends State<OrderHistory> {
                                               width: w,
                                               margin: EdgeInsets.symmetric(
                                                   horizontal: w * 0.0001),
+                                              padding: EdgeInsets.only(
+                                                bottom: h * 0.025,
+                                              ),
                                               decoration: BoxDecoration(
                                                   color: kwhitecolor,
                                                   borderRadius:
@@ -364,321 +367,316 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                     bottomLeft: Radius.circular(
                                                         h * 0.06),
                                                   )),
-                                              child: Column(
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                w * 0.02),
-                                                    child: Row(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            SizedBox(
-                                                              height: h * 0.01,
-                                                            ),
-                                                            RichText(
-                                                                text: TextSpan(
-                                                                    text:
-                                                                        "DELIVERY DATE: ",
-                                                                    style: GoogleFonts.montserrat(
-                                                                        fontSize:
-                                                                            10,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w400,
-                                                                        color:
-                                                                            kTextInputPlaceholderColor),
-                                                                    children: [
-                                                                  TextSpan(
-                                                                      text: datalist.first.deliverydate.toString() == "null"
-                                                                          ? "\n"
-                                                                          : DateFormat.MMMMd().format(DateTime.parse(datalist.first.deliverydate.toString())) +
-                                                                              "\n",
-                                                                      style: GoogleFonts.montserrat(
-                                                                          fontSize:
-                                                                              10,
-                                                                          fontWeight: FontWeight
-                                                                              .w700,
-                                                                          color:
-                                                                              kTextInputPlaceholderColor)),
-                                                                  TextSpan(
-                                                                      text:
-                                                                          "BOOKING ID: ",
-                                                                      style: GoogleFonts.montserrat(
-                                                                          fontSize:
-                                                                              10,
-                                                                          fontWeight: FontWeight
-                                                                              .w400,
-                                                                          color:
-                                                                              kTextInputPlaceholderColor)),
-                                                                  TextSpan(
-                                                                      text: datalist
-                                                                          .first
-                                                                          .orderid,
-                                                                      style: GoogleFonts.montserrat(
-                                                                          fontSize:
-                                                                              10,
-                                                                          fontWeight: FontWeight
-                                                                              .w700,
-                                                                          color:
-                                                                              kTextInputPlaceholderColor)),
-                                                                  TextSpan(
-                                                                      text:
-                                                                          "\nOTP: ",
-                                                                      style: GoogleFonts.montserrat(
-                                                                          fontSize:
-                                                                              10,
-                                                                          fontWeight: FontWeight
-                                                                              .w400,
-                                                                          color:
-                                                                              kTextInputPlaceholderColor)),
-                                                                  TextSpan(
-                                                                      text: datalist[
-                                                                              0]
-                                                                          .otp,
-                                                                      style: GoogleFonts.montserrat(
-                                                                          fontSize:
-                                                                              10,
-                                                                          fontWeight: FontWeight
-                                                                              .w700,
-                                                                          color:
-                                                                              kTextInputPlaceholderColor))
-                                                                ])),
-                                                            SizedBox(
-                                                              height: h * 0.005,
-                                                            ),
-                                                            TextButton(
-                                                              onPressed: () {
-                                                                Navigator.push(
-                                                                    context,
-                                                                    MaterialPageRoute(
-                                                                        builder: (context) =>
-                                                                            OrderDetails(
-                                                                              ordersPlans: datalist.first.ordersPlans,
-                                                                            )));
-                                                              },
-                                                              style: TextButton.styleFrom(
-                                                                  padding: const EdgeInsets
-                                                                          .only(
-                                                                      left: 0)),
-                                                              child: Text(
-                                                                "Order Details",
-                                                                style: GoogleFonts.montserrat(
-                                                                    fontSize:
-                                                                        18,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    color:
-                                                                        kTextInputPlaceholderColor),
+                                              child: SingleChildScrollView(
+                                                child: Column(
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal:
+                                                                  w * 0.02),
+                                                      child: Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              SizedBox(
+                                                                height:
+                                                                    h * 0.01,
                                                               ),
-                                                            ),
-                                                            // GestureDetector(
-                                                            //   onTap: () {
-                                                            //     Navigator.push(
-                                                            //         context,
-                                                            //         MaterialPageRoute(
-                                                            //           builder: (context) => CarHealth(
-                                                            //               id: datalist
-                                                            //                   .first
-                                                            //                   .id),
-                                                            //         ));
-                                                            //   },
-                                                            //   child: RRectCard(
-                                                            //     h: h * 0.04,
-                                                            //     w: w * 0.24,
-                                                            //     color: kGreenColor,
-                                                            //     padding: EdgeInsets
-                                                            //         .symmetric(
-                                                            //             horizontal:
-                                                            //                 w * 0.01),
-                                                            //     widget: Center(
-                                                            //       child: Text(
-                                                            //         "Car Health ", //Analysis",
-                                                            //         style: GoogleFonts.montserrat(
-                                                            //             fontSize:
-                                                            //                 11,
-                                                            //             fontWeight:
-                                                            //                 FontWeight
-                                                            //                     .w700,
-                                                            //             color:
-                                                            //                 kwhitecolor),
-                                                            //       ),
-                                                            //     ),
-                                                            //     borderRadius:
-                                                            //         h * 0.04,
-                                                            //   ),
-                                                            // ),
-                                                          ],
-                                                        ),
-                                                        Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .end,
-                                                          children: [
-                                                            Text(
-                                                                "₹" +
-                                                                    datalist
-                                                                        .first
-                                                                        .price,
-                                                                style: GoogleFonts.montserrat(
+                                                              RichText(
+                                                                  text: TextSpan(
+                                                                      text:
+                                                                          "DELIVERY DATE: ",
+                                                                      style: GoogleFonts.montserrat(
+                                                                          fontSize:
+                                                                              10,
+                                                                          fontWeight: FontWeight
+                                                                              .w400,
+                                                                          color:
+                                                                              kTextInputPlaceholderColor),
+                                                                      children: [
+                                                                    TextSpan(
+                                                                        text: datalist.first.deliverydate.toString() == "null"
+                                                                            ? "\n"
+                                                                            : DateFormat.MMMMd().format(DateTime.parse(datalist.first.deliverydate.toString())) +
+                                                                                "\n",
+                                                                        style: GoogleFonts.montserrat(
+                                                                            fontSize:
+                                                                                10,
+                                                                            fontWeight:
+                                                                                FontWeight.w700,
+                                                                            color: kTextInputPlaceholderColor)),
+                                                                    TextSpan(
+                                                                        text:
+                                                                            "BOOKING ID: ",
+                                                                        style: GoogleFonts.montserrat(
+                                                                            fontSize:
+                                                                                10,
+                                                                            fontWeight:
+                                                                                FontWeight.w400,
+                                                                            color: kTextInputPlaceholderColor)),
+                                                                    TextSpan(
+                                                                        text: datalist
+                                                                            .first
+                                                                            .orderid,
+                                                                        style: GoogleFonts.montserrat(
+                                                                            fontSize:
+                                                                                10,
+                                                                            fontWeight:
+                                                                                FontWeight.w700,
+                                                                            color: kTextInputPlaceholderColor)),
+                                                                    TextSpan(
+                                                                        text:
+                                                                            "\nOTP: ",
+                                                                        style: GoogleFonts.montserrat(
+                                                                            fontSize:
+                                                                                10,
+                                                                            fontWeight:
+                                                                                FontWeight.w400,
+                                                                            color: kTextInputPlaceholderColor)),
+                                                                    TextSpan(
+                                                                        text: datalist[0]
+                                                                            .otp,
+                                                                        style: GoogleFonts.montserrat(
+                                                                            fontSize:
+                                                                                10,
+                                                                            fontWeight:
+                                                                                FontWeight.w700,
+                                                                            color: kTextInputPlaceholderColor))
+                                                                  ])),
+                                                              SizedBox(
+                                                                height:
+                                                                    h * 0.005,
+                                                              ),
+                                                              TextButton(
+                                                                onPressed: () {
+                                                                  Navigator.push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                          builder: (context) => OrderDetails(
+                                                                                ordersPlans: datalist.first.ordersPlans,
+                                                                              )));
+                                                                },
+                                                                style: TextButton.styleFrom(
+                                                                    padding: const EdgeInsets
+                                                                            .only(
+                                                                        left:
+                                                                            0)),
+                                                                child: Text(
+                                                                  "Order Details",
+                                                                  style: GoogleFonts.montserrat(
+                                                                      fontSize:
+                                                                          18,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      color:
+                                                                          kTextInputPlaceholderColor),
+                                                                ),
+                                                              ),
+                                                              // GestureDetector(
+                                                              //   onTap: () {
+                                                              //     Navigator.push(
+                                                              //         context,
+                                                              //         MaterialPageRoute(
+                                                              //           builder: (context) => CarHealth(
+                                                              //               id: datalist
+                                                              //                   .first
+                                                              //                   .id),
+                                                              //         ));
+                                                              //   },
+                                                              //   child: RRectCard(
+                                                              //     h: h * 0.04,
+                                                              //     w: w * 0.24,
+                                                              //     color: kGreenColor,
+                                                              //     padding: EdgeInsets
+                                                              //         .symmetric(
+                                                              //             horizontal:
+                                                              //                 w * 0.01),
+                                                              //     widget: Center(
+                                                              //       child: Text(
+                                                              //         "Car Health ", //Analysis",
+                                                              //         style: GoogleFonts.montserrat(
+                                                              //             fontSize:
+                                                              //                 11,
+                                                              //             fontWeight:
+                                                              //                 FontWeight
+                                                              //                     .w700,
+                                                              //             color:
+                                                              //                 kwhitecolor),
+                                                              //       ),
+                                                              //     ),
+                                                              //     borderRadius:
+                                                              //         h * 0.04,
+                                                              //   ),
+                                                              // ),
+                                                            ],
+                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .end,
+                                                            children: [
+                                                              Text(
+                                                                  "₹" +
+                                                                      datalist
+                                                                          .first
+                                                                          .price,
+                                                                  style: GoogleFonts.montserrat(
+                                                                      fontSize:
+                                                                          23,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w700,
+                                                                      color:
+                                                                          kTextInputPlaceholderColor)),
+                                                              RRecctButton(
+                                                                text: datalist
+                                                                            .first
+                                                                            .paystatus ==
+                                                                        "Deposited"
+                                                                    ? "Paid"
+                                                                    : datalist.first.paystatus ==
+                                                                            "Failed"
+                                                                        ? "Failed"
+                                                                        : datalist
+                                                                            .first
+                                                                            .paystatus
+                                                                            .toUpperCase(), //  "Pay Later",
+                                                                style: GoogleFonts
+                                                                    .montserrat(
+                                                                  fontSize: 9,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color: datalist
+                                                                              .first
+                                                                              .paystatus ==
+                                                                          "Failed"
+                                                                      ? kGreenColor
+                                                                      : datalist.first.paystatus ==
+                                                                              "Deposited"
+                                                                          ? kredcolor
+                                                                          : korangecolor,
+                                                                ),
+                                                                // buttonColor: datalist
+                                                                //             .first
+                                                                //             .paystatus ==
+                                                                //         "Failed"
+                                                                //     ? kGreenColor
+                                                                //     : datalist.first
+                                                                //                 .paystatus ==
+                                                                //             "Deposited"
+                                                                //         ? kredcolor
+                                                                //         : korangecolor,
+                                                                // w: w * 0.17,
+                                                                h: h * 0.02,
+                                                              ),
+                                                              Visibility(
+                                                                visible: datalist
+                                                                    .first
+                                                                    .invoice
+                                                                    .isNotEmpty,
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap:
+                                                                      () async {
+                                                                    await launchURL(
+                                                                        datalist
+                                                                            .first
+                                                                            .invoice);
+                                                                  },
+                                                                  child: Text(
+                                                                      "View invoice",
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .center,
+                                                                      style: GoogleFonts.montserrat(
+                                                                          fontSize:
+                                                                              14,
+                                                                          fontWeight: FontWeight
+                                                                              .w500,
+                                                                          height:
+                                                                              2,
+                                                                          color:
+                                                                              kTextInputPlaceholderColor)),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    // Image.asset(
+                                                    //   "assets/images/Uber.png",
+                                                    //   height: h * 0.15,
+                                                    // ),
+                                                    Container(
+                                                      height: h * 0.13,
+                                                      // width: w * 0.3,
+                                                      margin: EdgeInsets.only(
+                                                          bottom: h * 0.01,
+                                                          top: h * 0.01),
+                                                      decoration: BoxDecoration(
+                                                          // shape: BoxShape.circle,
+                                                          image:
+                                                              DecorationImage(
+                                                        image: NetworkImage(
+                                                            datalist.first
+                                                                .carimage),
+                                                        fit: BoxFit.contain,
+                                                      )),
+                                                    ),
+                                                    RichText(
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        text: TextSpan(
+                                                            text: datalist.first
+                                                                    .carname +
+                                                                "  ",
+                                                            style: GoogleFonts
+                                                                .montserrat(
                                                                     fontSize:
-                                                                        23,
+                                                                        12,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w700,
+                                                                    height: 2,
                                                                     color:
-                                                                        kTextInputPlaceholderColor)),
-                                                            RRecctButton(
-                                                              text: datalist
+                                                                        kTextInputPlaceholderColor),
+                                                            children: [
+                                                              TextSpan(
+                                                                  text: datalist
                                                                           .first
-                                                                          .paystatus ==
-                                                                      "Deposited"
-                                                                  ? "Paid"
-                                                                  : datalist.first
-                                                                              .paystatus ==
-                                                                          "Failed"
-                                                                      ? "Failed"
-                                                                      : datalist
-                                                                          .first
-                                                                          .paystatus
-                                                                          .toUpperCase(), //  "Pay Later",
-                                                              style: GoogleFonts
-                                                                  .montserrat(
-                                                                fontSize: 9,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                color: datalist
-                                                                            .first
-                                                                            .paystatus ==
-                                                                        "Failed"
-                                                                    ? kGreenColor
-                                                                    : datalist.first.paystatus ==
-                                                                            "Deposited"
-                                                                        ? kredcolor
-                                                                        : korangecolor,
-                                                              ),
-                                                              // buttonColor: datalist
-                                                              //             .first
-                                                              //             .paystatus ==
-                                                              //         "Failed"
-                                                              //     ? kGreenColor
-                                                              //     : datalist.first
-                                                              //                 .paystatus ==
-                                                              //             "Deposited"
-                                                              //         ? kredcolor
-                                                              //         : korangecolor,
-                                                              // w: w * 0.17,
-                                                              h: h * 0.02,
-                                                            ),
-                                                            Visibility(
-                                                              visible: datalist
-                                                                  .first
-                                                                  .invoice
-                                                                  .isNotEmpty,
-                                                              child:
-                                                                  GestureDetector(
-                                                                onTap:
-                                                                    () async {
-                                                                  await launchURL(
+                                                                          .carbrand +
+                                                                      " \n(" +
                                                                       datalist
                                                                           .first
-                                                                          .invoice);
-                                                                },
-                                                                child: Text(
-                                                                    "View invoice",
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .center,
-                                                                    style: GoogleFonts.montserrat(
-                                                                        fontSize:
-                                                                            14,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w500,
-                                                                        height:
-                                                                            2,
-                                                                        color:
-                                                                            kTextInputPlaceholderColor)),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  // Image.asset(
-                                                  //   "assets/images/Uber.png",
-                                                  //   height: h * 0.15,
-                                                  // ),
-                                                  Container(
-                                                    height: h * 0.13,
-                                                    // width: w * 0.3,
-                                                    margin: EdgeInsets.only(
-                                                        bottom: h * 0.01,
-                                                        top: h * 0.01),
-                                                    decoration: BoxDecoration(
-                                                        // shape: BoxShape.circle,
-                                                        image: DecorationImage(
-                                                      image: NetworkImage(
-                                                          datalist
-                                                              .first.carimage),
-                                                      fit: BoxFit.contain,
-                                                    )),
-                                                  ),
-                                                  RichText(
-                                                      textAlign: TextAlign
-                                                          .center,
-                                                      text: TextSpan(
-                                                          text: datalist.first
-                                                                  .carname +
-                                                              "  ",
-                                                          style: GoogleFonts
-                                                              .montserrat(
-                                                                  fontSize: 12,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700,
-                                                                  height: 2,
-                                                                  color:
-                                                                      kTextInputPlaceholderColor),
-                                                          children: [
-                                                            TextSpan(
-                                                                text: datalist
-                                                                        .first
-                                                                        .carbrand +
-                                                                    " \n(" +
-                                                                    datalist
-                                                                        .first
-                                                                        .fuelname +
-                                                                    ") " +
-                                                                    datalist
-                                                                        .first
-                                                                        .cityname,
-                                                                style: GoogleFonts.montserrat(
-                                                                    fontSize:
-                                                                        12,
-                                                                    height: 1,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    color:
-                                                                        kTextInputPlaceholderColor)),
-                                                          ])),
-                                                  FittedBox(
-                                                    child: Column(
+                                                                          .fuelname +
+                                                                      ") " +
+                                                                      datalist
+                                                                          .first
+                                                                          .cityname,
+                                                                  style: GoogleFonts.montserrat(
+                                                                      fontSize:
+                                                                          12,
+                                                                      height: 1,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      color:
+                                                                          kTextInputPlaceholderColor)),
+                                                            ])),
+                                                    Column(
                                                       children: [
                                                         Text(
                                                           datalist[0]
@@ -743,212 +741,217 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                         //                     0.49))),
                                                       ],
                                                     ),
-                                                  ),
-                                                  RRectCard(
-                                                    color: kbluecolor,
-                                                    w: w * 0.6,
-                                                    h: h * 0.05,
-                                                    widget: Row(
+                                                    RRectCard(
+                                                      color: kbluecolor,
+                                                      w: w * 0.6,
+                                                      h: h * 0.05,
+                                                      widget: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          CircleAvatar(
+                                                            radius: h * 0.02,
+                                                            backgroundColor:
+                                                                const Color(
+                                                                    0xFFFD440D),
+                                                            child: Padding(
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(
+                                                                h * 0.004,
+                                                              ),
+                                                              child: SvgPicture
+                                                                  .asset(
+                                                                      "assets/svg/City.svg"),
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            width: w * 0.05,
+                                                          ),
+                                                          Text(
+                                                            "Track Order"
+                                                                .toUpperCase(),
+                                                            style: GoogleFonts
+                                                                .montserrat(
+                                                                    fontSize:
+                                                                        12,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color:
+                                                                        kwhitecolor),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      borderRadius: h * 0.05,
+                                                    ),
+                                                    SizedBox(
+                                                      height: h * 0.01,
+                                                    ),
+                                                    Row(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
-                                                              .center,
+                                                              .spaceEvenly,
                                                       children: [
-                                                        CircleAvatar(
-                                                          radius: h * 0.02,
-                                                          backgroundColor:
-                                                              const Color(
-                                                                  0xFFFD440D),
-                                                          child: Padding(
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                              h * 0.004,
-                                                            ),
-                                                            child: SvgPicture.asset(
-                                                                "assets/svg/City.svg"),
+                                                        Expanded(
+                                                          child: Column(
+                                                            children: [
+                                                              Padding(
+                                                                padding: EdgeInsets
+                                                                    .symmetric(
+                                                                        horizontal:
+                                                                            w * 0.05),
+                                                                child:
+                                                                    TextButton(
+                                                                  style: TextButton
+                                                                      .styleFrom(
+                                                                    backgroundColor:
+                                                                        kbluecolor,
+                                                                    shadowColor:
+                                                                        kblackcolor
+                                                                            .withOpacity(0.07),
+                                                                    padding: EdgeInsets
+                                                                        .all(h *
+                                                                            0.012),
+                                                                    elevation:
+                                                                        3,
+                                                                    shape:
+                                                                        RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(h *
+                                                                              0.1),
+                                                                    ),
+                                                                  ),
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.push(
+                                                                        context,
+                                                                        MaterialPageRoute(
+                                                                            builder: (context) => JobCard(
+                                                                                  orderid: datalist.first.id,
+                                                                                )));
+                                                                  },
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceAround,
+                                                                    children: [
+                                                                      Icon(
+                                                                        Icons
+                                                                            .star_border,
+                                                                        size: h *
+                                                                            0.025,
+                                                                        color:
+                                                                            kwhitecolor,
+                                                                      ),
+                                                                      Text(
+                                                                        "Job Card",
+                                                                        style: GoogleFonts.montserrat(
+                                                                            fontSize:
+                                                                                12,
+                                                                            fontWeight:
+                                                                                FontWeight.w500,
+                                                                            color: kwhitecolor),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Text(
+                                                                "shows pre-inspection report",
+                                                                style: GoogleFonts.montserrat(
+                                                                    fontSize: 9,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400,
+                                                                    color:
+                                                                        kTextInputPlaceholderColor),
+                                                              )
+                                                            ],
                                                           ),
                                                         ),
-                                                        SizedBox(
-                                                          width: w * 0.05,
-                                                        ),
-                                                        Text(
-                                                          "Track Order"
-                                                              .toUpperCase(),
-                                                          style: GoogleFonts
-                                                              .montserrat(
-                                                                  fontSize: 12,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  color:
-                                                                      kwhitecolor),
+                                                        Expanded(
+                                                          child: Column(
+                                                            children: [
+                                                              Padding(
+                                                                padding: EdgeInsets
+                                                                    .symmetric(
+                                                                        horizontal:
+                                                                            w * 0.05),
+                                                                child:
+                                                                    TextButton(
+                                                                  style: TextButton
+                                                                      .styleFrom(
+                                                                    backgroundColor:
+                                                                        kGreenColor,
+                                                                    shadowColor:
+                                                                        kblackcolor
+                                                                            .withOpacity(0.07),
+                                                                    padding: EdgeInsets
+                                                                        .all(h *
+                                                                            0.012),
+                                                                    elevation:
+                                                                        3,
+                                                                    shape:
+                                                                        RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(h *
+                                                                              0.1),
+                                                                    ),
+                                                                  ),
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.push(
+                                                                        context,
+                                                                        MaterialPageRoute(
+                                                                            builder: (context) => CarHealth(
+                                                                                  id: datalist.first.id,
+                                                                                )));
+                                                                  },
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceAround,
+                                                                    children: [
+                                                                      Icon(
+                                                                        Icons
+                                                                            .star_border,
+                                                                        size: h *
+                                                                            0.025,
+                                                                        color:
+                                                                            kwhitecolor,
+                                                                      ),
+                                                                      Text(
+                                                                        "Health Card",
+                                                                        style: GoogleFonts.montserrat(
+                                                                            fontSize:
+                                                                                12,
+                                                                            fontWeight:
+                                                                                FontWeight.w500,
+                                                                            color: kwhitecolor),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Text(
+                                                                "shows overall health of car",
+                                                                style: GoogleFonts.montserrat(
+                                                                    fontSize: 9,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400,
+                                                                    color:
+                                                                        kTextInputPlaceholderColor),
+                                                              )
+                                                            ],
+                                                          ),
                                                         ),
                                                       ],
                                                     ),
-                                                    borderRadius: h * 0.05,
-                                                  ),
-                                                  SizedBox(
-                                                    height: h * 0.01,
-                                                  ),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
-                                                    children: [
-                                                      Expanded(
-                                                        child: Column(
-                                                          children: [
-                                                            Padding(
-                                                              padding: EdgeInsets
-                                                                  .symmetric(
-                                                                      horizontal:
-                                                                          w * 0.05),
-                                                              child: TextButton(
-                                                                style: TextButton
-                                                                    .styleFrom(
-                                                                  backgroundColor:
-                                                                      kbluecolor,
-                                                                  shadowColor:
-                                                                      kblackcolor
-                                                                          .withOpacity(
-                                                                              0.07),
-                                                                  padding: EdgeInsets
-                                                                      .all(h *
-                                                                          0.012),
-                                                                  elevation: 3,
-                                                                  shape:
-                                                                      RoundedRectangleBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(h *
-                                                                            0.1),
-                                                                  ),
-                                                                ),
-                                                                onPressed: () {
-                                                                  Navigator.push(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                          builder: (context) => JobCard(
-                                                                                orderid: datalist.first.id,
-                                                                              )));
-                                                                },
-                                                                child: Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceAround,
-                                                                  children: [
-                                                                    Icon(
-                                                                      Icons
-                                                                          .star_border,
-                                                                      size: h *
-                                                                          0.025,
-                                                                      color:
-                                                                          kwhitecolor,
-                                                                    ),
-                                                                    Text(
-                                                                      "Job Card",
-                                                                      style: GoogleFonts.montserrat(
-                                                                          fontSize:
-                                                                              12,
-                                                                          fontWeight: FontWeight
-                                                                              .w500,
-                                                                          color:
-                                                                              kwhitecolor),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              "shows pre-inspection report",
-                                                              style: GoogleFonts.montserrat(
-                                                                  fontSize: 9,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  color:
-                                                                      kTextInputPlaceholderColor),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      Expanded(
-                                                        child: Column(
-                                                          children: [
-                                                            Padding(
-                                                              padding: EdgeInsets
-                                                                  .symmetric(
-                                                                      horizontal:
-                                                                          w * 0.05),
-                                                              child: TextButton(
-                                                                style: TextButton
-                                                                    .styleFrom(
-                                                                  backgroundColor:
-                                                                      kGreenColor,
-                                                                  shadowColor:
-                                                                      kblackcolor
-                                                                          .withOpacity(
-                                                                              0.07),
-                                                                  padding: EdgeInsets
-                                                                      .all(h *
-                                                                          0.012),
-                                                                  elevation: 3,
-                                                                  shape:
-                                                                      RoundedRectangleBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(h *
-                                                                            0.1),
-                                                                  ),
-                                                                ),
-                                                                onPressed: () {
-                                                                  Navigator.push(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                          builder: (context) => CarHealth(
-                                                                                id: datalist.first.id,
-                                                                              )));
-                                                                },
-                                                                child: Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceAround,
-                                                                  children: [
-                                                                    Icon(
-                                                                      Icons
-                                                                          .star_border,
-                                                                      size: h *
-                                                                          0.025,
-                                                                      color:
-                                                                          kwhitecolor,
-                                                                    ),
-                                                                    Text(
-                                                                      "Health Card",
-                                                                      style: GoogleFonts.montserrat(
-                                                                          fontSize:
-                                                                              12,
-                                                                          fontWeight: FontWeight
-                                                                              .w500,
-                                                                          color:
-                                                                              kwhitecolor),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              "shows overall health of car",
-                                                              style: GoogleFonts.montserrat(
-                                                                  fontSize: 9,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  color:
-                                                                      kTextInputPlaceholderColor),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -1059,6 +1062,9 @@ class _OrderHistoryState extends State<OrderHistory> {
                                               width: w,
                                               margin: EdgeInsets.symmetric(
                                                   horizontal: w * 0.0001),
+                                              padding: EdgeInsets.only(
+                                                bottom: h * 0.025,
+                                              ),
                                               decoration: BoxDecoration(
                                                   color: kwhitecolor,
                                                   borderRadius:
@@ -1068,345 +1074,319 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                     bottomLeft: Radius.circular(
                                                         h * 0.06),
                                                   )),
-                                              child: Column(
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                w * 0.02),
-                                                    child: Row(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            SizedBox(
-                                                              height: h * 0.01,
-                                                            ),
-                                                            RichText(
-                                                                text: TextSpan(
-                                                                    text:
-                                                                        "DELIVERY DATE: ",
-                                                                    style: GoogleFonts.montserrat(
-                                                                        fontSize:
-                                                                            10,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w400,
-                                                                        color:
-                                                                            kTextInputPlaceholderColor),
-                                                                    children: [
-                                                                  TextSpan(
-                                                                      text: datalist[index].deliverydate.toString() == "null"
-                                                                          ? "\n"
-                                                                          : DateFormat.MMMMd().format(DateTime.parse(datalist[index].deliverydate.toString())) +
-                                                                              "\n",
-                                                                      style: GoogleFonts.montserrat(
-                                                                          fontSize:
-                                                                              10,
-                                                                          fontWeight: FontWeight
-                                                                              .w700,
-                                                                          color:
-                                                                              kTextInputPlaceholderColor)),
-                                                                  TextSpan(
-                                                                      text:
-                                                                          "BOOKING ID: ",
-                                                                      style: GoogleFonts.montserrat(
-                                                                          fontSize:
-                                                                              10,
-                                                                          fontWeight: FontWeight
-                                                                              .w400,
-                                                                          color:
-                                                                              kTextInputPlaceholderColor)),
-                                                                  TextSpan(
-                                                                      text: datalist[
-                                                                              index]
-                                                                          .orderid,
-                                                                      style: GoogleFonts.montserrat(
-                                                                          fontSize:
-                                                                              10,
-                                                                          fontWeight: FontWeight
-                                                                              .w700,
-                                                                          color:
-                                                                              kTextInputPlaceholderColor)),
-                                                                  TextSpan(
-                                                                      text:
-                                                                          "\nOTP: ",
-                                                                      style: GoogleFonts.montserrat(
-                                                                          fontSize:
-                                                                              10,
-                                                                          fontWeight: FontWeight
-                                                                              .w400,
-                                                                          color:
-                                                                              kTextInputPlaceholderColor)),
-                                                                  TextSpan(
-                                                                      text: datalist[
-                                                                              index]
-                                                                          .otp,
-                                                                      style: GoogleFonts.montserrat(
-                                                                          fontSize:
-                                                                              10,
-                                                                          fontWeight: FontWeight
-                                                                              .w700,
-                                                                          color:
-                                                                              kTextInputPlaceholderColor))
-                                                                ])),
-                                                            SizedBox(
-                                                              height: h * 0.005,
-                                                            ),
-                                                            TextButton(
-                                                              onPressed: () {
-                                                                Navigator.push(
-                                                                    context,
-                                                                    MaterialPageRoute(
-                                                                        builder: (context) =>
-                                                                            OrderDetails(
-                                                                              ordersPlans: datalist[index].ordersPlans,
-                                                                            )));
-                                                              },
-                                                              style: TextButton.styleFrom(
-                                                                  padding: const EdgeInsets
-                                                                          .only(
-                                                                      left: 0)),
-                                                              child: Text(
-                                                                "Order Details",
-                                                                style: GoogleFonts.montserrat(
-                                                                    fontSize:
-                                                                        18,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    color:
-                                                                        kTextInputPlaceholderColor),
+                                              child: SingleChildScrollView(
+                                                child: Column(
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal:
+                                                                  w * 0.02),
+                                                      child: Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              SizedBox(
+                                                                height:
+                                                                    h * 0.01,
                                                               ),
-                                                            ),
-                                                            // GestureDetector(
-                                                            //   onTap: () {
-                                                            //     Navigator.push(
-                                                            //         context,
-                                                            //         MaterialPageRoute(
-                                                            //           builder: (context) => CarHealth(
-                                                            //               id: datalist
-                                                            //                   [index]
-                                                            //                   .id),
-                                                            //         ));
-                                                            //   },
-                                                            //   child: RRectCard(
-                                                            //     h: h * 0.04,
-                                                            //     w: w * 0.24,
-                                                            //     color: kGreenColor,
-                                                            //     padding: EdgeInsets
-                                                            //         .symmetric(
-                                                            //             horizontal:
-                                                            //                 w * 0.01),
-                                                            //     widget: Center(
-                                                            //       child: Text(
-                                                            //         "Car Health ", //Analysis",
-                                                            //         style: GoogleFonts.montserrat(
-                                                            //             fontSize:
-                                                            //                 11,
-                                                            //             fontWeight:
-                                                            //                 FontWeight
-                                                            //                     .w700,
-                                                            //             color:
-                                                            //                 kwhitecolor),
-                                                            //       ),
-                                                            //     ),
-                                                            //     borderRadius:
-                                                            //         h * 0.04,
-                                                            //   ),
-                                                            // ),
-                                                          ],
-                                                        ),
-                                                        Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .end,
-                                                          children: [
-                                                            Text(
-                                                                "₹" +
-                                                                    datalist[
-                                                                            index]
-                                                                        .price,
-                                                                style: GoogleFonts.montserrat(
+                                                              RichText(
+                                                                  text: TextSpan(
+                                                                      text:
+                                                                          "DELIVERY DATE: ",
+                                                                      style: GoogleFonts.montserrat(
+                                                                          fontSize:
+                                                                              10,
+                                                                          fontWeight: FontWeight
+                                                                              .w400,
+                                                                          color:
+                                                                              kTextInputPlaceholderColor),
+                                                                      children: [
+                                                                    TextSpan(
+                                                                        text: datalist[index].deliverydate.toString() == "null"
+                                                                            ? "\n"
+                                                                            : DateFormat.MMMMd().format(DateTime.parse(datalist[index].deliverydate.toString())) +
+                                                                                "\n",
+                                                                        style: GoogleFonts.montserrat(
+                                                                            fontSize:
+                                                                                10,
+                                                                            fontWeight:
+                                                                                FontWeight.w700,
+                                                                            color: kTextInputPlaceholderColor)),
+                                                                    TextSpan(
+                                                                        text:
+                                                                            "BOOKING ID: ",
+                                                                        style: GoogleFonts.montserrat(
+                                                                            fontSize:
+                                                                                10,
+                                                                            fontWeight:
+                                                                                FontWeight.w400,
+                                                                            color: kTextInputPlaceholderColor)),
+                                                                    TextSpan(
+                                                                        text: datalist[index]
+                                                                            .orderid,
+                                                                        style: GoogleFonts.montserrat(
+                                                                            fontSize:
+                                                                                10,
+                                                                            fontWeight:
+                                                                                FontWeight.w700,
+                                                                            color: kTextInputPlaceholderColor)),
+                                                                    TextSpan(
+                                                                        text:
+                                                                            "\nOTP: ",
+                                                                        style: GoogleFonts.montserrat(
+                                                                            fontSize:
+                                                                                10,
+                                                                            fontWeight:
+                                                                                FontWeight.w400,
+                                                                            color: kTextInputPlaceholderColor)),
+                                                                    TextSpan(
+                                                                        text: datalist[index]
+                                                                            .otp,
+                                                                        style: GoogleFonts.montserrat(
+                                                                            fontSize:
+                                                                                10,
+                                                                            fontWeight:
+                                                                                FontWeight.w700,
+                                                                            color: kTextInputPlaceholderColor))
+                                                                  ])),
+                                                              SizedBox(
+                                                                height:
+                                                                    h * 0.005,
+                                                              ),
+                                                              TextButton(
+                                                                onPressed: () {
+                                                                  Navigator.push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                          builder: (context) => OrderDetails(
+                                                                                ordersPlans: datalist[index].ordersPlans,
+                                                                              )));
+                                                                },
+                                                                style: TextButton.styleFrom(
+                                                                    padding: const EdgeInsets
+                                                                            .only(
+                                                                        left:
+                                                                            0)),
+                                                                child: Text(
+                                                                  "Order Details",
+                                                                  style: GoogleFonts.montserrat(
+                                                                      fontSize:
+                                                                          18,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      color:
+                                                                          kTextInputPlaceholderColor),
+                                                                ),
+                                                              ),
+                                                              // GestureDetector(
+                                                              //   onTap: () {
+                                                              //     Navigator.push(
+                                                              //         context,
+                                                              //         MaterialPageRoute(
+                                                              //           builder: (context) => CarHealth(
+                                                              //               id: datalist
+                                                              //                   [index]
+                                                              //                   .id),
+                                                              //         ));
+                                                              //   },
+                                                              //   child: RRectCard(
+                                                              //     h: h * 0.04,
+                                                              //     w: w * 0.24,
+                                                              //     color: kGreenColor,
+                                                              //     padding: EdgeInsets
+                                                              //         .symmetric(
+                                                              //             horizontal:
+                                                              //                 w * 0.01),
+                                                              //     widget: Center(
+                                                              //       child: Text(
+                                                              //         "Car Health ", //Analysis",
+                                                              //         style: GoogleFonts.montserrat(
+                                                              //             fontSize:
+                                                              //                 11,
+                                                              //             fontWeight:
+                                                              //                 FontWeight
+                                                              //                     .w700,
+                                                              //             color:
+                                                              //                 kwhitecolor),
+                                                              //       ),
+                                                              //     ),
+                                                              //     borderRadius:
+                                                              //         h * 0.04,
+                                                              //   ),
+                                                              // ),
+                                                            ],
+                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .end,
+                                                            children: [
+                                                              Text(
+                                                                  "₹" +
+                                                                      datalist[
+                                                                              index]
+                                                                          .price,
+                                                                  style: GoogleFonts.montserrat(
+                                                                      fontSize:
+                                                                          23,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w700,
+                                                                      color:
+                                                                          kTextInputPlaceholderColor)),
+                                                              RRecctButton(
+                                                                text: datalist[index]
+                                                                            .paystatus ==
+                                                                        "Deposited"
+                                                                    ? "Paid"
+                                                                    : datalist[index].paystatus ==
+                                                                            "Failed"
+                                                                        ? "Failed"
+                                                                        : datalist[index]
+                                                                            .paystatus
+                                                                            .toUpperCase(), //  "Pay Later",
+                                                                style: GoogleFonts
+                                                                    .montserrat(
+                                                                  fontSize: 9,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color: datalist[index]
+                                                                              .paystatus ==
+                                                                          "Failed"
+                                                                      ? kGreenColor
+                                                                      : datalist[index].paystatus ==
+                                                                              "Deposited"
+                                                                          ? kredcolor
+                                                                          : korangecolor,
+                                                                ),
+                                                                // buttonColor: datalist
+                                                                //             [index]
+                                                                //             .paystatus ==
+                                                                //         "Failed"
+                                                                //     ? kGreenColor
+                                                                //     : datalist[index]
+                                                                //                 .paystatus ==
+                                                                //             "Deposited"
+                                                                //         ? kredcolor
+                                                                //         : korangecolor,
+                                                                // w: w * 0.17,
+                                                                h: h * 0.02,
+                                                              ),
+                                                              Visibility(
+                                                                visible: datalist[
+                                                                        index]
+                                                                    .invoice
+                                                                    .isNotEmpty,
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap:
+                                                                      () async {
+                                                                    await launchURL(
+                                                                        datalist[index]
+                                                                            .invoice);
+                                                                  },
+                                                                  child: Text(
+                                                                      "View invoice",
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .center,
+                                                                      style: GoogleFonts.montserrat(
+                                                                          fontSize:
+                                                                              14,
+                                                                          fontWeight: FontWeight
+                                                                              .w500,
+                                                                          height:
+                                                                              2,
+                                                                          color:
+                                                                              kTextInputPlaceholderColor)),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    // Image.asset(
+                                                    //   "assets/images/Uber.png",
+                                                    //   height: h * 0.15,
+                                                    // ),
+                                                    Container(
+                                                      height: h * 0.13,
+                                                      // width: w * 0.3,
+                                                      margin: EdgeInsets.only(
+                                                          bottom: h * 0.01,
+                                                          top: h * 0.01),
+                                                      decoration: BoxDecoration(
+                                                          // shape: BoxShape.circle,
+                                                          image:
+                                                              DecorationImage(
+                                                        image: NetworkImage(
+                                                            datalist[index]
+                                                                .carimage),
+                                                        fit: BoxFit.contain,
+                                                      )),
+                                                    ),
+                                                    RichText(
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        text: TextSpan(
+                                                            text: datalist[
+                                                                        index]
+                                                                    .carname +
+                                                                "  ",
+                                                            style: GoogleFonts
+                                                                .montserrat(
                                                                     fontSize:
-                                                                        23,
+                                                                        12,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w700,
+                                                                    height: 2,
                                                                     color:
-                                                                        kTextInputPlaceholderColor)),
-                                                            RRecctButton(
-                                                              text: datalist[index]
-                                                                          .paystatus ==
-                                                                      "Deposited"
-                                                                  ? "Paid"
-                                                                  : datalist[index]
-                                                                              .paystatus ==
-                                                                          "Failed"
-                                                                      ? "Failed"
-                                                                      : datalist[
+                                                                        kTextInputPlaceholderColor),
+                                                            children: [
+                                                              TextSpan(
+                                                                  text: datalist[
                                                                               index]
-                                                                          .paystatus
-                                                                          .toUpperCase(), //  "Pay Later",
-                                                              style: GoogleFonts
-                                                                  .montserrat(
-                                                                fontSize: 9,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                color: datalist[index]
-                                                                            .paystatus ==
-                                                                        "Failed"
-                                                                    ? kGreenColor
-                                                                    : datalist[index].paystatus ==
-                                                                            "Deposited"
-                                                                        ? kredcolor
-                                                                        : korangecolor,
-                                                              ),
-                                                              // buttonColor: datalist
-                                                              //             [index]
-                                                              //             .paystatus ==
-                                                              //         "Failed"
-                                                              //     ? kGreenColor
-                                                              //     : datalist[index]
-                                                              //                 .paystatus ==
-                                                              //             "Deposited"
-                                                              //         ? kredcolor
-                                                              //         : korangecolor,
-                                                              // w: w * 0.17,
-                                                              h: h * 0.02,
-                                                            ),
-                                                            Visibility(
-                                                              visible: datalist[
-                                                                      index]
-                                                                  .invoice
-                                                                  .isNotEmpty,
-                                                              child:
-                                                                  GestureDetector(
-                                                                onTap:
-                                                                    () async {
-                                                                  await launchURL(
+                                                                          .carbrand +
+                                                                      " \n(" +
                                                                       datalist[
                                                                               index]
-                                                                          .invoice);
-                                                                },
-                                                                child: Text(
-                                                                    "View invoice",
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .center,
-                                                                    style: GoogleFonts.montserrat(
-                                                                        fontSize:
-                                                                            14,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w500,
-                                                                        height:
-                                                                            2,
-                                                                        color:
-                                                                            kTextInputPlaceholderColor)),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  // Image.asset(
-                                                  //   "assets/images/Uber.png",
-                                                  //   height: h * 0.15,
-                                                  // ),
-                                                  Container(
-                                                    height: h * 0.13,
-                                                    // width: w * 0.3,
-                                                    margin: EdgeInsets.only(
-                                                        bottom: h * 0.01,
-                                                        top: h * 0.01),
-                                                    decoration: BoxDecoration(
-                                                        // shape: BoxShape.circle,
-                                                        image: DecorationImage(
-                                                      image: NetworkImage(
-                                                          datalist[index]
-                                                              .carimage),
-                                                      fit: BoxFit.contain,
-                                                    )),
-                                                  ),
-                                                  RichText(
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      text: TextSpan(
-                                                          text: datalist[index]
-                                                                  .carname +
-                                                              "  ",
-                                                          style: GoogleFonts
-                                                              .montserrat(
-                                                                  fontSize: 12,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700,
-                                                                  height: 2,
-                                                                  color:
-                                                                      kTextInputPlaceholderColor),
-                                                          children: [
-                                                            TextSpan(
-                                                                text: datalist[
-                                                                            index]
-                                                                        .carbrand +
-                                                                    " \n(" +
-                                                                    datalist[index]
-                                                                        .fuelname +
-                                                                    ") " +
-                                                                    datalist[index]
-                                                                        .cityname,
-                                                                style: GoogleFonts.montserrat(
-                                                                    fontSize:
-                                                                        12,
-                                                                    height: 1,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    color:
-                                                                        kTextInputPlaceholderColor)),
-                                                          ])),
-                                                  FittedBox(
-                                                    child: Column(
-                                                      children: [
-                                                        Text(
-                                                          datalist[index]
-                                                                  .ordersPlans[
-                                                                      0]
-                                                                  .planName
-                                                                  .toString() +
-                                                              "\n",
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          maxLines: 1,
-                                                          style: GoogleFonts
-                                                              .montserrat(
-                                                                  fontSize: 28,
-                                                                  height: 1.5,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700,
-                                                                  color:
-                                                                      kTextInputPlaceholderColor),
-                                                        ),
-                                                        Text(
+                                                                          .fuelname +
+                                                                      ") " +
+                                                                      datalist[
+                                                                              index]
+                                                                          .cityname,
+                                                                  style: GoogleFonts.montserrat(
+                                                                      fontSize:
+                                                                          12,
+                                                                      height: 1,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      color:
+                                                                          kTextInputPlaceholderColor)),
+                                                            ])),
+                                                    FittedBox(
+                                                      child: Column(
+                                                        children: [
+                                                          Text(
                                                             datalist[index]
                                                                     .ordersPlans[
                                                                         0]
-                                                                    .plansubName
+                                                                    .planName
                                                                     .toString() +
                                                                 "\n",
                                                             textAlign: TextAlign
@@ -1414,241 +1394,270 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                             overflow:
                                                                 TextOverflow
                                                                     .ellipsis,
-                                                            // maxLines: 2,
+                                                            maxLines: 1,
                                                             style: GoogleFonts
                                                                 .montserrat(
                                                                     fontSize:
-                                                                        11,
+                                                                        28,
+                                                                    height: 1.5,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700,
+                                                                    color:
+                                                                        kTextInputPlaceholderColor),
+                                                          ),
+                                                          Text(
+                                                              datalist[index]
+                                                                      .ordersPlans[
+                                                                          0]
+                                                                      .plansubName
+                                                                      .toString() +
+                                                                  "\n",
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              // maxLines: 2,
+                                                              style: GoogleFonts.montserrat(
+                                                                  fontSize: 11,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color:
+                                                                      kTextInputPlaceholderColor)),
+                                                          // Text(
+                                                          //     "The package includes the use of 3M products and services",
+                                                          //     textAlign:
+                                                          //         TextAlign.center,
+                                                          //     overflow: TextOverflow
+                                                          //         .ellipsis,
+                                                          //     // maxLines: 2,
+                                                          //     style: GoogleFonts
+                                                          //         .montserrat(
+                                                          //             fontSize: 12,
+                                                          //             // height: 2,
+                                                          //             fontWeight:
+                                                          //                 FontWeight
+                                                          //                     .w400,
+                                                          //             color: kTextInputPlaceholderColor
+                                                          //                 .withOpacity(
+                                                          //                     0.49))),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    RRectCard(
+                                                      color: kbluecolor,
+                                                      w: w * 0.6,
+                                                      h: h * 0.05,
+                                                      widget: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          CircleAvatar(
+                                                            radius: h * 0.02,
+                                                            backgroundColor:
+                                                                const Color(
+                                                                    0xFFFD440D),
+                                                            child: Padding(
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(
+                                                                h * 0.004,
+                                                              ),
+                                                              child: SvgPicture
+                                                                  .asset(
+                                                                      "assets/svg/City.svg"),
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            width: w * 0.05,
+                                                          ),
+                                                          Text(
+                                                            "Track Order"
+                                                                .toUpperCase(),
+                                                            style: GoogleFonts
+                                                                .montserrat(
+                                                                    fontSize:
+                                                                        12,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color:
+                                                                        kwhitecolor),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      borderRadius: h * 0.05,
+                                                    ),
+                                                    SizedBox(
+                                                      height: h * 0.01,
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceEvenly,
+                                                      children: [
+                                                        Expanded(
+                                                          child: Column(
+                                                            children: [
+                                                              Padding(
+                                                                padding: EdgeInsets
+                                                                    .symmetric(
+                                                                        horizontal:
+                                                                            w * 0.05),
+                                                                child:
+                                                                    TextButton(
+                                                                  style: TextButton
+                                                                      .styleFrom(
+                                                                    backgroundColor:
+                                                                        kbluecolor,
+                                                                    shadowColor:
+                                                                        kblackcolor
+                                                                            .withOpacity(0.07),
+                                                                    padding: EdgeInsets
+                                                                        .all(h *
+                                                                            0.012),
+                                                                    elevation:
+                                                                        3,
+                                                                    shape:
+                                                                        RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(h *
+                                                                              0.1),
+                                                                    ),
+                                                                  ),
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.push(
+                                                                        context,
+                                                                        MaterialPageRoute(
+                                                                            builder: (context) => JobCard(
+                                                                                  orderid: datalist[index].id,
+                                                                                )));
+                                                                  },
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceAround,
+                                                                    children: [
+                                                                      Icon(
+                                                                        Icons
+                                                                            .star_border,
+                                                                        size: h *
+                                                                            0.025,
+                                                                        color:
+                                                                            kwhitecolor,
+                                                                      ),
+                                                                      Text(
+                                                                        "Job Card",
+                                                                        style: GoogleFonts.montserrat(
+                                                                            fontSize:
+                                                                                12,
+                                                                            fontWeight:
+                                                                                FontWeight.w500,
+                                                                            color: kwhitecolor),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Text(
+                                                                "shows pre-inspection report",
+                                                                style: GoogleFonts.montserrat(
+                                                                    fontSize: 9,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w400,
                                                                     color:
-                                                                        kTextInputPlaceholderColor)),
-                                                        // Text(
-                                                        //     "The package includes the use of 3M products and services",
-                                                        //     textAlign:
-                                                        //         TextAlign.center,
-                                                        //     overflow: TextOverflow
-                                                        //         .ellipsis,
-                                                        //     // maxLines: 2,
-                                                        //     style: GoogleFonts
-                                                        //         .montserrat(
-                                                        //             fontSize: 12,
-                                                        //             // height: 2,
-                                                        //             fontWeight:
-                                                        //                 FontWeight
-                                                        //                     .w400,
-                                                        //             color: kTextInputPlaceholderColor
-                                                        //                 .withOpacity(
-                                                        //                     0.49))),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  RRectCard(
-                                                    color: kbluecolor,
-                                                    w: w * 0.6,
-                                                    h: h * 0.05,
-                                                    widget: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        CircleAvatar(
-                                                          radius: h * 0.02,
-                                                          backgroundColor:
-                                                              const Color(
-                                                                  0xFFFD440D),
-                                                          child: Padding(
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                              h * 0.004,
-                                                            ),
-                                                            child: SvgPicture.asset(
-                                                                "assets/svg/City.svg"),
+                                                                        kTextInputPlaceholderColor),
+                                                              )
+                                                            ],
                                                           ),
                                                         ),
-                                                        SizedBox(
-                                                          width: w * 0.05,
-                                                        ),
-                                                        Text(
-                                                          "Track Order"
-                                                              .toUpperCase(),
-                                                          style: GoogleFonts
-                                                              .montserrat(
-                                                                  fontSize: 12,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  color:
-                                                                      kwhitecolor),
+                                                        Expanded(
+                                                          child: Column(
+                                                            children: [
+                                                              Padding(
+                                                                padding: EdgeInsets
+                                                                    .symmetric(
+                                                                        horizontal:
+                                                                            w * 0.05),
+                                                                child:
+                                                                    TextButton(
+                                                                  style: TextButton
+                                                                      .styleFrom(
+                                                                    backgroundColor:
+                                                                        kGreenColor,
+                                                                    shadowColor:
+                                                                        kblackcolor
+                                                                            .withOpacity(0.07),
+                                                                    padding: EdgeInsets
+                                                                        .all(h *
+                                                                            0.012),
+                                                                    elevation:
+                                                                        3,
+                                                                    shape:
+                                                                        RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(h *
+                                                                              0.1),
+                                                                    ),
+                                                                  ),
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.push(
+                                                                        context,
+                                                                        MaterialPageRoute(
+                                                                            builder: (context) => CarHealth(
+                                                                                  id: datalist[index].id,
+                                                                                )));
+                                                                  },
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceAround,
+                                                                    children: [
+                                                                      Icon(
+                                                                        Icons
+                                                                            .star_border,
+                                                                        size: h *
+                                                                            0.025,
+                                                                        color:
+                                                                            kwhitecolor,
+                                                                      ),
+                                                                      Text(
+                                                                        "Health Card",
+                                                                        style: GoogleFonts.montserrat(
+                                                                            fontSize:
+                                                                                12,
+                                                                            fontWeight:
+                                                                                FontWeight.w500,
+                                                                            color: kwhitecolor),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Text(
+                                                                "shows overall health of car",
+                                                                style: GoogleFonts.montserrat(
+                                                                    fontSize: 9,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400,
+                                                                    color:
+                                                                        kTextInputPlaceholderColor),
+                                                              )
+                                                            ],
+                                                          ),
                                                         ),
                                                       ],
                                                     ),
-                                                    borderRadius: h * 0.05,
-                                                  ),
-                                                  SizedBox(
-                                                    height: h * 0.01,
-                                                  ),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
-                                                    children: [
-                                                      Expanded(
-                                                        child: Column(
-                                                          children: [
-                                                            Padding(
-                                                              padding: EdgeInsets
-                                                                  .symmetric(
-                                                                      horizontal:
-                                                                          w * 0.05),
-                                                              child: TextButton(
-                                                                style: TextButton
-                                                                    .styleFrom(
-                                                                  backgroundColor:
-                                                                      kbluecolor,
-                                                                  shadowColor:
-                                                                      kblackcolor
-                                                                          .withOpacity(
-                                                                              0.07),
-                                                                  padding: EdgeInsets
-                                                                      .all(h *
-                                                                          0.012),
-                                                                  elevation: 3,
-                                                                  shape:
-                                                                      RoundedRectangleBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(h *
-                                                                            0.1),
-                                                                  ),
-                                                                ),
-                                                                onPressed: () {
-                                                                  Navigator.push(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                          builder: (context) => JobCard(
-                                                                                orderid: datalist[index].id,
-                                                                              )));
-                                                                },
-                                                                child: Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceAround,
-                                                                  children: [
-                                                                    Icon(
-                                                                      Icons
-                                                                          .star_border,
-                                                                      size: h *
-                                                                          0.025,
-                                                                      color:
-                                                                          kwhitecolor,
-                                                                    ),
-                                                                    Text(
-                                                                      "Job Card",
-                                                                      style: GoogleFonts.montserrat(
-                                                                          fontSize:
-                                                                              12,
-                                                                          fontWeight: FontWeight
-                                                                              .w500,
-                                                                          color:
-                                                                              kwhitecolor),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              "shows pre-inspection report",
-                                                              style: GoogleFonts.montserrat(
-                                                                  fontSize: 9,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  color:
-                                                                      kTextInputPlaceholderColor),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      Expanded(
-                                                        child: Column(
-                                                          children: [
-                                                            Padding(
-                                                              padding: EdgeInsets
-                                                                  .symmetric(
-                                                                      horizontal:
-                                                                          w * 0.05),
-                                                              child: TextButton(
-                                                                style: TextButton
-                                                                    .styleFrom(
-                                                                  backgroundColor:
-                                                                      kGreenColor,
-                                                                  shadowColor:
-                                                                      kblackcolor
-                                                                          .withOpacity(
-                                                                              0.07),
-                                                                  padding: EdgeInsets
-                                                                      .all(h *
-                                                                          0.012),
-                                                                  elevation: 3,
-                                                                  shape:
-                                                                      RoundedRectangleBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(h *
-                                                                            0.1),
-                                                                  ),
-                                                                ),
-                                                                onPressed: () {
-                                                                  Navigator.push(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                          builder: (context) => CarHealth(
-                                                                                id: datalist[index].id,
-                                                                              )));
-                                                                },
-                                                                child: Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceAround,
-                                                                  children: [
-                                                                    Icon(
-                                                                      Icons
-                                                                          .star_border,
-                                                                      size: h *
-                                                                          0.025,
-                                                                      color:
-                                                                          kwhitecolor,
-                                                                    ),
-                                                                    Text(
-                                                                      "Health Card",
-                                                                      style: GoogleFonts.montserrat(
-                                                                          fontSize:
-                                                                              12,
-                                                                          fontWeight: FontWeight
-                                                                              .w500,
-                                                                          color:
-                                                                              kwhitecolor),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              "shows overall health of car",
-                                                              style: GoogleFonts.montserrat(
-                                                                  fontSize: 9,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  color:
-                                                                      kTextInputPlaceholderColor),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           ),

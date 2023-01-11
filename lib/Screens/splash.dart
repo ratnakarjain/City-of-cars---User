@@ -5,6 +5,7 @@ import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Utils/preference.dart';
 import 'package:flutter/material.dart';
 
+import '../Services/servies.dart';
 import 'bottomnavBar.dart';
 import 'myhomepage.dart';
 
@@ -105,13 +106,13 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
       duration: const Duration(seconds: 4),
       vsync: this,
     );
-    slidecontroller =
-        AnimationController(duration: const Duration(milliseconds: 600), vsync: this);
+    slidecontroller = AnimationController(
+        duration: const Duration(milliseconds: 600), vsync: this);
     slideanimation =
         Tween<double>(begin: 0.3, end: 1.0).animate(slidecontroller);
     slidecontroller.forward();
-    scalecontroller =
-        AnimationController(duration: const Duration(milliseconds: 600), vsync: this);
+    scalecontroller = AnimationController(
+        duration: const Duration(milliseconds: 600), vsync: this);
     scaleanimation =
         Tween<double>(begin: 0.5, end: 0.7).animate(scalecontroller);
 
@@ -126,7 +127,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
       print(id + "    +++++");
     }
     Future.delayed(const Duration(seconds: 3), () {
-       Navigator.pushAndRemoveUntil<dynamic>(
+      Navigator.pushAndRemoveUntil<dynamic>(
         context,
         MaterialPageRoute<dynamic>(
           builder: (BuildContext context) => id == "" || id == "null"
@@ -137,6 +138,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
         ),
         (route) => false, //if you want to disable back feature set to false
       );
+      sendfcm();
       //  id == "" || id == "null"
       //     ? const MyHomePage()
       //     : BottomNavBar(index: 0),
@@ -165,26 +167,26 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
             // )),
             child: Stack(
               children: [
-                 AnimatedPositioned(
-                      duration: const Duration(milliseconds: 600),
-                      top: start
-                          ? MediaQuery.of(context).size.height * 0.25
-                          : MediaQuery.of(context).size.height * 0.35,
-                      right: 0,
-                      left: 0,
-                      child: ScaleTransition(
-                        scale: scaleanimation,
-                        child: Image.asset(
-                          "assets/images/COClogo.png",
-                          height: MediaQuery.of(context).size.height * 0.2,
-                        ),
-                      ),
+                AnimatedPositioned(
+                  duration: const Duration(milliseconds: 600),
+                  top: start
+                      ? MediaQuery.of(context).size.height * 0.25
+                      : MediaQuery.of(context).size.height * 0.35,
+                  right: 0,
+                  left: 0,
+                  child: ScaleTransition(
+                    scale: scaleanimation,
+                    child: Image.asset(
+                      "assets/images/COClogo.png",
+                      height: MediaQuery.of(context).size.height * 0.2,
                     ),
+                  ),
+                ),
                 // AnimatedPositioned(
                 //   duration: const Duration(seconds: 1),
                 //   onEnd: (){
                 //     setState(() {
-                      
+
                 //     });
                 //   },
                 //   top:end? MediaQuery.of(context).size.height * 0.45:MediaQuery.of(context).size.height * 0.5,
