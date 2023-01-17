@@ -1,26 +1,17 @@
 import 'dart:collection';
-
 import 'package:cityofcars/Screens/bottomnavBar.dart';
 import 'package:cityofcars/Screens/editProfile.dart';
-import 'package:cityofcars/Screens/orderHistoryDetails.dart';
 import 'package:cityofcars/Screens/splash.dart';
-
 import 'package:cityofcars/Utils/constants.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'Screens/glance.dart';
 import 'Screens/messages.dart';
-import 'Screens/myhomepage.dart';
 import 'Screens/notification.dart';
-import 'Screens/selectBrand.dart';
 import 'Services/models/receivedNotification.dart';
-import 'Services/servies.dart';
 import 'Utils/functions.dart';
 import 'Utils/preference.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -31,9 +22,9 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
-    'cityofcars', // id
-    'cityofcars',
-    description: "User Notification Channel", // name
+    'high_importance_channel', // id
+    'High Importance Notifications',
+    description: "This channel is used for important notifications.", // name
     importance: Importance.max,
     enableLights: true,
     playSound: true,
@@ -42,61 +33,78 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
-// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-//   await Firebase.initializeApp();
-//    if(message.notification !=null){
-//       Map<String, dynamic> map = HashMap();
-//       print(map.toString());
-//        map["title"] = message.notification!.title;
-//        map["body"] = message.notification!.body;
-//        if (message.data.isNotEmpty) {
-//       if (message.data.containsKey("type")) {
-//         map["type"] = message.data["type"];
-//       }
-//     }
-//       print("notification data"+message.data.toString());
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print("===background");
+  await Firebase.initializeApp();
+  if (message.notification != null) {
+    print("notification notification" + message.notification!.title.toString());
+  }
+  if (message.notification != null) {
+    Map<String, dynamic> map = HashMap();
+    print(map.toString());
+    map["title"] = message.notification!.title;
+    map["body"] = message.notification!.body;
+    if (message.data.isNotEmpty) {
+      if (message.data.containsKey("type")) {
+        map["type"] = message.data["type"];
+      }
+    }
 
-//       createListMap(map);
-//    }
-//   // If `onMessage` is triggered with a notification, construct our own
-//   // local notification to show to users using the created channel.
-//   const AndroidNotificationDetails androidPlatformChannelSpecifics =
-//         AndroidNotificationDetails(
-//           'cityofcars',
-//           'cityofcars',
-//           channelDescription: 'User Notification Channel',
-//           importance: Importance.max,
-//           priority: Priority.high,
-//           ticker: 'ticker',
-//           enableLights: true,
-//           enableVibration: true,
-//           playSound: true,
-//         );
-//         const NotificationDetails platformChannelSpecifics =
-//         NotificationDetails(android: androidPlatformChannelSpecifics);
-//         await flutterLocalNotificationsPlugin.show(
-//           10,
-//           message.notification!.title,
-//           message.notification!.body,
-//           platformChannelSpecifics,
-//           payload: message.data.toString(),
-//         );
-//   // if (notification != null && android != null) {
-//   //   flutterLocalNotificationsPlugin.show(
-//   //       notification.hashCode,
-//   //       notification.title,
-//   //       notification.body,
-//   //       NotificationDetails(
-//   //         android: AndroidNotificationDetails(
-//   //           channel.id,
-//   //           channel.name,
-//   //           icon: android.smallIcon,
-//   //           // other properties...
-//   //         ),
-//   //       ));
-//   // }
-//   print('A bg message just showed up :  ${message.messageId}');
-// }
+    createListMap(map);
+  }
+  // if (message.notification != null) {
+  //   Map<String, dynamic> map = HashMap();
+  //   print(map.toString());
+  //   map["title"] = message.notification!.title;
+  //   map["body"] = message.notification!.body;
+  //   if (message.data.isNotEmpty) {
+  //     if (message.data.containsKey("type")) {
+  //       map["type"] = message.data["type"];
+  //     }
+  //   }
+  //   print("notification data" + message.data.toString());
+
+  //   createListMap(map);
+  // }
+  // If `onMessage` is triggered with a notification, construct our own
+  // local notification to show to users using the created channel.
+  // const AndroidNotificationDetails androidPlatformChannelSpecifics =
+  //     AndroidNotificationDetails(
+  //   'cityofcars',
+  //   'cityofcars',
+  //   channelDescription: 'User Notification Channel',
+  //   importance: Importance.max,
+  //   priority: Priority.high,
+  //   ticker: 'ticker',
+  //   enableLights: true,
+  //   enableVibration: true,
+  //   playSound: true,
+  // );
+  // const NotificationDetails platformChannelSpecifics =
+  //     NotificationDetails(android: androidPlatformChannelSpecifics);
+  // await flutterLocalNotificationsPlugin.show(
+  //   10,
+  //   message.notification!.title,
+  //   message.notification!.body,
+  //   platformChannelSpecifics,
+  //   payload: message.data.toString(),
+  // );
+  // if (notification != null && android != null) {
+  //   flutterLocalNotificationsPlugin.show(
+  //       notification.hashCode,
+  //       notification.title,
+  //       notification.body,
+  //       NotificationDetails(
+  //         android: AndroidNotificationDetails(
+  //           channel.id,
+  //           channel.name,
+  //           icon: android.smallIcon,
+  //           // other properties...
+  //         ),
+  //       ));
+  // }
+  print('A bg message just showed up :  ${message.messageId}');
+}
 
 final BehaviorSubject<String?> selectNotificationSubject =
     BehaviorSubject<String?>();
@@ -108,6 +116,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();
+  Prefernece.pref = await SharedPreferences.getInstance();
 
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -161,7 +170,7 @@ Future<void> main() async {
     sound: true,
   );
 
-  Prefernece.pref = await SharedPreferences.getInstance();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
@@ -353,9 +362,9 @@ class _MyAppState extends State<MyApp> {
       // local notification to show to users using the created channel.
       const AndroidNotificationDetails androidPlatformChannelSpecifics =
           AndroidNotificationDetails(
-        'cityofcars',
-        'cityofcars',
-        channelDescription: 'User Notification Channel',
+        'high_importance_channel', // id
+        'High Importance Notifications',
+        channelDescription: "This channel is used for important notifications.",
         importance: Importance.max,
         priority: Priority.high,
         ticker: 'ticker',
@@ -421,9 +430,9 @@ class _MyAppState extends State<MyApp> {
       }
       const AndroidNotificationDetails androidPlatformChannelSpecifics =
           AndroidNotificationDetails(
-        'cityofcars',
-        'cityofcars',
-        channelDescription: 'User Notification Channel',
+        'high_importance_channel', // id
+        'High Importance Notifications',
+        channelDescription: "This channel is used for important notifications.",
         importance: Importance.max,
         priority: Priority.high,
         ticker: 'ticker',

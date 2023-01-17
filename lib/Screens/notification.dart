@@ -3,6 +3,7 @@ import 'package:cityofcars/Utils/preference.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Utils/functions.dart';
 import 'bottomnavBar.dart';
@@ -27,13 +28,15 @@ class _NotificationsState extends State<Notifications> {
   List<String> typeList = [];
   List<bool> selectedList = [];
   // List<String> replyIdList = [];
-  var preferences = Prefernece.pref;
+  late SharedPreferences preferences;
+  bool isloading = true;
   // List selected = [];
   int item = 10;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    WidgetsFlutterBinding.ensureInitialized();
     getData();
 
     // isread.add("false");
@@ -49,10 +52,11 @@ class _NotificationsState extends State<Notifications> {
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.width;
-//  preferences!.remove("titleList");
-//        preferences!.remove("bodyList");
-//      preferences!.remove("isRead");
-//        preferences!.remove("timeList");
+    // preferences.remove("titleList");
+    // preferences.remove("bodyList");
+    // preferences.remove("isRead");
+    // preferences.remove("timeList");
+    // preferences.remove("typeList");
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -97,7 +101,7 @@ class _NotificationsState extends State<Notifications> {
                               // setState(() {
 
                               // });
-                              preferences!.setStringList("isRead", isread);
+                              preferences.setStringList("isRead", isread);
                               switch (
                                   typeList[index].toString().toLowerCase()) {
                                 case "presets":
@@ -300,16 +304,25 @@ class _NotificationsState extends State<Notifications> {
 
   Future<void> getData() async {
     // List<String> isRead = [];
+    preferences = await SharedPreferences.getInstance();
 
-    if (preferences!.containsKey("titleList")) {
-      titleList = preferences!.getStringList("titleList")!;
-      bodyList = preferences!.getStringList("bodyList")!;
-      isread = preferences!.getStringList("isRead")!;
-      timeList = preferences!.getStringList("timeList")!;
-      typeList = preferences!.getStringList("typeList")!;
+    if (preferences.containsKey("titleList")) {
+      titleList = preferences.getStringList("titleList")!;
+      bodyList = preferences.getStringList("bodyList")!;
+      isread = preferences.getStringList("isRead")!;
+      timeList = preferences.getStringList("timeList")!;
+      typeList = preferences.getStringList("typeList")!;
+      print(preferences.getStringList('titleList'));
+      print(preferences.getStringList('bodyList'));
+      print(preferences.getStringList('isRead'));
+      print(preferences.getStringList('timeList'));
+      print(preferences.getStringList('typeList'));
+      if (isread.length < titleList.length) {
+        isread = List.generate(titleList.length, (index) => "true");
+      }
       selectedList = List.generate(titleList.length, (index) => false);
       print("========= $selectedList");
-      // replyIdList = preferences.getStringList("replyIdList")!;
+      // replyIdList = preferencesgetStringList("replyIdList")!;
       // isread.forEach((element) {
       //   isRead.add("true");
       // });
@@ -319,8 +332,8 @@ class _NotificationsState extends State<Notifications> {
     print("title list length " + timeList.toString() + "^^");
     print("type list length " + typeList.toString() + "^^");
     print("is read list length " + isread.toString() + "^^");
-    preferences!.setStringList("isRead", isread);
-    preferences!.commit();
+    preferences.setStringList("isRead", isread);
+    preferences.commit();
     // notificationCount = 0;
     // context.read<Counter>().getNotify();
 
@@ -330,6 +343,7 @@ class _NotificationsState extends State<Notifications> {
       // isread = isread.reversed.toList();
       // timeList = timeList.reversed.toList();
       // replyIdList = replyIdList.reversed.toList();
+      isloading = false;
     });
   }
 }
