@@ -45,6 +45,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     // TODO: implement initState
     super.initState();
     getcmsdata();
+    getSecurityURL();
     selectedPos = widget.index;
     _navigationController = CircularBottomNavigationController(selectedPos);
   }

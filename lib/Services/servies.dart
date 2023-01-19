@@ -1881,3 +1881,42 @@ Future changeCity(BuildContext context, String newcityId) async {
     return false;
   }
 }
+
+Future getSecurityURL() async {
+  var url = Uri.parse(securityURL);
+  try {
+    var respnse = await http.get(url, headers: {
+      "Authorization": prefs!.getString('token').toString(),
+    });
+    if (respnse.statusCode == 200) {
+      var data = jsonDecode(respnse.body);
+      // prefs.print("Success");
+      prefs!.setString("securityKey", data["data"][0]["security_key"] ?? "");
+      // return data["status"];
+    } else {
+      return false;
+    }
+  } catch (e) {
+    print("error $e");
+    return false;
+  }
+}
+
+Future fcmclear() async {
+  var url = Uri.parse(fcmclearURL);
+  try {
+    var respnse = await http.post(url, headers: {
+      "Authorization": prefs!.getString('token').toString(),
+    });
+    if (respnse.statusCode == 200) {
+      var data = jsonDecode(respnse.body);
+      // prefs.print("Success");
+      // return data["status"];
+    } else {
+      return false;
+    }
+  } catch (e) {
+    print("error $e");
+    return false;
+  }
+}

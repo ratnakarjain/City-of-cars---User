@@ -53,5 +53,7 @@ const String addbookmarkUrl = baseUrl + "/AddStatus";
 const String resendotpUrl = baseUrl + "/resendOtp";
 const String deleteaccountUrl = baseUrl + "/deleteuser";
 const String changeCityUrl = baseUrl + "/UpdateCity";
+const String securityURL = baseUrl + "/get_securitykey";
+const String fcmclearURL = baseUrl + "/fcm_clear";
 
 String token = "";

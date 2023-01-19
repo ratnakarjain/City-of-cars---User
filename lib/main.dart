@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'Screens/messages.dart';
 import 'Screens/notification.dart';
 import 'Services/models/receivedNotification.dart';
+import 'Utils/database.dart';
 import 'Utils/functions.dart';
 import 'Utils/preference.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -49,7 +50,12 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
         map["type"] = message.data["type"];
       }
     }
-
+    await NotesDatabase.instance.create(Note(
+        isImportant: false,
+        number: map["type"] ?? "",
+        title: map["title"],
+        description: map["body"],
+        createdTime: DateTime.now()));
     createListMap(map);
   }
   // if (message.notification != null) {
@@ -355,7 +361,12 @@ class _MyAppState extends State<MyApp> {
           }
         }
         // print("type =" + map["type"]);
-
+        await NotesDatabase.instance.create(Note(
+            isImportant: false,
+            number: map["type"] ?? "",
+            title: map["title"],
+            description: map["body"],
+            createdTime: DateTime.now()));
         createListMap(map);
       }
       // If `onMessage` is triggered with a notification, construct our own
@@ -425,6 +436,12 @@ class _MyAppState extends State<MyApp> {
             map["type"] = message.data["type"];
           }
         }
+        await NotesDatabase.instance.create(Note(
+            isImportant: false,
+            number: map["type"] ?? "",
+            title: map["title"],
+            description: map["body"],
+            createdTime: DateTime.now()));
 
         createListMap(map);
       }

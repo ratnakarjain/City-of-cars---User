@@ -20,6 +20,7 @@ import 'package:cityofcars/Services/models/usercardetailsmodel.dart';
 import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:cityofcars/Utils/constants.dart';
+import 'package:cityofcars/Utils/database.dart';
 import 'package:cityofcars/Utils/preference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -1290,7 +1291,8 @@ class _ProfileState extends State<Profile> {
                             borderRadius: BorderRadius.circular(h * 0.02)),
                         height: h * 0.04,
                         child: InkWell(
-                          onTap: () {
+                          onTap: () async {
+                            await fcmclear();
                             pref!.remove("userId");
                             pref!.remove("usercar");
                             pref!.remove("CCar");
@@ -1311,6 +1313,7 @@ class _ProfileState extends State<Profile> {
                               "brandId",
                             );
                             pref!.clear();
+                            NotesDatabase.instance.delete();
                             Navigator.pushAndRemoveUntil<dynamic>(
                               context,
                               MaterialPageRoute<dynamic>(
@@ -1398,6 +1401,8 @@ class _ProfileState extends State<Profile> {
                         height: h * 0.04,
                         child: InkWell(
                           onTap: () {
+                            NotesDatabase.instance.delete();
+
                             deletecardata(modellist[cindex].id).then((value) {
                               Navigator.pop(context);
                               currentCar = currentCar - 1;

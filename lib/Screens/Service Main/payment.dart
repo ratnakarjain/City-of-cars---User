@@ -8,6 +8,7 @@ import 'package:cityofcars/Services/servies.dart';
 import 'package:cityofcars/Utils/Buttons/button.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:cityofcars/Utils/constants.dart';
+import 'package:cityofcars/Utils/preference.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -64,7 +65,7 @@ class _PaymentState extends State<Payment> {
     //     },
     //   };
     var options = {
-      'key': 'rzp_test_ZV56ClYdeni9vm',
+      'key': Prefernece.pref!.getString("securityKey") ?? "",
       'amount': price * 100,
       'name': 'City of Cars',
       'description': 'Payment for the order.',

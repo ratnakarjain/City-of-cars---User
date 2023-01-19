@@ -1,4 +1,5 @@
 import 'package:cityofcars/Utils/constants.dart';
+import 'package:cityofcars/Utils/database.dart';
 import 'package:cityofcars/Utils/preference.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -21,11 +22,12 @@ class Notifications extends StatefulWidget {
 }
 
 class _NotificationsState extends State<Notifications> {
-  List<String> titleList = [];
-  List<String> bodyList = [];
-  List<String> isread = [];
-  List<String> timeList = [];
-  List<String> typeList = [];
+  // List<String> titleList = [];
+  // List<String> bodyList = [];
+  // List<String> isread = [];
+  // List<String> timeList = [];
+  // List<String> typeList = [];
+  List<Note> notificationList = [];
   List<bool> selectedList = [];
   // List<String> replyIdList = [];
   late SharedPreferences preferences;
@@ -74,7 +76,7 @@ class _NotificationsState extends State<Notifications> {
       ),
       body: SizedBox(
         width: w,
-        child: titleList.isEmpty
+        child: notificationList.isEmpty
             ? Center(
                 child: Text(
                   "No Notifications yet",
@@ -93,17 +95,12 @@ class _NotificationsState extends State<Notifications> {
                       ),
                       child: IntrinsicHeight(
                         child: Stack(
-                            children: List.generate(titleList.length, (index) {
+                            children:
+                                List.generate(notificationList.length, (index) {
+                          Note note = notificationList[index];
                           return GestureDetector(
                             onTap: () {
-                              print("ontap====");
-                              isread[index] = "true";
-                              // setState(() {
-
-                              // });
-                              preferences.setStringList("isRead", isread);
-                              switch (
-                                  typeList[index].toString().toLowerCase()) {
+                              switch (note.number.toString().toLowerCase()) {
                                 case "presets":
                                   print("presets");
                                   Navigator.pushAndRemoveUntil<dynamic>(
@@ -191,19 +188,21 @@ class _NotificationsState extends State<Notifications> {
                               // height: h*0.3,
                               width: w,
                               margin: EdgeInsets.only(
-                                  top: index == titleList.length - 1
+                                  top: index == notificationList.length - 1
                                       ? 0
                                       : (h * 0.05)),
                               padding: EdgeInsets.only(
                                 bottom: h * 0.02,
-                                top: index == titleList.length - 1
+                                top: index == notificationList.length - 1
                                     ? h * 0.15
-                                    : ((titleList.length - index) * h * 0.11),
+                                    : ((notificationList.length - index) *
+                                        h *
+                                        0.11),
                               ),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.only(
                                       bottomLeft: Radius.circular(h * 0.06)),
-                                  color: isread[index] == "false"
+                                  color: !note.isImportant
                                       ? kbluecolor
                                       : kwhitecolor,
                                   boxShadow: [
@@ -220,7 +219,7 @@ class _NotificationsState extends State<Notifications> {
                                     padding: EdgeInsets.only(top: h * 0.025),
                                     child: CircleAvatar(
                                       radius: h * 0.015,
-                                      backgroundColor: isread[index] == "false"
+                                      backgroundColor: !note.isImportant
                                           ? kGreenColor
                                           : carhealthColor4,
                                     ),
@@ -233,18 +232,17 @@ class _NotificationsState extends State<Notifications> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            "${titleList[index]}:\n${bodyList[index]}\n",
+                                            "${note.title}:\n${note.description}\n",
                                             maxLines:
                                                 selectedList[index] ? 200 : 2,
                                             overflow: TextOverflow.ellipsis,
                                             style: GoogleFonts.montserrat(
                                                 fontSize: 14,
-                                                fontWeight:
-                                                    isread[index] == "false"
-                                                        ? FontWeight.bold
-                                                        : FontWeight.w500,
+                                                fontWeight: !note.isImportant
+                                                    ? FontWeight.bold
+                                                    : FontWeight.w500,
                                                 height: 1.5,
-                                                color: isread[index] == "false"
+                                                color: !note.isImportant
                                                     ? kwhitecolor
                                                     : kTextInputPlaceholderColor),
                                           ),
@@ -253,16 +251,16 @@ class _NotificationsState extends State<Notifications> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                  timedifference(
-                                                          timeList[index])
+                                                  timedifference(note
+                                                          .createdTime
+                                                          .toIso8601String())
                                                       .toString(),
                                                   style: GoogleFonts.montserrat(
                                                       fontSize: 12,
                                                       fontWeight:
                                                           FontWeight.w400,
                                                       height: 2,
-                                                      color: isread[index] ==
-                                                              "false"
+                                                      color: !note.isImportant
                                                           ? kwhitecolor
                                                           : kTextInputPlaceholderColor)),
                                               SizedBox(
@@ -304,36 +302,38 @@ class _NotificationsState extends State<Notifications> {
 
   Future<void> getData() async {
     // List<String> isRead = [];
-    preferences = await SharedPreferences.getInstance();
+    // preferences = await SharedPreferences.getInstance();
+    notificationList = await NotesDatabase.instance.readAllNotes();
+    selectedList = List.generate(notificationList.length, (index) => false);
 
-    if (preferences.containsKey("titleList")) {
-      titleList = preferences.getStringList("titleList")!;
-      bodyList = preferences.getStringList("bodyList")!;
-      isread = preferences.getStringList("isRead")!;
-      timeList = preferences.getStringList("timeList")!;
-      typeList = preferences.getStringList("typeList")!;
-      print(preferences.getStringList('titleList'));
-      print(preferences.getStringList('bodyList'));
-      print(preferences.getStringList('isRead'));
-      print(preferences.getStringList('timeList'));
-      print(preferences.getStringList('typeList'));
-      if (isread.length < titleList.length) {
-        isread = List.generate(titleList.length, (index) => "true");
-      }
-      selectedList = List.generate(titleList.length, (index) => false);
-      print("========= $selectedList");
-      // replyIdList = preferencesgetStringList("replyIdList")!;
-      // isread.forEach((element) {
-      //   isRead.add("true");
-      // });
-    }
-    print("title list length " + titleList.length.toString() + "^^");
-    print("title list length " + titleList.toString() + "^^");
-    print("title list length " + timeList.toString() + "^^");
-    print("type list length " + typeList.toString() + "^^");
-    print("is read list length " + isread.toString() + "^^");
-    preferences.setStringList("isRead", isread);
-    preferences.commit();
+    // if (preferences.containsKey("titleList")) {
+    //   titleList = preferences.getStringList("titleList")!;
+    //   bodyList = preferences.getStringList("bodyList")!;
+    //   isread = preferences.getStringList("isRead")!;
+    //   timeList = preferences.getStringList("timeList")!;
+    //   typeList = preferences.getStringList("typeList")!;
+    //   print(preferences.getStringList('titleList'));
+    //   print(preferences.getStringList('bodyList'));
+    //   print(preferences.getStringList('isRead'));
+    //   print(preferences.getStringList('timeList'));
+    //   print(preferences.getStringList('typeList'));
+    //   if (isread.length < titleList.length) {
+    //     isread = List.generate(titleList.length, (index) => "true");
+    //   }
+    //   selectedList = List.generate(titleList.length, (index) => false);
+    //   print("========= $selectedList");
+    //   // replyIdList = preferencesgetStringList("replyIdList")!;
+    //   // isread.forEach((element) {
+    //   //   isRead.add("true");
+    //   // });
+    // }
+    // print("title list length " + titleList.length.toString() + "^^");
+    // print("title list length " + titleList.toString() + "^^");
+    // print("title list length " + timeList.toString() + "^^");
+    // print("type list length " + typeList.toString() + "^^");
+    // print("is read list length " + isread.toString() + "^^");
+    // preferences.setStringList("isRead", isread);
+    // preferences.commit();
     // notificationCount = 0;
     // context.read<Counter>().getNotify();
 
@@ -345,6 +345,9 @@ class _NotificationsState extends State<Notifications> {
       // replyIdList = replyIdList.reversed.toList();
       isloading = false;
     });
+    for (var element in notificationList) {
+      element.isImportant = true;
+    }
   }
 }
 

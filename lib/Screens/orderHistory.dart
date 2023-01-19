@@ -1249,10 +1249,13 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                                 text: datalist[index]
                                                                             .paystatus ==
                                                                         "Deposited"
+                                                                            .toUpperCase()
                                                                     ? "Paid"
+                                                                        .toUpperCase()
                                                                     : datalist[index].paystatus ==
                                                                             "Failed"
                                                                         ? "Failed"
+                                                                            .toUpperCase()
                                                                         : datalist[index]
                                                                             .paystatus
                                                                             .toUpperCase(), //  "Pay Later",
@@ -1265,10 +1268,10 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                                   color: datalist[index]
                                                                               .paystatus ==
                                                                           "Failed"
-                                                                      ? kGreenColor
-                                                                      : datalist[index].paystatus ==
-                                                                              "Deposited"
-                                                                          ? kredcolor
+                                                                      ? kredcolor
+                                                                      : datalist[index].paystatus == "Deposited" ||
+                                                                              datalist[index].paystatus.toUpperCase() == "PAID"
+                                                                          ? kGreenColor
                                                                           : korangecolor,
                                                                 ),
                                                                 // buttonColor: datalist
