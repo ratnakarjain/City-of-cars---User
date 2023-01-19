@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>517522386835-dg6emfpka8gf5g7p2vo4pp5m2u3j07nk.apps.googleusercontent.com</string>
+	<string>517522386835-0s1q1e49plimn3nbe220ri49nv9e93qa.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.517522386835-dg6emfpka8gf5g7p2vo4pp5m2u3j07nk</string>
+	<string>com.googleusercontent.apps.517522386835-0s1q1e49plimn3nbe220ri49nv9e93qa</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>517522386835-t38hcboauo33sdq4tdmtti0s57qgg15n.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,22 +15,22 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.cityofcars.cityofcars</string>
+	<string>com.starlight.cocuser</string>
 	<key>PROJECT_ID</key>
 	<string>city-of-cars-6b50c</string>
 	<key>STORAGE_BUCKET</key>
 	<string>city-of-cars-6b50c.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:517522386835:ios:c16d04eaa8a2a9022d8266</string>
+	<string>1:517522386835:ios:a31171f6bf2b1e892d8266</string>
 </dict>
 </plist>

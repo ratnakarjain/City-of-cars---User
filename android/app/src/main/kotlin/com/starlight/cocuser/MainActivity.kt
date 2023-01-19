@@ -1,4 +1,4 @@
-package com.cityofcars.cityofcars
+package com.starlight.cocuser
 
 import io.flutter.embedding.android.FlutterActivity
 
