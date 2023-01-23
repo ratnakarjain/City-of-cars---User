@@ -74,27 +74,28 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // }
   // If `onMessage` is triggered with a notification, construct our own
   // local notification to show to users using the created channel.
-  // const AndroidNotificationDetails androidPlatformChannelSpecifics =
-  //     AndroidNotificationDetails(
-  //   'cityofcars',
-  //   'cityofcars',
-  //   channelDescription: 'User Notification Channel',
-  //   importance: Importance.max,
-  //   priority: Priority.high,
-  //   ticker: 'ticker',
-  //   enableLights: true,
-  //   enableVibration: true,
-  //   playSound: true,
-  // );
-  // const NotificationDetails platformChannelSpecifics =
-  //     NotificationDetails(android: androidPlatformChannelSpecifics);
-  // await flutterLocalNotificationsPlugin.show(
-  //   10,
-  //   message.notification!.title,
-  //   message.notification!.body,
-  //   platformChannelSpecifics,
-  //   payload: message.data.toString(),
-  // );
+  const AndroidNotificationDetails androidPlatformChannelSpecifics =
+      AndroidNotificationDetails(
+    'cityofcars',
+    'cityofcars',
+    channelDescription: 'User Notification Channel',
+    importance: Importance.max,
+    priority: Priority.high,
+    ticker: 'ticker',
+    icon: "@mipmap/ic_launcher",
+    enableLights: true,
+    enableVibration: true,
+    playSound: true,
+  );
+  const NotificationDetails platformChannelSpecifics =
+      NotificationDetails(android: androidPlatformChannelSpecifics);
+  await flutterLocalNotificationsPlugin.show(
+    0,
+    message.notification!.title,
+    message.notification!.body,
+    platformChannelSpecifics,
+    payload: message.data.toString(),
+  );
   // if (notification != null && android != null) {
   //   flutterLocalNotificationsPlugin.show(
   //       notification.hashCode,
@@ -379,6 +380,7 @@ class _MyAppState extends State<MyApp> {
         importance: Importance.max,
         priority: Priority.high,
         ticker: 'ticker',
+        icon: "@mipmap/ic_launcher",
         enableLights: true,
         enableVibration: true,
         playSound: true,
@@ -386,7 +388,7 @@ class _MyAppState extends State<MyApp> {
       const NotificationDetails platformChannelSpecifics =
           NotificationDetails(android: androidPlatformChannelSpecifics);
       await flutterLocalNotificationsPlugin.show(
-        10,
+        0,
         message.notification!.title,
         message.notification!.body,
         platformChannelSpecifics,
@@ -453,6 +455,7 @@ class _MyAppState extends State<MyApp> {
         importance: Importance.max,
         priority: Priority.high,
         ticker: 'ticker',
+        icon: "@mipmap/ic_launcher",
         enableLights: true,
         enableVibration: true,
         playSound: true,
@@ -460,7 +463,7 @@ class _MyAppState extends State<MyApp> {
       const NotificationDetails platformChannelSpecifics =
           NotificationDetails(android: androidPlatformChannelSpecifics);
       await flutterLocalNotificationsPlugin.show(
-        10,
+        0,
         message.notification!.title,
         message.notification!.body,
         platformChannelSpecifics,

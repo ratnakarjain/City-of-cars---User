@@ -55,5 +55,6 @@ const String deleteaccountUrl = baseUrl + "/deleteuser";
 const String changeCityUrl = baseUrl + "/UpdateCity";
 const String securityURL = baseUrl + "/get_securitykey";
 const String fcmclearURL = baseUrl + "/fcm_clear";
+const String get_notificationUrl = baseUrl + "/get_notification";
 
 String token = "";

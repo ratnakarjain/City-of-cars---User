@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Services/models/notificationModel.dart';
+import '../Services/servies.dart';
 import '../Utils/functions.dart';
 import 'bottomnavBar.dart';
 import 'editProfile.dart';
@@ -27,11 +29,12 @@ class _NotificationsState extends State<Notifications> {
   // List<String> isread = [];
   // List<String> timeList = [];
   // List<String> typeList = [];
-  List<Note> notificationList = [];
+  // List<Note> notificationList = [];
   List<bool> selectedList = [];
   // List<String> replyIdList = [];
   late SharedPreferences preferences;
   bool isloading = true;
+  List<NotificationModel> notifications = [];
   // List selected = [];
   int item = 10;
   @override
@@ -39,7 +42,15 @@ class _NotificationsState extends State<Notifications> {
     // TODO: implement initState
     super.initState();
     WidgetsFlutterBinding.ensureInitialized();
-    getData();
+    // getData();
+    get_notification().then((value) => setState(
+          () {
+            notifications.addAll(value);
+            isloading = false;
+            selectedList =
+                List.generate(notifications.length, (index) => false);
+          },
+        ));
 
     // isread.add("false");
     // preferences!.setStringList("isRead", isread);
@@ -76,282 +87,298 @@ class _NotificationsState extends State<Notifications> {
       ),
       body: SizedBox(
         width: w,
-        child: notificationList.isEmpty
-            ? Center(
-                child: Text(
-                  "No Notifications yet",
-                  style: GoogleFonts.montserrat(
-                      fontSize: 16, fontWeight: FontWeight.w400),
-                ),
-              )
-            : LayoutBuilder(
-                builder: (context, viewportConstraints) {
-                  return SingleChildScrollView(
-                    controller: _controller,
-                    padding: EdgeInsets.only(bottom: h * 0.1),
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minHeight: viewportConstraints.minHeight,
-                      ),
-                      child: IntrinsicHeight(
-                        child: Stack(
-                            children:
-                                List.generate(notificationList.length, (index) {
-                          Note note = notificationList[index];
-                          return GestureDetector(
-                            onTap: () {
-                              switch (note.number.toString().toLowerCase()) {
-                                case "presets":
-                                  print("presets");
-                                  Navigator.pushAndRemoveUntil<dynamic>(
-                                    context,
-                                    MaterialPageRoute<dynamic>(
-                                      builder: (BuildContext context) =>
-                                          BottomNavBar(
-                                        index: 2,
-                                      ),
-                                    ),
-                                    (route) =>
-                                        false, //if you want to disable back feature set to false
-                                  );
-
-                                  break;
-                                case "approvel":
-                                  print("approvel");
-                                  Navigator.pushAndRemoveUntil<dynamic>(
-                                    context,
-                                    MaterialPageRoute<dynamic>(
-                                      builder: (BuildContext context) =>
-                                          BottomNavBar(
-                                        index: 2,
-                                      ),
-                                    ),
-                                    (route) =>
-                                        false, //if you want to disable back feature set to false
-                                  );
-                                  break;
-
-                                // case "pendingcart":
-
-                                //   break;
-                                // case "offer":
-
-                                //   break;
-                                case "conversation":
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: ((context) =>
-                                              const Messages())));
-
-                                  break;
-                                // case "feedback":
-
-                                //   break;
-                                // case "otp":
-                                // Navigator.push(context, MaterialPageRoute(builder: ((context) => Messages())));
-
-                                //   break;
-                                case "order":
-                                  Navigator.pushAndRemoveUntil<dynamic>(
-                                    context,
-                                    MaterialPageRoute<dynamic>(
-                                      builder: (BuildContext context) =>
-                                          BottomNavBar(
-                                        index: 2,
-                                      ),
-                                    ),
-                                    (route) =>
-                                        false, //if you want to disable back feature set to false
-                                  );
-                                  break;
-
-                                case "blogs":
-                                  Navigator.pushAndRemoveUntil<dynamic>(
-                                    context,
-                                    MaterialPageRoute<dynamic>(
-                                      builder: (BuildContext context) =>
-                                          BottomNavBar(
-                                        index: 1,
-                                      ),
-                                    ),
-                                    (route) =>
-                                        false, //if you want to disable back feature set to false
-                                  );
-
-                                  break;
-                                case "":
-                                  break;
-                              }
-                            },
-                            child: Container(
-                              // height: h*0.3,
-                              width: w,
-                              margin: EdgeInsets.only(
-                                  top: index == notificationList.length - 1
-                                      ? 0
-                                      : (h * 0.05)),
-                              padding: EdgeInsets.only(
-                                bottom: h * 0.02,
-                                top: index == notificationList.length - 1
-                                    ? h * 0.15
-                                    : ((notificationList.length - index) *
-                                        h *
-                                        0.11),
-                              ),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(h * 0.06)),
-                                  color: !note.isImportant
-                                      ? kbluecolor
-                                      : kwhitecolor,
-                                  boxShadow: [
-                                    BoxShadow(
-                                        blurRadius: 5,
-                                        color: kTextInputPlaceholderColor
-                                            .withOpacity(0.5))
-                                  ]),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                      child: Padding(
-                                    padding: EdgeInsets.only(top: h * 0.025),
-                                    child: CircleAvatar(
-                                      radius: h * 0.015,
-                                      backgroundColor: !note.isImportant
-                                          ? kGreenColor
-                                          : carhealthColor4,
-                                    ),
-                                  )),
-                                  Expanded(
-                                      flex: 3,
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "${note.title}:\n${note.description}\n",
-                                            maxLines:
-                                                selectedList[index] ? 200 : 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: GoogleFonts.montserrat(
-                                                fontSize: 14,
-                                                fontWeight: !note.isImportant
-                                                    ? FontWeight.bold
-                                                    : FontWeight.w500,
-                                                height: 1.5,
-                                                color: !note.isImportant
-                                                    ? kwhitecolor
-                                                    : kTextInputPlaceholderColor),
+        child: isloading
+            ? loder
+            : notifications.isEmpty
+                ? Center(
+                    child: Text(
+                      "No Notifications yet",
+                      style: GoogleFonts.montserrat(
+                          fontSize: 16, fontWeight: FontWeight.w400),
+                    ),
+                  )
+                : LayoutBuilder(
+                    builder: (context, viewportConstraints) {
+                      return SingleChildScrollView(
+                        controller: _controller,
+                        padding: EdgeInsets.only(bottom: h * 0.1),
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            minHeight: viewportConstraints.minHeight,
+                          ),
+                          child: IntrinsicHeight(
+                            child: Stack(
+                                children: List.generate(notifications.length,
+                                    (index) {
+                              NotificationModel note = notifications[index];
+                              return GestureDetector(
+                                onTap: () {
+                                  switch (note.type.toString().toLowerCase()) {
+                                    case "presets":
+                                      print("presets");
+                                      Navigator.pushAndRemoveUntil<dynamic>(
+                                        context,
+                                        MaterialPageRoute<dynamic>(
+                                          builder: (BuildContext context) =>
+                                              BottomNavBar(
+                                            index: 2,
                                           ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                        ),
+                                        (route) =>
+                                            false, //if you want to disable back feature set to false
+                                      );
+
+                                      break;
+                                    case "approvel":
+                                      print("approvel");
+                                      Navigator.pushAndRemoveUntil<dynamic>(
+                                        context,
+                                        MaterialPageRoute<dynamic>(
+                                          builder: (BuildContext context) =>
+                                              BottomNavBar(
+                                            index: 2,
+                                          ),
+                                        ),
+                                        (route) =>
+                                            false, //if you want to disable back feature set to false
+                                      );
+                                      break;
+
+                                    // case "pendingcart":
+
+                                    //   break;
+                                    // case "offer":
+
+                                    //   break;
+                                    case "conversation":
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: ((context) =>
+                                                  const Messages())));
+
+                                      break;
+                                    // case "feedback":
+
+                                    //   break;
+                                    // case "otp":
+                                    // Navigator.push(context, MaterialPageRoute(builder: ((context) => Messages())));
+
+                                    //   break;
+                                    case "order":
+                                      Navigator.pushAndRemoveUntil<dynamic>(
+                                        context,
+                                        MaterialPageRoute<dynamic>(
+                                          builder: (BuildContext context) =>
+                                              BottomNavBar(
+                                            index: 2,
+                                          ),
+                                        ),
+                                        (route) =>
+                                            false, //if you want to disable back feature set to false
+                                      );
+                                      break;
+
+                                    case "blogs":
+                                      Navigator.pushAndRemoveUntil<dynamic>(
+                                        context,
+                                        MaterialPageRoute<dynamic>(
+                                          builder: (BuildContext context) =>
+                                              BottomNavBar(
+                                            index: 1,
+                                          ),
+                                        ),
+                                        (route) =>
+                                            false, //if you want to disable back feature set to false
+                                      );
+
+                                      break;
+                                    case "":
+                                      break;
+                                  }
+                                },
+                                child: Container(
+                                  // height: h*0.3,
+                                  width: w,
+                                  margin: EdgeInsets.only(
+                                      top: index == notifications.length - 1
+                                          ? 0
+                                          : (h * 0.05)),
+                                  padding: EdgeInsets.only(
+                                    bottom: h * 0.02,
+                                    top: index == notifications.length - 1
+                                        ? h * 0.15
+                                        : ((notifications.length - index) *
+                                            h *
+                                            0.11),
+                                  ),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                          bottomLeft:
+                                              Radius.circular(h * 0.06)),
+                                      color:
+                                          // !note.isImportant
+                                          //     ? kbluecolor
+                                          //     :
+                                          kwhitecolor,
+                                      boxShadow: [
+                                        BoxShadow(
+                                            blurRadius: 5,
+                                            color: kTextInputPlaceholderColor
+                                                .withOpacity(0.5))
+                                      ]),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                          child: Padding(
+                                        padding:
+                                            EdgeInsets.only(top: h * 0.025),
+                                        child: CircleAvatar(
+                                          radius: h * 0.015,
+                                          backgroundColor:
+                                              //  !note.isImportant
+                                              //     ? kGreenColor
+                                              //     :
+                                              carhealthColor4,
+                                        ),
+                                      )),
+                                      Expanded(
+                                          flex: 3,
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                  timedifference(note
-                                                          .createdTime
-                                                          .toIso8601String())
-                                                      .toString(),
-                                                  style: GoogleFonts.montserrat(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      height: 2,
-                                                      color: !note.isImportant
-                                                          ? kwhitecolor
-                                                          : kTextInputPlaceholderColor)),
-                                              SizedBox(
-                                                height: h * 0.035,
-                                                child: IconButton(
-                                                    onPressed: () {
-                                                      setState(() {
-                                                        selectedList[index] =
-                                                            !selectedList[
-                                                                index];
-                                                      });
-                                                    },
-                                                    icon: Icon(
-                                                      selectedList[index]
-                                                          ? Icons
-                                                              .keyboard_arrow_up_rounded
-                                                          : Icons
-                                                              .keyboard_arrow_down_rounded,
-                                                      size: h * 0.04,
-                                                    )),
-                                              )
+                                                "${note.title}:\n${note.body}\n",
+                                                maxLines: selectedList[index]
+                                                    ? 200
+                                                    : 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: GoogleFonts.montserrat(
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        // !note.isImportant
+                                                        //     ? FontWeight.bold
+                                                        //     :
+                                                        FontWeight.w500,
+                                                    height: 1.5,
+                                                    color:
+                                                        //  !note.isImportant
+                                                        //     ? kwhitecolor
+                                                        //     :
+                                                        kTextInputPlaceholderColor),
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                      timedifference(note
+                                                              .createdAt!
+                                                              .toIso8601String())
+                                                          .toString(),
+                                                      style: GoogleFonts.montserrat(
+                                                          fontSize: 12,
+                                                          fontWeight: FontWeight.w400,
+                                                          height: 2,
+                                                          color:
+                                                              //  !note
+                                                              //         .isImportant
+                                                              //     ? kwhitecolor
+                                                              //     :
+                                                              kTextInputPlaceholderColor)),
+                                                  SizedBox(
+                                                    height: h * 0.035,
+                                                    child: IconButton(
+                                                        onPressed: () {
+                                                          setState(() {
+                                                            selectedList[
+                                                                    index] =
+                                                                !selectedList[
+                                                                    index];
+                                                          });
+                                                        },
+                                                        icon: Icon(
+                                                          selectedList[index]
+                                                              ? Icons
+                                                                  .keyboard_arrow_up_rounded
+                                                              : Icons
+                                                                  .keyboard_arrow_down_rounded,
+                                                          size: h * 0.04,
+                                                        )),
+                                                  )
+                                                ],
+                                              ),
                                             ],
-                                          ),
-                                        ],
-                                      ))
-                                ],
-                              ),
-                            ),
-                          );
-                        })),
-                      ),
-                    ),
-                  );
-                },
-              ),
+                                          ))
+                                    ],
+                                  ),
+                                ),
+                              );
+                            })),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
       ),
     );
   }
 
-  Future<void> getData() async {
-    // List<String> isRead = [];
-    // preferences = await SharedPreferences.getInstance();
-    notificationList = await NotesDatabase.instance.readAllNotes();
-    selectedList = List.generate(notificationList.length, (index) => false);
+  // Future<void> getData() async {
+  //   // List<String> isRead = [];
+  //   // preferences = await SharedPreferences.getInstance();
+  //   notificationList = await NotesDatabase.instance.readAllNotes();
+  //   selectedList = List.generate(notificationList.length, (index) => false);
 
-    // if (preferences.containsKey("titleList")) {
-    //   titleList = preferences.getStringList("titleList")!;
-    //   bodyList = preferences.getStringList("bodyList")!;
-    //   isread = preferences.getStringList("isRead")!;
-    //   timeList = preferences.getStringList("timeList")!;
-    //   typeList = preferences.getStringList("typeList")!;
-    //   print(preferences.getStringList('titleList'));
-    //   print(preferences.getStringList('bodyList'));
-    //   print(preferences.getStringList('isRead'));
-    //   print(preferences.getStringList('timeList'));
-    //   print(preferences.getStringList('typeList'));
-    //   if (isread.length < titleList.length) {
-    //     isread = List.generate(titleList.length, (index) => "true");
-    //   }
-    //   selectedList = List.generate(titleList.length, (index) => false);
-    //   print("========= $selectedList");
-    //   // replyIdList = preferencesgetStringList("replyIdList")!;
-    //   // isread.forEach((element) {
-    //   //   isRead.add("true");
-    //   // });
-    // }
-    // print("title list length " + titleList.length.toString() + "^^");
-    // print("title list length " + titleList.toString() + "^^");
-    // print("title list length " + timeList.toString() + "^^");
-    // print("type list length " + typeList.toString() + "^^");
-    // print("is read list length " + isread.toString() + "^^");
-    // preferences.setStringList("isRead", isread);
-    // preferences.commit();
-    // notificationCount = 0;
-    // context.read<Counter>().getNotify();
+  //   // if (preferences.containsKey("titleList")) {
+  //   //   titleList = preferences.getStringList("titleList")!;
+  //   //   bodyList = preferences.getStringList("bodyList")!;
+  //   //   isread = preferences.getStringList("isRead")!;
+  //   //   timeList = preferences.getStringList("timeList")!;
+  //   //   typeList = preferences.getStringList("typeList")!;
+  //   //   print(preferences.getStringList('titleList'));
+  //   //   print(preferences.getStringList('bodyList'));
+  //   //   print(preferences.getStringList('isRead'));
+  //   //   print(preferences.getStringList('timeList'));
+  //   //   print(preferences.getStringList('typeList'));
+  //   //   if (isread.length < titleList.length) {
+  //   //     isread = List.generate(titleList.length, (index) => "true");
+  //   //   }
+  //   //   selectedList = List.generate(titleList.length, (index) => false);
+  //   //   print("========= $selectedList");
+  //   //   // replyIdList = preferencesgetStringList("replyIdList")!;
+  //   //   // isread.forEach((element) {
+  //   //   //   isRead.add("true");
+  //   //   // });
+  //   // }
+  //   // print("title list length " + titleList.length.toString() + "^^");
+  //   // print("title list length " + titleList.toString() + "^^");
+  //   // print("title list length " + timeList.toString() + "^^");
+  //   // print("type list length " + typeList.toString() + "^^");
+  //   // print("is read list length " + isread.toString() + "^^");
+  //   // preferences.setStringList("isRead", isread);
+  //   // preferences.commit();
+  //   // notificationCount = 0;
+  //   // context.read<Counter>().getNotify();
 
-    setState(() {
-      // titleList = titleList.reversed.toList();
-      // bodyList = bodyList.reversed.toList();
-      // isread = isread.reversed.toList();
-      // timeList = timeList.reversed.toList();
-      // replyIdList = replyIdList.reversed.toList();
-      isloading = false;
-    });
-    for (var element in notificationList) {
-      element.isImportant = true;
-    }
-  }
+  //   setState(() {
+  //     // titleList = titleList.reversed.toList();
+  //     // bodyList = bodyList.reversed.toList();
+  //     // isread = isread.reversed.toList();
+  //     // timeList = timeList.reversed.toList();
+  //     // replyIdList = replyIdList.reversed.toList();
+  //     isloading = false;
+  //   });
+  //   for (var element in notificationList) {
+  //     element.isImportant = true;
+  //   }
+  // }
 }
-
-
 
 // class Noti extends StatefulWidget {
 //   const Noti({Key? key}) : super(key: key);

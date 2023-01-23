@@ -25,6 +25,7 @@ import 'models/ApprovalsModel.dart';
 import 'models/blogModel.dart';
 import 'models/faqModel.dart';
 import 'models/messageModel.dart';
+import 'models/notificationModel.dart';
 import 'models/paymentmodel.dart';
 import 'models/recentsModel.dart';
 
@@ -1912,6 +1913,28 @@ Future fcmclear() async {
       var data = jsonDecode(respnse.body);
       // prefs.print("Success");
       // return data["status"];
+    } else {
+      return false;
+    }
+  } catch (e) {
+    print("error $e");
+    return false;
+  }
+}
+
+Future get_notification() async {
+  var url = Uri.parse(get_notificationUrl);
+  try {
+    var respnse = await http.get(url, headers: {
+      "Authorization": prefs!.getString('token').toString(),
+    });
+    if (respnse.statusCode == 200) {
+      var data = jsonDecode(respnse.body);
+      List<NotificationModel> notilist =
+          notificationModelFromJson(jsonEncode(data["data"]));
+      // prefs.print("Success");
+      // return data["status"];
+      return notilist;
     } else {
       return false;
     }
