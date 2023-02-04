@@ -10,6 +10,7 @@ import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Utils/Shapes/widgets.dart';
 import 'package:cityofcars/Utils/functions.dart';
 import 'package:cityofcars/Utils/preference.dart';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -345,6 +346,7 @@ class _ServiceMainState extends State<ServiceMain> {
                         style:
                             GoogleFonts.montserrat(fontWeight: FontWeight.w700),
                         // focusNode: FocusNode(canRequestFocus: true),
+                        onTap: () => throw Exception(),
                         onSubmitted: (value) {
                           if (search.text.isEmpty) {
                             getcategaries().then((value) {

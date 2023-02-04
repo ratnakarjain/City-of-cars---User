@@ -3,6 +3,7 @@ import 'package:cityofcars/Screens/bottomnavBar.dart';
 import 'package:cityofcars/Screens/editProfile.dart';
 import 'package:cityofcars/Screens/splash.dart';
 import 'package:cityofcars/Utils/constants.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,6 +14,7 @@ import 'Screens/messages.dart';
 import 'Screens/notification.dart';
 import 'Services/models/receivedNotification.dart';
 import 'Utils/database.dart';
+
 import 'Utils/functions.dart';
 import 'Utils/preference.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -124,7 +126,10 @@ Future<void> main() async {
 
   await Firebase.initializeApp();
   Prefernece.pref = await SharedPreferences.getInstance();
-
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  FlutterError.onError = (errorDetails) {
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  };
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');
 
