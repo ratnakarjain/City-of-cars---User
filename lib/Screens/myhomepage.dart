@@ -1,3 +1,4 @@
+// import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:cityofcars/Utils/Buttons/button.dart';
 import 'package:cityofcars/Utils/constants.dart';
 import 'package:cityofcars/Screens/loginSignup.dart';
@@ -39,8 +40,27 @@ class _MyHomePageState extends State<MyHomePage> {
           "We provide excellent customer experience and provide real-time updates and analytics.",
     },
   ];
+
+  String _authStatus = 'Unknown';
+
+  Future<void> initPlugin() async {
+    // final TrackingStatus status =
+    //     await AppTrackingTransparency.trackingAuthorizationStatus;
+    // setState(() => _authStatus = '$status');
+    // // If the system can show an authorization request dialog
+    // if (status == TrackingStatus.notDetermined) {
+    //   // Request system's tracking authorization dialog
+    //   await Future.delayed(const Duration(milliseconds: 200));
+    //   final TrackingStatus status =
+    //       await AppTrackingTransparency.requestTrackingAuthorization();
+    //   setState(() => _authStatus = '$status');
+    // }
+    // final uuid = await AppTrackingTransparency.getAdvertisingIdentifier();
+  }
+
   @override
   void initState() {
+    initPlugin();
     super.initState();
   }
 

@@ -102,6 +102,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
     // TODO: implement initState
 
     super.initState();
+
     _controller = AnimationController(
       duration: const Duration(seconds: 4),
       vsync: this,
@@ -126,6 +127,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
       Ids.userid = id;
       print(id + "    +++++");
     }
+
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushAndRemoveUntil<dynamic>(
         context,

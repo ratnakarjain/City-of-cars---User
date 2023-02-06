@@ -41,8 +41,10 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
       body: Container(
           padding:
               EdgeInsets.symmetric(vertical: h * 0.02, horizontal: w * 0.05),
-          child: Html(
-            data: des.toString(),
+          child: SingleChildScrollView(
+            child: Html(
+              data: des.toString(),
+            ),
           )),
     );
   }

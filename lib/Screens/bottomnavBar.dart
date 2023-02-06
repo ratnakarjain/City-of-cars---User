@@ -1,3 +1,4 @@
+// import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:cityofcars/Screens/Service%20Main/serviceMain.dart';
 import 'package:cityofcars/Screens/news.dart';
 import 'package:cityofcars/Screens/notification.dart';
@@ -40,14 +41,32 @@ class _BottomNavBarState extends State<BottomNavBar> {
         labelStyle: GoogleFonts.montserrat(color: kwhitecolor, fontSize: 9)),
   ]);
   var _navigationController;
+  String _authStatus = 'Unknown';
+
+  Future<void> initPlugin() async {
+    // final TrackingStatus status =
+    //     await AppTrackingTransparency.trackingAuthorizationStatus;
+    // setState(() => _authStatus = '$status');
+    // // If the system can show an authorization request dialog
+    // if (status == TrackingStatus.notDetermined) {
+    //   // Request system's tracking authorization dialog
+    //   await Future.delayed(const Duration(milliseconds: 200));
+    //   final TrackingStatus status =
+    //       await AppTrackingTransparency.requestTrackingAuthorization();
+    //   setState(() => _authStatus = '$status');
+    // }
+    // final uuid = await AppTrackingTransparency.getAdvertisingIdentifier();
+  }
+
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
+    initPlugin();
     getcmsdata();
     getSecurityURL();
     selectedPos = widget.index;
     _navigationController = CircularBottomNavigationController(selectedPos);
+    super.initState();
   }
 
   List<Widget> widgets = [
